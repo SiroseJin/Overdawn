@@ -40,6 +40,8 @@ func _process(delta):
 	Global.witchDamageZone = $WitchDealDamageArea
 	
 	if Global.playerAlive:
+		is_witch_chase = true
+		is_witch_roaming = false
 		Player = Global.PlayerBody
 		var distance_to_player = position.distance_to(Player.position)
 		if distance_to_player >= 100:
@@ -49,6 +51,7 @@ func _process(delta):
 			charging_timer.stop()
 	else:
 		is_witch_chase = false
+		is_witch_roaming = true
 
 func move(delta):
 	if !dead:
@@ -63,12 +66,23 @@ func move(delta):
 		elif taking_damage and is_witch_chase:
 			var knockback_dir = position.direction_to(Player.position) * -15
 			velocity = knockback_dir
+		elif is_witch_roaming:
+			roam_pattern()
 		else:
 			velocity += dir * speed * delta
 	elif dead:
 		velocity.y = 0
 		velocity.x = 0
 	move_and_slide()
+
+func roam_pattern():
+	$Timer.wait_time = choose([0.2, 0.5, 0.8])
+	if !is_witch_chase:
+		dir = choose([Vector2.RIGHT, Vector2.LEFT, Vector2.UP, Vector2.DOWN])
+
+func choose(array):
+	array.shuffle()
+	return array.front()
 
 func handle_animation():
 	var animated_sprite = $AnimatedSprite2D
@@ -89,7 +103,7 @@ func handle_animation():
 		animated_sprite.play("attack")
 	elif !dead and taking_damage:
 		animated_sprite.play("hurt")
-		await get_tree().create_timer(0.6).timeout
+		await get_tree().create_timer(0.7).timeout
 		taking_damage = false
 	elif dead:
 		$CollisionShape2D.disabled = true
@@ -154,6 +168,6 @@ func _on_witch_deal_damage_area_area_entered(area):
 	if area == Global.playerHitbox:
 		is_dealing_damage = true
 
-func _on_bat_deal_damage_area_area_exited(area):
+func _on_witch_deal_damage_area_area_exited(area):
 	if area == Global.playerHitbox:
 		is_dealing_damage = false

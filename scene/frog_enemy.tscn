@@ -286,7 +286,7 @@ position = Vector2(0, -8.68325)
 scale = Vector2(0.812106, 1)
 shape = SubResource("CircleShape2D_1w40h")
 
-[node name="DirectionTimer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="."]
 autostart = true
 
 [node name="HitBox" type="Area2D" parent="."]
@@ -303,6 +303,7 @@ position = Vector2(0, -8.68325)
 scale = Vector2(2.92515, 3.66539)
 shape = SubResource("CircleShape2D_hp3hy")
 
-[connection signal="timeout" from="DirectionTimer" to="." method="_on_direction_timer_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_direction_timer_timeout"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_frog_hit_box_area_entered"]
 [connection signal="area_entered" from="FrogAreaDealDamage" to="." method="_on_frog_area_deal_damage_area_entered"]
+[connection signal="area_exited" from="FrogAreaDealDamage" to="." method="_on_frog_area_deal_damage_area_exited"]

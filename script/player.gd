@@ -40,8 +40,8 @@ var strength: int = 11
 
 # Level and EXP
 var level: int = 1
-var exp: float = 0
-var exp_to_next_level: float = 10
+var exp: int = 0
+var exp_to_next_level: int = 10
 
 # Attacks
 var attack_type: String
@@ -172,7 +172,7 @@ func gain_exp(amount):
 func level_up():
 	level += 1
 	exp -= exp_to_next_level
-	exp_to_next_level *= 1.05
+	exp_to_next_level *= 1.1
 	health_max += 1
 	health += 1
 	strength += 0.6

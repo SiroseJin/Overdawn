@@ -355,3 +355,4 @@ position = Vector2(12, -12)
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="area_entered" from="WitchDealDamageArea" to="." method="_on_witch_deal_damage_area_area_entered"]
+[connection signal="area_exited" from="WitchDealDamageArea" to="." method="_on_witch_deal_damage_area_area_exited"]

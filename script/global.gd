@@ -16,5 +16,8 @@ var batDamageAmmount: int
 var frogDamageZone: Area2D
 var frogDamageAmmount: int
 
+var witchDamageZone: Area2D
+var witchDamageAmmount: int
+
 var current_wave: int
 var moving_to_next_wave: bool

@@ -14,3 +14,12 @@ func _on_start_game_detection_body_entered(body):
 		SceneTransitionAnimation.play("fade_in")
 		await get_tree().create_timer(0.5).timeout
 		get_tree().change_scene_to_file("res://scene/stage.tscn")
+
+func _process(delta):
+	if !Global.playerAlive:
+		await get_tree().create_timer(3.0).timeout
+		Global.gameStarted = false
+		SceneTransitionAnimation.play("fade_in")
+		await get_tree().create_timer(0.5).timeout
+		get_tree().change_scene_to_file("res://scene/lobby_level.tscn")
+		return
