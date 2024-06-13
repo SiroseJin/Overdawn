@@ -1,0 +1,366 @@
+[gd_scene load_steps=38 format=3 uid="uid://db2pu5tpfap8j"]
+
+[ext_resource type="Script" path="res://script/player.gd" id="1_aicbr"]
+[ext_resource type="Texture2D" uid="uid://c5n1kibkrmtn1" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Idle/50x50/Idle 0-0.png" id="2_1etox"]
+[ext_resource type="Texture2D" uid="uid://cp1j04t15oac5" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Dead/50x50/Dead 0-0.png" id="2_2mvgr"]
+[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_5yx0s"]
+[ext_resource type="Texture2D" uid="uid://dpc0fhg50xqvf" path="res://art/2D Pixel Dungeon Asset Pack/items and trap_animation/arrow/Just_arrow.png" id="2_8a1l4"]
+[ext_resource type="Texture2D" uid="uid://clxprb1rbriny" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Fall/50x50/Fall 1-0.png" id="2_cifd4"]
+[ext_resource type="Texture2D" uid="uid://cofq2kc0ghe6l" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Jump/100x100/Jump 0-3.png" id="2_tr72s"]
+[ext_resource type="Texture2D" uid="uid://0o3o7p36o0g8" path="res://art/Health Bar Asset Pack 2 by Adwit Rahman/hpbar.png" id="2_xahv4"]
+[ext_resource type="Texture2D" uid="uid://dmwtmipwqb0re" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Idle/50x50/Idle 0-1.png" id="3_20s3b"]
+[ext_resource type="Texture2D" uid="uid://b2u2xi6emefuf" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Fall/50x50/Fall 1-1.png" id="3_umafc"]
+[ext_resource type="Texture2D" uid="uid://cmli3jhg55jl1" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Dead/50x50/Dead 0-1.png" id="3_ve7ey"]
+[ext_resource type="Texture2D" uid="uid://df40w55i572vl" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Dead/50x50/Dead 0-2.png" id="4_a4wbl"]
+[ext_resource type="Texture2D" uid="uid://gy0yjl6bvnu" path="res://art/Health Bar Asset Pack 2 by Adwit Rahman/expbar.png" id="4_catr1"]
+[ext_resource type="Texture2D" uid="uid://dqs070alf1g54" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Idle/50x50/Idle 0-2.png" id="4_wau1o"]
+[ext_resource type="Texture2D" uid="uid://dnf1oq40d2nyu" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Dead/50x50/Dead 0-3.png" id="5_8owox"]
+[ext_resource type="Texture2D" uid="uid://c565g1egwvw0e" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Attack/50x50/Attack 1-0.png" id="5_ikhu5"]
+[ext_resource type="Texture2D" uid="uid://wseynxtl5a4a" path="res://art/Custom or Edit/Attack 1-1.png" id="5_y8336"]
+[ext_resource type="Texture2D" uid="uid://cvakgoggdy73i" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Attack/50x50/Attack 1-1.png" id="6_8fvsl"]
+[ext_resource type="Texture2D" uid="uid://vm7rc14qh2jd" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Dead/50x50/Dead 0-4.png" id="6_ht5xl"]
+[ext_resource type="Texture2D" uid="uid://drqb5qi4txldd" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Attack/50x50/Attack 1-2.png" id="7_1bf0f"]
+[ext_resource type="Texture2D" uid="uid://cl5jy2hklf1s2" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Attack/50x50/Attack 1-3.png" id="8_2pedd"]
+[ext_resource type="Texture2D" uid="uid://7ubph120j0ir" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Attack/50x50/Attack 0-0.png" id="9_aqeml"]
+[ext_resource type="Texture2D" uid="uid://babi467co6k57" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Attack/50x50/Attack 0-1.png" id="10_eft6i"]
+[ext_resource type="Texture2D" uid="uid://bd0pernv5gscn" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Attack/50x50/Attack 0-2.png" id="11_wgmmn"]
+[ext_resource type="Texture2D" uid="uid://c33si0eucr1cq" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Attack/50x50/Attack 0-3.png" id="12_xkl3d"]
+[ext_resource type="Texture2D" uid="uid://c4oyh2bvq2koa" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Attack/50x50/Attack 0-4.png" id="13_53pew"]
+[ext_resource type="Texture2D" uid="uid://cr5pbnbb3g6am" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Attack/50x50/Attack 0-5.png" id="14_62v3b"]
+[ext_resource type="Texture2D" uid="uid://laqkm67vntac" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Run/50x50/Run 2-0.png" id="20_3txw1"]
+[ext_resource type="Texture2D" uid="uid://cgtt67kyk2ef6" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Run/50x50/Run 2-1.png" id="21_bjhuw"]
+[ext_resource type="Texture2D" uid="uid://bwfgew2kqs0pj" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Run/50x50/Run 2-2.png" id="22_hkr0j"]
+[ext_resource type="Texture2D" uid="uid://ro8osx7lgwn" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Run/50x50/Run 2-3.png" id="23_2e4vf"]
+[ext_resource type="Texture2D" uid="uid://boovav2tu4xn8" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Run/50x50/Run 2-4.png" id="24_xb30i"]
+[ext_resource type="Texture2D" uid="uid://boo17cbjjhemc" path="res://art/v1.1 dungeon crawler 16X16 pixel pack/ui (new)/crosshair_3.png" id="28_4gof6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m7y2c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_cifd4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_umafc")
+}],
+"loop": false,
+"name": &"dash",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_ikhu5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_y8336")
+}],
+"loop": false,
+"name": &"dash_attack",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_2mvgr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ve7ey")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_a4wbl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_8owox")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ht5xl")
+}],
+"loop": false,
+"name": &"dead",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1etox")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_20s3b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wau1o")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_ikhu5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_8fvsl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_1bf0f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2pedd")
+}],
+"loop": false,
+"name": &"normal_attack",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("20_3txw1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_bjhuw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_hkr0j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_2e4vf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_xb30i")
+}],
+"loop": false,
+"name": &"run",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_aqeml")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_eft6i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_wgmmn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_xkl3d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_53pew")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_62v3b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ikhu5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_8fvsl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_1bf0f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2pedd")
+}],
+"loop": false,
+"name": &"special_attack",
+"speed": 12.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xvlql"]
+radius = 4.0
+height = 20.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lp7sq"]
+radius = 6.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1q661"]
+radius = 5.0
+height = 22.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_aicbr")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+scale = Vector2(6.0785, 4.38601)
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -144.0
+offset_top = 24.0
+offset_right = -144.0
+offset_bottom = 28.0
+
+[node name="HealthBar" type="ProgressBar" parent="CanvasLayer/Control"]
+self_modulate = Color(0.933333, 0, 0, 1)
+layout_mode = 2
+offset_left = 168.0
+offset_right = 448.0
+offset_bottom = 19.0
+size_flags_horizontal = 0
+show_percentage = false
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/HealthBar"]
+position = Vector2(152, 71.9999)
+scale = Vector2(2.5931, 2.89655)
+texture = ExtResource("2_xahv4")
+
+[node name="HealthLabel" type="Label" parent="CanvasLayer/Control/HealthBar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.146429
+anchor_top = 11.3947
+anchor_right = 1.14286
+anchor_bottom = 11.8947
+offset_left = -40.0
+offset_top = -216.5
+offset_right = -39.0
+offset_bottom = -206.5
+theme_override_fonts/font = ExtResource("2_5yx0s")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="EXPBar" type="ProgressBar" parent="CanvasLayer/Control"]
+self_modulate = Color(0, 0.705882, 0, 1)
+layout_mode = 0
+offset_left = 168.0
+offset_top = 24.0
+offset_right = 448.0
+offset_bottom = 43.0
+show_percentage = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer/Control/EXPBar"]
+position = Vector2(152, 52)
+scale = Vector2(2.5931, 2.92414)
+texture = ExtResource("4_catr1")
+
+[node name="EXPLabel" type="Label" parent="CanvasLayer/Control/EXPBar"]
+layout_mode = 0
+offset_top = -2.0
+offset_right = 282.0
+offset_bottom = 21.0
+theme_override_fonts/font = ExtResource("2_5yx0s")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DashCD" type="ProgressBar" parent="CanvasLayer/Control"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+offset_left = 1216.0
+offset_top = 544.0
+offset_right = 1280.0
+offset_bottom = 608.0
+grow_horizontal = 0
+grow_vertical = 0
+fill_mode = 3
+show_percentage = false
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/DashCD"]
+position = Vector2(31, 36)
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("2_tr72s")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/DashCD"]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+theme_override_fonts/font = ExtResource("2_5yx0s")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ArrowCD" type="ProgressBar" parent="CanvasLayer/Control"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+offset_left = 1136.0
+offset_top = 544.0
+offset_right = 1200.0
+offset_bottom = 608.0
+grow_horizontal = 0
+grow_vertical = 2
+fill_mode = 2
+show_percentage = false
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/ArrowCD"]
+position = Vector2(30, 32)
+rotation = -2.38598
+scale = Vector2(4, 4)
+texture = ExtResource("2_8a1l4")
+
+[node name="ArrowRefillCD" type="Label" parent="CanvasLayer/Control/ArrowCD"]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+theme_override_fonts/font = ExtResource("2_5yx0s")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ArrowCount" type="Label" parent="CanvasLayer/Control/ArrowCD"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 48.0
+offset_right = 72.0
+offset_bottom = 71.0
+theme_override_fonts/font = ExtResource("2_5yx0s")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelLabel" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 2
+offset_left = 168.0
+offset_top = 48.0
+offset_right = 225.0
+offset_bottom = 71.0
+theme_override_fonts/font = ExtResource("2_5yx0s")
+text = "Level: "
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 72.0
+offset_right = 227.0
+offset_bottom = 95.0
+theme_override_fonts/font = ExtResource("2_5yx0s")
+text = "Score: "
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-5.96046e-08, -8)
+scale = Vector2(0.83, 0.87375)
+sprite_frames = SubResource("SpriteFrames_m7y2c")
+animation = &"dash"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10)
+shape = SubResource("CapsuleShape2D_xvlql")
+
+[node name="DealDamageZone" type="Area2D" parent="."]
+position = Vector2(0, -6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DealDamageZone"]
+position = Vector2(0, -10)
+shape = SubResource("CircleShape2D_lp7sq")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="DealDamageZone/CollisionShape2D"]
+position = Vector2(0, -3.53903e-07)
+scale = Vector2(0.804688, 0.742187)
+texture = ExtResource("28_4gof6")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(5.96046e-08, -8)
+enabled = false
+zoom = Vector2(2, 2)
+
+[node name="PlayerHitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHitbox"]
+position = Vector2(0, -11)
+shape = SubResource("CapsuleShape2D_1q661")
+
+[node name="ProjectileOutput" type="Marker2D" parent="."]
+position = Vector2(5, -16)
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
