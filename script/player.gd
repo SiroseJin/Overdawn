@@ -24,6 +24,7 @@ class_name Player
 @onready var exp_label = $CanvasLayer/Control/EXPBar/EXPLabel
 
 @onready var pause_menu = $CanvasLayer/PauseMenu
+@onready var stats_menu = $CanvasLayer/stats_menu
 
 # HP
 var health = 100
@@ -78,6 +79,7 @@ func _ready():
 	update_exp_lvl_label()
 	update_score_label()
 	pause_menu.hide()
+	stats_menu.hide()
 	is_game_paused = false
 
 func _physics_process(delta):
@@ -118,6 +120,9 @@ func _physics_process(delta):
 			
 			if Input.is_action_just_pressed("pause"):
 				pause_menu_screen()
+			
+			if Input.is_action_just_pressed("stats"):
+				stats_menu_screen()
 
 			update_deal_damage_zone()
 			update_player_sprite_orientation()
@@ -127,6 +132,11 @@ func _physics_process(delta):
 func pause_menu_screen():
 	is_game_paused = true
 	pause_menu.show()
+	pause_game()
+
+func stats_menu_screen():
+	is_game_paused = true
+	stats_menu.show()
 	pause_game()
 
 func pause_game():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://db2pu5tpfap8j"]
+[gd_scene load_steps=40 format=3 uid="uid://db2pu5tpfap8j"]
 
 [ext_resource type="Script" path="res://script/player.gd" id="1_aicbr"]
 [ext_resource type="Texture2D" uid="uid://c5n1kibkrmtn1" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Idle/50x50/Idle 0-0.png" id="2_1etox"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://cvakgoggdy73i" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Attack/50x50/Attack 1-1.png" id="6_8fvsl"]
 [ext_resource type="Texture2D" uid="uid://vm7rc14qh2jd" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Dead/50x50/Dead 0-4.png" id="6_ht5xl"]
 [ext_resource type="Texture2D" uid="uid://drqb5qi4txldd" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Attack/50x50/Attack 1-2.png" id="7_1bf0f"]
+[ext_resource type="PackedScene" uid="uid://kpntph6sfj6f" path="res://scene/stats_menu.tscn" id="8_0pi7d"]
 [ext_resource type="Texture2D" uid="uid://cl5jy2hklf1s2" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Attack/50x50/Attack 1-3.png" id="8_2pedd"]
 [ext_resource type="Texture2D" uid="uid://7ubph120j0ir" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Attack/50x50/Attack 0-0.png" id="9_aqeml"]
 [ext_resource type="Texture2D" uid="uid://babi467co6k57" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Attack/50x50/Attack 0-1.png" id="10_eft6i"]
@@ -328,6 +329,14 @@ text = "Score: "
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("2_rg4d1")]
 visible = false
+
+[node name="stats_menu" parent="CanvasLayer" instance=ExtResource("8_0pi7d")]
+visible = false
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-5.96046e-08, -8)

@@ -2,16 +2,15 @@ extends CharacterBody2D
 
 class_name FrogEnemy
 
-var speed = 20
+var speed = 17
 var dir: Vector2
 var is_frog_chase: bool
 var is_frog_roaming: bool
 
 var Player: CharacterBody2D
-var score_manager
 
-var health = 40
-var health_max = 40
+var health = 35
+var health_max = 35
 var health_min = 0
 var dead = false
 var taking_damage: bool
@@ -28,7 +27,7 @@ func _process(delta):
 	move(delta)
 	handle_animation()
 	Global.frogDamageAmmount = damage_to_deal
-	Global.frogDamageZone = $FrogAreaDealDamage
+	Global.frogDamageZone = $frogDealDamageArea
 	if Global.playerAlive:
 		is_frog_chase = true
 		is_frog_roaming = false
@@ -38,13 +37,12 @@ func _process(delta):
 
 func move(delta):
 	if !dead:
-		is_frog_roaming = true
 		if !taking_damage and is_frog_chase and Global.playerAlive:
 			Player = Global.PlayerBody
 			velocity = position.direction_to(Player.position) * speed
 			dir.x = abs(velocity.x) / velocity.x
 		elif taking_damage and is_frog_chase:
-			var knockback_dir = position.direction_to(Player.position) * -20
+			var knockback_dir = position.direction_to(Player.position) * -12
 			velocity = knockback_dir
 		elif is_frog_roaming:
 			roam_pattern()
@@ -87,7 +85,7 @@ func handle_animation():
 		$FrogAreaDealDamage/CollisionShape2D.disabled = true
 		$HitBox/CollisionShape2D.disabled = true
 		animated_sprite.play("death")
-		await get_tree().create_timer(1.5).timeout
+		await get_tree().create_timer(0.8).timeout
 		handle_death()
 
 func handle_death():
@@ -98,21 +96,21 @@ func handle_death():
 
 func _on_frog_hit_box_area_entered(area):
 	if area == Global.playerDamageZone:
-		var damage = Global.playerDamageAmount
-		take_damage(damage)
+		var player_damage = Global.playerDamageAmount
+		take_damage(player_damage)
 
-func take_damage(damage):
-	health -= damage
+func take_damage(player_damage):
+	health -= player_damage
 	taking_damage = true
 	if health <= 0:
 		health = 0
 		dead = true
-		handle_death()
+	print(str(self), "current Hp is", health)
 
-func _on_frog_area_deal_damage_area_entered(area):
+func _on_frog_deal_damage_area_area_entered(area):
 	if area == Global.playerHitbox:
 		is_dealing_damage = true
 
-func _on_frog_area_deal_damage_area_exited(area):
+func _on_frog_deal_damage_area_area_exited(area):
 	if area == Global.playerHitbox:
 		is_dealing_damage = false

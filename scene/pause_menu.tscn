@@ -34,6 +34,7 @@ theme_override_fonts/font = ExtResource("1_fgjmp")
 text = "Resumes"
 
 [node name="Lobby" type="Button" parent="MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_fgjmp")
 text = "Back to Lobby"

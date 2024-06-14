@@ -7,6 +7,7 @@ func _ready():
 	player_camera.enabled = false
 	SceneTransitionAnimation.get_parent().get_node("ColorRect").color.a = 255
 	SceneTransitionAnimation.play("fade_out")
+	Global.gameStarted = false
 
 func _on_start_game_detection_body_entered(body):
 	if body is Player:

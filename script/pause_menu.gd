@@ -1,9 +1,5 @@
 extends Control
 
-@onready var resume = $MarginContainer/VBoxContainer/Resume
-@onready var quit = $MarginContainer/VBoxContainer/Quit
-@onready var lobby = $MarginContainer/VBoxContainer/Lobby
-
 func _ready():
 	pass
 
