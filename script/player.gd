@@ -23,6 +23,7 @@ class_name Player
 @onready var exp_bar = $CanvasLayer/Control/EXPBar
 @onready var exp_label = $CanvasLayer/Control/EXPBar/EXPLabel
 
+@onready var pause_menu = $CanvasLayer/PauseMenu
 
 # HP
 var health = 100
@@ -63,6 +64,7 @@ var current_arrow_refill_time: float = 0.0
 var attack_radius: float = 14
 var can_take_damage: bool
 var score: int = 0
+var is_game_paused: bool
 
 func _ready():
 	Global.PlayerBody = self
@@ -75,46 +77,63 @@ func _ready():
 	update_dash_cd(0)
 	update_exp_lvl_label()
 	update_score_label()
+	pause_menu.hide()
+	is_game_paused = false
 
 func _physics_process(delta):
-	weapon_equip = Global.PlayerWeaponEquip
-	Global.playerDamageZone = deal_damage_zone
-	Global.playerHitbox = $PlayerHitbox
+	if not is_game_paused:
+		weapon_equip = Global.PlayerWeaponEquip
+		Global.playerDamageZone = deal_damage_zone
+		Global.playerHitbox = $PlayerHitbox
 
-	if !dead:
-		var direction_x = Input.get_axis("left", "right")
-		var direction_y = Input.get_axis("up", "down")
-		var direction = Vector2(direction_x, direction_y).normalized()
-		velocity = direction * SPEED
+		if !dead:
+			var direction_x = Input.get_axis("left", "right")
+			var direction_y = Input.get_axis("up", "down")
+			var direction = Vector2(direction_x, direction_y).normalized()
+			velocity = direction * SPEED
 
-		if !weapon_equip and !current_attack:
-			if DASH:
-				if Input.is_action_just_pressed("left_click") or Input.is_action_just_pressed("right_click"):
+			if !weapon_equip and !current_attack:
+				if DASH:
+					if Input.is_action_just_pressed("left_click") or Input.is_action_just_pressed("right_click"):
+						current_attack = true
+						attack_type = "dash"
+						set_damage(attack_type)
+						handle_attack_animation(attack_type)
+				elif Input.is_action_just_pressed("left_click") or Input.is_action_just_pressed("right_click"):
 					current_attack = true
-					attack_type = "dash"
+					if Input.is_action_just_pressed("left_click"):
+						attack_type = "normal"
+					elif Input.is_action_just_pressed("right_click"):
+						attack_type = "special"
 					set_damage(attack_type)
 					handle_attack_animation(attack_type)
-			elif Input.is_action_just_pressed("left_click") or Input.is_action_just_pressed("right_click"):
-				current_attack = true
-				if Input.is_action_just_pressed("left_click"):
-					attack_type = "normal"
-				elif Input.is_action_just_pressed("right_click"):
-					attack_type = "special"
-				set_damage(attack_type)
-				handle_attack_animation(attack_type)
-		handle_movement_animation(direction)
-		check_hitbox()
+			handle_movement_animation(direction)
+			check_hitbox()
 
-		if Input.is_action_just_pressed("dash") and !dash_cooldown:
-			start_dash()
-		
-		if Input.is_action_just_pressed("shoot"):
-			shoot_arrow()
+			if Input.is_action_just_pressed("dash") and !dash_cooldown:
+				start_dash()
+			
+			if Input.is_action_just_pressed("shoot"):
+				shoot_arrow()
+			
+			if Input.is_action_just_pressed("pause"):
+				pause_menu_screen()
 
-		update_deal_damage_zone()
-		update_player_sprite_orientation()
+			update_deal_damage_zone()
+			update_player_sprite_orientation()
 
-	move_and_slide()
+		move_and_slide()
+
+func pause_menu_screen():
+	is_game_paused = true
+	pause_menu.show()
+	pause_game()
+
+func pause_game():
+	if is_game_paused:
+		Engine.time_scale = 0
+	elif !is_game_paused:
+		Engine.time_scale = 1
 
 func shoot_arrow():
 	if arrows_held > 0:

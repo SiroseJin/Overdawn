@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://db2pu5tpfap8j"]
+[gd_scene load_steps=39 format=3 uid="uid://db2pu5tpfap8j"]
 
 [ext_resource type="Script" path="res://script/player.gd" id="1_aicbr"]
 [ext_resource type="Texture2D" uid="uid://c5n1kibkrmtn1" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Idle/50x50/Idle 0-0.png" id="2_1etox"]
@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_5yx0s"]
 [ext_resource type="Texture2D" uid="uid://dpc0fhg50xqvf" path="res://art/2D Pixel Dungeon Asset Pack/items and trap_animation/arrow/Just_arrow.png" id="2_8a1l4"]
 [ext_resource type="Texture2D" uid="uid://clxprb1rbriny" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Fall/50x50/Fall 1-0.png" id="2_cifd4"]
+[ext_resource type="PackedScene" uid="uid://dnsbssrr88l8n" path="res://scene/pause_menu.tscn" id="2_rg4d1"]
 [ext_resource type="Texture2D" uid="uid://cofq2kc0ghe6l" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Jump/100x100/Jump 0-3.png" id="2_tr72s"]
 [ext_resource type="Texture2D" uid="uid://0o3o7p36o0g8" path="res://art/Health Bar Asset Pack 2 by Adwit Rahman/hpbar.png" id="2_xahv4"]
 [ext_resource type="Texture2D" uid="uid://dmwtmipwqb0re" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Idle/50x50/Idle 0-1.png" id="3_20s3b"]
@@ -324,6 +325,9 @@ offset_right = 227.0
 offset_bottom = 95.0
 theme_override_fonts/font = ExtResource("2_5yx0s")
 text = "Score: "
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("2_rg4d1")]
+visible = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-5.96046e-08, -8)

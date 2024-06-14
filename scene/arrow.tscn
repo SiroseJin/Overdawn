@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://svgyue6l52ke"]
+[gd_scene load_steps=4 format=3 uid="uid://bvmwnhj3e20vq"]
 
 [ext_resource type="Texture2D" uid="uid://dpc0fhg50xqvf" path="res://art/2D Pixel Dungeon Asset Pack/items and trap_animation/arrow/Just_arrow.png" id="1_jgqgm"]
 [ext_resource type="Script" path="res://script/arrow.gd" id="1_mgajy"]
