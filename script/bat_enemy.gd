@@ -44,24 +44,14 @@ func move(delta):
 		elif taking_damage and is_bat_chase:
 			var knockback_dir = position.direction_to(Player.position) * -20
 			velocity = knockback_dir
-		elif is_bat_roaming:
-			roam_pattern()
-		else:
-			velocity += dir * speed * delta
+		elif !taking_damage and !is_bat_chase and !Global.playerAlive:
+			velocity.y = 0
+			velocity.x = 0
 	elif dead:
 		velocity.y = 0
 		velocity.x = 0
 	
 	move_and_slide()
-
-func roam_pattern():
-	$Timer.wait_time = choose([0.2, 0.5, 0.8])
-	if !is_bat_chase:
-		dir = choose([Vector2.RIGHT, Vector2.LEFT, Vector2.UP, Vector2.DOWN])
-
-func choose(array):
-	array.shuffle()
-	return array.front()
 
 func handle_animation():
 	var animated_sprite = $AnimatedSprite2D

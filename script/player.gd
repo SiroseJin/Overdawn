@@ -188,6 +188,8 @@ func check_hitbox():
 			damage = Global.frogDamageAmmount
 		elif hitbox.get_parent() is WitchEnemy:
 			damage = Global.witchDamageAmmount
+		elif hitbox.get_parent() is NecroEnemy:
+			damage = Global.necroDamageAmmount
 
 	if can_take_damage:
 		take_damage(damage)

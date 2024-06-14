@@ -1,5 +1,7 @@
 extends Area2D
 
+class_name CoinItem
+
 @onready var animation_player = $AnimationPlayer
 var score_manager
 

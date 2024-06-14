@@ -22,11 +22,10 @@ func _on_area_entered(area: Area2D) -> void:
 		speed = 0
 		await get_tree().create_timer(0.5).timeout
 		self.queue_free()
-	elif area.get_parent() is BatEnemy or area.get_parent() is FrogEnemy or area.get_parent() is WitchEnemy:
+	elif area.get_parent() is CoinItem or area.get_parent() is BatEnemy or area.get_parent() is FrogEnemy or area.get_parent() is WitchEnemy or area.get_parent() is NecroEnemy:
 		pass
 	else:
 		self.queue_free()
 
 func _on_visible_on_screen_enabler_2d_screen_exited() -> void:
-	await get_tree().create_timer(10.0).timeout
 	self.queue_free()

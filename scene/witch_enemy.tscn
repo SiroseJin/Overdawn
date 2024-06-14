@@ -330,7 +330,7 @@ animation = &"attack"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -12)
+position = Vector2(0, -13)
 shape = SubResource("CapsuleShape2D_urtky")
 
 [node name="Timer" type="Timer" parent="."]
@@ -343,10 +343,9 @@ position = Vector2(0, -15)
 shape = SubResource("CapsuleShape2D_s760l")
 
 [node name="WitchDealDamageArea" type="Area2D" parent="."]
-position = Vector2(15, -16)
+position = Vector2(0, -14)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WitchDealDamageArea"]
-position = Vector2(-15, 2)
 shape = SubResource("CapsuleShape2D_vowod")
 
 [node name="ProjectileOutput" type="Marker2D" parent="."]
