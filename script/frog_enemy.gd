@@ -27,7 +27,7 @@ func _process(delta):
 	move(delta)
 	handle_animation()
 	Global.frogDamageAmmount = damage_to_deal
-	Global.frogDamageZone = $frogDealDamageArea
+	Global.frogDamageZone = $FrogDealDamageArea
 	if Global.playerAlive:
 		is_frog_chase = true
 		is_frog_roaming = false
@@ -72,7 +72,7 @@ func handle_animation():
 
 	elif dead and is_frog_roaming or is_frog_chase:
 		$CollisionShape2D.disabled = true
-		$FrogAreaDealDamage/CollisionShape2D.disabled = true
+		$FrogDealDamageArea/CollisionShape2D.disabled = true
 		$HitBox/CollisionShape2D.disabled = true
 		animated_sprite.play("death")
 		await get_tree().create_timer(0.8).timeout

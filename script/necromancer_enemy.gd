@@ -9,7 +9,7 @@ var is_necro_roaming: bool
 
 var Player: CharacterBody2D
 
-var health = 1
+var health = 200
 var health_max = 200
 var health_min = 0
 var dead = false
@@ -63,9 +63,9 @@ func _process(delta):
 		is_necro_roaming = false
 		Player = Global.PlayerBody
 		var distance_to_player = position.distance_to(Player.position)
-		if distance_to_player >= 150 and can_summon:
+		if distance_to_player >= 80 and can_summon:
 			enter_summon_state()
-		elif distance_to_player >= 150:
+		elif distance_to_player >= 120:
 			charge()
 		else:
 			charging = false

@@ -296,14 +296,14 @@ position = Vector2(0, -8.68325)
 scale = Vector2(1, 1.23171)
 shape = SubResource("CircleShape2D_88eua")
 
-[node name="FrogAreaDealDamage" type="Area2D" parent="."]
+[node name="FrogDealDamageArea" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FrogAreaDealDamage"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FrogDealDamageArea"]
 position = Vector2(0, -8.68325)
 scale = Vector2(2.92515, 3.66539)
 shape = SubResource("CircleShape2D_hp3hy")
 
 [connection signal="timeout" from="Timer" to="." method="_on_direction_timer_timeout"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_frog_hit_box_area_entered"]
-[connection signal="area_entered" from="FrogAreaDealDamage" to="." method="_on_frog_area_deal_damage_area_entered"]
-[connection signal="area_exited" from="FrogAreaDealDamage" to="." method="_on_frog_area_deal_damage_area_exited"]
+[connection signal="area_entered" from="FrogDealDamageArea" to="." method="_on_frog_area_deal_damage_area_entered"]
+[connection signal="area_exited" from="FrogDealDamageArea" to="." method="_on_frog_area_deal_damage_area_exited"]
