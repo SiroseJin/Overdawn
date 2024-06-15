@@ -10,7 +10,8 @@ var current_wave: int
 var enemy_scenes: Array = [
 	preload("res://scene/bat_enemy.tscn"),
 	preload("res://scene/frog_enemy.tscn"),
-	preload("res://scene/witch_enemy.tscn")
+	preload("res://scene/witch_enemy.tscn"),
+	preload("res://scene/necromancer_enemy.tscn")
 ]
 
 # Items
@@ -69,15 +70,23 @@ func position_to_next_wave():
 		SceneTransitionAnimation.play("between_wave")
 		current_wave += 1
 		Global.current_wave = current_wave
+		Global.PlayerBody.heal_player(5)
+		Global.PlayerBody.update_health_bar()
+		Global.PlayerBody.gain_score(10 * current_wave)
 		await get_tree().create_timer(1.5).timeout
+		
+		# Determine which enemies/items to spawn based on current wave
 		prepare_spawn("bats", 1.15, 3.0) # Bats increase by 1.15 each wave
 		if current_wave >= 3:
 			prepare_spawn("frogs", 1.1, 2.0) # Frogs increase by 1.1 every wave after wave 3
 		if current_wave >= 5:
-			if current_wave >= 10:
-				prepare_spawn("witches", 1.1, 1.0) # Witches spawn every wave after wave 10
-			elif (current_wave - 5) % 3 == 0:
-				prepare_spawn("witches", 1.1, 1.0) # Witches increase by 1 every 3 waves after wave 5
+			if current_wave >= 9:
+				prepare_spawn("witches", 1.1, 1.0) # Witches spawn every wave after wave 9
+			elif (current_wave - 5) % 2 == 0:
+				prepare_spawn("witches", 1.1, 1.0) # Witches increase by 1 every 2 waves after wave 5
+		if current_wave >= 10 and (current_wave - 10) % 4 == 0:
+			prepare_spawn("necromancers", 1.0, 1.0) # Necromancers spawn every 4 waves after wave 10
+
 		print(current_wave)
 
 		spawn_items() # Spawn items after a wave ends
@@ -95,7 +104,9 @@ func calculate_mob_amount(type, multiplier, base_amount):
 		wave_offset -= 2 # Frogs start from wave 3
 	elif type == "witches":
 		wave_offset -= 9 if current_wave >= 9 else int((current_wave - 5) / 3) # Witches every 3 waves starting from wave 5
-
+	elif type == "necromancers":
+		wave_offset -= 9 if current_wave >= 10 else 0 # Necromancers spawn after wave 10, every 4 waves
+	
 	if wave_offset < 0:
 		return 0
 
@@ -124,6 +135,10 @@ func spawn_type(type, mob_amount, mob_wait_time):
 		elif type == "witches":
 			spawn_point = select_valid_spawn_point(boss_spawn_points)
 			mob_instance = enemy_scenes[2].instantiate()
+		elif type == "necromancers":
+			spawn_point = select_valid_spawn_point(boss_spawn_points)
+			mob_instance = enemy_scenes[3].instantiate()
+
 		if mob_instance:
 			mob_instance.global_position = spawn_point.global_position
 			adjust_mob_attributes(mob_instance)
@@ -205,3 +220,4 @@ func spawn_items():
 
 func current_enemy_count():
 	return get_tree().get_nodes_in_group("enemies").size()
+

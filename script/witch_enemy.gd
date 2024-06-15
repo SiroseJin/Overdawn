@@ -44,7 +44,7 @@ func _process(delta):
 		is_witch_roaming = false
 		Player = Global.PlayerBody
 		var distance_to_player = position.distance_to(Player.position)
-		if distance_to_player >= 170:
+		if distance_to_player >= 140:
 			charge()
 		else:
 			charging = false

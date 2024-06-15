@@ -1,7 +1,7 @@
 extends Area2D
 class_name WitchFireball
 
-@export var speed: int = 200
+@export var speed: int = 240
 var direction: Vector2 = Vector2.ZERO
 @onready var animated_sprite_2d = $AnimatedSprite2D
 

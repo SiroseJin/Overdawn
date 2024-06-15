@@ -208,6 +208,7 @@ func level_up():
 	health += 1
 	strength += 0.6
 	update_health_bar()
+	health = min(health, health_max)
 
 func update_exp_lvl_label():
 	if exp_label:
@@ -237,6 +238,14 @@ func take_damage(damage):
 				Global.playerAlive = false
 				handle_death_animation()
 			take_damage_cooldown(1.0)
+			health = min(health, health_max)
+
+func heal_player(amount: int):
+	if health < health_max:
+		health += amount
+		update_health_bar()
+	elif health > health_max:
+		health = health_max
 
 func update_health_bar():
 	health_bar.value = health

@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name NecroEnemy
 
-var speed = 20
+var speed = 60
 var dir: Vector2
 var is_necro_chase: bool
 var is_necro_roaming: bool
@@ -81,7 +81,7 @@ func move(delta):
 		elif !taking_damage and is_necro_chase and Global.playerAlive:
 			Player = Global.PlayerBody
 			if charging:
-				velocity = position.direction_to(Player.position) * (speed / 4)
+				velocity = position.direction_to(Player.position) * (speed / 6)
 			else:
 				velocity = position.direction_to(Player.position) * speed
 			dir.x = abs(velocity.x) / velocity.x

@@ -365,7 +365,7 @@ texture = ExtResource("28_4gof6")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(5.96046e-08, -8)
 enabled = false
-zoom = Vector2(2, 2)
+zoom = Vector2(1.8, 1.8)
 
 [node name="PlayerHitbox" type="Area2D" parent="."]
 
