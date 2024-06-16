@@ -22,6 +22,8 @@ var charging_timer: Timer
 var exp_value = 20
 var score_value = 40
 
+var health_bar
+
 func _ready():
 	is_witch_chase = true
 	taking_damage = false
@@ -32,6 +34,9 @@ func _ready():
 	charging_timer.one_shot = true
 	charging_timer.connect("timeout", Callable(self, "_on_charging_timeout"))
 	add_child(charging_timer)
+	health_bar = $HealthBar
+	health_bar.max_value = health_max
+	health_bar.value = health
 
 func _process(delta):
 	move(delta)
@@ -147,7 +152,7 @@ func take_damage(damage):
 		health = 0
 		dead = true
 		charging_timer.stop()
-	print(str(self), "current Hp is", health)
+	health_bar.value = health
 
 func _on_hit_box_area_entered(area):
 	if area == Global.playerDamageZone:

@@ -303,6 +303,14 @@ position = Vector2(0, -8.68325)
 scale = Vector2(2.92515, 3.66539)
 shape = SubResource("CircleShape2D_hp3hy")
 
+[node name="HealthBar" type="ProgressBar" parent="."]
+self_modulate = Color(1, 0, 0, 1)
+offset_left = -11.0
+offset_top = 4.96186
+offset_right = 11.0
+offset_bottom = 8.96185
+show_percentage = false
+
 [connection signal="timeout" from="Timer" to="." method="_on_direction_timer_timeout"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_frog_hit_box_area_entered"]
 [connection signal="area_entered" from="FrogDealDamageArea" to="." method="_on_frog_area_deal_damage_area_entered"]

@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name NecroEnemy
 
-var speed = 60
+var speed = 50
 var dir: Vector2
 var is_necro_chase: bool
 var is_necro_roaming: bool
@@ -26,6 +26,8 @@ var summoning: bool
 var summon_timer: Timer
 var can_summon: bool = true
 var summon_cooldown_timer: Timer
+
+var health_bar
 
 func _ready():
 	is_necro_chase = true
@@ -51,6 +53,10 @@ func _ready():
 	summon_cooldown_timer.one_shot = true
 	summon_cooldown_timer.connect("timeout", Callable(self, "_on_summon_cooldown_timeout"))
 	add_child(summon_cooldown_timer)
+	
+	health_bar = $HealthBar
+	health_bar.max_value = health_max
+	health_bar.value = health
 
 func _process(delta):
 	move(delta)
@@ -81,7 +87,7 @@ func move(delta):
 		elif !taking_damage and is_necro_chase and Global.playerAlive:
 			Player = Global.PlayerBody
 			if charging:
-				velocity = position.direction_to(Player.position) * (speed / 6)
+				velocity = position.direction_to(Player.position) * (speed / 5)
 			else:
 				velocity = position.direction_to(Player.position) * speed
 			dir.x = abs(velocity.x) / velocity.x
@@ -174,7 +180,7 @@ func take_damage(damage):
 		dead = true
 		charging_timer.stop()
 		summon_timer.stop()
-	print(str(self), "current Hp is", health)
+	health_bar.value = health
 
 func _on_hit_box_area_entered(area):
 	if area == Global.playerDamageZone:

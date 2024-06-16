@@ -19,9 +19,15 @@ var is_dealing_damage: bool
 var exp_value = 10
 var score_value = 20
 
+var health_bar
+
 func _ready():
 	taking_damage = false
 	is_dealing_damage = false
+
+	health_bar = $HealthBar
+	health_bar.max_value = health_max
+	health_bar.value = health
 
 func _process(delta):
 	move(delta)
@@ -95,7 +101,7 @@ func take_damage(player_damage):
 	if health <= 0:
 		health = 0
 		dead = true
-	print(str(self), "current Hp is", health)
+	health_bar.value = health
 
 func _on_frog_deal_damage_area_area_entered(area):
 	if area == Global.playerHitbox:
