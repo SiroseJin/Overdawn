@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://nabs7mptwvww"
+path="res://.godot/imported/Ove Melaa - Italo Unlimited.mp3-66510515bf4a0fb570d2be9978d01cf9.mp3str"
+
+[deps]
+
+source_file="res://audio/Music/FullScores/Retro Scores/Ove Melaa - Italo Unlimited.mp3"
+dest_files=["res://.godot/imported/Ove Melaa - Italo Unlimited.mp3-66510515bf4a0fb570d2be9978d01cf9.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

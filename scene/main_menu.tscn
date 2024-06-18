@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8h8psijst4am"]
+[gd_scene load_steps=6 format=3 uid="uid://c8h8psijst4am"]
 
 [ext_resource type="Script" path="res://script/main_menu.gd" id="1_c5cew"]
 [ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="1_xbuaw"]
 [ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/scene_transition_animation.tscn" id="3_2ehx7"]
+[ext_resource type="AudioStream" uid="uid://bknt7etc6vk2b" path="res://audio/Music/FullScores/Retro Scores/Ove Melaa - Dark.ogg" id="4_sa8jk"]
+[ext_resource type="AudioStream" uid="uid://c1m8vs2hh2gx6" path="res://audio/SFX/menuclick.wav" id="5_wrppt"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -56,6 +58,20 @@ text = "Quit"
 
 [node name="SceneTransitionAnimation" parent="." instance=ExtResource("3_2ehx7")]
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_sa8jk")
+bus = &"bgm"
+
+[node name="AudioClick" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_wrppt")
+volume_db = 4.0
+bus = &"sfx"
+
+[node name="AudioHover" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"
+
+[connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
+[connection signal="mouse_entered" from="ColorRect/MarginContainer/VBoxContainer" to="." method="_on_v_box_container_mouse_entered"]
 [connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/Arcade" to="." method="_on_arcade_pressed"]
 [connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/Setting" to="." method="_on_setting_pressed"]

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://qwnpxp3w6elx"
+path="res://.godot/imported/Ove Melaa - They Ate My Family.mp3-1fe6ce5d272902b9785541d8714a36bb.mp3str"
+
+[deps]
+
+source_file="res://audio/Music/Loops/Ove Melaa - They Ate My Family.mp3"
+dest_files=["res://.godot/imported/Ove Melaa - They Ate My Family.mp3-1fe6ce5d272902b9785541d8714a36bb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

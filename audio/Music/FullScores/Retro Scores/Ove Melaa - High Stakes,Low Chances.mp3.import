@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://r8gltmhe3623"
+path="res://.godot/imported/Ove Melaa - High Stakes,Low Chances.mp3-b9c9aa3023a8632e4a806b24e0a81ac4.mp3str"
+
+[deps]
+
+source_file="res://audio/Music/FullScores/Retro Scores/Ove Melaa - High Stakes,Low Chances.mp3"
+dest_files=["res://.godot/imported/Ove Melaa - High Stakes,Low Chances.mp3-b9c9aa3023a8632e4a806b24e0a81ac4.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

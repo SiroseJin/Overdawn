@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bfvh8e7ffr1y2"
+path="res://.godot/imported/Ove Melaa - Heaven Sings.mp3-3ba801f359b47cc041b4473e51e36488.mp3str"
+
+[deps]
+
+source_file="res://audio/Music/FullScores/Orchestral Scores/Ove Melaa - Heaven Sings.mp3"
+dest_files=["res://.godot/imported/Ove Melaa - Heaven Sings.mp3-3ba801f359b47cc041b4473e51e36488.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

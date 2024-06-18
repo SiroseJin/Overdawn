@@ -6,6 +6,9 @@ class_name Player
 @onready var deal_damage_zone = $DealDamageZone
 @onready var projectile_output = $ProjectileOutput
 
+@onready var audio_walk = $AudioStreamPlayer_walk
+@onready var audio_dash = $AudioStreamPlayer_dash
+
 @onready var score_label = $CanvasLayer/Control/ScoreLabel
 
 @onready var health_bar = $CanvasLayer/Control/HealthBar
@@ -83,7 +86,7 @@ func _ready():
 	is_game_paused = false
 
 func _physics_process(delta):
-	if not is_game_paused:
+	if !is_game_paused:
 		weapon_equip = Global.PlayerWeaponEquip
 		Global.playerDamageZone = deal_damage_zone
 		Global.playerHitbox = $PlayerHitbox
@@ -322,6 +325,7 @@ func set_damage(attack_type):
 
 func start_dash():
 	DASH = true
+	audio_dash.play()
 	$PlayerHitbox/CollisionShape2D.disabled = true
 	can_take_damage = false
 	SPEED = DASH_SPEED

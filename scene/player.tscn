@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://db2pu5tpfap8j"]
+[gd_scene load_steps=42 format=3 uid="uid://db2pu5tpfap8j"]
 
 [ext_resource type="Script" path="res://script/player.gd" id="1_aicbr"]
 [ext_resource type="Texture2D" uid="uid://c5n1kibkrmtn1" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Idle/50x50/Idle 0-0.png" id="2_1etox"]
@@ -35,6 +35,8 @@
 [ext_resource type="Texture2D" uid="uid://ro8osx7lgwn" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Run/50x50/Run 2-3.png" id="23_2e4vf"]
 [ext_resource type="Texture2D" uid="uid://boovav2tu4xn8" path="res://art/Dacian Warrior Animated Pixel-Art 2D/Run/50x50/Run 2-4.png" id="24_xb30i"]
 [ext_resource type="Texture2D" uid="uid://boo17cbjjhemc" path="res://art/v1.1 dungeon crawler 16X16 pixel pack/ui (new)/crosshair_3.png" id="28_4gof6"]
+[ext_resource type="AudioStream" uid="uid://cluuh45t2riek" path="res://audio/SFX/footstep09.ogg" id="36_lo4lk"]
+[ext_resource type="AudioStream" uid="uid://djpbltbvp2gdo" path="res://audio/SFX/dropLeather.ogg" id="37_xf7gg"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_m7y2c"]
 animations = [{
@@ -168,15 +170,15 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xvlql"]
-radius = 4.0
-height = 20.0
+radius = 3.0
+height = 18.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lp7sq"]
 radius = 6.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1q661"]
-radius = 5.0
-height = 22.0
+radius = 4.0
+height = 20.0
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -346,7 +348,7 @@ animation = &"dash"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -10)
+position = Vector2(0, -9)
 shape = SubResource("CapsuleShape2D_xvlql")
 
 [node name="DealDamageZone" type="Area2D" parent="."]
@@ -365,15 +367,24 @@ texture = ExtResource("28_4gof6")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(5.96046e-08, -8)
 enabled = false
-zoom = Vector2(1.8, 1.8)
+zoom = Vector2(2.1, 2.1)
 
 [node name="PlayerHitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHitbox"]
-position = Vector2(0, -11)
+position = Vector2(0, -10)
 shape = SubResource("CapsuleShape2D_1q661")
 
 [node name="ProjectileOutput" type="Marker2D" parent="."]
 position = Vector2(5, -16)
+
+[node name="AudioStreamPlayer_walk" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("36_lo4lk")
+autoplay = true
+bus = &"sfx"
+
+[node name="AudioStreamPlayer_dash" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("37_xf7gg")
+bus = &"sfx"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

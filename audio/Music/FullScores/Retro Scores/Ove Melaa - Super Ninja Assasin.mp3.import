@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://doj6j8qyyvdpu"
+path="res://.godot/imported/Ove Melaa - Super Ninja Assasin.mp3-fe64a7ecacde959411cb59629e2ba521.mp3str"
+
+[deps]
+
+source_file="res://audio/Music/FullScores/Retro Scores/Ove Melaa - Super Ninja Assasin.mp3"
+dest_files=["res://.godot/imported/Ove Melaa - Super Ninja Assasin.mp3-fe64a7ecacde959411cb59629e2ba521.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

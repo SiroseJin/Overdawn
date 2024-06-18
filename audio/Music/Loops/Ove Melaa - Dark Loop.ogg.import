@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://s3gf5qesepip"
+path="res://.godot/imported/Ove Melaa - Dark Loop.ogg-2d37be4421a09fad38be6d5992d3b5ce.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/Music/Loops/Ove Melaa - Dark Loop.ogg"
+dest_files=["res://.godot/imported/Ove Melaa - Dark Loop.ogg-2d37be4421a09fad38be6d5992d3b5ce.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

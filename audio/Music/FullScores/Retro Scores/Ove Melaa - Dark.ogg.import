@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bknt7etc6vk2b"
+path="res://.godot/imported/Ove Melaa - Dark.ogg-95cd52c7bf9fdf1f0280626a25aad40f.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/Music/FullScores/Retro Scores/Ove Melaa - Dark.ogg"
+dest_files=["res://.godot/imported/Ove Melaa - Dark.ogg-95cd52c7bf9fdf1f0280626a25aad40f.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d1wpt6vv4t7"
+path="res://.godot/imported/Ove Melaa - General Snus Loop B.ogg-39e91ca332bcfb7e46ae5f9d4215ed24.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/Music/Loops/Ove Melaa - General Snus Loop B.ogg"
+dest_files=["res://.godot/imported/Ove Melaa - General Snus Loop B.ogg-39e91ca332bcfb7e46ae5f9d4215ed24.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

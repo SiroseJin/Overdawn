@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c0p6ewkon34de"
+path="res://.godot/imported/Ove Melaa - DrumLoop 1.mp3-177e70c5daf2302af62593d9dd47b4ed.mp3str"
+
+[deps]
+
+source_file="res://audio/Music/Loops/Drum Only Loops/Ove Melaa - DrumLoop 1.mp3"
+dest_files=["res://.godot/imported/Ove Melaa - DrumLoop 1.mp3-177e70c5daf2302af62593d9dd47b4ed.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

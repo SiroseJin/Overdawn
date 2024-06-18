@@ -3,6 +3,7 @@ extends Node2D
 @onready var SceneTransitionAnimation = $SceneTransitionAnimation/AnimationPlayer
 @onready var player_camera = $Player/Camera2D
 @onready var player = $Player
+@onready var audio_bgm = $AudioBGM
 
 var current_wave: int
 
@@ -52,6 +53,7 @@ func _ready():
 	Global.current_wave = current_wave
 	starting_nodes = get_child_count()
 	current_nodes = get_child_count()
+	audio_bgm.play()
 	
 	# Check if PackedScenes are not null
 	for enemy_scene in enemy_scenes:

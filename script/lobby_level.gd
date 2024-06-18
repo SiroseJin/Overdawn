@@ -2,13 +2,13 @@ extends Node2D
 
 @onready var SceneTransitionAnimation = $SceneTransitionAnimation/AnimationPlayer
 @onready var player_camera = $Player/Camera2D
-
+@onready var audio_bgm = $AudioBGM
 
 func _ready():
 	player_camera.enabled = false
 	SceneTransitionAnimation.play("fade_out")
 	Global.gameStarted = false
-
+	audio_bgm.play()
 
 func _on_start_game_detection_body_entered(body):
 	if body is Player:
