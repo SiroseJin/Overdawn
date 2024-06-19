@@ -6,7 +6,7 @@ var direction: Vector2 = Vector2.ZERO
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @export var necro_dot_field_scene: PackedScene = preload("res://scene/dot_field.tscn")
 
-const DAMAGE_AMOUNT: int = 10
+const DAMAGE_AMOUNT: int = 5
 
 func _ready():
 	set_process(true)
