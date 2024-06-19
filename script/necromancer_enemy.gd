@@ -162,8 +162,8 @@ func _on_charging_timeout():
 func release_fireball():
 	if dead:
 		return
-	print("Release fireball")
-	var fireball_scene = preload("res://scene/witch_fireball.tscn")
+	print("Release necro orb")
+	var fireball_scene = preload("res://scene/necromancer_slow_orb.tscn")
 	if fireball_scene:
 		var fireball_instance = fireball_scene.instantiate()
 		if fireball_instance:

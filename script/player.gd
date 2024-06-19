@@ -367,3 +367,9 @@ func update_deal_damage_zone():
 	var direction = (mouse_position - player_position).normalized()
 
 	deal_damage_zone.position = direction * attack_radius
+
+func slow_down(factor: float):
+	SPEED = int(NORMAL_SPEED * factor)
+
+func restore_speed():
+	SPEED = NORMAL_SPEED

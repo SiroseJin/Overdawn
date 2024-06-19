@@ -82,7 +82,7 @@ func position_to_next_wave():
 		if current_wave >= 3:
 			prepare_spawn("frogs", 1.1, 2.0) # Frogs increase by 1.1 every wave after wave 3
 		if current_wave >= 5:
-			if current_wave >= 9:
+			if current_wave >= 7:
 				prepare_spawn("witches", 1.1, 1.0) # Witches spawn every wave after wave 9
 			elif (current_wave - 5) % 2 == 0:
 				prepare_spawn("witches", 1.1, 1.0) # Witches increase by 1 every 2 waves after wave 5

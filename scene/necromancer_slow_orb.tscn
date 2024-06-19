@@ -1,0 +1,110 @@
+[gd_scene load_steps=22 format=3 uid="uid://ct2dnbo34dw8x"]
+
+[ext_resource type="Script" path="res://script/necromancer_slow_orb.gd" id="1_1dxih"]
+[ext_resource type="Texture2D" uid="uid://b52ticiv2viha" path="res://art/VFX/Dark VFX 2/Separated Frames/Dark VFX 2 (48x64)9.png" id="2_0x08c"]
+[ext_resource type="Texture2D" uid="uid://cdhpp7pmd8ajx" path="res://art/VFX/Dark VFX 1/Separeted frames/Dark VFX 1 (40x32)1.png" id="3_5b2fd"]
+[ext_resource type="Texture2D" uid="uid://pm0oqnf3fqva" path="res://art/VFX/Dark VFX 2/Separated Frames/Dark VFX 2 (48x64)10.png" id="3_ftvpp"]
+[ext_resource type="Texture2D" uid="uid://dqqs6v04aaobl" path="res://art/VFX/Dark VFX 1/Separeted frames/Dark VFX 1 (40x32)2.png" id="4_5hhr2"]
+[ext_resource type="Texture2D" uid="uid://cxj84io6a87cs" path="res://art/VFX/Dark VFX 2/Separated Frames/Dark VFX 2 (48x64)11.png" id="4_qjegs"]
+[ext_resource type="Texture2D" uid="uid://bidqs3bmt05a4" path="res://art/VFX/Dark VFX 2/Separated Frames/Dark VFX 2 (48x64)12.png" id="5_ap5oj"]
+[ext_resource type="Texture2D" uid="uid://bayeal2x3oo7h" path="res://art/VFX/Dark VFX 1/Separeted frames/Dark VFX 1 (40x32)3.png" id="5_ebg8y"]
+[ext_resource type="Texture2D" uid="uid://b72a40fj64wwv" path="res://art/VFX/Dark VFX 1/Separeted frames/Dark VFX 1 (40x32)4.png" id="6_5yadw"]
+[ext_resource type="Texture2D" uid="uid://cyh5ltst3l628" path="res://art/VFX/Dark VFX 2/Separated Frames/Dark VFX 2 (48x64)13.png" id="6_lojqc"]
+[ext_resource type="Texture2D" uid="uid://cgg56dr32evp6" path="res://art/VFX/Dark VFX 2/Separated Frames/Dark VFX 2 (48x64)14.png" id="7_84okc"]
+[ext_resource type="Texture2D" uid="uid://dsp7t13vrlrre" path="res://art/VFX/Dark VFX 1/Separeted frames/Dark VFX 1 (40x32)5.png" id="7_q8svp"]
+[ext_resource type="Texture2D" uid="uid://cwax4wj03upir" path="res://art/VFX/Dark VFX 2/Separated Frames/Dark VFX 2 (48x64)15.png" id="8_bjf2q"]
+[ext_resource type="Texture2D" uid="uid://bsqwjas5447x8" path="res://art/VFX/Dark VFX 1/Separeted frames/Dark VFX 1 (40x32)6.png" id="8_wrf2g"]
+[ext_resource type="Texture2D" uid="uid://bgt63r1x4r63s" path="res://art/VFX/Dark VFX 2/Separated Frames/Dark VFX 2 (48x64)16.png" id="9_5unrl"]
+[ext_resource type="Texture2D" uid="uid://dni5hawtgr04w" path="res://art/VFX/Dark VFX 1/Separeted frames/Dark VFX 1 (40x32)7.png" id="9_rpa2d"]
+[ext_resource type="Texture2D" uid="uid://ijskw6umq3uj" path="res://art/VFX/Dark VFX 1/Separeted frames/Dark VFX 1 (40x32)8.png" id="10_3hyhk"]
+[ext_resource type="Texture2D" uid="uid://drtia78ckjxlv" path="res://art/VFX/Dark VFX 1/Separeted frames/Dark VFX 1 (40x32)9.png" id="11_2xhra"]
+[ext_resource type="Texture2D" uid="uid://p67ysa4cma7t" path="res://art/VFX/Dark VFX 1/Separeted frames/Dark VFX 1 (40x32)10.png" id="12_ixvan"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yisl6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_0x08c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ftvpp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_qjegs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ap5oj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_lojqc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_84okc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_bjf2q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_5unrl")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_5b2fd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_5hhr2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ebg8y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_5yadw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_q8svp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_wrf2g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_rpa2d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_3hyhk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_2xhra")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_ixvan")
+}],
+"loop": true,
+"name": &"travel",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hmdgt"]
+radius = 3.99773
+
+[node name="necromancer_slow_orb" type="Area2D"]
+position = Vector2(-3, -2)
+script = ExtResource("1_1dxih")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(4, 2)
+rotation = -1.57677
+scale = Vector2(0.404458, 0.455076)
+sprite_frames = SubResource("SpriteFrames_yisl6")
+animation = &"travel"
+autoplay = "travel"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3.19735, 1.61116)
+shape = SubResource("CircleShape2D_hmdgt")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="child_entered_tree" from="CollisionShape2D" to="." method="_on_collision_shape_2d_child_entered_tree"]
