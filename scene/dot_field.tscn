@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bhl6s4vhseqwp"]
+[gd_scene load_steps=20 format=3 uid="uid://bgjkq7o62jli0"]
 
 [ext_resource type="Script" path="res://script/dot_field.gd" id="1_u5wbg"]
 [ext_resource type="Texture2D" uid="uid://bi0c6oykyxpdr" path="res://art/VFX/Dark VFX 2/Separated Frames/Dark VFX 2 (48x64)1.png" id="2_38vw1"]

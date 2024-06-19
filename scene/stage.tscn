@@ -1,11 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://de5g1yrr0ox6e"]
+[gd_scene load_steps=11 format=3 uid="uid://qub2gn8mfawi"]
 
 [ext_resource type="Script" path="res://script/stage.gd" id="1_2mlit"]
 [ext_resource type="Texture2D" uid="uid://ojrc07dasuxk" path="res://art/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Tileset.png" id="1_eakq8"]
 [ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/player.tscn" id="2_k7jwx"]
 [ext_resource type="Texture2D" uid="uid://buajudq12xcgo" path="res://art/Pixel Art Top Down/Texture/TX Shadow.png" id="4_cyvy5"]
 [ext_resource type="AudioStream" uid="uid://b0pp6f4y1nsjm" path="res://audio/Music/mythica.mp3" id="6_atujf"]
-[ext_resource type="PackedScene" uid="uid://jr1opep0t5q3" path="res://scene/necromancer_enemy.tscn" id="7_np6uh"]
 [ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/scene_transition_animation.tscn" id="9_lv20d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p8uni"]
@@ -521,6 +520,3 @@ scale = Vector2(77.4905, 2.27648)
 stream = ExtResource("6_atujf")
 volume_db = -5.0
 bus = &"bgm"
-
-[node name="necromancer_enemy" parent="." instance=ExtResource("7_np6uh")]
-position = Vector2(130, -25)

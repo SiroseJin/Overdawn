@@ -14,8 +14,16 @@ func _ready():
 func _on_area_entered(area: Area2D) -> void:
 	var parent = area.get_parent()
 	if area.get_parent() is Player:
-		parent.take_damage(DAMAGE_AMOUNT)
 		parent.slow_down(SLOW_FACTOR)
+		parent.take_damage(DAMAGE_AMOUNT)
+		await get_tree().create_timer(1.2).timeout
+		parent.take_damage(DAMAGE_AMOUNT)
+		await get_tree().create_timer(1.2).timeout
+		parent.take_damage(DAMAGE_AMOUNT)
+		await get_tree().create_timer(1.2).timeout
+		parent.take_damage(DAMAGE_AMOUNT)
+		await get_tree().create_timer(1.2).timeout
+		parent.take_damage(DAMAGE_AMOUNT)
 
 func on_lifetime_timeout():
 	await get_tree().create_timer(6.0).timeout
