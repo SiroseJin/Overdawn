@@ -1,21 +1,33 @@
 extends Node
 
-var score = 0
+# ─── Score Manager ─────────────────────────────────────────────────────────────
+# Tracks and displays the player's score.
+# Each enemy / pickup type awards a different point value.
+# ───────────────────────────────────────────────────────────────────────────────
 
 @onready var score_label = $ScoreLabel
 
-func add_pointcoin():
+var score: int = 0
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Score Helpers
+# ───────────────────────────────────────────────────────────────────────────────
+
+func _update_label():
+	score_label.text = "Score: " + str(score)
+
+func add_point_coin():
 	score += 1
-	score_label.text = "Score: " + str(score)
+	_update_label()
 
-func add_pointbat():
+func add_point_bat():
 	score += 2
-	score_label.text = "Score: " + str(score)
+	_update_label()
 
-func add_pointfrog():
+func add_point_frog():
 	score += 4
-	score_label.text = "Score: " + str(score)
+	_update_label()
 
-func add_pointwitch():
+func add_point_witch():
 	score += 10
-	score_label.text = "Score: " + str(score)
+	_update_label()

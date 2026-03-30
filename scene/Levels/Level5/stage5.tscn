@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=3 uid="uid://cnyvpht4rwtvw"]
+
+[ext_resource type="Script" path="res://scene/Levels/Level5/stage5.gd" id="1_yaa1r"]
+[ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/player.tscn" id="2_exk6m"]
+[ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/scene_transition_animation.tscn" id="3_7scb5"]
+[ext_resource type="AudioStream" uid="uid://028va8maeqdm" path="res://audio/Music/Caketown 1 by matthewpablo.mp3" id="4_rd6tq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pyi8t"]
+size = Vector2(32, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0lpfd"]
+size = Vector2(32, 24)
+
+[node name="Stage5" type="Node2D"]
+script = ExtResource("1_yaa1r")
+
+[node name="BackGroundSprite" type="StaticBody2D" parent="."]
+
+[node name="WallCollision" type="CollisionPolygon2D" parent="BackGroundSprite"]
+polygon = PackedVector2Array(216, 208, 208, 208, 208, 176, -256, 176, -256, -144, 256, -144, 256, 208, 248, 208, 248, -136, -248, -136, -248, 112, 216, 112)
+
+[node name="EndPortal" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EndPortal"]
+position = Vector2(199, 95)
+shape = SubResource("RectangleShape2D_pyi8t")
+
+[node name="Player" parent="EndPortal" instance=ExtResource("2_exk6m")]
+position = Vector2(0, 64)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, 32)
+zoom = Vector2(1.8, 1.8)
+
+[node name="SceneTransitionAnimation" parent="." instance=ExtResource("3_7scb5")]
+top_level = true
+position = Vector2(0, 16)
+scale = Vector2(8.81124, 1.79268)
+
+[node name="AudioBGM" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_rd6tq")
+volume_db = -4.0
+bus = &"bgm"
+
+[node name="Stage4Portal" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stage4Portal"]
+position = Vector2(-119, 90)
+shape = SubResource("RectangleShape2D_0lpfd")
+
+[connection signal="body_entered" from="EndPortal" to="." method="_on_end_portal_body_entered"]
+[connection signal="body_entered" from="Stage4Portal" to="." method="_on_stage_4_portal_body_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c8h8psijst4am"]
+[gd_scene load_steps=18 format=3 uid="uid://c8h8psijst4am"]
 
 [ext_resource type="Script" path="res://script/main_menu.gd" id="1_c5cew"]
 [ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="1_xbuaw"]
@@ -6,10 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://ojrc07dasuxk" path="res://art/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Tileset.png" id="3_yqug7"]
 [ext_resource type="AudioStream" uid="uid://bknt7etc6vk2b" path="res://audio/Music/FullScores/Retro Scores/Ove Melaa - Dark.ogg" id="4_sa8jk"]
 [ext_resource type="AudioStream" uid="uid://c1m8vs2hh2gx6" path="res://audio/SFX/menuclick.wav" id="5_wrppt"]
-[ext_resource type="Texture2D" uid="uid://b8xkiy1nrk0hs" path="res://art/logo-telkom-university-white 4.png" id="6_hd5xn"]
+[ext_resource type="Texture2D" uid="uid://3g1o1n831t0n" path="res://art/Logo/logo-telkom-university-white 4.png" id="6_hd5xn"]
 [ext_resource type="Texture2D" uid="uid://bjfc0io80dig" path="res://art/EVil Wizard 2/Sprites/Attack2.png" id="6_p78mb"]
 [ext_resource type="Texture2D" uid="uid://rvgnk0uoym3f" path="res://art/Blue_witch/B_witch_charge.png" id="7_ke8hd"]
 [ext_resource type="Texture2D" uid="uid://bp4onncvemv3y" path="res://art/Logo/pixil-frame-0 (1).png" id="7_t0rp7"]
+[ext_resource type="PackedScene" uid="uid://cx1cvc8r7fsfi" path="res://scene/load_menu.tscn" id="11_3nehi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5c1rh"]
 texture = ExtResource("3_yqug7")
@@ -191,6 +192,11 @@ theme_override_fonts/font = ExtResource("1_xbuaw")
 text = "Start
 "
 
+[node name="Load" type="Button" parent="MenuUI/MenuSelect"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_xbuaw")
+text = "Load"
+
 [node name="Arcade" type="Button" parent="MenuUI/MenuSelect"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_xbuaw")
@@ -289,9 +295,18 @@ position = Vector2(56.4375, 696)
 scale = Vector2(0.195299, 0.177778)
 texture = ExtResource("6_hd5xn")
 
+[node name="LoadMenu" parent="." instance=ExtResource("11_3nehi")]
+visible = false
+layout_mode = 1
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 1.0
+offset_bottom = 1.0
+
 [connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
 [connection signal="mouse_entered" from="MenuUI/MenuSelect" to="." method="_on_v_box_container_mouse_entered"]
 [connection signal="pressed" from="MenuUI/MenuSelect/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MenuUI/MenuSelect/Load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="MenuUI/MenuSelect/Arcade" to="." method="_on_arcade_pressed"]
 [connection signal="pressed" from="MenuUI/MenuSelect/Setting" to="." method="_on_setting_pressed"]
 [connection signal="pressed" from="MenuUI/MenuSelect/Quit" to="." method="_on_quit_pressed"]

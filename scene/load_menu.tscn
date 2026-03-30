@@ -1,0 +1,86 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx1cvc8r7fsfi"]
+
+[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="1_2xcpn"]
+[ext_resource type="Script" path="res://script/load_menu.gd" id="1_lmscr"]
+
+[node name="LoadMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lmscr")
+
+[node name="LoadMenuUI" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -160.0
+offset_right = 220.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LoadMenuSelect" type="VBoxContainer" parent="LoadMenuUI"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Slot1Row" type="HBoxContainer" parent="LoadMenuUI/LoadMenuSelect"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Thumb1" type="TextureRect" parent="LoadMenuUI/LoadMenuSelect/Slot1Row"]
+custom_minimum_size = Vector2(160, 90)
+layout_mode = 2
+stretch_mode = 6
+
+[node name="Save1" type="Button" parent="LoadMenuUI/LoadMenuSelect/Slot1Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("1_2xcpn")
+text = "Slot 1 — Empty"
+
+[node name="Slot2Row" type="HBoxContainer" parent="LoadMenuUI/LoadMenuSelect"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Thumb2" type="TextureRect" parent="LoadMenuUI/LoadMenuSelect/Slot2Row"]
+custom_minimum_size = Vector2(160, 90)
+layout_mode = 2
+stretch_mode = 6
+
+[node name="Save2" type="Button" parent="LoadMenuUI/LoadMenuSelect/Slot2Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("1_2xcpn")
+text = "Slot 2 — Empty"
+
+[node name="Slot3Row" type="HBoxContainer" parent="LoadMenuUI/LoadMenuSelect"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Thumb3" type="TextureRect" parent="LoadMenuUI/LoadMenuSelect/Slot3Row"]
+custom_minimum_size = Vector2(160, 90)
+layout_mode = 2
+stretch_mode = 6
+
+[node name="Save3" type="Button" parent="LoadMenuUI/LoadMenuSelect/Slot3Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("1_2xcpn")
+text = "Slot 3 — Empty"
+
+[node name="Back" type="Button" parent="LoadMenuUI/LoadMenuSelect"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_2xcpn")
+text = "Back"
+
+[connection signal="pressed" from="LoadMenuUI/LoadMenuSelect/Slot1Row/Save1" to="." method="_on_save_1_pressed"]
+[connection signal="pressed" from="LoadMenuUI/LoadMenuSelect/Slot2Row/Save2" to="." method="_on_save_2_pressed"]
+[connection signal="pressed" from="LoadMenuUI/LoadMenuSelect/Slot3Row/Save3" to="." method="_on_save_3_pressed"]
+[connection signal="pressed" from="LoadMenuUI/LoadMenuSelect/Back" to="." method="_on_back_pressed"]
