@@ -560,7 +560,7 @@ script = ExtResource("1_r0fb5")
 position = Vector2(2.38419e-07, -32)
 scale = Vector2(0.672, 0.768)
 sprite_frames = SubResource("SpriteFrames_seu58")
-animation = &"death"
+animation = &"summon"
 autoplay = "idle"
 
 [node name="FVX" type="AnimatedSprite2D" parent="."]
