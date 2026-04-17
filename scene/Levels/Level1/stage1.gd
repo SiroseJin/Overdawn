@@ -4,12 +4,22 @@ extends Node2D
 
 @onready var scene_transition_anim: AnimationPlayer    = $SceneTransitionAnimation/AnimationPlayer
 @onready var audio_bgm:             AudioStreamPlayer2D = $AudioBGM
+@onready var player_camera         = $Player/Camera2D
+@onready var player                = $Player
+
+var enemy_scenes: Array = [
+	preload("res://scene/bat_enemy.tscn"),
+	preload("res://scene/frog_enemy.tscn"),
+	preload("res://scene/witch_enemy.tscn"),
+	preload("res://scene/necromancer_enemy.tscn"),
+]
 
 var _transitioning := false
 
 func _ready() -> void:
 	Global.gameStarted = true
 	scene_transition_anim.play("fade_out")
+	player_camera.enabled  = true
 	audio_bgm.play()
 
 func _process(_delta: float) -> void:

@@ -1,6 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://qub2gn8mfawi"]
+[gd_scene format=3 uid="uid://qub2gn8mfawi"]
 
-[ext_resource type="Script" path="res://script/stage.gd" id="1_2mlit"]
+[ext_resource type="Script" uid="uid://gwdu6aol085h" path="res://script/stage.gd" id="1_2mlit"]
 [ext_resource type="Texture2D" uid="uid://ojrc07dasuxk" path="res://art/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Tileset.png" id="1_eakq8"]
 [ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/player.tscn" id="2_k7jwx"]
 [ext_resource type="Texture2D" uid="uid://buajudq12xcgo" path="res://art/Pixel Art Top Down/Texture/TX Shadow.png" id="4_cyvy5"]
@@ -440,12 +440,12 @@ sources/1 = SubResource("TileSetAtlasSource_xn6rn")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f2c8l"]
 size = Vector2(32, 16)
 
-[node name="Stage" type="Node2D"]
+[node name="Stage" type="Node2D" unique_id=278592955]
 script = ExtResource("1_2mlit")
 
-[node name="BackGroundSprite" type="StaticBody2D" parent="."]
+[node name="BackGroundSprite" type="StaticBody2D" parent="." unique_id=132889169]
 
-[node name="TileMap" type="TileMap" parent="BackGroundSprite"]
+[node name="TileMap" type="TileMap" parent="BackGroundSprite" unique_id=1572156628]
 tile_set = SubResource("TileSet_mncpu")
 format = 2
 layer_0/name = "0"
@@ -453,70 +453,70 @@ layer_0/tile_data = PackedInt32Array(-131076, 65536, 1, -65540, 65536, 2, -4, 65
 layer_1/name = "1"
 layer_1/tile_data = PackedInt32Array(-458752, 458752, 6, -393217, 458752, 268435462, -458745, 262144, 7, -393224, 262144, 7, 196614, 458752, 7, 131065, 524288, 6, -393210, 524288, 6, -262150, 589824, 4, 327675, 589824, 5, 3, 524288, 268435462, 327672, 458752, 268435463, -458740, 0, 9, -393229, 0, 9, -458733, 0, 9, -393236, 0, 9, -393218, 0, 9, -458751, 0, 9, -262164, 458752, 268435463, -393199, 262144, 268435462, 458765, 524288, 6, 524272, 589824, 5, -65521, 589824, 268435461, 65517, 589824, 268435461, 851975, 589824, 4, 983022, 589824, 268435460, 917522, 458752, 7, 786420, 393216, 9, 262158, 393216, 9, 65525, 393216, 9, 851970, 524288, 6, 1638381, 262144, 9, 131048, 262144, 9, 65559, 262144, 9, 1507352, 262144, 9, 1703942, 262144, 9, 1114134, 589824, 5, 1048549, 589824, 5, -262169, 589824, 5, 1638375, 589824, 5, 1572887, 589824, 5, 1245202, 589824, 4, 1376246, 589824, 4, 327702, 589824, 4, 720890, 589824, 4, 524264, 589824, 4, 1441767, 589824, 4, -393242, 0, 9, -458727, 0, 9, -28, 65536, 9, 786404, 65536, 9, 1572836, 65536, 9, -65509, 65536, 268435465, 720923, 65536, 268435465, 1507355, 65536, 268435465)
 
-[node name="DoorCollision" type="CollisionShape2D" parent="BackGroundSprite"]
+[node name="DoorCollision" type="CollisionShape2D" parent="BackGroundSprite" unique_id=739298379]
 position = Vector2(0, -104)
 shape = SubResource("RectangleShape2D_f2c8l")
 
-[node name="WallCollision" type="CollisionPolygon2D" parent="BackGroundSprite"]
+[node name="WallCollision" type="CollisionPolygon2D" parent="BackGroundSprite" unique_id=245374982]
 polygon = PackedVector2Array(-448, -96, -16, -96, -16, -112, -464, -112, -464, 448, 464, 448, 464, -120, 464, -112, 16, -112, 16, -96, 448, -96, 448, 432, -448, 432)
 
-[node name="Player" parent="." instance=ExtResource("2_k7jwx")]
+[node name="Player" parent="." unique_id=385178922 instance=ExtResource("2_k7jwx")]
 position = Vector2(0, -64)
 
-[node name="SpawnPoint1" type="Marker2D" parent="."]
+[node name="SpawnPoint1" type="Marker2D" parent="." unique_id=692349987]
 position = Vector2(320, 64)
 
-[node name="SpawnPoint2" type="Marker2D" parent="."]
+[node name="SpawnPoint2" type="Marker2D" parent="." unique_id=2019162347]
 position = Vector2(-320, 336)
 
-[node name="SpawnPoint3" type="Marker2D" parent="."]
+[node name="SpawnPoint3" type="Marker2D" parent="." unique_id=1783927543]
 position = Vector2(256, 216)
 
-[node name="SpawnPoint4" type="Marker2D" parent="."]
+[node name="SpawnPoint4" type="Marker2D" parent="." unique_id=1603616339]
 position = Vector2(320, 0)
 
-[node name="SpawnPoint5" type="Marker2D" parent="."]
+[node name="SpawnPoint5" type="Marker2D" parent="." unique_id=762466696]
 position = Vector2(-320, 3.05176e-05)
 scale = Vector2(-125225, -6916.16)
 
-[node name="SpawnPoint6" type="Marker2D" parent="."]
+[node name="SpawnPoint6" type="Marker2D" parent="." unique_id=488179326]
 position = Vector2(320, 336)
 scale = Vector2(-125225, -6916.16)
 
-[node name="BossSpawnPoint1" type="Marker2D" parent="."]
+[node name="BossSpawnPoint1" type="Marker2D" parent="." unique_id=2031950753]
 position = Vector2(-320, 304)
 scale = Vector2(-125225, -6916.16)
 
-[node name="BossSpawnPoint2" type="Marker2D" parent="."]
+[node name="BossSpawnPoint2" type="Marker2D" parent="." unique_id=909872443]
 position = Vector2(320, 304)
 scale = Vector2(-125225, -6916.16)
 
-[node name="ItemSpawnPoint1" type="Marker2D" parent="."]
+[node name="ItemSpawnPoint1" type="Marker2D" parent="." unique_id=996422608]
 position = Vector2(-240, 64)
 scale = Vector2(-125225, -6916.16)
 
-[node name="ItemSpawnPoint2" type="Marker2D" parent="."]
+[node name="ItemSpawnPoint2" type="Marker2D" parent="." unique_id=1687968017]
 position = Vector2(240, 64)
 scale = Vector2(-125225, -6916.16)
 
-[node name="ItemSpawnPoint3" type="Marker2D" parent="."]
+[node name="ItemSpawnPoint3" type="Marker2D" parent="." unique_id=746403598]
 position = Vector2(-240, 304)
 scale = Vector2(-125225, -6916.16)
 
-[node name="ItemSpawnPoint4" type="Marker2D" parent="."]
+[node name="ItemSpawnPoint4" type="Marker2D" parent="." unique_id=381916468]
 position = Vector2(240, 304)
 scale = Vector2(-125225, -6916.16)
 
-[node name="ItemSpawnPoint5" type="Marker2D" parent="."]
+[node name="ItemSpawnPoint5" type="Marker2D" parent="." unique_id=196600224]
 position = Vector2(1.52588e-05, 144)
 scale = Vector2(-125225, -6916.16)
 
-[node name="SceneTransitionAnimation" parent="." instance=ExtResource("9_lv20d")]
+[node name="SceneTransitionAnimation" parent="." unique_id=209540452 instance=ExtResource("9_lv20d")]
 top_level = true
 position = Vector2(2.38419e-07, 64)
 scale = Vector2(77.4905, 2.27648)
 
-[node name="AudioBGM" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioBGM" type="AudioStreamPlayer2D" parent="." unique_id=171895674]
 stream = ExtResource("6_atujf")
 volume_db = -5.0
 bus = &"bgm"

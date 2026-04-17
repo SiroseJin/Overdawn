@@ -112,6 +112,7 @@ func _ready():
 	pause_menu.hide()
 	stats_menu.hide()
 	is_game_paused = false
+	add_to_group("player")
 
 func _physics_process(delta):
 	if is_game_paused:
