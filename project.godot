@@ -28,7 +28,7 @@ buses/default_bus_layout="uid://deolkwypii4ig"
 Global="*res://script/global.gd"
 PreviousSceneManager="*res://script/previous_scene_manager.gd"
 SaveManager="*res://script/save_manager.gd"
-Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
+Dialogic="*uid://ds2q0uclmolvu"
 
 [dialogic]
 
