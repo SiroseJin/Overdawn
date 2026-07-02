@@ -34,6 +34,12 @@ var is_dealing_damage: bool = false
 var is_frog_chase: bool     = false
 var is_frog_roaming: bool   = false
 
+# Detection zone / roaming
+var player_in_range: bool = false
+var spawn_position: Vector2
+var roam_direction: int = 1   # +1 = right, -1 = left
+var roam_range: float = 60.0
+
 var Player: CharacterBody2D
 var health_bar: ProgressBar
 
@@ -46,6 +52,9 @@ func _ready():
 	health_bar.max_value = health_max
 	health_bar.value     = health
 
+	spawn_position   = position
+	$Timer.wait_time = 3.0
+
 func _process(_delta):
 	move(_delta)
 	handle_animation()
@@ -54,7 +63,10 @@ func _process(_delta):
 	Global.frogDamageAmount = damage_to_deal
 	Global.frogDamageZone    = $FrogDealDamageArea
 
-	if Global.playerAlive:
+	if not Global.playerAlive:
+		is_frog_chase   = false
+		is_frog_roaming = false
+	elif Global.arcade_mode or (player_in_range and has_line_of_sight_to_player()):
 		is_frog_chase   = true
 		is_frog_roaming = false
 	else:
@@ -92,7 +104,14 @@ func move(delta):
 	elif taking_damage and is_frog_chase:
 		velocity.x = sign(position.x - Player.position.x) * 50
 
-	elif not taking_damage and not is_frog_chase and not Global.playerAlive:
+	elif not taking_damage and is_frog_roaming:
+		# Walk back and forth within roam_range of spawn position
+		if abs(position.x - spawn_position.x) >= roam_range:
+			roam_direction *= -1
+		velocity.x = roam_direction * speed * 0.4
+		dir.x      = roam_direction
+
+	else:
 		velocity.x = 0
 
 	move_and_slide()
@@ -148,6 +167,26 @@ func handle_death():
 # ───────────────────────────────────────────────────────────────────────────────
 # Signals
 # ───────────────────────────────────────────────────────────────────────────────
+
+func has_line_of_sight_to_player() -> bool:
+	if not Global.PlayerBody:
+		return false
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsRayQueryParameters2D.create(global_position, Global.PlayerBody.global_position)
+	query.exclude = [self]
+	var result = space_state.intersect_ray(query)
+	return result.is_empty() or result.get("collider") == Global.PlayerBody
+
+func _on_direction_timer_timeout():
+	roam_direction *= -1
+
+func _on_detection_zone_body_entered(body: Node2D):
+	if body == Global.PlayerBody:
+		player_in_range = true
+
+func _on_detection_zone_body_exited(body: Node2D):
+	if body == Global.PlayerBody:
+		player_in_range = false
 
 func _on_frog_hit_box_area_entered(area: Area2D):
 	if area == Global.playerDamageZone:

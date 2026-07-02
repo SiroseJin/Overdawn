@@ -30,6 +30,8 @@ func slot_label(slot: int) -> String:
 	var lvl        : String = "Level %s" % str(data.get("player_level", "?"))
 	var scene_path : String = data.get("current_scene", "")
 	var scene_name : String = scene_path.get_file().get_basename().capitalize()
+	if data.get("arcade_mode", false):
+		scene_name = "Arcade — Wave %d" % int(data.get("current_wave", 0))
 	return "Slot %d — %s | %s | %s" % [slot, lvl, ts, scene_name]
 
 ## Returns an ImageTexture thumbnail for the slot, or null if none exists.
@@ -119,6 +121,8 @@ func collect_save_data() -> Dictionary:
 	data["current_scene"] = get_tree().current_scene.scene_file_path
 	data["current_wave"]  = Global.current_wave
 	data["player_alive"]  = Global.playerAlive
+	data["arcade_mode"]   = Global.arcade_mode
+	data["progression"]   = ProgressionManager.to_dict()
 
 	if is_instance_valid(Global.PlayerBody):
 		var p := Global.PlayerBody
@@ -140,6 +144,12 @@ func collect_save_data() -> Dictionary:
 # ─────────────────────────────────────────────────────────────────────────────
 
 func apply_save_data(data: Dictionary) -> void:
+	# Set these before the scene loads so _ready() in stage.gd / player.gd can read them
+	Global.arcade_mode  = data.get("arcade_mode", false)
+	# stage.gd increments current_wave before spawning, so pre-set to saved-1
+	Global.current_wave = max(0, int(data.get("current_wave", 1)) - 1)
+	ProgressionManager.from_dict(data.get("progression", {}))
+
 	var scene_path : String = data.get("current_scene", "")
 	if scene_path != "" and ResourceLoader.exists(scene_path):
 		get_tree().change_scene_to_file(scene_path)
@@ -153,6 +163,7 @@ func _restore_player_state(data: Dictionary) -> void:
 
 	Global.playerAlive  = data.get("player_alive", true)
 	Global.current_wave = data.get("current_wave", 0)
+	Global.arcade_mode  = data.get("arcade_mode", false)
 
 	if not is_instance_valid(Global.PlayerBody):
 		push_warning("[SaveManager] PlayerBody not valid after load.")

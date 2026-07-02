@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cx1cvc8r7fsfi"]
+[gd_scene format=3 uid="uid://cx1cvc8r7fsfi"]
 
 [ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="1_2xcpn"]
-[ext_resource type="Script" path="res://script/load_menu.gd" id="1_lmscr"]
+[ext_resource type="Script" uid="uid://1mq2p888chr3" path="res://script/load_menu.gd" id="1_lmscr"]
 
-[node name="LoadMenu" type="Control"]
+[node name="LoadMenu" type="Control" unique_id=1699332451]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lmscr")
 
-[node name="LoadMenuUI" type="MarginContainer" parent="."]
+[node name="LoadMenuUI" type="MarginContainer" parent="." unique_id=874081018]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -26,56 +26,56 @@ offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LoadMenuSelect" type="VBoxContainer" parent="LoadMenuUI"]
+[node name="LoadMenuSelect" type="VBoxContainer" parent="LoadMenuUI" unique_id=528120175]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Slot1Row" type="HBoxContainer" parent="LoadMenuUI/LoadMenuSelect"]
+[node name="Slot1Row" type="HBoxContainer" parent="LoadMenuUI/LoadMenuSelect" unique_id=48985205]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Thumb1" type="TextureRect" parent="LoadMenuUI/LoadMenuSelect/Slot1Row"]
+[node name="Thumb1" type="TextureRect" parent="LoadMenuUI/LoadMenuSelect/Slot1Row" unique_id=664324494]
 custom_minimum_size = Vector2(160, 90)
 layout_mode = 2
 stretch_mode = 6
 
-[node name="Save1" type="Button" parent="LoadMenuUI/LoadMenuSelect/Slot1Row"]
+[node name="Save1" type="Button" parent="LoadMenuUI/LoadMenuSelect/Slot1Row" unique_id=411003242]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("1_2xcpn")
 text = "Slot 1 — Empty"
 
-[node name="Slot2Row" type="HBoxContainer" parent="LoadMenuUI/LoadMenuSelect"]
+[node name="Slot2Row" type="HBoxContainer" parent="LoadMenuUI/LoadMenuSelect" unique_id=71487635]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Thumb2" type="TextureRect" parent="LoadMenuUI/LoadMenuSelect/Slot2Row"]
+[node name="Thumb2" type="TextureRect" parent="LoadMenuUI/LoadMenuSelect/Slot2Row" unique_id=1636999161]
 custom_minimum_size = Vector2(160, 90)
 layout_mode = 2
 stretch_mode = 6
 
-[node name="Save2" type="Button" parent="LoadMenuUI/LoadMenuSelect/Slot2Row"]
+[node name="Save2" type="Button" parent="LoadMenuUI/LoadMenuSelect/Slot2Row" unique_id=603650670]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("1_2xcpn")
 text = "Slot 2 — Empty"
 
-[node name="Slot3Row" type="HBoxContainer" parent="LoadMenuUI/LoadMenuSelect"]
+[node name="Slot3Row" type="HBoxContainer" parent="LoadMenuUI/LoadMenuSelect" unique_id=1442947375]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Thumb3" type="TextureRect" parent="LoadMenuUI/LoadMenuSelect/Slot3Row"]
+[node name="Thumb3" type="TextureRect" parent="LoadMenuUI/LoadMenuSelect/Slot3Row" unique_id=822530009]
 custom_minimum_size = Vector2(160, 90)
 layout_mode = 2
 stretch_mode = 6
 
-[node name="Save3" type="Button" parent="LoadMenuUI/LoadMenuSelect/Slot3Row"]
+[node name="Save3" type="Button" parent="LoadMenuUI/LoadMenuSelect/Slot3Row" unique_id=1616912041]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("1_2xcpn")
 text = "Slot 3 — Empty"
 
-[node name="Back" type="Button" parent="LoadMenuUI/LoadMenuSelect"]
+[node name="Back" type="Button" parent="LoadMenuUI/LoadMenuSelect" unique_id=262496872]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_2xcpn")
 text = "Back"

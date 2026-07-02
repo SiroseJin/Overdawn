@@ -30,7 +30,15 @@ class_name Player
 
 @onready var pause_menu  = $CanvasLayer/PauseMenu
 @onready var stats_menu  = $CanvasLayer/stats_menu
+@onready var skip_button:   Button  = $CanvasLayer/SkipButton
+@onready var death_screen          = $CanvasLayer/DeathScreen
 @onready var dbjump_cd   = $CanvasLayer/Control/DBJumpCD
+@onready var firewall_cd       = $CanvasLayer/Control/FirewallCD
+@onready var firewall_cd_label = $CanvasLayer/Control/FirewallCD/Label
+
+var _dialogue_skipping := false
+var _toast_label: Label
+var _float_tween: Tween
 
 # ─── Stats ─────────────────────────────────────────────────────────────────────
 
@@ -44,6 +52,16 @@ var dead: bool
 var SPEED: int
 const NORMAL_SPEED: int = 100
 const DASH_SPEED:   int = int(NORMAL_SPEED * 3.2)
+
+# Effective walking speed = NORMAL_SPEED × speed_multiplier (boosts) × slow_factor
+# (enemy slows). Both default to 1.0 and are combined by _recompute_speed().
+var speed_multiplier: float    = 1.0
+var slow_factor: float         = 1.0
+var _speed_boost_remaining: float = 0.0
+
+# Constant external velocity applied by pull zones (Stage 4 gimmick). Set/cleared
+# by the zone on enter/exit; added to horizontal movement each frame.
+var external_push: Vector2 = Vector2.ZERO
 
 # Gravity & Jump
 const GRAVITY: float       = 900.0   # Downward acceleration in pixels/s²
@@ -69,13 +87,35 @@ var weapon_equip: bool
 
 var DASH: bool          = false  # True during the active dash window
 var dash_cooldown: bool = false  # True while the dash cooldown is ticking
+const DASH_COOLDOWN: float = 1.0 # Seconds before dash can be used again
+var _dash_cd_remaining: float = 0.0
+var _dash_cd_total: float = DASH_COOLDOWN
 
 # ─── Double Jump ───────────────────────────────────────────────────────────────
 
+var _dbjump_cd_remaining: float = 0.0
 var can_double_jump: bool    = true   # Resets on landing
 var double_jump_cooldown: bool = false # True while the cooldown is ticking
 const DOUBLE_JUMP_FORCE: float = -320.0  # Slightly weaker than the first jump
 const DOUBLE_JUMP_COOLDOWN: float = 1.0  # Seconds before the skill is available again
+var _dbjump_cd_total: float = DOUBLE_JUMP_COOLDOWN
+
+# ─── Firewall (defensive skill) ──────────────────────────────────────────────────
+# A gambling-reference shield: raise a firewall to block all incoming damage for
+# a short window. Unlocked by an NPC; upgrade level extends the shield duration.
+
+const FIREWALL_COOLDOWN: float = 6.0
+var firewall_active: bool     = false
+var firewall_cooldown: bool   = false
+var _firewall_active_remaining: float = 0.0
+var _firewall_cd_remaining: float     = 0.0
+
+# True while talking to an NPC / taking a quiz — the player can't be hurt so
+# conversations always happen in a safe zone.
+var conversation_safe: bool = false
+
+# Coin counter shown on the HUD.
+var _coin_label: Label
 
 # ─── Arrows ────────────────────────────────────────────────────────────────────
 
@@ -106,13 +146,27 @@ func _ready():
 	update_health_bar()
 	update_dash_cd(0)
 	update_dbjump_cd(0)
+	update_firewall_cd(0)
 	update_exp_lvl_label()
 	update_score_label()
 
 	pause_menu.hide()
 	stats_menu.hide()
+	skip_button.hide()
 	is_game_paused = false
 	add_to_group("player")
+
+	$Camera2D.enabled = true
+	skip_button.pressed.connect(_on_skip_pressed)
+	Dialogic.timeline_ended.connect(func(): _dialogue_skipping = false)
+
+	_setup_toast()
+	_setup_coin_hud()
+	ProgressionManager.skill_unlocked.connect(_on_skill_unlocked)
+	ProgressionManager.coins_changed.connect(_on_coins_changed)
+	refresh_stats_from_skills()
+	_refresh_skill_huds()
+	_setup_skill_key_hints()
 
 func _physics_process(delta):
 	if is_game_paused:
@@ -142,13 +196,13 @@ func _physics_process(delta):
 	# Only apply normal input when not in a dash (dash sets its own velocity)
 	if not DASH:
 		var direction_x = Input.get_axis("left", "right")
-		velocity.x = direction_x * SPEED
+		velocity.x = direction_x * SPEED + external_push.x
 
 	# ── Jump & Double Jump ─────────────────────────────────────────────────────
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
 			velocity.y = JUMP_FORCE
-		elif can_double_jump and not double_jump_cooldown:
+		elif can_double_jump and not double_jump_cooldown and ProgressionManager.is_skill_unlocked("double_jump"):
 			velocity.y      = DOUBLE_JUMP_FORCE
 			can_double_jump = false
 			start_double_jump_cooldown()
@@ -176,8 +230,11 @@ func _physics_process(delta):
 	handle_movement_animation(velocity)
 	check_hitbox()
 
-	if Input.is_action_just_pressed("dash") and not dash_cooldown:
+	if Input.is_action_just_pressed("dash") and not dash_cooldown and ProgressionManager.is_skill_unlocked("dash"):
 		start_dash()
+
+	if Input.is_action_just_pressed("firewall") and not firewall_active and not firewall_cooldown and ProgressionManager.is_skill_unlocked("firewall"):
+		activate_firewall()
 
 	if Input.is_action_just_pressed("shoot"):
 		shoot_arrow()
@@ -194,6 +251,13 @@ func _physics_process(delta):
 	move_and_slide()
 
 func _process(delta):
+	if not _dialogue_skipping:
+		skip_button.visible = (
+			not is_game_paused
+			and Dialogic.Styles.has_active_layout_node()
+			and Dialogic.Styles.get_layout_node().visible
+		)
+
 	if arrows_held < max_arrows:
 		current_arrow_refill_time += delta
 		if current_arrow_refill_time >= arrow_refill_time:
@@ -201,16 +265,68 @@ func _process(delta):
 			current_arrow_refill_time  = 0.0
 	update_arrow_cd()
 
+	# Expire any temporary speed boost — the rush always runs out
+	if _speed_boost_remaining > 0.0:
+		_speed_boost_remaining -= delta
+		if _speed_boost_remaining <= 0.0:
+			speed_multiplier = 1.0
+			_recompute_speed()
+			show_toast(tr("The rush fades."))
+
+	# Tick the ability cooldowns down smoothly so their HUD bars/labels animate
+	if _dash_cd_remaining > 0.0:
+		_dash_cd_remaining = max(0.0, _dash_cd_remaining - delta)
+		if _dash_cd_remaining == 0.0:
+			dash_cooldown = false
+		update_dash_cd(_dash_cd_remaining)
+
+	if _dbjump_cd_remaining > 0.0:
+		_dbjump_cd_remaining = max(0.0, _dbjump_cd_remaining - delta)
+		if _dbjump_cd_remaining == 0.0:
+			double_jump_cooldown = false
+		update_dbjump_cd(_dbjump_cd_remaining)
+
+	# Firewall: active shield window, then cooldown
+	if _firewall_active_remaining > 0.0:
+		_firewall_active_remaining -= delta
+		if _firewall_active_remaining <= 0.0:
+			firewall_active = false
+			modulate = Color.WHITE
+			firewall_cooldown = true
+			_firewall_cd_remaining = FIREWALL_COOLDOWN
+			update_firewall_cd(_firewall_cd_remaining)
+	elif _firewall_cd_remaining > 0.0:
+		_firewall_cd_remaining -= delta
+		if _firewall_cd_remaining <= 0.0:
+			_firewall_cd_remaining = 0.0
+			firewall_cooldown = false
+			show_toast(tr("Firewall ready"))
+		update_firewall_cd(_firewall_cd_remaining)
+
 # ───────────────────────────────────────────────────────────────────────────────
 # Pause / Menu
 # ───────────────────────────────────────────────────────────────────────────────
 
+func _on_skip_pressed():
+	_dialogue_skipping = true
+	skip_button.hide()
+	if Dialogic.Styles.has_active_layout_node():
+		Dialogic.Styles.get_layout_node().hide()
+	if Dialogic.current_timeline != null:
+		Dialogic.end_timeline()
+
 func pause_menu_screen():
+	if Dialogic.current_timeline != null:
+		Dialogic.end_timeline()
+		if Dialogic.Styles.has_active_layout_node():
+			Dialogic.Styles.get_layout_node().hide()
 	is_game_paused = true
 	pause_menu.show()
 	pause_game()
 
 func stats_menu_screen():
+	if Dialogic.current_timeline != null:
+		Dialogic.end_timeline()
 	is_game_paused = true
 	stats_menu.show()
 	pause_game()
@@ -223,6 +339,8 @@ func pause_game():
 # ───────────────────────────────────────────────────────────────────────────────
 
 func shoot_arrow():
+	if not ProgressionManager.is_skill_unlocked("arrows"):
+		return
 	if arrows_held <= 0:
 		return
 
@@ -285,9 +403,12 @@ func level_up():
 	exp_to_next_level  = int(exp_to_next_level * 1.1)
 	health_max        += 1
 	health            += 1
-	strength          += 0.6
+	strength           = int(strength + 0.6)
 	health             = min(health, health_max)
 	update_health_bar()
+	# RPG: each level grants a skill point to spend in the stat screen
+	ProgressionManager.add_skill_points(1)
+	show_toast(tr("Level up! +1 Skill Point"))
 
 func update_exp_lvl_label():
 	if exp_label:
@@ -309,6 +430,9 @@ func update_score_label():
 
 func take_damage(damage: int):
 	if damage == 0 or health <= 0:
+		return
+	# Blocked by an active firewall, or safe during a conversation/quiz
+	if firewall_active or conversation_safe:
 		return
 
 	health -= damage
@@ -342,14 +466,22 @@ func take_damage_cooldown(_wait_time: float):
 # Death
 # ───────────────────────────────────────────────────────────────────────────────
 
+func die():
+	if dead:
+		return
+	health             = 0
+	dead               = true
+	Global.playerAlive = false
+	handle_death_animation()
+
 func handle_death_animation():
 	velocity = Vector2.ZERO
 	$CollisionShape2D.disabled = true
 	animated_sprite_2d.play("dead")
 	await get_tree().create_timer(0.5).timeout
 	$Camera2D.zoom = Vector2(4, 4)
-	await get_tree().create_timer(3.0).timeout
-	queue_free()
+	await get_tree().create_timer(1.5).timeout
+	death_screen.show_screen()
 
 # ───────────────────────────────────────────────────────────────────────────────
 # Animation
@@ -439,63 +571,214 @@ func start_dash():
 
 	DASH          = false
 	dash_cooldown = true
+	# Higher dash level shortens the cooldown
+	_dash_cd_total     = max(0.4, DASH_COOLDOWN - 0.25 * (_skill_level("dash") - 1))
+	_dash_cd_remaining = _dash_cd_total
 	$PlayerHitbox/CollisionShape2D.disabled = false
 	can_take_damage = true
+	update_dash_cd(_dash_cd_remaining)
 
-	await dash_cooldown_duration()
-
-func dash_cooldown_duration():
-	var cooldown_time: float = 0.1
-	dash_cd.max_value        = cooldown_time
-
-	while cooldown_time > 0:
-		update_dash_cd(cooldown_time)
-		await get_tree().create_timer(1.0).timeout
-		cooldown_time -= 1.0
-
-	dash_cooldown = false
-	update_dash_cd(0)
-
-func update_dash_cd(cooldown_time: float):
-	if cooldown_time > 0:
-		dash_cd.value         = cooldown_time
-		dash_cd_label.text    = str(round(cooldown_time))
+# Bar fills up as the cooldown recovers (full = ready); the label counts the
+# remaining seconds down and hides once the dash is available again.
+func update_dash_cd(remaining: float):
+	dash_cd.max_value = _dash_cd_total
+	dash_cd.value     = _dash_cd_total - remaining
+	if remaining > 0.0:
+		dash_cd_label.text    = "%.1f" % remaining
 		dash_cd_label.visible = true
 	else:
-		dash_cd.value         = 0
+		dash_cd_label.text    = ""
 		dash_cd_label.visible = false
 
 # ───────────────────────────────────────────────────────────────────────────────
 # Double Jump
 # ───────────────────────────────────────────────────────────────────────────────
 
-# Trigger the cooldown after a double jump is consumed
+# Trigger the cooldown after a double jump is consumed; _process ticks it down.
 func start_double_jump_cooldown():
 	double_jump_cooldown = true
 	can_double_jump      = false
-	var remaining        = DOUBLE_JUMP_COOLDOWN
-	dbjump_cd.max_value  = remaining
+	# Higher double-jump level shortens the cooldown
+	_dbjump_cd_total     = max(0.3, DOUBLE_JUMP_COOLDOWN - 0.25 * (_skill_level("double_jump") - 1))
+	_dbjump_cd_remaining = _dbjump_cd_total
+	update_dbjump_cd(_dbjump_cd_remaining)
 
-	while remaining > 0:
-		update_dbjump_cd(remaining)
-		await get_tree().create_timer(1.0).timeout
-		remaining -= 1.0
-
-	double_jump_cooldown = false
-	update_dbjump_cd(0)
-
-# Refresh the double jump cooldown bar label
+# Bar fills up as the cooldown recovers (full = ready again).
 func update_dbjump_cd(remaining: float):
-	dbjump_cd.value   = remaining
-	dbjump_cd.visible = true
+	dbjump_cd.max_value = _dbjump_cd_total
+	dbjump_cd.value     = _dbjump_cd_total - remaining
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Firewall (defensive skill)
+# ───────────────────────────────────────────────────────────────────────────────
+
+func activate_firewall():
+	var lvl := _skill_level("firewall")
+	var duration := 1.5 + 0.5 * (lvl - 1)   # upgrades extend the shield window
+	firewall_active            = true
+	_firewall_active_remaining = duration
+	modulate = Color(0.45, 0.75, 1.0)        # blue shielded tint
+	show_toast(tr("Firewall up!"))
+
+# Bar fills up as the cooldown recovers (full = ready); label counts down.
+func update_firewall_cd(remaining: float):
+	firewall_cd.max_value = FIREWALL_COOLDOWN
+	firewall_cd.value     = FIREWALL_COOLDOWN - remaining
+	if remaining > 0.0:
+		firewall_cd_label.text    = "%.1f" % remaining
+		firewall_cd_label.visible = true
+	else:
+		firewall_cd_label.text    = ""
+		firewall_cd_label.visible = false
+
+# ───────────────────────────────────────────────────────────────────────────────
+# RPG stats derived from skill levels
+# ───────────────────────────────────────────────────────────────────────────────
+
+func _skill_level(skill_name: String) -> int:
+	return max(1, ProgressionManager.get_skill_level(skill_name))
+
+# Recompute stats that depend on skill upgrade levels. Called on spawn and
+# whenever a skill is upgraded in the stat screen.
+func refresh_stats_from_skills():
+	max_arrows  = 1 + _skill_level("arrows")   # lvl1→2, lvl2→3, lvl3→4 arrows
+	arrows_held = min(arrows_held, max_arrows)
+	update_arrow_cd()
 
 # ───────────────────────────────────────────────────────────────────────────────
 # Speed Modifiers (used by enemy effects)
 # ───────────────────────────────────────────────────────────────────────────────
 
+# Recalculate SPEED from the base speed and every active modifier.
+func _recompute_speed():
+	SPEED = int(NORMAL_SPEED * speed_multiplier * slow_factor)
+
 # Temporarily reduce movement speed by a fractional factor (e.g. 0.6 = 40% slow)
 func slow_down(factor: float):
-	SPEED = int(NORMAL_SPEED * factor)
+	slow_factor = factor
+	_recompute_speed()
 
 func restore_speed():
-	SPEED = NORMAL_SPEED
+	slow_factor = 1.0
+	_recompute_speed()
+
+# Grant a timed movement-speed boost (used by speed pickups). The caller owns
+# the on-screen message; expiry is reported by _process via _recompute_speed.
+func apply_speed_boost(multiplier: float, duration: float):
+	speed_multiplier        = multiplier
+	_speed_boost_remaining  = duration
+	_recompute_speed()
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Skill HUD & Unlock Feedback
+# ───────────────────────────────────────────────────────────────────────────────
+
+# Show/hide ability cooldown indicators based on what's currently unlocked.
+func _refresh_skill_huds():
+	dash_cd.visible     = ProgressionManager.is_skill_unlocked("dash")
+	arrow_cd.visible    = ProgressionManager.is_skill_unlocked("arrows")
+	dbjump_cd.visible   = ProgressionManager.is_skill_unlocked("double_jump")
+	firewall_cd.visible = ProgressionManager.is_skill_unlocked("firewall")
+
+# Stamp the activation key onto each skill's HUD bar (read from the input map so
+# it follows any rebinds). The label is a child of the bar, so it hides/shows
+# with the bar automatically.
+func _setup_skill_key_hints():
+	_add_key_hint(dash_cd,     "dash")     # dash
+	_add_key_hint(dbjump_cd,   "jump")     # double jump = jump again in mid-air
+	_add_key_hint(arrow_cd,    "shoot")    # fire arrow
+	_add_key_hint(firewall_cd, "firewall") # raise shield
+
+func _add_key_hint(bar: Control, action: String):
+	if bar == null or bar.has_node("KeyHint"):
+		return
+	var l := Label.new()
+	l.name = "KeyHint"
+	l.text = _key_hint(action)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	l.add_theme_font_override("font", load("res://art/Fonts/skeleboom.ttf"))
+	l.add_theme_font_size_override("font_size", 10)
+	l.add_theme_color_override("font_color", Color(1, 1, 0.7))
+	l.add_theme_color_override("font_outline_color", Color.BLACK)
+	l.add_theme_constant_override("outline_size", 3)
+	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	l.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	l.offset_top    = 0.0
+	l.offset_bottom = 15.0
+	bar.add_child(l)
+
+# Readable name of the first keyboard key bound to an action (e.g. "Shift", "E").
+func _key_hint(action: String) -> String:
+	if not InputMap.has_action(action):
+		return ""
+	for ev in InputMap.action_get_events(action):
+		if ev is InputEventKey:
+			var t: String = ev.as_text_physical_keycode()
+			if t.is_empty():
+				t = ev.as_text_keycode()
+			return t
+	return ""
+
+func _on_skill_unlocked(skill_name: String):
+	_refresh_skill_huds()
+	show_toast(_skill_display_name(skill_name) + " " + tr("Unlocked!"))
+
+func _skill_display_name(skill_name: String) -> String:
+	match skill_name:
+		"double_jump": return tr("Double Jump")
+		"dash":        return tr("Dash")
+		"arrows":      return tr("Arrows")
+		"firewall":    return tr("Firewall")
+		_:             return skill_name
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Coin HUD
+# ───────────────────────────────────────────────────────────────────────────────
+
+func _setup_coin_hud():
+	_coin_label = Label.new()
+	_coin_label.anchor_left  = 0.0
+	_coin_label.anchor_right = 0.0
+	_coin_label.offset_left  = 16.0
+	_coin_label.offset_top   = 52.0
+	_coin_label.add_theme_font_override("font", load("res://art/Fonts/skeleboom.ttf"))
+	_coin_label.add_theme_font_size_override("font_size", 16)
+	_coin_label.add_theme_color_override("font_color", Color(1, 0.86, 0.3))
+	_coin_label.add_theme_color_override("font_outline_color", Color.BLACK)
+	_coin_label.add_theme_constant_override("outline_size", 4)
+	_coin_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	$CanvasLayer/Control.add_child(_coin_label)
+	_on_coins_changed(ProgressionManager.coins)
+
+func _on_coins_changed(total: int):
+	if _coin_label:
+		_coin_label.text = tr("Coins") + ": " + str(total)
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Toast (transient on-screen notification)
+# ───────────────────────────────────────────────────────────────────────────────
+
+func _setup_toast():
+	_toast_label = Label.new()
+	_toast_label.anchor_left   = 0.0
+	_toast_label.anchor_right  = 1.0
+	_toast_label.offset_top    = 80.0
+	_toast_label.offset_bottom = 120.0
+	_toast_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_toast_label.add_theme_font_override("font", load("res://art/Fonts/skeleboom.ttf"))
+	_toast_label.add_theme_font_size_override("font_size", 22)
+	_toast_label.add_theme_color_override("font_color", Color(1, 1, 0.6))
+	_toast_label.add_theme_color_override("font_outline_color", Color.BLACK)
+	_toast_label.add_theme_constant_override("outline_size", 6)
+	_toast_label.modulate.a = 0.0
+	_toast_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	$CanvasLayer/Control.add_child(_toast_label)
+
+func show_toast(text: String):
+	if _toast_label == null:
+		return
+	_toast_label.text       = text
+	_toast_label.modulate.a = 1.0
+	var t := create_tween()
+	t.tween_interval(1.2)
+	t.tween_property(_toast_label, "modulate:a", 0.0, 0.8)

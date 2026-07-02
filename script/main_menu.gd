@@ -7,18 +7,8 @@ extends Control
 @onready var audio_player  = $AudioStreamPlayer2D
 @onready var audio_click   = $AudioClick
 @onready var audio_hover   = $AudioHover
-@onready var option_container = $OptionContainer
-@onready var load_menu        = $LoadMenu
-@onready var menu_ui          = $MenuUI
-
-var resolutions: Array = [
-	Vector2(1920, 1080),
-	Vector2(1600, 900),
-	Vector2(1366, 768),
-	Vector2(1280, 720),
-	Vector2(1024, 768),
-	Vector2(800,  600),
-]
+@onready var load_menu     = $LoadMenu
+@onready var menu_ui       = $MenuUI
 
 func _ready():
 	_handle_transition()
@@ -46,7 +36,6 @@ func _on_load_pressed():
 
 func _refresh_load_menu() -> void:
 	for i in range(1, SaveManager.MAX_SLOTS + 1):
-		# Slot rows: Slot1Row/Save1, Slot1Row/Thumb1
 		var btn   = load_menu.get_node_or_null("LoadMenuUI/LoadMenuSelect/Slot%dRow/Save%d" % [i, i])
 		var thumb = load_menu.get_node_or_null("LoadMenuUI/LoadMenuSelect/Slot%dRow/Thumb%d" % [i, i])
 
@@ -60,11 +49,9 @@ func _refresh_load_menu() -> void:
 		if thumb != null:
 			thumb.texture = SaveManager.slot_thumbnail(i) if exists else null
 
-		# Connect load signal once
 		if not btn.pressed.is_connected(_on_load_slot_pressed.bind(i)):
 			btn.pressed.connect(_on_load_slot_pressed.bind(i))
 
-	# Connect Back once
 	var back = load_menu.get_node_or_null("LoadMenuUI/LoadMenuSelect/Back")
 	if back and not back.pressed.is_connected(_on_back_pressed):
 		back.pressed.connect(_on_back_pressed)
@@ -74,32 +61,23 @@ func _on_load_slot_pressed(slot: int) -> void:
 
 func _on_arcade_pressed():
 	audio_click.play()
+	Global.arcade_mode  = true
+	Global.current_wave = 0
 	get_tree().change_scene_to_file("res://scene/stage.tscn")
 
 func _on_setting_pressed():
 	audio_click.play()
-	menu_ui.hide()
-	option_container.show()
+	Global.settings_return_path = "res://scene/main_menu.tscn"
+	get_tree().change_scene_to_file("res://scene/settings.tscn")
+
+func _on_debug_pressed():
+	audio_click.play()
+	Global.settings_return_path = "res://scene/main_menu.tscn"
+	get_tree().change_scene_to_file("res://scene/debug_settings.tscn")
 
 func _on_quit_pressed():
 	get_tree().quit()
 
 func _on_back_pressed():
-	option_container.hide()
 	load_menu.hide()
 	menu_ui.show()
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Settings
-# ─────────────────────────────────────────────────────────────────────────────
-
-func _on_resolution_select_item_selected(index: int):
-	var new_res = resolutions[index]
-	DisplayServer.window_set_size(new_res)
-	get_viewport().size = new_res
-
-func _on_full_screen_toggle_toggled(toggled_on: bool):
-	if toggled_on:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)

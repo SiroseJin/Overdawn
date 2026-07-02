@@ -23,6 +23,8 @@ var playerHitbox: Area2D              # The player's own hurtbox (receives incom
 var gameStarted: bool
 var current_wave: int
 var moving_to_next_wave: bool
+var arcade_mode: bool = false   # When true, enemies always chase — DetectionZone is ignored
+var settings_return_path: String = "res://scene/main_menu.tscn"
 
 # ─── Enemy Damage (shared per enemy type) ──────────────────────────────────────
 # Each enemy writes its stats here every frame so the player can read them

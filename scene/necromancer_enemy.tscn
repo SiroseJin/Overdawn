@@ -1,6 +1,6 @@
-[gd_scene load_steps=83 format=3 uid="uid://jr1opep0t5q3"]
+[gd_scene format=3 uid="uid://jr1opep0t5q3"]
 
-[ext_resource type="Script" path="res://script/necromancer_enemy.gd" id="1_r0fb5"]
+[ext_resource type="Script" uid="uid://b1vf7aifocm0l" path="res://script/necromancer_enemy.gd" id="1_r0fb5"]
 [ext_resource type="Texture2D" uid="uid://dvix1b71ls07w" path="res://art/EVil Wizard 2/Sprites/Idle.png" id="2_1edem"]
 [ext_resource type="Texture2D" uid="uid://bfmbsucuu1dx6" path="res://art/EVil Wizard 2/Sprites/Attack1.png" id="2_pkuah"]
 [ext_resource type="Texture2D" uid="uid://bjfc0io80dig" path="res://art/EVil Wizard 2/Sprites/Attack2.png" id="3_lbiw6"]
@@ -553,45 +553,50 @@ height = 42.0
 radius = 8.0
 height = 38.0
 
-[node name="necromancer_enemy" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_detect"]
+radius = 473.06766
+
+[node name="necromancer_enemy" type="CharacterBody2D" unique_id=70596450]
+z_index = 1
 script = ExtResource("1_r0fb5")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1311879676]
 position = Vector2(2.38419e-07, -32)
 scale = Vector2(0.672, 0.768)
 sprite_frames = SubResource("SpriteFrames_seu58")
 animation = &"summon"
 autoplay = "idle"
 
-[node name="FVX" type="AnimatedSprite2D" parent="."]
+[node name="FVX" type="AnimatedSprite2D" parent="." unique_id=1125339940]
 position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_b0b3f")
 animation = &"summoned"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1391848541]
 position = Vector2(0, -17)
 shape = SubResource("CapsuleShape2D_11to5")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=982299210]
+wait_time = 4.0
 autostart = true
 
-[node name="HitBox" type="Area2D" parent="."]
+[node name="HitBox" type="Area2D" parent="." unique_id=1972728254]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=575369338]
 position = Vector2(0, -18)
 shape = SubResource("CapsuleShape2D_xmfwv")
 
-[node name="NecroDealDamageArea" type="Area2D" parent="."]
+[node name="NecroDealDamageArea" type="Area2D" parent="." unique_id=1722664160]
 position = Vector2(0, -14)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="NecroDealDamageArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NecroDealDamageArea" unique_id=1136199140]
 position = Vector2(0, -3)
 shape = SubResource("CapsuleShape2D_55ubp")
 
-[node name="ProjectileOutput" type="Marker2D" parent="."]
+[node name="ProjectileOutput" type="Marker2D" parent="." unique_id=108405960]
 position = Vector2(12, -12)
 
-[node name="HealthBar" type="ProgressBar" parent="."]
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=379133455]
 self_modulate = Color(1, 0, 0, 1)
 offset_left = -22.0
 offset_top = 4.0
@@ -599,6 +604,17 @@ offset_right = 22.0
 offset_bottom = 8.0
 show_percentage = false
 
+[node name="DetectionZone" type="Area2D" parent="." unique_id=830640743]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone" unique_id=1578940915]
+position = Vector2(0, -17)
+shape = SubResource("CircleShape2D_detect")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="area_entered" from="NecroDealDamageArea" to="." method="_on_necro_deal_damage_area_area_entered"]
 [connection signal="area_exited" from="NecroDealDamageArea" to="." method="_on_necro_deal_damage_area_area_exited"]
+[connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
+[connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]

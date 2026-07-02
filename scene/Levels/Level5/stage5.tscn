@@ -1,54 +1,146 @@
-[gd_scene load_steps=7 format=3 uid="uid://cnyvpht4rwtvw"]
+[gd_scene format=3 uid="uid://cnyvpht4rwtvw"]
 
-[ext_resource type="Script" path="res://scene/Levels/Level5/stage5.gd" id="1_yaa1r"]
-[ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/player.tscn" id="2_exk6m"]
-[ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/scene_transition_animation.tscn" id="3_7scb5"]
-[ext_resource type="AudioStream" uid="uid://028va8maeqdm" path="res://audio/Music/Caketown 1 by matthewpablo.mp3" id="4_rd6tq"]
+[ext_resource type="Script" uid="uid://yjg5qo2bvv2l" path="res://scene/Levels/Level5/stage5.gd" id="1_stg5"]
+[ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/scene_transition_animation.tscn" id="3_trans"]
+[ext_resource type="AudioStream" uid="uid://028va8maeqdm" path="res://audio/Music/Caketown 1 by matthewpablo.mp3" id="4_bgm"]
+[ext_resource type="PackedScene" uid="uid://d0ib3gkf0fyen" path="res://scene/npc1.tscn" id="5_npc"]
+[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/frog_enemy.tscn" id="6_frog"]
+[ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/bat_enemy.tscn" id="7_bat"]
+[ext_resource type="PackedScene" uid="uid://chn8rr31oxv0x" path="res://scene/witch_enemy.tscn" id="8_witch"]
+[ext_resource type="PackedScene" uid="uid://jr1opep0t5q3" path="res://scene/necromancer_enemy.tscn" id="9_necro"]
+[ext_resource type="PackedScene" uid="uid://cmovingplat01" path="res://scene/moving_platform.tscn" id="10_mp"]
+[ext_resource type="PackedScene" uid="uid://cfallingplat0" path="res://scene/falling_platform.tscn" id="11_fp"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pyi8t"]
-size = Vector2(32, 24)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_death"]
+size = Vector2(5200, 60)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0lpfd"]
-size = Vector2(32, 24)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_portalA"]
+size = Vector2(40, 80)
 
-[node name="Stage5" type="Node2D"]
-script = ExtResource("1_yaa1r")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_portalB"]
+size = Vector2(40, 80)
 
-[node name="BackGroundSprite" type="StaticBody2D" parent="."]
+[node name="Stage5" type="Node2D" unique_id=1529574299]
+script = ExtResource("1_stg5")
 
-[node name="WallCollision" type="CollisionPolygon2D" parent="BackGroundSprite"]
-polygon = PackedVector2Array(216, 208, 208, 208, 208, 176, -256, 176, -256, -144, 256, -144, 256, 208, 248, 208, 248, -136, -248, -136, -248, 112, 216, 112)
+[node name="Terrain" type="StaticBody2D" parent="." unique_id=1255593313]
 
-[node name="EndPortal" type="Area2D" parent="."]
+[node name="Floor1" type="CollisionPolygon2D" parent="Terrain" unique_id=98302283]
+polygon = PackedVector2Array(0, 648, 700, 648, 700, 680, 0, 680)
+
+[node name="Floor2" type="CollisionPolygon2D" parent="Terrain" unique_id=1986804628]
+polygon = PackedVector2Array(1000, 648, 1600, 648, 1600, 680, 1000, 680)
+
+[node name="Floor3" type="CollisionPolygon2D" parent="Terrain" unique_id=664945375]
+polygon = PackedVector2Array(2100, 648, 2800, 648, 2800, 680, 2100, 680)
+
+[node name="Floor4" type="CollisionPolygon2D" parent="Terrain" unique_id=972726702]
+polygon = PackedVector2Array(3100, 648, 4000, 648, 4000, 680, 3100, 680)
+
+[node name="Floor5" type="CollisionPolygon2D" parent="Terrain" unique_id=1010618256]
+polygon = PackedVector2Array(4200, 648, 4900, 648, 4900, 680, 4200, 680)
+
+[node name="P1" type="CollisionPolygon2D" parent="Terrain" unique_id=201380858]
+polygon = PackedVector2Array(1150, 560, 1300, 560, 1300, 568, 1150, 568)
+
+[node name="P2" type="CollisionPolygon2D" parent="Terrain" unique_id=1132620680]
+polygon = PackedVector2Array(2180, 560, 2320, 560, 2320, 568, 2180, 568)
+
+[node name="P3" type="CollisionPolygon2D" parent="Terrain" unique_id=465828211]
+polygon = PackedVector2Array(2330, 480, 2470, 480, 2470, 488, 2330, 488)
+
+[node name="KeyPlatform" type="CollisionPolygon2D" parent="Terrain" unique_id=1276757631]
+polygon = PackedVector2Array(2420, 460, 2560, 460, 2560, 468, 2420, 468)
+
+[node name="LeftWall" type="CollisionPolygon2D" parent="Terrain" unique_id=283196416]
+polygon = PackedVector2Array(-100, -300, 0, -300, 0, 800, -100, 800)
+
+[node name="RightWall" type="CollisionPolygon2D" parent="Terrain" unique_id=928109757]
+polygon = PackedVector2Array(4900, -300, 5000, -300, 5000, 800, 4900, 800)
+
+[node name="MovingPlatform1" parent="." unique_id=924019853 instance=ExtResource("10_mp")]
+position = Vector2(760, 645)
+travel = Vector2(250, 0)
+
+[node name="MovingPlatform2" parent="." unique_id=1887732441 instance=ExtResource("10_mp")]
+position = Vector2(2860, 645)
+travel = Vector2(240, 0)
+
+[node name="MovingPlatform3" parent="." unique_id=1646808557 instance=ExtResource("10_mp")]
+position = Vector2(4040, 645)
+travel = Vector2(160, 0)
+
+[node name="FallingPlatform1" parent="." unique_id=114795995 instance=ExtResource("11_fp")]
+position = Vector2(1720, 600)
+
+[node name="FallingPlatform2" parent="." unique_id=636116812 instance=ExtResource("11_fp")]
+position = Vector2(1870, 560)
+
+[node name="FallingPlatform3" parent="." unique_id=1329956596 instance=ExtResource("11_fp")]
+position = Vector2(2020, 600)
+
+[node name="DeathZone" type="Area2D" parent="." unique_id=366546281]
+collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EndPortal"]
-position = Vector2(199, 95)
-shape = SubResource("RectangleShape2D_pyi8t")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone" unique_id=8837003]
+position = Vector2(2450, 760)
+shape = SubResource("RectangleShape2D_death")
 
-[node name="Player" parent="EndPortal" instance=ExtResource("2_exk6m")]
-position = Vector2(0, 64)
+[node name="Stage4Portal" type="Area2D" parent="." unique_id=162732717]
+collision_mask = 2
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, 32)
-zoom = Vector2(1.8, 1.8)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stage4Portal" unique_id=63153806]
+position = Vector2(30, 608)
+shape = SubResource("RectangleShape2D_portalA")
 
-[node name="SceneTransitionAnimation" parent="." instance=ExtResource("3_7scb5")]
+[node name="Stage6Portal" type="Area2D" parent="." unique_id=829922716]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stage6Portal" unique_id=1633575462]
+position = Vector2(4850, 608)
+shape = SubResource("RectangleShape2D_portalB")
+
+[node name="SceneTransitionAnimation" parent="." unique_id=1608430325 instance=ExtResource("3_trans")]
+visible = false
 top_level = true
-position = Vector2(0, 16)
+position = Vector2(5, 37)
 scale = Vector2(8.81124, 1.79268)
 
-[node name="AudioBGM" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("4_rd6tq")
+[node name="AudioBGM" type="AudioStreamPlayer" parent="." unique_id=1622012147]
+stream = ExtResource("4_bgm")
 volume_db = -4.0
 bus = &"bgm"
 
-[node name="Stage4Portal" type="Area2D" parent="."]
-collision_mask = 2
+[node name="Npc1" parent="." unique_id=1571475650 instance=ExtResource("5_npc")]
+position = Vector2(150, 641)
+dialogue_timeline = "s5npc1timeline"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Stage4Portal"]
-position = Vector2(-119, 90)
-shape = SubResource("RectangleShape2D_0lpfd")
+[node name="QuizNpc" parent="." unique_id=134998758 instance=ExtResource("5_npc")]
+position = Vector2(4400, 641)
 
-[connection signal="body_entered" from="EndPortal" to="." method="_on_end_portal_body_entered"]
+[node name="Bat1" parent="." unique_id=702771751 instance=ExtResource("7_bat")]
+position = Vector2(400, 570)
+
+[node name="Frog1" parent="." unique_id=2038829546 instance=ExtResource("6_frog")]
+position = Vector2(1300, 635)
+
+[node name="Bat2" parent="." unique_id=555840681 instance=ExtResource("7_bat")]
+position = Vector2(1400, 500)
+
+[node name="Witch1" parent="." unique_id=2128957536 instance=ExtResource("8_witch")]
+position = Vector2(2400, 635)
+
+[node name="Necromancer1" parent="." unique_id=1733766344 instance=ExtResource("9_necro")]
+position = Vector2(3500, 630)
+
+[node name="Frog2" parent="." unique_id=953677410 instance=ExtResource("6_frog")]
+position = Vector2(3750, 635)
+
+[node name="Player" parent="." unique_id=893853448 instance=ExtResource("2_player")]
+position = Vector2(100, 610)
+
+[connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Stage4Portal" to="." method="_on_stage_4_portal_body_entered"]
+[connection signal="body_entered" from="Stage6Portal" to="." method="_on_stage_6_portal_body_entered"]

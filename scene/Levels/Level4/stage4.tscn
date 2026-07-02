@@ -1,54 +1,165 @@
-[gd_scene load_steps=7 format=3 uid="uid://ho387xu1ptvp"]
+[gd_scene format=3 uid="uid://ho387xu1ptvp"]
 
-[ext_resource type="Script" path="res://scene/Levels/Level4/stage4.gd" id="1_5qole"]
-[ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/player.tscn" id="2_x2kt0"]
-[ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/scene_transition_animation.tscn" id="3_5ebta"]
-[ext_resource type="AudioStream" uid="uid://028va8maeqdm" path="res://audio/Music/Caketown 1 by matthewpablo.mp3" id="4_0ydrg"]
+[ext_resource type="Script" path="res://scene/Levels/Level4/stage4.gd" id="1_stg4"]
+[ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/scene_transition_animation.tscn" id="3_trans"]
+[ext_resource type="AudioStream" uid="uid://028va8maeqdm" path="res://audio/Music/Caketown 1 by matthewpablo.mp3" id="4_bgm"]
+[ext_resource type="PackedScene" uid="uid://d0ib3gkf0fyen" path="res://scene/npc1.tscn" id="5_npc"]
+[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/frog_enemy.tscn" id="6_frog"]
+[ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/bat_enemy.tscn" id="7_bat"]
+[ext_resource type="PackedScene" uid="uid://chn8rr31oxv0x" path="res://scene/witch_enemy.tscn" id="8_witch"]
+[ext_resource type="PackedScene" uid="uid://jr1opep0t5q3" path="res://scene/necromancer_enemy.tscn" id="9_necro"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_a7ebl"]
-size = Vector2(32, 24)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_portalA"]
+size = Vector2(40, 80)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_614lr"]
-size = Vector2(32, 24)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_portalB"]
+size = Vector2(40, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_death"]
+size = Vector2(5200, 60)
 
 [node name="Stage4" type="Node2D"]
-script = ExtResource("1_5qole")
+script = ExtResource("1_stg4")
 
-[node name="BackGroundSprite" type="StaticBody2D" parent="."]
+[node name="Terrain" type="StaticBody2D" parent="."]
 
-[node name="WallCollision" type="CollisionPolygon2D" parent="BackGroundSprite"]
-polygon = PackedVector2Array(216, 208, 208, 208, 208, 176, -256, 176, -256, -144, 256, -144, 256, 208, 248, 208, 248, -136, -248, -136, -248, 112, 216, 112)
+[node name="Floor1" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(0, 648, 800, 648, 800, 680, 0, 680)
 
-[node name="Stage5Portal" type="Area2D" parent="."]
+[node name="Floor2" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(1050, 648, 1850, 648, 1850, 680, 1050, 680)
+
+[node name="Floor3" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(2100, 648, 2950, 648, 2950, 680, 2100, 680)
+
+[node name="Floor4" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(3200, 648, 4700, 648, 4700, 680, 3200, 680)
+
+[node name="Bridge1" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(850, 600, 1000, 600, 1000, 608, 850, 608)
+
+[node name="Bridge2" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(1900, 570, 2050, 570, 2050, 578, 1900, 578)
+
+[node name="Bridge3" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(3000, 600, 3150, 600, 3150, 608, 3000, 608)
+
+[node name="Platform1" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(200, 548, 380, 548, 380, 556, 200, 556)
+
+[node name="Platform2" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(450, 480, 630, 480, 630, 488, 450, 488)
+
+[node name="Platform3" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(1250, 548, 1430, 548, 1430, 556, 1250, 556)
+
+[node name="Platform4" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(1550, 480, 1730, 480, 1730, 488, 1550, 488)
+
+[node name="Platform5" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(2250, 548, 2430, 548, 2430, 556, 2250, 556)
+
+[node name="Platform6" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(2550, 470, 2730, 470, 2730, 478, 2550, 478)
+
+[node name="Platform7" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(3400, 548, 3580, 548, 3580, 556, 3400, 556)
+
+[node name="Platform8" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(3700, 480, 3880, 480, 3880, 488, 3700, 488)
+
+[node name="Platform9" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(4050, 540, 4230, 540, 4230, 548, 4050, 548)
+
+[node name="LeftWall" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(-100, -300, 0, -300, 0, 800, -100, 800)
+
+[node name="RightWall" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(4700, -300, 4800, -300, 4800, 800, 4700, 800)
+
+[node name="DeathZone" type="Area2D" parent="."]
+collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Stage5Portal"]
-position = Vector2(199, 95)
-shape = SubResource("RectangleShape2D_a7ebl")
-
-[node name="Player" parent="Stage5Portal" instance=ExtResource("2_x2kt0")]
-position = Vector2(0, 64)
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, 32)
-zoom = Vector2(1.8, 1.8)
-
-[node name="SceneTransitionAnimation" parent="." instance=ExtResource("3_5ebta")]
-top_level = true
-position = Vector2(0, 16)
-scale = Vector2(8.81124, 1.79268)
-
-[node name="AudioBGM" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("4_0ydrg")
-volume_db = -4.0
-bus = &"bgm"
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(2350, 760)
+shape = SubResource("RectangleShape2D_death")
 
 [node name="Stage3Portal" type="Area2D" parent="."]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stage3Portal"]
-position = Vector2(-83, 93)
-shape = SubResource("RectangleShape2D_614lr")
+position = Vector2(30, 608)
+shape = SubResource("RectangleShape2D_portalA")
 
-[connection signal="body_entered" from="Stage5Portal" to="." method="_on_stage_5_portal_body_entered"]
+[node name="Stage5Portal" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stage5Portal"]
+position = Vector2(4680, 608)
+shape = SubResource("RectangleShape2D_portalB")
+
+[node name="SceneTransitionAnimation" parent="." instance=ExtResource("3_trans")]
+visible = false
+top_level = true
+position = Vector2(5, 37)
+scale = Vector2(8.81124, 1.79268)
+
+[node name="AudioBGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_bgm")
+volume_db = -4.0
+bus = &"bgm"
+
+[node name="Npc1" parent="." instance=ExtResource("5_npc")]
+position = Vector2(150, 641)
+dialogue_timeline = "s4npc1timeline"
+
+[node name="Npc2" parent="." instance=ExtResource("5_npc")]
+position = Vector2(1300, 641)
+dialogue_timeline = "s4npc2timeline"
+
+[node name="Npc3" parent="." instance=ExtResource("5_npc")]
+position = Vector2(2200, 641)
+dialogue_timeline = "s4npc3timeline"
+
+[node name="Npc4" parent="." instance=ExtResource("5_npc")]
+position = Vector2(4550, 641)
+dialogue_timeline = "s4npc4timeline"
+
+[node name="Bat1" parent="." instance=ExtResource("7_bat")]
+position = Vector2(500, 560)
+
+[node name="Frog1" parent="." instance=ExtResource("6_frog")]
+position = Vector2(1150, 635)
+
+[node name="Bat2" parent="." instance=ExtResource("7_bat")]
+position = Vector2(1500, 500)
+
+[node name="Frog2" parent="." instance=ExtResource("6_frog")]
+position = Vector2(2400, 635)
+
+[node name="Bat3" parent="." instance=ExtResource("7_bat")]
+position = Vector2(2500, 480)
+
+[node name="Witch1" parent="." instance=ExtResource("8_witch")]
+position = Vector2(2800, 635)
+
+[node name="Witch2" parent="." instance=ExtResource("8_witch")]
+position = Vector2(3500, 635)
+
+[node name="Bat4" parent="." instance=ExtResource("7_bat")]
+position = Vector2(3800, 470)
+
+[node name="Frog3" parent="." instance=ExtResource("6_frog")]
+position = Vector2(3950, 635)
+
+[node name="Necromancer1" parent="." instance=ExtResource("9_necro")]
+position = Vector2(4250, 630)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(100, 610)
+
+[connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Stage3Portal" to="." method="_on_stage_3_portal_body_entered"]
+[connection signal="body_entered" from="Stage5Portal" to="." method="_on_stage_5_portal_body_entered"]

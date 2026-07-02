@@ -1,6 +1,6 @@
-[gd_scene load_steps=43 format=3 uid="uid://dsxx5fkcrw8f5"]
+[gd_scene format=3 uid="uid://dsxx5fkcrw8f5"]
 
-[ext_resource type="Script" path="res://script/frog_enemy.gd" id="1_k55gl"]
+[ext_resource type="Script" uid="uid://cfmhu4dph7vwa" path="res://script/frog_enemy.gd" id="1_k55gl"]
 [ext_resource type="Texture2D" uid="uid://c3qsrkkxsdfsk" path="res://art/craftpix-net-913026-free-gangster-pixel-character-sprite-sheets-pack/Gangsters_2/Attack_1.png" id="2_76hn7"]
 [ext_resource type="Texture2D" uid="uid://cermyyvwokosc" path="res://art/craftpix-net-913026-free-gangster-pixel-character-sprite-sheets-pack/Gangsters_2/Dead.png" id="3_wdigd"]
 [ext_resource type="Texture2D" uid="uid://7kvrth25wgnd" path="res://art/craftpix-net-913026-free-gangster-pixel-character-sprite-sheets-pack/Gangsters_2/Hurt.png" id="4_5sxlq"]
@@ -268,39 +268,44 @@ radius = 9.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_hp3hy"]
 radius = 3.76049
 
-[node name="frog_enemy" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_detect"]
+radius = 170.11308
+
+[node name="frog_enemy" type="CharacterBody2D" unique_id=1556349936]
+z_index = 1
 scale = Vector2(1, 0.80615)
 script = ExtResource("1_k55gl")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1331666682]
 position = Vector2(4, -32.2521)
 scale = Vector2(0.488492, 0.576419)
 sprite_frames = SubResource("SpriteFrames_oem18")
 animation = &"attack"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=645069567]
 position = Vector2(0, -8.68325)
 scale = Vector2(0.812106, 1)
 shape = SubResource("CircleShape2D_1w40h")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=792836337]
+wait_time = 3.0
 autostart = true
 
-[node name="HitBox" type="Area2D" parent="."]
+[node name="HitBox" type="Area2D" parent="." unique_id=1719722337]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=1714044591]
 position = Vector2(0, -8.68325)
 scale = Vector2(1, 1.23171)
 shape = SubResource("CircleShape2D_88eua")
 
-[node name="FrogDealDamageArea" type="Area2D" parent="."]
+[node name="FrogDealDamageArea" type="Area2D" parent="." unique_id=1445614437]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FrogDealDamageArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FrogDealDamageArea" unique_id=1993466385]
 position = Vector2(0, -8.68325)
 scale = Vector2(2.92515, 3.66539)
 shape = SubResource("CircleShape2D_hp3hy")
 
-[node name="HealthBar" type="ProgressBar" parent="."]
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=341612521]
 self_modulate = Color(1, 0, 0, 1)
 offset_left = -11.0
 offset_top = 4.96186
@@ -308,7 +313,17 @@ offset_right = 11.0
 offset_bottom = 8.96185
 show_percentage = false
 
+[node name="DetectionZone" type="Area2D" parent="." unique_id=1783748213]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone" unique_id=401518288]
+position = Vector2(-0.99999994, 1.2404639)
+shape = SubResource("CircleShape2D_detect")
+
 [connection signal="timeout" from="Timer" to="." method="_on_direction_timer_timeout"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_frog_hit_box_area_entered"]
 [connection signal="area_entered" from="FrogDealDamageArea" to="." method="_on_frog_area_deal_damage_area_entered"]
 [connection signal="area_exited" from="FrogDealDamageArea" to="." method="_on_frog_area_deal_damage_area_exited"]
+[connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
+[connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]

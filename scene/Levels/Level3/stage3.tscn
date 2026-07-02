@@ -1,44 +1,130 @@
-[gd_scene load_steps=7 format=3 uid="uid://dbq5mi3q4rxcj"]
+[gd_scene format=3 uid="uid://dbq5mi3q4rxcj"]
 
-[ext_resource type="Script" path="res://scene/Levels/Level3/stage3.gd" id="1_ofun6"]
+[ext_resource type="Script" uid="uid://dbocxiivny60x" path="res://scene/Levels/Level3/stage3.gd" id="1_ofun6"]
 [ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/player.tscn" id="2_5pl4s"]
 [ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/scene_transition_animation.tscn" id="2_ctrbp"]
 [ext_resource type="AudioStream" uid="uid://028va8maeqdm" path="res://audio/Music/Caketown 1 by matthewpablo.mp3" id="3_s4f8y"]
+[ext_resource type="PackedScene" uid="uid://d0ib3gkf0fyen" path="res://scene/npc1.tscn" id="5_npc1"]
+[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/frog_enemy.tscn" id="6_frog"]
+[ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/bat_enemy.tscn" id="7_bat"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d1twj"]
-size = Vector2(32, 24)
+size = Vector2(40, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pxhb"]
-size = Vector2(32, 24)
+size = Vector2(40, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_death"]
+size = Vector2(4600, 60)
 
 [node name="Stage3" type="Node2D"]
 script = ExtResource("1_ofun6")
 
-[node name="BackGroundSprite" type="StaticBody2D" parent="."]
+[node name="Terrain" type="StaticBody2D" parent="."]
 
-[node name="WallCollision" type="CollisionPolygon2D" parent="BackGroundSprite"]
-polygon = PackedVector2Array(216, 208, 208, 208, 208, 176, -256, 176, -256, -144, 256, -144, 256, 208, 248, 208, 248, -136, -248, -136, -248, 112, 216, 112)
+[node name="Floor1" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(0, 648, 600, 648, 600, 680, 0, 680)
+
+[node name="Floor2" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(800, 648, 1400, 648, 1400, 680, 800, 680)
+
+[node name="Floor3" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(1700, 648, 2400, 648, 2400, 680, 1700, 680)
+
+[node name="Floor4" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(2700, 648, 3500, 648, 3500, 680, 2700, 680)
+
+[node name="Floor5" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(3700, 648, 4100, 648, 4100, 680, 3700, 680)
+
+[node name="Bridge1" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(620, 618, 780, 618, 780, 626, 620, 626)
+
+[node name="Bridge2a" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(1420, 568, 1550, 568, 1550, 576, 1420, 576)
+
+[node name="Bridge2b" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(1560, 608, 1700, 608, 1700, 616, 1560, 616)
+
+[node name="Bridge4" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(3520, 628, 3700, 628, 3700, 636, 3520, 636)
+
+[node name="Platform1" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(100, 520, 250, 520, 250, 528, 100, 528)
+
+[node name="Platform2" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(280, 450, 430, 450, 430, 458, 280, 458)
+
+[node name="Platform3" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(460, 380, 620, 380, 620, 388, 460, 388)
+
+[node name="Platform4" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(900, 520, 1060, 520, 1060, 528, 900, 528)
+
+[node name="Platform5" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(1100, 450, 1280, 450, 1280, 458, 1100, 458)
+
+[node name="Platform6" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(1350, 380, 1520, 380, 1520, 388, 1350, 388)
+
+[node name="Platform7" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(1800, 520, 1960, 520, 1960, 528, 1800, 528)
+
+[node name="Platform8" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(2010, 450, 2200, 450, 2200, 458, 2010, 458)
+
+[node name="Platform9" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(2260, 380, 2420, 380, 2420, 388, 2260, 388)
+
+[node name="Platform10" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(2450, 520, 2620, 520, 2620, 528, 2450, 528)
+
+[node name="Platform11" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(2640, 460, 2800, 460, 2800, 468, 2640, 468)
+
+[node name="Platform12" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(2820, 520, 2980, 520, 2980, 528, 2820, 528)
+
+[node name="Platform13" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(3060, 450, 3220, 450, 3220, 458, 3060, 458)
+
+[node name="Platform14" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(3260, 380, 3460, 380, 3460, 388, 3260, 388)
+
+[node name="Platform15" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(3600, 520, 3800, 520, 3800, 528, 3600, 528)
+
+[node name="Platform16" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(3850, 450, 4050, 450, 4050, 458, 3850, 458)
+
+[node name="LeftWall" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(-100, -300, 0, -300, 0, 800, -100, 800)
+
+[node name="RightWall" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(4100, -300, 4200, -300, 4200, 800, 4100, 800)
+
+[node name="DeathZone" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(2050, 760)
+shape = SubResource("RectangleShape2D_death")
 
 [node name="Stage4Portal" type="Area2D" parent="."]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stage4Portal"]
-position = Vector2(199, 95)
+position = Vector2(4070, 608)
 shape = SubResource("RectangleShape2D_d1twj")
 
-[node name="Player" parent="." instance=ExtResource("2_5pl4s")]
-position = Vector2(0, 64)
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, 32)
-zoom = Vector2(1.8, 1.8)
-
 [node name="SceneTransitionAnimation" parent="." instance=ExtResource("2_ctrbp")]
+visible = false
 top_level = true
-position = Vector2(0, 16)
+position = Vector2(5, 37)
 scale = Vector2(8.81124, 1.79268)
 
-[node name="AudioBGM" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioBGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_s4f8y")
 volume_db = -4.0
 bus = &"bgm"
@@ -47,8 +133,70 @@ bus = &"bgm"
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stage2Portal"]
-position = Vector2(-118, 90)
+position = Vector2(30, 608)
 shape = SubResource("RectangleShape2D_8pxhb")
+
+[node name="Npc1" parent="." instance=ExtResource("5_npc1")]
+position = Vector2(100, 641)
+dialogue_timeline = "s3npc1timeline"
+
+[node name="Npc2" parent="." instance=ExtResource("5_npc1")]
+position = Vector2(1100, 641)
+dialogue_timeline = "s3npc2timeline"
+
+[node name="Npc3" parent="." instance=ExtResource("5_npc1")]
+position = Vector2(2150, 641)
+dialogue_timeline = "s3npc3timeline"
+
+[node name="Npc4" parent="." instance=ExtResource("5_npc1")]
+position = Vector2(3900, 641)
+dialogue_timeline = "s3npc4timeline"
+
+[node name="Bat1" parent="." instance=ExtResource("7_bat")]
+position = Vector2(300, 450)
+
+[node name="Bat2" parent="." instance=ExtResource("7_bat")]
+position = Vector2(500, 370)
+
+[node name="Frog1" parent="." instance=ExtResource("6_frog")]
+position = Vector2(900, 641)
+
+[node name="Bat3" parent="." instance=ExtResource("7_bat")]
+position = Vector2(1000, 450)
+
+[node name="Bat4" parent="." instance=ExtResource("7_bat")]
+position = Vector2(1200, 370)
+
+[node name="Frog2" parent="." instance=ExtResource("6_frog")]
+position = Vector2(1800, 641)
+
+[node name="Bat5" parent="." instance=ExtResource("7_bat")]
+position = Vector2(1900, 450)
+
+[node name="Bat6" parent="." instance=ExtResource("7_bat")]
+position = Vector2(2150, 370)
+
+[node name="Frog3" parent="." instance=ExtResource("6_frog")]
+position = Vector2(2700, 641)
+
+[node name="Bat7" parent="." instance=ExtResource("7_bat")]
+position = Vector2(2500, 450)
+
+[node name="Bat8" parent="." instance=ExtResource("7_bat")]
+position = Vector2(3000, 450)
+
+[node name="Bat9" parent="." instance=ExtResource("7_bat")]
+position = Vector2(3300, 370)
+
+[node name="Frog4" parent="." instance=ExtResource("6_frog")]
+position = Vector2(3500, 641)
+
+[node name="Bat10" parent="." instance=ExtResource("7_bat")]
+position = Vector2(3700, 450)
+
+[node name="Player" parent="." instance=ExtResource("2_5pl4s")]
+position = Vector2(100, 610)
 
 [connection signal="body_entered" from="Stage4Portal" to="." method="_on_stage_4_portal_body_entered"]
 [connection signal="body_entered" from="Stage2Portal" to="." method="_on_stage_2_portal_body_entered"]
+[connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]

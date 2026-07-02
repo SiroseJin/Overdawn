@@ -1,0 +1,177 @@
+[gd_scene format=3 uid="uid://death_screen_01"]
+
+[ext_resource type="Script" path="res://script/death_screen.gd" id="1_ds"]
+[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_font"]
+[ext_resource type="AudioStream" uid="uid://c1m8vs2hh2gx6" path="res://audio/SFX/menuclick.wav" id="3_sfx"]
+
+[node name="DeathScreen" type="Control"]
+auto_translate_mode = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ds")
+
+[node name="Overlay" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 4000.0
+offset_bottom = 4000.0
+color = Color(0, 0, 0, 0.75)
+
+[node name="MainPanel" type="MarginContainer" parent="."]
+layout_mode = 0
+anchor_left = 0.35
+anchor_top = 0.25
+anchor_right = 0.65
+anchor_bottom = 0.75
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TitleLabel" type="Label" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 28
+text = "You Died"
+horizontal_alignment = 1
+
+[node name="RetryButton" type="Button" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+text = "Retry"
+
+[node name="LoadButton" type="Button" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+text = "Load Save"
+
+[node name="LobbyButton" type="Button" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+text = "Back to Lobby"
+
+[node name="MenuButton" type="Button" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+text = "Main Menu"
+
+[node name="LoadPanel" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 0
+anchor_left = 0.25
+anchor_top = 0.2
+anchor_right = 0.75
+anchor_bottom = 0.8
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LoadPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Slot1Row" type="HBoxContainer" parent="LoadPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Thumb1" type="TextureRect" parent="LoadPanel/VBoxContainer/Slot1Row"]
+custom_minimum_size = Vector2(160, 90)
+layout_mode = 2
+stretch_mode = 6
+
+[node name="LoadSlot1" type="Button" parent="LoadPanel/VBoxContainer/Slot1Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+text = "Slot 1 - Empty"
+
+[node name="Slot2Row" type="HBoxContainer" parent="LoadPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Thumb2" type="TextureRect" parent="LoadPanel/VBoxContainer/Slot2Row"]
+custom_minimum_size = Vector2(160, 90)
+layout_mode = 2
+stretch_mode = 6
+
+[node name="LoadSlot2" type="Button" parent="LoadPanel/VBoxContainer/Slot2Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+text = "Slot 2 - Empty"
+
+[node name="Slot3Row" type="HBoxContainer" parent="LoadPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Thumb3" type="TextureRect" parent="LoadPanel/VBoxContainer/Slot3Row"]
+custom_minimum_size = Vector2(160, 90)
+layout_mode = 2
+stretch_mode = 6
+
+[node name="LoadSlot3" type="Button" parent="LoadPanel/VBoxContainer/Slot3Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+text = "Slot 3 - Empty"
+
+[node name="LoadBackButton" type="Button" parent="LoadPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+text = "Back"
+
+[node name="ConfirmPanel" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 0
+anchor_left = 0.3
+anchor_top = 0.35
+anchor_right = 0.7
+anchor_bottom = 0.65
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConfirmPanel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ConfirmLabel" type="Label" parent="ConfirmPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "Unsaved progress will be lost!"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="AreYouSure" type="Label" parent="ConfirmPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "Are you sure?"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ConfirmPanel/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 16
+
+[node name="ConfirmButton" type="Button" parent="ConfirmPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+text = "Confirm"
+
+[node name="CancelButton" type="Button" parent="ConfirmPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+text = "Cancel"
+
+[connection signal="pressed" from="MainPanel/VBoxContainer/RetryButton" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="MainPanel/VBoxContainer/LoadButton" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="MainPanel/VBoxContainer/LobbyButton" to="." method="_on_lobby_pressed"]
+[connection signal="pressed" from="MainPanel/VBoxContainer/MenuButton" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="LoadPanel/VBoxContainer/Slot1Row/LoadSlot1" to="." method="_on_load_slot_1_pressed"]
+[connection signal="pressed" from="LoadPanel/VBoxContainer/Slot2Row/LoadSlot2" to="." method="_on_load_slot_2_pressed"]
+[connection signal="pressed" from="LoadPanel/VBoxContainer/Slot3Row/LoadSlot3" to="." method="_on_load_slot_3_pressed"]
+[connection signal="pressed" from="LoadPanel/VBoxContainer/LoadBackButton" to="." method="_on_load_back_pressed"]
+[connection signal="pressed" from="ConfirmPanel/VBoxContainer/HBoxContainer/ConfirmButton" to="." method="_on_confirm_pressed"]
+[connection signal="pressed" from="ConfirmPanel/VBoxContainer/HBoxContainer/CancelButton" to="." method="_on_cancel_pressed"]

@@ -198,7 +198,11 @@ radius = 9.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_mqgrq"]
 radius = 8.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_u4orr"]
+radius = 176.07101
+
 [node name="BatEnemy" type="CharacterBody2D" unique_id=925523153]
+z_index = 1
 safe_margin = 2.0
 script = ExtResource("1_dm5nb")
 
@@ -233,7 +237,16 @@ offset_right = 13.0
 offset_bottom = 11.0
 show_percentage = false
 
+[node name="DetectionZone" type="Area2D" parent="." unique_id=1279263129]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone" unique_id=258573586]
+shape = SubResource("CircleShape2D_u4orr")
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_bat_hit_box_area_entered"]
 [connection signal="area_entered" from="BatDealDamageArea" to="." method="_on_bat_deal_damage_area_area_entered"]
 [connection signal="area_exited" from="BatDealDamageArea" to="." method="_on_bat_deal_damage_area_area_exited"]
+[connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
+[connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]

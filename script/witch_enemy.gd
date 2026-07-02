@@ -34,6 +34,12 @@ var is_dealing_damage: bool = false
 var is_witch_chase: bool    = false
 var is_witch_roaming: bool  = false
 
+# Detection zone / roaming
+var player_in_range: bool = false
+var spawn_position: Vector2
+var roam_target_x: float
+var roam_range: float = 80.0
+
 # Charge state: witch slows down then fires after the timer elapses
 var charging: bool = false
 var charging_timer: Timer
@@ -60,6 +66,10 @@ func _ready():
 	health_bar.max_value = health_max
 	health_bar.value     = health
 
+	spawn_position   = position
+	roam_target_x    = position.x
+	$Timer.wait_time = 2.5
+
 func _process(_delta):
 	move(_delta)
 	handle_animation()
@@ -68,7 +78,10 @@ func _process(_delta):
 	Global.witchDamageAmount = damage_to_deal
 	Global.witchDamageZone    = $WitchDealDamageArea
 
-	if Global.playerAlive:
+	if not Global.playerAlive:
+		is_witch_chase   = false
+		is_witch_roaming = false
+	elif Global.arcade_mode or (player_in_range and has_line_of_sight_to_player()):
 		is_witch_chase   = true
 		is_witch_roaming = false
 		Player = Global.PlayerBody
@@ -116,7 +129,16 @@ func move(delta):
 	elif taking_damage and is_witch_chase:
 		velocity.x = sign(position.x - Player.position.x) * 60
 
-	elif not taking_damage and not is_witch_chase and not Global.playerAlive:
+	elif not taking_damage and is_witch_roaming:
+		# Drift horizontally toward the current roam target at 30% speed
+		var dist = roam_target_x - position.x
+		if abs(dist) > 5.0:
+			velocity.x = sign(dist) * speed * 0.3
+			dir.x      = sign(velocity.x)
+		else:
+			velocity.x = 0
+
+	else:
 		velocity.x = 0
 
 	move_and_slide()
@@ -136,7 +158,9 @@ func handle_animation():
 		else:
 			sprite.play("idle")
 
-		if Player and Player.position.x < position.x:
+		var facing_left = (is_witch_chase and Player and Player.position.x < position.x) \
+			or (is_witch_roaming and dir.x == -1)
+		if facing_left:
 			sprite.flip_h                = true
 			$ProjectileOutput.position.x = -12
 		else:
@@ -209,6 +233,27 @@ func handle_death():
 # ───────────────────────────────────────────────────────────────────────────────
 # Signals
 # ───────────────────────────────────────────────────────────────────────────────
+
+func has_line_of_sight_to_player() -> bool:
+	if not Global.PlayerBody:
+		return false
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsRayQueryParameters2D.create(global_position, Global.PlayerBody.global_position)
+	query.exclude = [self]
+	var result = space_state.intersect_ray(query)
+	return result.is_empty() or result.get("collider") == Global.PlayerBody
+
+func _on_timer_timeout():
+	# Pick a new random horizontal roam target within roam_range of spawn position
+	roam_target_x = spawn_position.x + randf_range(-roam_range, roam_range)
+
+func _on_detection_zone_body_entered(body: Node2D):
+	if body == Global.PlayerBody:
+		player_in_range = true
+
+func _on_detection_zone_body_exited(body: Node2D):
+	if body == Global.PlayerBody:
+		player_in_range = false
 
 func _on_hit_box_area_entered(area: Area2D):
 	if area == Global.playerDamageZone:

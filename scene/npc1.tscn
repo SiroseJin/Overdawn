@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cuv8ghi02bo6s" path="res://script/npc_1.gd" id="1_4hgyg"]
 [ext_resource type="Texture2D" uid="uid://bxxq1jl0my4tu" path="res://art/Free-City-Trader-Character-Sprite-Sheets-Pixel-Art/Trader_3/Idle.png" id="1_15n37"]
 [ext_resource type="Texture2D" uid="uid://bpu6b0wvtr57k" path="res://art/Free-City-Trader-Character-Sprite-Sheets-Pixel-Art/Trader_3/Dialogue.png" id="1_sxijf"]
+[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_font"]
 [ext_resource type="Script" uid="uid://cx2mbhe5mu2aw" path="res://script/npc1_chat_detection_zone.gd" id="3_4hgyg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wo54f"]
@@ -115,6 +116,21 @@ shape = SubResource("CapsuleShape2D_4dbx6")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1929895191]
 shape = SubResource("CircleShape2D_hcji2")
 disabled = true
+
+[node name="InteractHint" type="Label" parent="." unique_id=1870217038]
+auto_translate_mode = 1
+visible = false
+offset_left = -50.0
+offset_top = -100.0
+offset_right = 50.0
+offset_bottom = -80.0
+theme_override_colors/font_color = Color(1, 1, 0.2, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 11
+text = "[F] Talk"
+horizontal_alignment = 1
 
 [connection signal="body_entered" from="ChatDetectionZone" to="ChatDetectionZone" method="_on_body_entered"]
 [connection signal="body_exited" from="ChatDetectionZone" to="ChatDetectionZone" method="_on_body_exited"]

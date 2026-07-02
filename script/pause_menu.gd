@@ -3,39 +3,19 @@ extends Control
 # ─── Pause Menu ───────────────────────────────────────────────────────────────
 
 var margin_container : Node
-var option_container : Node
 var save_menu        : Node
 var load_menu        : Node
+var confirm_panel    : Node
 var audio_open       : Node
 var audio_close      : Node
 
-var resolutions: Array = [
-	Vector2(1920, 1080),
-	Vector2(1600, 900),
-	Vector2(1366, 768),
-	Vector2(1280, 720),
-	Vector2(1024, 768),
-	Vector2(800,  600),
-]
-
 func _ready():
 	margin_container = get_node_or_null("MarginContainer")
-	option_container = get_node_or_null("OptionContainer")
 	save_menu        = get_node_or_null("SaveMenu")
 	load_menu        = get_node_or_null("LoadMenu")
+	confirm_panel    = get_node_or_null("ConfirmPanel")
 	audio_open       = get_node_or_null("AudioOpen")
 	audio_close      = get_node_or_null("AudioClose")
-
-	for pair in [
-		["MarginContainer", margin_container],
-		["OptionContainer", option_container],
-		["SaveMenu",        save_menu],
-		["LoadMenu",        load_menu],
-		["AudioOpen",       audio_open],
-		["AudioClose",      audio_close],
-	]:
-		if pair[1] == null:
-			push_warning("PauseMenu: node '%s' not found." % pair[0])
 
 	if audio_open:
 		audio_open.play()
@@ -48,13 +28,13 @@ func _refresh_slot_labels() -> void:
 		var label : String = SaveManager.slot_label(i)
 
 		if save_menu:
-			var btn = save_menu.get_node_or_null("VBoxContainer/SaveSlot%d" % i)
+			var btn: Button = save_menu.get_node_or_null("VBoxContainer/SaveSlot%d" % i) as Button
 			if btn:
 				btn.text = label
 
 		if load_menu:
-			var btn   = load_menu.get_node_or_null("VBoxContainer/Slot%dRow/LoadSlot%d" % [i, i])
-			var thumb = load_menu.get_node_or_null("VBoxContainer/Slot%dRow/Thumb%d" % [i, i])
+			var btn:   Button      = load_menu.get_node_or_null("VBoxContainer/Slot%dRow/LoadSlot%d" % [i, i]) as Button
+			var thumb: TextureRect = load_menu.get_node_or_null("VBoxContainer/Slot%dRow/Thumb%d" % [i, i]) as TextureRect
 			if btn:
 				btn.text     = label
 				btn.disabled = not SaveManager.slot_exists(i)
@@ -62,7 +42,7 @@ func _refresh_slot_labels() -> void:
 				thumb.texture = SaveManager.slot_thumbnail(i) if SaveManager.slot_exists(i) else null
 
 func _show_only(container: Node) -> void:
-	for c in [margin_container, option_container, save_menu, load_menu]:
+	for c in [margin_container, save_menu, load_menu, confirm_panel]:
 		if c:
 			c.hide()
 	if container:
@@ -76,6 +56,7 @@ func _on_resume_pressed():
 	if audio_close: audio_close.play()
 	Global.PlayerBody.is_game_paused = false
 	Engine.time_scale = 1
+	Dialogic.paused = false
 	hide()
 
 func _on_save_pressed():
@@ -90,21 +71,48 @@ func _on_load_pressed():
 
 func _on_settings_pressed():
 	if audio_open: audio_open.play()
-	_show_only(option_container)
-
-func _on_lobby_pressed():
-	if audio_close: audio_close.play()
-	Global.PlayerBody.dead = true
-	Global.PlayerBody.handle_death_animation()
-	Global.playerAlive = false
-	Engine.time_scale  = 1
+	if get_parent().get_node_or_null("SettingsOverlay"):
+		return
+	var settings: Node = (load("res://scene/settings.tscn") as PackedScene).instantiate()
+	settings.name = "SettingsOverlay"
+	get_parent().add_child(settings)
 	hide()
+	settings.tree_exited.connect(func():
+		if is_instance_valid(self):
+			show()
+	)
+
+func _on_debug_pressed():
+	if audio_open: audio_open.play()
+	var debug: Node = (load("res://scene/debug_settings.tscn") as PackedScene).instantiate()
+	debug.name = "DebugOverlay"
+	get_parent().add_child(debug)
+	hide()
+	debug.tree_exited.connect(func():
+		if is_instance_valid(self):
+			show()
+	)
+
+func _on_main_menu_pressed():
+	if audio_open: audio_open.play()
+	_show_only(confirm_panel)
+
+func _on_confirm_pressed():
+	if audio_close: audio_close.play()
+	Global.PlayerBody.is_game_paused = false
+	Engine.time_scale = 1
+	Dialogic.paused = false
+	get_tree().change_scene_to_file("res://scene/main_menu.tscn")
+
+func _on_cancel_pressed():
+	if audio_close: audio_close.play()
+	_show_only(margin_container)
 
 func _on_quit_pressed():
 	get_tree().quit()
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Save slots — save_game is now async (captures screenshot)
+# Save slots
 # ─────────────────────────────────────────────────────────────────────────────
 
 func _on_save_slot_1_pressed(): _do_save(1)
@@ -112,7 +120,6 @@ func _on_save_slot_2_pressed(): _do_save(2)
 func _on_save_slot_3_pressed(): _do_save(3)
 
 func _do_save(slot: int) -> void:
-	# save_game is async — await it so screenshot is captured before refresh
 	await SaveManager.save_game(slot)
 	if audio_close: audio_close.play()
 	_refresh_slot_labels()
@@ -132,24 +139,10 @@ func _do_load(slot: int) -> void:
 	if audio_close: audio_close.play()
 	Global.PlayerBody.is_game_paused = false
 	Engine.time_scale = 1
+	Dialogic.paused = false
 	hide()
 	SaveManager.load_game(slot)
 
 func _on_back_pressed():
 	if audio_close: audio_close.play()
 	_show_only(margin_container)
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Settings
-# ─────────────────────────────────────────────────────────────────────────────
-
-func _on_resolution_select_item_selected(index: int):
-	var new_res = resolutions[index]
-	DisplayServer.window_set_size(new_res)
-	get_viewport().size = new_res
-
-func _on_full_screen_toggle_toggled(toggled_on: bool):
-	if toggled_on:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)

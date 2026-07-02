@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://cqlockeddoor0"]
+
+[ext_resource type="Script" path="res://script/locked_door.gd" id="1_door"]
+[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_font"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(24, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_detect"]
+size = Vector2(90, 170)
+
+[node name="LockedDoor" type="StaticBody2D"]
+script = ExtResource("1_door")
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(0.42, 0.28, 0.16, 1)
+polygon = PackedVector2Array(-12, -80, 12, -80, 12, 80, -12, 80)
+
+[node name="Bar" type="Polygon2D" parent="."]
+color = Color(0.7, 0.55, 0.2, 1)
+polygon = PackedVector2Array(-12, -8, 12, -8, 12, 8, -12, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_body")
+
+[node name="DetectZone" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectZone"]
+shape = SubResource("RectangleShape2D_detect")
+
+[node name="Hint" type="Label" parent="."]
+auto_translate_mode = 1
+visible = false
+offset_left = -90.0
+offset_top = -118.0
+offset_right = 90.0
+offset_bottom = -96.0
+theme_override_colors/font_color = Color(1, 0.5, 0.5, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 11
+text = "It's locked. Find the one who got out."
+horizontal_alignment = 1

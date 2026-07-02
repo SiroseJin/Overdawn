@@ -12,6 +12,7 @@ extends Node2D
 @onready var player_camera         = $Player/Camera2D
 @onready var player                = $Player
 @onready var audio_bgm             = $AudioBGM
+@onready var wave_label            = $HUD/WaveLabel
 
 # ─── Enemy / Item Scenes ───────────────────────────────────────────────────────
 
@@ -63,9 +64,8 @@ func _ready():
 	scene_transition_anim.get_parent().get_node("ColorRect").color.a = 255
 	scene_transition_anim.play("fade_out")
 
-	player_camera.enabled  = true
-	current_wave           = 0
-	Global.current_wave    = current_wave
+	player_camera.enabled = true
+	current_wave          = Global.current_wave  # 0 for fresh start, saved-1 when loading
 	audio_bgm.play()
 
 	# Verify all enemy scenes loaded correctly
@@ -78,15 +78,6 @@ func _ready():
 	position_to_next_wave()
 
 func _process(_delta):
-	# Return to lobby after a short pause when the player dies
-	if !Global.playerAlive:
-		await get_tree().create_timer(3.0).timeout
-		Global.gameStarted = false
-		scene_transition_anim.play("fade_in")
-		await get_tree().create_timer(0.5).timeout
-		get_tree().change_scene_to_file("res://scene/lobby_level.tscn")
-		return
-
 	# Advance to the next wave once all spawned enemies are dead
 	if wave_spawn_ended and current_enemy_count() == 0:
 		position_to_next_wave()
@@ -109,6 +100,7 @@ func position_to_next_wave():
 
 	current_wave        += 1
 	Global.current_wave  = current_wave
+	wave_label.text      = "Waves: %d" % current_wave
 
 	# Reward the player for surviving the previous wave
 	Global.PlayerBody.heal_player(5)

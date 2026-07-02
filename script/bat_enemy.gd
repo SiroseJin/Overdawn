@@ -25,6 +25,12 @@ var is_dealing_damage: bool = false
 var is_bat_chase: bool      = false
 var is_bat_roaming: bool    = false
 
+# Detection zone / roaming
+var player_in_range: bool = false
+var spawn_position: Vector2
+var roam_target: Vector2
+var roam_range: float = 80.0
+
 var Player: CharacterBody2D
 var health_bar: ProgressBar
 
@@ -37,6 +43,10 @@ func _ready():
 	health_bar.max_value = health_max
 	health_bar.value     = health
 
+	spawn_position   = position
+	roam_target      = position
+	$Timer.wait_time = 2.5
+
 func _process(_delta):
 	move(_delta)
 	handle_animation()
@@ -45,7 +55,10 @@ func _process(_delta):
 	Global.batDamageAmount = damage_to_deal
 	Global.batDamageZone    = $BatDealDamageArea
 
-	if Global.playerAlive:
+	if not Global.playerAlive:
+		is_bat_chase   = false
+		is_bat_roaming = false
+	elif Global.arcade_mode or (player_in_range and has_line_of_sight_to_player()):
 		is_bat_chase   = true
 		is_bat_roaming = false
 	else:
@@ -72,7 +85,15 @@ func move(_delta):
 	elif taking_damage and is_bat_chase:
 		velocity = position.direction_to(Player.position) * -80
 
-	elif not taking_damage and not is_bat_chase and not Global.playerAlive:
+	elif not taking_damage and is_bat_roaming:
+		# Drift toward the current roam target at 40% speed
+		if position.distance_to(roam_target) > 5.0:
+			velocity = position.direction_to(roam_target) * (speed * 0.4)
+			dir.x    = sign(velocity.x)
+		else:
+			velocity = Vector2.ZERO
+
+	else:
 		velocity = Vector2.ZERO
 
 	move_and_slide()
@@ -128,6 +149,30 @@ func handle_death():
 # ───────────────────────────────────────────────────────────────────────────────
 # Signals
 # ───────────────────────────────────────────────────────────────────────────────
+
+func has_line_of_sight_to_player() -> bool:
+	if not Global.PlayerBody:
+		return false
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsRayQueryParameters2D.create(global_position, Global.PlayerBody.global_position)
+	query.exclude = [self]
+	var result = space_state.intersect_ray(query)
+	return result.is_empty() or result.get("collider") == Global.PlayerBody
+
+func _on_timer_timeout():
+	# Pick a new random roam target within roam_range of the spawn position
+	roam_target = spawn_position + Vector2(
+		randf_range(-roam_range, roam_range),
+		randf_range(-roam_range, roam_range)
+	)
+
+func _on_detection_zone_body_entered(body: Node2D):
+	if body == Global.PlayerBody:
+		player_in_range = true
+
+func _on_detection_zone_body_exited(body: Node2D):
+	if body == Global.PlayerBody:
+		player_in_range = false
 
 func _on_bat_hit_box_area_entered(area: Area2D):
 	if area == Global.playerDamageZone:
