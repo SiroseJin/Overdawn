@@ -106,6 +106,10 @@ const _DATA := {
 		"Not now": "Not now",
 		"The gate is sealed. Pass the final questions.": "The gate is sealed. Pass the final questions.",
 		"SURVIVE": "SURVIVE",
+		"SHIELDED": "SHIELDED",
+		"VULNERABLE": "VULNERABLE",
+		"Recovers in": "Recovers in",
+		"Servers": "Servers",
 		"The system is down.\nYou made it out — now help others do the same.": "The system is down.\nYou made it out — now help others do the same.",
 		# Death screen
 		"You Died": "You Died",
@@ -217,6 +221,10 @@ const _DATA := {
 		"Not now": "Nanti saja",
 		"The gate is sealed. Pass the final questions.": "Gerbang tersegel. Lulus pertanyaan terakhir.",
 		"SURVIVE": "BERTAHAN",
+		"SHIELDED": "BERPERISAI",
+		"VULNERABLE": "RENTAN",
+		"Recovers in": "Pulih dalam",
+		"Servers": "Server",
 		"The system is down.\nYou made it out — now help others do the same.": "Sistemnya tumbang.\nKamu berhasil keluar — kini bantu orang lain melakukannya.",
 		# Death screen
 		"You Died": "Kamu Mati",

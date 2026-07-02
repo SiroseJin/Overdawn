@@ -8,7 +8,7 @@ extends Node2D
 # ends the game.
 # ───────────────────────────────────────────────────────────────────────────────
 
-const BOSS_SCENE    := preload("res://scene/final_boss.tscn")
+const BOSS_SCENE    := preload("res://scene/finalboss_enemy.tscn")
 const BAIT_SCENE    := preload("res://scene/bait_platform.tscn")
 const DEBT_WALL     := preload("res://scene/debt_wall.tscn")
 const PULL_ZONE     := preload("res://scene/pull_zone.tscn")
@@ -71,6 +71,13 @@ func _summon_boss() -> void:
 	var boss := BOSS_SCENE.instantiate()
 	boss.position = Vector2(1400, 450)
 	boss.activation_x = -100000.0   # already trapped in the arena — fight now
+	# Server spawn spots — only on the floor and STATIC platforms, so servers are
+	# always reachable no matter which moving/falling gimmick is active.
+	boss.server_spots = [
+		Vector2(400, 620), Vector2(625, 535), Vector2(1000, 620),
+		Vector2(1400, 535), Vector2(1600, 620), Vector2(1825, 535),
+		Vector2(2050, 620),
+	]
 	boss.died.connect(_on_boss_died)
 	boss.phase_changed.connect(_on_boss_phase)
 	add_child(boss)

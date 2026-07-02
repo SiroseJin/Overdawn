@@ -99,6 +99,15 @@ func unlock_all() -> void:
 		unlock_skill(s)
 		skill_levels[s] = MAX_SKILL_LEVEL
 
+# Re-lock a skill (debug). Level drops to 0 so it can't be used or upgraded.
+func lock_skill(skill: String) -> void:
+	unlocked_skills[skill] = false
+	skill_levels[skill] = 0
+
+func lock_all() -> void:
+	for s in DEFAULT_SKILLS:
+		lock_skill(s)
+
 # ─── Skill points ────────────────────────────────────────────────────────────────
 
 func add_skill_points(amount: int) -> void:

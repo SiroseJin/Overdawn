@@ -18,6 +18,7 @@ var _life: float = 5.0
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
+	body_entered.connect(_on_body_entered)
 
 func _process(delta: float) -> void:
 	position += direction * speed * delta
@@ -32,3 +33,8 @@ func _on_area_entered(area: Area2D) -> void:
 	if parent is Player:
 		parent.take_damage(damage)
 		queue_free()
+
+# Terrain (walls, floors, platforms — layer 1 physics bodies) blocks bullets,
+# giving the player cover to hide behind.
+func _on_body_entered(_body: Node) -> void:
+	queue_free()

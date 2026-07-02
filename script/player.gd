@@ -114,6 +114,10 @@ var _firewall_cd_remaining: float     = 0.0
 # conversations always happen in a safe zone.
 var conversation_safe: bool = false
 
+# ─── Debug toggles (set from the Debug panel) ───────────────────────────────────
+var god_mode: bool       = false   # ignore all incoming damage
+var infinite_arrows: bool = false  # never run out of arrows
+
 # Coin counter shown on the HUD.
 var _coin_label: Label
 
@@ -341,7 +345,7 @@ func pause_game():
 func shoot_arrow():
 	if not ProgressionManager.is_skill_unlocked("arrows"):
 		return
-	if arrows_held <= 0:
+	if not infinite_arrows and arrows_held <= 0:
 		return
 
 	var arrow_scene    = preload("res://scene/arrow.tscn")
@@ -352,7 +356,8 @@ func shoot_arrow():
 	var mouse_pos             = get_global_mouse_position()
 	arrow_instance.direction  = (mouse_pos - $ProjectileOutput.global_position).normalized()
 
-	arrows_held -= 1
+	if not infinite_arrows:
+		arrows_held -= 1
 	update_arrow_cd()
 
 func update_arrow_cd():
@@ -431,8 +436,8 @@ func update_score_label():
 func take_damage(damage: int):
 	if damage == 0 or health <= 0:
 		return
-	# Blocked by an active firewall, or safe during a conversation/quiz
-	if firewall_active or conversation_safe:
+	# Blocked by an active firewall, safe during a conversation/quiz, or god mode
+	if firewall_active or conversation_safe or god_mode:
 		return
 
 	health -= damage
