@@ -29,6 +29,7 @@ const SKILL_ORDER := ["dash", "arrows", "double_jump", "firewall"]
 
 var _font: FontFile
 var _skill_checks: Dictionary = {}   # skill id -> CheckButton
+var _wave_spin: SpinBox
 
 func _ready() -> void:
 	_font = load("res://art/Fonts/skeleboom.ttf")
@@ -105,6 +106,20 @@ func _build_tools(has_player: bool) -> void:
 	for kind in ["Bat", "Frog", "Witch", "Necro", "Boss"]:
 		sprow.add_child(_button(kind, _on_spawn.bind(kind), not has_player))
 	_vbox.add_child(sprow)
+
+	# Arcade wave editor — start a fresh arcade run at a wave, or jump the running run.
+	_vbox.add_child(_label("Arcade Wave (boss every 15)", 13))
+	var wrow := _row()
+	_wave_spin = SpinBox.new()
+	_wave_spin.min_value = 1
+	_wave_spin.max_value = 999
+	_wave_spin.value = maxi(1, Global.current_wave)
+	_wave_spin.custom_minimum_size = Vector2(72, 0)
+	_wave_spin.add_theme_font_override("font", _font)
+	wrow.add_child(_wave_spin)
+	wrow.add_child(_button("Start Arcade @ Wave", _on_start_at_wave))
+	wrow.add_child(_button("Jump to Wave", _on_jump_to_wave, _arcade_stage() == null))
+	_vbox.add_child(wrow)
 
 	# Progression
 	var r3 := _row()
@@ -240,6 +255,45 @@ func _on_spawn(kind: String) -> void:
 func _on_reset_progression() -> void:
 	ProgressionManager.reset()
 	_sync_skill_checks()
+
+# ─── Arcade Wave editor ────────────────────────────────────────────────────────
+
+# The running arcade stage (has the wave system), or null if we're not in it.
+func _arcade_stage() -> Node:
+	var scn := get_tree().current_scene
+	if scn and scn.has_method("position_to_next_wave"):
+		return scn
+	return null
+
+# Load a fresh arcade run that begins on the chosen wave. The stage's _ready reads
+# Global.current_wave and its first wave is that +1, so seed it with value-1.
+func _on_start_at_wave() -> void:
+	Global.arcade_mode  = true
+	Global.current_wave = maxi(0, int(_wave_spin.value) - 1)
+	Engine.time_scale   = 1
+	get_tree().change_scene_to_file("res://scene/system/stage.tscn")
+
+# Jump the CURRENT arcade run to the chosen wave: set the counter, clear the field,
+# and the stage's _process advances into the target wave (uses set() so we don't
+# have to statically type the stage script).
+func _on_jump_to_wave() -> void:
+	var stage := _arcade_stage()
+	if stage == null:
+		return
+	var target := maxi(0, int(_wave_spin.value) - 1)
+	stage.set("current_wave", target)
+	stage.set("wave_spawn_ended", true)
+	Global.current_wave = target
+	_on_kill_enemies()   # clears enemies → the wave-advance fires into the target wave
+	# Resume play so the stage can advance into the target wave (mirror Dead Test).
+	var pause_menu = get_parent().get_node_or_null("PauseMenu")
+	if pause_menu:
+		pause_menu.hide()
+	if is_instance_valid(Global.PlayerBody):
+		Global.PlayerBody.is_game_paused = false
+	Engine.time_scale = 1
+	Dialogic.paused = false
+	hide()
 
 # ─── Arcade Mode ──────────────────────────────────────────────────────────────
 

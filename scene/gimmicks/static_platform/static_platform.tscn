@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cstaticplat01"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sp"]
+size = Vector2(80, 16)
+
+[node name="StaticPlatform" type="StaticBody2D"]
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(0.42, 0.47, 0.58, 1)
+polygon = PackedVector2Array(-40, -8, 40, -8, 40, 8, -40, 8)
+
+[node name="Edge" type="Polygon2D" parent="."]
+color = Color(0.68, 0.74, 0.85, 1)
+polygon = PackedVector2Array(-40, -8, 40, -8, 40, -5, -40, -5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_sp")

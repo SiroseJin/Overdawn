@@ -78,8 +78,17 @@ const GAMBLE_PICKUPS := [PU_COIN, PU_HEALTH, PU_SPEED, PU_FAKE]   # may include 
 ## How fast the hover centre travels along the path, in px/s.
 @export var path_speed: float = 60.0
 
+## Steer around nodes in the `avoid_group` instead of phasing through them (used by
+## arcade so the boss goes around platforms). Off by default so it doesn't change
+## the story fights.
+@export var avoid_platforms: bool = false
+@export var avoid_group: StringName = &"arena_platform"
+
 ## Fallback absolute positions if no spawn-point nodes are found in the group.
 var server_spots: Array = []
+
+var _avoid_shape: CircleShape2D
+var _avoid_params: PhysicsShapeQueryParameters2D
 
 var health: float
 var shield: float
@@ -126,6 +135,14 @@ func _ready() -> void:
 	_down_y = position.y + 175.0
 	if not path_node.is_empty():
 		_path = get_node_or_null(path_node) as Path2D
+	if avoid_platforms:
+		_avoid_shape = CircleShape2D.new()
+		_avoid_shape.radius = 46.0
+		_avoid_params = PhysicsShapeQueryParameters2D.new()
+		_avoid_params.shape = _avoid_shape
+		_avoid_params.collision_mask = 1          # platforms live on layer 1
+		_avoid_params.collide_with_bodies = true
+		_avoid_params.collide_with_areas = false
 	_hp_bar.max_value = health_max
 	_hp_bar.value = health
 	_shield_bar.max_value = shield_max
@@ -172,7 +189,12 @@ func _process(delta: float) -> void:
 
 	# Blend toward a straight crash-down column while downed (0 = hover, 1 = floor).
 	# _process is the ONLY writer of position — the crash/rise just tweens _down_amount.
-	position = (hover_centre + wobble + _jitter).lerp(Vector2(_down_x, _down_y), _down_amount)
+	var target := (hover_centre + wobble + _jitter).lerp(Vector2(_down_x, _down_y), _down_amount)
+	# Steer around platforms rather than phasing through them (arcade). Skipped while
+	# crashing down so it can still reach the floor.
+	if avoid_platforms and _down_amount < 0.4:
+		target = _steer_around_platforms(target)
+	position = target
 
 	match state:
 		"shielded": _process_shielded(delta)
@@ -291,6 +313,29 @@ func _spawn_servers() -> void:
 			s.setup(self)
 		get_parent().add_child(s)
 		_servers.append(s)
+
+# Nudge a target position out of / away from any nearby platform (nodes in
+# `avoid_group`) so the boss goes around them instead of phasing through.
+func _steer_around_platforms(target: Vector2) -> Vector2:
+	if _avoid_params == null:
+		return target
+	_avoid_params.transform = Transform2D(0.0, target)
+	var hits := get_world_2d().direct_space_state.intersect_shape(_avoid_params, 6)
+	if hits.is_empty():
+		return target
+	var push := Vector2.ZERO
+	var reach := _avoid_shape.radius + 24.0
+	for h in hits:
+		var col = h.get("collider")
+		if col == null or not (col is Node2D) or not col.is_in_group(avoid_group):
+			continue
+		var away: Vector2 = target - col.global_position
+		var d := away.length()
+		if d < 0.01:
+			away = Vector2.UP
+			d = 0.01
+		push += away.normalized() * (reach - minf(d, reach))
+	return target + push
 
 # ─── Intensity (0 at full HP → 1 near death) ──────────────────────────────────────
 

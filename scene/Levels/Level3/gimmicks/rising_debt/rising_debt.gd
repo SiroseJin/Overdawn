@@ -12,12 +12,15 @@ class_name RisingDebt
 
 @export var rise_speed: float = 6.0   # px/s — how fast the debt floods upward
 @export var damage: int      = 12     # chip damage per hit
+## The debt stops rising once its top reaches this world Y (a smaller Y = higher).
+## Used by arcade so the flood only covers the lower arena instead of drowning it.
+@export var min_top_y: float = -100000.0
 
 func _process(delta: float) -> void:
 	var p = Global.PlayerBody
 	# Freeze the debt while the player is talking so conversations are safe.
 	var talking: bool = is_instance_valid(p) and p.conversation_safe
-	if not talking:
+	if not talking and position.y > min_top_y:
 		position.y -= rise_speed * delta
 	if is_instance_valid(p) and p.can_take_damage and overlaps_body(p):
 		p.take_damage(damage)

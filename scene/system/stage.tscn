@@ -522,10 +522,10 @@ stream = ExtResource("6_atujf")
 volume_db = -5.0
 bus = &"bgm"
 
-[node name="HUD" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1057612863]
 layer = 10
 
-[node name="WaveLabel" type="Label" parent="HUD"]
+[node name="WaveLabel" type="Label" parent="HUD" unique_id=2092135275]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
