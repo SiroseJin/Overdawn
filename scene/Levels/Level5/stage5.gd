@@ -10,17 +10,7 @@ extends Node2D
 @onready var scene_transition_anim: AnimationPlayer  = $SceneTransitionAnimation/AnimationPlayer
 @onready var audio_bgm:             AudioStreamPlayer = $AudioBGM
 
-const PICKUP_SCENE := preload("res://scene/pickup.tscn")
-const KEY_SCENE    := preload("res://scene/key_pickup.tscn")
-const DOOR_SCENE   := preload("res://scene/locked_door.tscn")
-const COIN_SCENE   := preload("res://scene/coin.tscn")
 const TRADER       := "res://art/Free-City-Trader-Character-Sprite-Sheets-Pixel-Art/"
-
-const COIN_POSITIONS := [
-	Vector2(300, 640), Vector2(1225, 548), Vector2(1400, 640),
-	Vector2(2490, 448), Vector2(3300, 640), Vector2(3700, 640),
-	Vector2(4300, 640),
-]
 
 var _transitioning := false
 
@@ -30,12 +20,10 @@ func _ready() -> void:
 	audio_bgm.play()
 	_apply_npc_skins()
 	_configure_npcs()
-	_spawn_coins()
-	_setup_pickups_and_puzzle()
 
 func _apply_npc_skins() -> void:
-	_skin("Npc1", "Trader_1")
-	_skin("QuizNpc", "Trader_3")
+	_skin("Arif", "Trader_1")
+	_skin("Wira", "Trader_3")
 
 func _skin(npc_name: String, trader: String) -> void:
 	var npc := get_node_or_null(npc_name)
@@ -45,12 +33,12 @@ func _skin(npc_name: String, trader: String) -> void:
 			load(TRADER + trader + "/Dialogue.png"))
 
 func _configure_npcs() -> void:
-	var n1 := get_node_or_null("Npc1")
+	var n1 := get_node_or_null("Arif")
 	if n1: n1.npc_id = "stage5_intro"
 
-	# The must-do final quiz at the end. Passing grants the key that opens the
-	# gate to Stage 6 (the boss). Non-consuming so retries don't force a redo.
-	var quiz := get_node_or_null("QuizNpc")
+	# The must-do final quiz at the end (Wira). Passing grants the key that opens
+	# the gate to Stage 6 (the boss). Non-consuming so retries don't force a redo.
+	var quiz := get_node_or_null("Wira")
 	if quiz:
 		quiz.npc_id             = "stage5_bossgate"
 		quiz.dialogue_timeline  = "s5bossgate"
@@ -58,43 +46,16 @@ func _configure_npcs() -> void:
 		quiz.quiz_id            = "stage5_quiz"
 		quiz.quiz_optional      = false
 		quiz.quiz_grants_key    = "stage5_boss_key"
+		# Talking to Wira reveals the two hidden lifts by the exit.
+		quiz.talked.connect(_reveal_hidden_lifts)
 
-func _spawn_coins() -> void:
-	for pos in COIN_POSITIONS:
-		var c := COIN_SCENE.instantiate()
-		c.position = pos
-		add_child(c)
-
-func _setup_pickups_and_puzzle() -> void:
-	var spd: Node = PICKUP_SCENE.instantiate()
-	spd.kind = Pickup.Kind.SPEED
-	spd.position = Vector2(400, 640)
-	add_child(spd)
-
-	var hp: Node = PICKUP_SCENE.instantiate()
-	hp.kind = Pickup.Kind.HEALTH
-	hp.position = Vector2(3300, 640)
-	add_child(hp)
-
-	# Mid-level lock-and-key: key sits high on the climb, door blocks the way on.
-	var key: Node = KEY_SCENE.instantiate()
-	key.key_id = "stage5_key"
-	key.position = Vector2(2490, 442)
-	add_child(key)
-
-	var puzzle_door: Node = DOOR_SCENE.instantiate()
-	puzzle_door.required_key = "stage5_key"
-	puzzle_door.position = Vector2(2740, 590)
-	add_child(puzzle_door)
-
-	# End gate: opens with the final-quiz key. Tall + non-consuming.
-	var gate: Node = DOOR_SCENE.instantiate()
-	gate.scale = Vector2(1.0, 1.4)
-	gate.position = Vector2(4600, 536)
-	gate.required_key = "stage5_boss_key"
-	gate.consume_key  = false
-	gate.locked_hint  = "The gate is sealed. Pass the final questions."
-	add_child(gate)
+# The lifts (Lift2, Lift3) start dormant (hidden + non-solid) and only appear once
+# the player has spoken to Wira.
+func _reveal_hidden_lifts(_npc_id: String) -> void:
+	for lift_name in ["Lift2", "Lift3"]:
+		var lift := get_node_or_null(lift_name)
+		if lift and lift.has_method("activate"):
+			lift.activate()
 
 # ─── Transitions ─────────────────────────────────────────────────────────────────
 

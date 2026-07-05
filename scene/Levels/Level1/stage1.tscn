@@ -2,21 +2,22 @@
 
 [ext_resource type="Script" uid="uid://1bp0jh8saegr" path="res://scene/Levels/Level1/stage1.gd" id="1_ylrub"]
 [ext_resource type="Texture2D" uid="uid://d2j0t404knc0u" path="res://scene/Levels/Level1/tileset/Tiles.png" id="2_28j2g"]
-[ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/player.tscn" id="2_s3yw2"]
-[ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/scene_transition_animation.tscn" id="3_1pmp5"]
+[ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/actors/player/player.tscn" id="2_s3yw2"]
+[ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/ui/scene_transition_animation.tscn" id="3_1pmp5"]
 [ext_resource type="Texture2D" uid="uid://2q5mmjrmadhd" path="res://scene/Levels/Level1/tileset/Props-01.png" id="3_ujxb2"]
 [ext_resource type="AudioStream" uid="uid://028va8maeqdm" path="res://audio/Music/Caketown 1 by matthewpablo.mp3" id="4_5qi1a"]
 [ext_resource type="Texture2D" uid="uid://boujfk62x2t1g" path="res://art/Sidescroller Shooter - Central City/Assets/Buildings.png" id="4_p0vne"]
 [ext_resource type="Texture2D" uid="uid://dug2a02qdeg2f" path="res://art/Sidescroller Shooter - Central City/Background/Background Props.png" id="5_xkbnk"]
-[ext_resource type="PackedScene" uid="uid://d0ib3gkf0fyen" path="res://scene/npc1.tscn" id="9_26d74"]
-[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/frog_enemy.tscn" id="10_x525m"]
-[ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/bat_enemy.tscn" id="11_baten"]
+[ext_resource type="PackedScene" uid="uid://d0ib3gkf0fyen" path="res://scene/actors/npc/npc1.tscn" id="9_26d74"]
+[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/frog/frog_enemy.tscn" id="10_x525m"]
+[ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/actors/enemies/bat/bat_enemy.tscn" id="11_baten"]
+[ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
+[ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="itm_door"]
+[ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="itm_hp"]
+[ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="itm_spd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v25fd"]
-size = Vector2(32, 24)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_death1"]
-size = Vector2(3600, 60)
+size = Vector2(32, 42)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r8u7b"]
 texture = ExtResource("2_28j2g")
@@ -590,6 +591,9 @@ sources/1 = SubResource("TileSetAtlasSource_dt656")
 sources/4 = SubResource("TileSetAtlasSource_la4m3")
 sources/5 = SubResource("TileSetAtlasSource_acc6t")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_death1"]
+size = Vector2(3600, 60)
+
 [node name="Stage1" type="Node2D" unique_id=344051803]
 position = Vector2(-5, -2)
 script = ExtResource("1_ylrub")
@@ -614,94 +618,79 @@ layer_2/name = "Back"
 layer_2/tile_data = PackedInt32Array(1245172, 983044, 0, 1310708, 983044, 1, 1376244, 983044, 2, 1245173, 1048580, 0, 1310709, 1048580, 1, 1376245, 1048580, 2, 1245174, 1114116, 0, 1310710, 1114116, 1, 1376246, 1114116, 2, 1245175, 1179652, 0, 1310711, 1179652, 1, 1376247, 1179652, 2, 1245176, 1245188, 0, 1310712, 1245188, 1, 1376248, 1245188, 2, 1179636, 65540, 0, 1179637, 131076, 0, 1179638, 196612, 0, 1179639, 262148, 0, 1179640, 4, 0, 1245177, 262148, 2, 1310713, 262148, 3, 1376249, 262148, 3, 1179641, 65540, 0, 1179642, 131076, 0, 1179643, 196612, 0, 1179644, 262148, 0, 1376243, 4, 3, 1310707, 4, 2, 1245171, 4, 1, 1179635, 4, 0)
 
 [node name="WallCollision" type="CollisionPolygon2D" parent="StageSprite" unique_id=1103394686]
-position = Vector2(-64, 816)
-polygon = PackedVector2Array(-256, -144, 3264, -144, 3264, 87, -257, 83)
+polygon = PackedVector2Array(-320, 672, 1500, 672, 1800, 632, 3465, 632, 3465, 901, -320, 901)
 
-[node name="PlatformA" type="CollisionPolygon2D" parent="StageSprite" unique_id=110100001]
-polygon = PackedVector2Array(240, 672, 370, 640, 370, 672)
-
-[node name="PlatformB" type="CollisionPolygon2D" parent="StageSprite" unique_id=110100002]
-polygon = PackedVector2Array(380, 640, 560, 640, 560, 650, 380, 650)
-
-[node name="PlatformC" type="CollisionPolygon2D" parent="StageSprite" unique_id=110100003]
-polygon = PackedVector2Array(590, 608, 780, 608, 780, 618, 590, 618)
+[node name="SkyBarrier" type="CollisionPolygon2D" parent="StageSprite" unique_id=110100099]
+position = Vector2(52, -197)
+polygon = PackedVector2Array(-400, 200, 3550, 200, 3550, 420, -400, 420)
 
 [node name="PlatformE" type="CollisionPolygon2D" parent="StageSprite" unique_id=110100005]
+position = Vector2(1245, -28)
 polygon = PackedVector2Array(1360, 608, 1530, 608, 1530, 618, 1360, 618)
-
-[node name="PlatformF" type="CollisionPolygon2D" parent="StageSprite" unique_id=110100006]
-polygon = PackedVector2Array(1560, 576, 1720, 576, 1720, 586, 1560, 586)
-
-[node name="PlatformG" type="CollisionPolygon2D" parent="StageSprite" unique_id=110100007]
-polygon = PackedVector2Array(1750, 544, 1910, 544, 1910, 554, 1750, 554)
-
-[node name="PlatformH" type="CollisionPolygon2D" parent="StageSprite" unique_id=110100008]
-polygon = PackedVector2Array(1940, 480, 2090, 480, 2090, 490, 1940, 490)
-
-[node name="PlatformI" type="CollisionPolygon2D" parent="StageSprite" unique_id=110100009]
-polygon = PackedVector2Array(2110, 544, 2200, 544, 2200, 554, 2110, 554)
-
-[node name="PlatformJ" type="CollisionPolygon2D" parent="StageSprite" unique_id=110100010]
-polygon = PackedVector2Array(2010, 416, 2090, 416, 2090, 426, 2010, 426)
-
-[node name="PlatformK" type="CollisionPolygon2D" parent="StageSprite" unique_id=110100011]
-polygon = PackedVector2Array(2480, 608, 2620, 608, 2620, 618, 2480, 618)
-
-[node name="PlatformL" type="CollisionPolygon2D" parent="StageSprite" unique_id=110100012]
-polygon = PackedVector2Array(2650, 576, 2790, 576, 2790, 586, 2650, 586)
-
-[node name="PlatformM" type="CollisionPolygon2D" parent="StageSprite" unique_id=110100013]
-polygon = PackedVector2Array(2820, 544, 2960, 544, 2960, 554, 2820, 554)
-
-[node name="PlatformN" type="CollisionPolygon2D" parent="StageSprite" unique_id=110100014]
-polygon = PackedVector2Array(2840, 416, 2940, 416, 2940, 426, 2840, 426)
-
-[node name="PlatformO" type="CollisionPolygon2D" parent="StageSprite" unique_id=110100015]
-polygon = PackedVector2Array(2965, 608, 2998, 608, 2998, 618, 2965, 618)
 
 [node name="Safehouses" type="StaticBody2D" parent="." unique_id=1755414404]
 
 [node name="SH1LeftWall" type="CollisionPolygon2D" parent="Safehouses" unique_id=1759030129]
+position = Vector2(-59, 4)
 polygon = PackedVector2Array(0, 545, 10, 545, 10, 672, 0, 672)
 
 [node name="SH1Ceiling" type="CollisionPolygon2D" parent="Safehouses" unique_id=606634166]
+position = Vector2(-59, -3)
 polygon = PackedVector2Array(0, 545, 220, 545, 220, 555, 0, 555)
 
 [node name="SH1RightWallTop" type="CollisionPolygon2D" parent="Safehouses" unique_id=1105238884]
+position = Vector2(-51, -2)
 polygon = PackedVector2Array(210, 545, 220, 545, 220, 630, 210, 630)
 
 [node name="SH2LeftWallTop" type="CollisionPolygon2D" parent="Safehouses" unique_id=380088543]
+position = Vector2(8, 1)
 polygon = PackedVector2Array(1090, 545, 1100, 545, 1100, 630, 1090, 630)
 
 [node name="SH2Ceiling" type="CollisionPolygon2D" parent="Safehouses" unique_id=500761392]
-polygon = PackedVector2Array(1090, 545, 1340, 545, 1340, 555, 1090, 555)
+position = Vector2(6, 55)
+polygon = PackedVector2Array(1090, 545, 1089, -47, 1338, -47, 1340, 555, 1090, 555)
 
 [node name="SH2RightWallTop" type="CollisionPolygon2D" parent="Safehouses" unique_id=2129680992]
+position = Vector2(6, 3)
 polygon = PackedVector2Array(1330, 545, 1340, 545, 1340, 630, 1330, 630)
 
 [node name="SH3LeftWallTop" type="CollisionPolygon2D" parent="Safehouses" unique_id=1576475415]
+position = Vector2(0, -46.5)
 polygon = PackedVector2Array(2210, 545, 2220, 545, 2220, 630, 2210, 630)
 
 [node name="SH3Ceiling" type="CollisionPolygon2D" parent="Safehouses" unique_id=2056441866]
-polygon = PackedVector2Array(2210, 545, 2470, 545, 2470, 555, 2210, 555)
+position = Vector2(-11, -45)
+polygon = PackedVector2Array(2222, 375, 2481, 375, 2481, 557, 2222, 557)
 
 [node name="SH3RightWallTop" type="CollisionPolygon2D" parent="Safehouses" unique_id=171421123]
+position = Vector2(0, -46.5)
 polygon = PackedVector2Array(2460, 545, 2470, 545, 2470, 630, 2460, 630)
 
 [node name="SH4LeftWallTop" type="CollisionPolygon2D" parent="Safehouses" unique_id=2108644450]
+position = Vector2(269, -30)
 polygon = PackedVector2Array(3000, 545, 3010, 545, 3010, 630, 3000, 630)
 
 [node name="SH4Ceiling" type="CollisionPolygon2D" parent="Safehouses" unique_id=1272308426]
+position = Vector2(269, -1)
 polygon = PackedVector2Array(3000, 545, 3170, 545, 3170, 555, 3000, 555)
 
 [node name="SH4RightWall" type="CollisionPolygon2D" parent="Safehouses" unique_id=615746564]
-polygon = PackedVector2Array(3160, 545, 3170, 545, 3170, 672, 3160, 672)
+position = Vector2(269, 10)
+polygon = PackedVector2Array(3160, 545, 3170, 545, 3170, 672, 3160, 672, 3160, 632.0196)
+
+[node name="LeftBorder" type="CollisionPolygon2D" parent="Safehouses" unique_id=1015010933]
+position = Vector2(-1656, 132)
+polygon = PackedVector2Array(1090, 545, 1089, -47, 1338, -47, 1340, 555, 1090, 555)
+
+[node name="RightBorder" type="CollisionPolygon2D" parent="Safehouses" unique_id=83719159]
+position = Vector2(2180, -8)
+polygon = PackedVector2Array(1090, 545, 1089, -47, 1338, -47, 1340, 555, 1090, 555)
 
 [node name="Stage2Portal" type="Area2D" parent="." unique_id=987220002]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stage2Portal" unique_id=680171797]
-position = Vector2(3100, 644)
+position = Vector2(3412, 610)
 shape = SubResource("RectangleShape2D_v25fd")
 
 [node name="SceneTransitionAnimation" parent="." unique_id=818007785 instance=ExtResource("3_1pmp5")]
@@ -716,48 +705,76 @@ volume_db = -4.0
 bus = &"bgm"
 
 [node name="Player" parent="." unique_id=165182191 instance=ExtResource("2_s3yw2")]
-position = Vector2(32, 668)
+position = Vector2(34, 667)
 
-[node name="Npc1" parent="." unique_id=1937046261 instance=ExtResource("9_26d74")]
-position = Vector2(150, 671)
+[node name="Hendra" parent="." unique_id=1937046261 instance=ExtResource("9_26d74")]
+position = Vector2(152, 667)
 
 [node name="FrogEnemy" parent="." unique_id=309038319 instance=ExtResource("10_x525m")]
-position = Vector2(900, 655)
+position = Vector2(1893, 621)
 
-[node name="Npc2" parent="." unique_id=454119333 instance=ExtResource("9_26d74")]
-position = Vector2(1200, 671)
+[node name="Sari" parent="." unique_id=454119333 instance=ExtResource("9_26d74")]
+position = Vector2(1199, 671)
 dialogue_timeline = "npc2timeline"
 
-[node name="Npc3" parent="." unique_id=424964374 instance=ExtResource("9_26d74")]
-position = Vector2(2340, 671)
+[node name="Ana" parent="." unique_id=424964374 instance=ExtResource("9_26d74")]
+position = Vector2(2340, 631)
 dialogue_timeline = "npc3timeline"
 
-[node name="Npc4" parent="." unique_id=258507587 instance=ExtResource("9_26d74")]
-position = Vector2(3060, 671)
+[node name="Bayu" parent="." unique_id=258507587 instance=ExtResource("9_26d74")]
+position = Vector2(3345, 630)
 dialogue_timeline = "npc4timeline"
 
-[node name="Bat1" parent="." unique_id=1040743786 instance=ExtResource("11_baten")]
-position = Vector2(640, 570)
-
 [node name="Bat2" parent="." unique_id=1689417740 instance=ExtResource("11_baten")]
-position = Vector2(1515, 518)
+position = Vector2(588, 620)
 
 [node name="Bat3" parent="." unique_id=2038592968 instance=ExtResource("11_baten")]
-position = Vector2(1860, 450)
+position = Vector2(2692, 520)
 
 [node name="Frog2" parent="." unique_id=1565383430 instance=ExtResource("10_x525m")]
-position = Vector2(2560, 655)
+position = Vector2(2738, 625.00006)
 
-[node name="Bat4" parent="." unique_id=75049374 instance=ExtResource("11_baten")]
-position = Vector2(2830, 488)
-
-[node name="DeathZone" type="Area2D" parent="."]
+[node name="DeathZone" type="Area2D" parent="." unique_id=1390101666]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone" unique_id=603825408]
 position = Vector2(1550, 800)
 shape = SubResource("RectangleShape2D_death1")
+
+[node name="Coin1" parent="." unique_id=1824753299 instance=ExtResource("itm_coin")]
+position = Vector2(350, 654)
+
+[node name="Coin2" parent="." unique_id=1091690492 instance=ExtResource("itm_coin")]
+position = Vector2(950, 654)
+
+[node name="Coin3" parent="." unique_id=281445501 instance=ExtResource("itm_coin")]
+position = Vector2(1650, 634)
+
+[node name="Coin4" parent="." unique_id=1585317732 instance=ExtResource("itm_coin")]
+position = Vector2(2100, 614)
+
+[node name="Coin5" parent="." unique_id=470795021 instance=ExtResource("itm_coin")]
+position = Vector2(2650, 614)
+
+[node name="Coin6" parent="." unique_id=663838768 instance=ExtResource("itm_coin")]
+position = Vector2(3113, 609)
+
+[node name="SpeedPickup" parent="." unique_id=1157561859 instance=ExtResource("itm_spd")]
+position = Vector2(2410, 606)
+
+[node name="HealthPickup" parent="." unique_id=622202041 instance=ExtResource("itm_hp")]
+position = Vector2(1001, 648)
+
+[node name="Gatekeeper" parent="." unique_id=152493309 instance=ExtResource("9_26d74")]
+position = Vector2(3082, 632)
+dialogue_timeline = "s1gatekeepertimeline"
+npc_id = "stage1_gatekeeper"
+unlocks_skill = "double_jump"
+grants_key = "stage1_key"
+
+[node name="Stage1Door" parent="." unique_id=1479382046 instance=ExtResource("itm_door")]
+position = Vector2(3271, 551)
 
 [connection signal="body_entered" from="Lobby Portal" to="." method="_on_lobby_portal_body_entered"]
 [connection signal="body_entered" from="Stage2Portal" to="." method="_on_stage_2_portal_body_entered"]

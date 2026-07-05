@@ -5,15 +5,7 @@ extends Node2D
 @onready var scene_transition_anim: AnimationPlayer    = $SceneTransitionAnimation/AnimationPlayer
 @onready var audio_bgm:             AudioStreamPlayer = $AudioBGM
 
-const KEY_SCENE  := preload("res://scene/key_pickup.tscn")
-const DOOR_SCENE := preload("res://scene/locked_door.tscn")
-const BAIT_SCENE := preload("res://scene/bait_platform.tscn")
-const COIN_SCENE := preload("res://scene/coin.tscn")
 const TRADER     := "res://art/Free-City-Trader-Character-Sprite-Sheets-Pixel-Art/"
-
-# Gimmick: bait platforms — they glow gold and dangle a coin, then vanish the
-# instant you trust them. Placed over solid floor so learning them is safe.
-const BAIT_POSITIONS := [Vector2(600, 560), Vector2(1500, 560), Vector2(2600, 560)]
 
 var _transitioning := false
 
@@ -22,24 +14,21 @@ func _ready() -> void:
 	scene_transition_anim.play("fade_out")
 	audio_bgm.play()
 	_apply_npc_skins()
-	_setup_puzzle()
-	_setup_bait()
+	_configure_npcs()
 
-func _setup_bait() -> void:
-	for pos in BAIT_POSITIONS:
-		var bait := BAIT_SCENE.instantiate()
-		bait.position = pos
-		add_child(bait)
-		var coin := COIN_SCENE.instantiate()
-		coin.position = pos + Vector2(0, -30)   # the lure sitting on the trap
-		add_child(coin)
+# Give each NPC a stable id so the game remembers who's been spoken to.
+func _configure_npcs() -> void:
+	for pair in [["Nadia", "stage2_nadia"], ["Eko", "stage2_eko"],
+			["Rafi", "stage2_rafi"], ["Yani", "stage2_yani"]]:
+		var n := get_node_or_null(pair[0])
+		if n: n.npc_id = pair[1]
 
 # Give each placed NPC a distinct trader look.
 func _apply_npc_skins() -> void:
-	_skin("Npc1", "Trader_2")   # the spam-bot warner
-	_skin("Npc2", "Trader_3")   # the phishing / near-win NPC
-	_skin("Npc3", "Trader_1")   # Rafi, the insider dev
-	_skin("Npc4", "Trader_2")   # the exit NPC
+	_skin("Nadia", "Trader_2")  # spam-bot / surface-web warner
+	_skin("Eko", "Trader_3")    # the phishing / near-win NPC
+	_skin("Rafi", "Trader_1")   # the insider dev who hid the key
+	_skin("Yani", "Trader_2")   # the exit NPC (warns of the Collector)
 
 func _skin(npc_name: String, trader: String) -> void:
 	var npc := get_node_or_null(npc_name)
@@ -47,23 +36,6 @@ func _skin(npc_name: String, trader: String) -> void:
 		npc.set_appearance(
 			load(TRADER + trader + "/Idle.png"),
 			load(TRADER + trader + "/Dialogue.png"))
-
-# ── Puzzle: Rafi's hidden backdoor key ──────────────────────────────────────────
-# The exit is locked. Rafi (Npc3) tells you he hid a developer's key up high,
-# where the platform usually dangles its bright "bonus" bait — so reaching it
-# uses the double jump earned in Stage 1. Climb for the honest key, not the bait.
-func _setup_puzzle() -> void:
-	var key: Node = KEY_SCENE.instantiate()
-	key.key_id = "stage2_key"
-	key.obtained_message = "Backdoor key found"
-	key.position = Vector2(4100, 392)   # atop the highest platform near the exit
-	add_child(key)
-
-	var door: Node = DOOR_SCENE.instantiate()
-	door.required_key = "stage2_key"
-	door.locked_hint = "Locked. The key is up where the 'bonus' hangs."
-	door.position = Vector2(4620, 600)
-	add_child(door)
 
 func _on_stage_3_portal_body_entered(body: Node2D) -> void:
 	if body is Player and not _transitioning:

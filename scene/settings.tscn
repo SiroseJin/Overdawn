@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://belkbgctnvsvf"]
+[gd_scene format=3 uid="uid://x030hl3q7bot"]
 
 [ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_el4av"]
 
@@ -84,53 +84,53 @@ func _on_back_pressed():
 		queue_free()
 "
 
-[node name="Settings" type="Control"]
+[node name="Settings" type="Control" unique_id=414637596]
+auto_translate_mode = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-auto_translate_mode = 1
 script = SubResource("GDScript_lov54")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=140939567]
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0, 0, 0, 0.27451)
 
-[node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect" unique_id=1064332329]
 layout_mode = 0
 offset_left = 376.0
 offset_top = 44.0
 offset_right = 776.0
 offset_bottom = 604.0
 theme_override_constants/margin_left = 16
-theme_override_constants/margin_right = 16
 theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 12
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer" unique_id=1306756906]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="SettingsTitle" type="Label" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="SettingsTitle" type="Label" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=1810356581]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 theme_override_font_sizes/font_size = 22
 text = "SETTINGS"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=985730174]
 layout_mode = 2
 
-[node name="ResolutionSelect" type="OptionButton" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="ResolutionSelect" type="OptionButton" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=1854053262]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 alignment = 1
-item_count = 6
 selected = 0
+item_count = 6
 popup/item_0/text = "1920 x 1080"
 popup/item_0/id = 0
 popup/item_1/text = "1600 x 900"
@@ -144,7 +144,7 @@ popup/item_4/id = 4
 popup/item_5/text = "800 x 600"
 popup/item_5/id = 5
 
-[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/ResolutionSelect"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/ResolutionSelect" unique_id=1884352923]
 layout_mode = 0
 offset_left = -120.0
 offset_right = -9.0
@@ -152,28 +152,28 @@ offset_bottom = 16.0
 theme_override_fonts/font = ExtResource("2_el4av")
 text = "Resolution:"
 
-[node name="FullScreenToggle" type="CheckButton" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="FullScreenToggle" type="CheckButton" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=126233961]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 text = "Fullscreen"
 
-[node name="VSyncToggle" type="CheckButton" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="VSyncToggle" type="CheckButton" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=1434900095]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 text = "VSync"
 
-[node name="LanguageSelect" type="OptionButton" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="LanguageSelect" type="OptionButton" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=644713596]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 alignment = 1
-item_count = 2
 selected = 0
+item_count = 2
 popup/item_0/text = "English"
 popup/item_0/id = 0
 popup/item_1/text = "Bahasa Indonesia"
 popup/item_1/id = 1
 
-[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/LanguageSelect"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/LanguageSelect" unique_id=1780237946]
 layout_mode = 0
 offset_left = -120.0
 offset_right = -9.0
@@ -181,49 +181,46 @@ offset_bottom = 16.0
 theme_override_fonts/font = ExtResource("2_el4av")
 text = "Language:"
 
-[node name="HSeparator2" type="HSeparator" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=599839088]
 layout_mode = 2
 
-[node name="MasterVolumeLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="MasterVolumeLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=675490685]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 text = "Master Volume"
 
-[node name="MasterVolumeSlider" type="HSlider" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="MasterVolumeSlider" type="HSlider" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=970146334]
 layout_mode = 2
 size_flags_horizontal = 3
-min_value = 0.0
 max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="MusicVolumeLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="MusicVolumeLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=1697618207]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 text = "Music Volume"
 
-[node name="MusicVolumeSlider" type="HSlider" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="MusicVolumeSlider" type="HSlider" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=2081395540]
 layout_mode = 2
 size_flags_horizontal = 3
-min_value = 0.0
 max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="SFXVolumeLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="SFXVolumeLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=239373867]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 text = "SFX Volume"
 
-[node name="SFXVolumeSlider" type="HSlider" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="SFXVolumeSlider" type="HSlider" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=800414293]
 layout_mode = 2
 size_flags_horizontal = 3
-min_value = 0.0
 max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="Back" type="Button" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="Back" type="Button" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=126814835]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 text = "Back"

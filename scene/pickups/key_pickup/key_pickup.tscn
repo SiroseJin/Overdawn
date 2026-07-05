@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cqkeypickup00"]
+
+[ext_resource type="Script" path="res://scene/pickups/key_pickup/key_pickup.gd" id="1_key"]
+[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_font"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_key"]
+radius = 12.0
+
+[node name="KeyPickup" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_key")
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(1, 0.84, 0.25, 1)
+polygon = PackedVector2Array(-2, -10, 4, -10, 4, 4, 9, 4, 9, 8, 4, 8, 4, 12, -2, 12)
+
+[node name="Tag" type="Label" parent="."]
+offset_left = -24.0
+offset_top = -38.0
+offset_right = 24.0
+offset_bottom = -20.0
+theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 10
+text = "KEY"
+horizontal_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_key")

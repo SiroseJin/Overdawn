@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://htdn64tverd8"]
+
+[ext_resource type="Script" path="res://scene/Levels/Level3/gimmicks/rising_debt/rising_debt.gd" id="1_rd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_debt"]
+size = Vector2(1720, 2600)
+
+[node name="RisingDebt" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_rd")
+
+[node name="Body" type="Polygon2D" parent="."]
+color = Color(0.55, 0.08, 0.12, 0.8)
+polygon = PackedVector2Array(-860, 0, 860, 0, 860, 2600, -860, 2600)
+
+[node name="Edge" type="Polygon2D" parent="."]
+color = Color(1, 0.35, 0.35, 0.9)
+polygon = PackedVector2Array(-860, 0, 860, 0, 860, 8, -860, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1300)
+shape = SubResource("RectangleShape2D_debt")

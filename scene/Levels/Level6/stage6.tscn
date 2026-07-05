@@ -1,97 +1,186 @@
 [gd_scene format=3 uid="uid://c6bossarena01"]
 
-[ext_resource type="Script" path="res://scene/Levels/Level6/stage6.gd" id="1_stg6"]
-[ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/player.tscn" id="2_player"]
-[ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/scene_transition_animation.tscn" id="3_trans"]
+[ext_resource type="Script" uid="uid://db2q2dfkej2wg" path="res://scene/Levels/Level6/stage6.gd" id="1_stg6"]
+[ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/actors/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/ui/scene_transition_animation.tscn" id="3_trans"]
 [ext_resource type="AudioStream" uid="uid://b0pp6f4y1nsjm" path="res://audio/Music/mythica.mp3" id="4_bgm"]
-[ext_resource type="PackedScene" uid="uid://cmovingplat01" path="res://scene/moving_platform.tscn" id="5_mp"]
-[ext_resource type="PackedScene" uid="uid://cfallingplat0" path="res://scene/falling_platform.tscn" id="6_fp"]
+[ext_resource type="PackedScene" uid="uid://cmovingplat01" path="res://scene/gimmicks/moving_platform/moving_platform.tscn" id="5_mp"]
+[ext_resource type="PackedScene" uid="uid://cfallingplat0" path="res://scene/gimmicks/falling_platform/falling_platform.tscn" id="6_fp"]
+[ext_resource type="PackedScene" uid="uid://cfinalboss001" path="res://scene/actors/enemies/finalboss/finalboss_enemy.tscn" id="7_boss"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_zone"]
 size = Vector2(100, 520)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
-size = Vector2(30, 540)
+size = Vector2(30, 615)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_portal"]
 size = Vector2(40, 80)
 
-[node name="Stage6" type="Node2D"]
+[sub_resource type="Curve2D" id="Curve2D_bosspath"]
+bake_interval = 178.98
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1200, 460, 0, 0, 0, 0, 1450, 400, 0, 0, 0, 0, 1636, 430, 0, 0, 0, 0, 1850, 400, 0, 0, 0, 0, 2050, 460)
+}
+point_count = 5
+
+[node name="Stage6" type="Node2D" unique_id=1039610357]
 script = ExtResource("1_stg6")
 
-[node name="Terrain" type="StaticBody2D" parent="."]
+[node name="Terrain" type="StaticBody2D" parent="." unique_id=1314738730]
 
-[node name="Floor" type="CollisionPolygon2D" parent="Terrain"]
+[node name="Floor" type="CollisionPolygon2D" parent="Terrain" unique_id=453482967]
 polygon = PackedVector2Array(0, 648, 2400, 648, 2400, 680, 0, 680)
 
-[node name="Ceiling" type="CollisionPolygon2D" parent="Terrain"]
+[node name="Ceiling" type="CollisionPolygon2D" parent="Terrain" unique_id=1792058644]
+position = Vector2(4, -71)
 polygon = PackedVector2Array(0, 120, 2400, 120, 2400, 128, 0, 128)
 
-[node name="LeftWall" type="CollisionPolygon2D" parent="Terrain"]
+[node name="LeftWall" type="CollisionPolygon2D" parent="Terrain" unique_id=838525104]
 polygon = PackedVector2Array(-100, -300, 0, -300, 0, 800, -100, 800)
 
-[node name="RightWall" type="CollisionPolygon2D" parent="Terrain"]
+[node name="RightWall" type="CollisionPolygon2D" parent="Terrain" unique_id=832526942]
 polygon = PackedVector2Array(2400, -300, 2500, -300, 2500, 800, 2400, 800)
 
-[node name="SP1" type="CollisionPolygon2D" parent="Terrain"]
+[node name="SP1" type="CollisionPolygon2D" parent="Terrain" unique_id=495319102]
+position = Vector2(375, -47)
 polygon = PackedVector2Array(550, 560, 700, 560, 700, 568, 550, 568)
 
-[node name="SP2" type="CollisionPolygon2D" parent="Terrain"]
+[node name="SP2" type="CollisionPolygon2D" parent="Terrain" unique_id=71473486]
+position = Vector2(2, -42.599976)
 polygon = PackedVector2Array(1750, 560, 1900, 560, 1900, 568, 1750, 568)
 
-[node name="PerchCenter" type="CollisionPolygon2D" parent="Terrain"]
+[node name="PerchCenter" type="CollisionPolygon2D" parent="Terrain" unique_id=1791024646]
+position = Vector2(665.6874, -42.9989)
+scale = Vector2(0.4609376, 0.9999981)
 polygon = PackedVector2Array(1320, 560, 1480, 560, 1480, 568, 1320, 568)
 
-[node name="MovingPlatform1" parent="." instance=ExtResource("5_mp")]
+[node name="PerchCenter2" type="CollisionPolygon2D" parent="Terrain" unique_id=1845537550]
+position = Vector2(59, -264)
+polygon = PackedVector2Array(1320, 560, 1480, 560, 1480, 568, 1320, 568)
+
+[node name="PerchCenter3" type="CollisionPolygon2D" parent="Terrain" unique_id=2013213154]
+position = Vector2(1235, -304)
+scale = Vector2(0.4609376, 0.9999981)
+polygon = PackedVector2Array(1320, 560, 1413.4625, 560, 1480, 560, 1480, 568, 1320, 568)
+
+[node name="PerchCenter4" type="CollisionPolygon2D" parent="Terrain" unique_id=1574572884]
+position = Vector2(1715.9999, -263.99997)
+scale = Vector2(0.4609376, 0.9999981)
+polygon = PackedVector2Array(1320, 560, 1413.4625, 560, 1480, 560, 1480, 568, 1320, 568)
+
+[node name="PerchCenter5" type="CollisionPolygon2D" parent="Terrain" unique_id=501526309]
+position = Vector2(517, -220.99997)
+scale = Vector2(0.4609376, 0.9999981)
+polygon = PackedVector2Array(1320, 560, 1413.4625, 560, 1480, 560, 1480, 568, 1320, 568)
+
+[node name="PerchCenter6" type="CollisionPolygon2D" parent="Terrain" unique_id=156226141]
+position = Vector2(1718.9999, -39)
+scale = Vector2(0.4609376, 0.9999981)
+polygon = PackedVector2Array(1320, 560, 1413.4625, 560, 1480, 560, 1480, 568, 1320, 568)
+
+[node name="MovingPlatform1" parent="." unique_id=1609207014 instance=ExtResource("5_mp")]
 position = Vector2(1000, 600)
 travel = Vector2(400, 0)
+speed = 50.0
+downtime = 0.0
 
-[node name="FallingPlatform1" parent="." instance=ExtResource("6_fp")]
-position = Vector2(850, 470)
+[node name="End" type="Marker2D" parent="MovingPlatform1" unique_id=1609207101]
+position = Vector2(1214, 0)
 
-[node name="FallingPlatform2" parent="." instance=ExtResource("6_fp")]
-position = Vector2(1950, 470)
+[node name="FallingPlatform1" parent="." unique_id=2102387712 instance=ExtResource("6_fp")]
+position = Vector2(996, 413)
 
-[node name="BossZone" type="Area2D" parent="."]
+[node name="FallingPlatform2" parent="." unique_id=1112091366 instance=ExtResource("6_fp")]
+position = Vector2(2216, 406)
+
+[node name="BossZone" type="Area2D" parent="." unique_id=1505831751]
+position = Vector2(244, -16)
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BossZone"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossZone" unique_id=1370784035]
 position = Vector2(700, 400)
 shape = SubResource("RectangleShape2D_zone")
 
-[node name="CloseDoor" type="StaticBody2D" parent="."]
-visible = false
+[node name="CloseDoor" type="StaticBody2D" parent="." unique_id=1695110576]
+position = Vector2(294, -31)
 
-[node name="Visual" type="Polygon2D" parent="CloseDoor"]
-position = Vector2(450, 380)
+[node name="Visual" type="Polygon2D" parent="CloseDoor" unique_id=1061550074]
+position = Vector2(471, 392)
+scale = Vector2(1, 1.137037)
 color = Color(0.5, 0.1, 0.13, 1)
 polygon = PackedVector2Array(-15, -270, 15, -270, 15, 270, -15, 270)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CloseDoor"]
-position = Vector2(450, 380)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CloseDoor" unique_id=525587952]
+position = Vector2(471, 392.5)
 shape = SubResource("RectangleShape2D_door")
 
-[node name="Stage5Portal" type="Area2D" parent="."]
+[node name="Stage5Portal" type="Area2D" parent="." unique_id=2071274434]
+position = Vector2(-40, 0)
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Stage5Portal"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stage5Portal" unique_id=1860233852]
 position = Vector2(30, 608)
 shape = SubResource("RectangleShape2D_portal")
 
-[node name="SceneTransitionAnimation" parent="." instance=ExtResource("3_trans")]
+[node name="SceneTransitionAnimation" parent="." unique_id=11477567 instance=ExtResource("3_trans")]
 visible = false
 top_level = true
-position = Vector2(5, 37)
+position = Vector2(67, -76)
 scale = Vector2(8.81124, 1.79268)
 
-[node name="AudioBGM" type="AudioStreamPlayer" parent="."]
+[node name="AudioBGM" type="AudioStreamPlayer" parent="." unique_id=1015829361]
 stream = ExtResource("4_bgm")
 volume_db = -5.0
 bus = &"bgm"
 
-[node name="Player" parent="." instance=ExtResource("2_player")]
-position = Vector2(100, 610)
+[node name="Player" parent="." unique_id=1362063768 instance=ExtResource("2_player")]
+position = Vector2(75, 640)
+
+[node name="Boss" parent="." unique_id=1497745838 instance=ExtResource("7_boss")]
+position = Vector2(1636, 429)
+wait_for_summon = true
+use_path = true
+path_node = NodePath("../BossPath")
+
+[node name="BossPath" type="Path2D" parent="." unique_id=190435817]
+curve = SubResource("Curve2D_bosspath")
+
+[node name="ServerSpawns" type="Node2D" parent="." unique_id=1312267116]
+
+[node name="Spawn1" type="Marker2D" parent="ServerSpawns" unique_id=368762844 groups=["server_spawn"]]
+position = Vector2(1880, 225)
+
+[node name="Spawn2" type="Marker2D" parent="ServerSpawns" unique_id=893465231 groups=["server_spawn"]]
+position = Vector2(1000, 378)
+
+[node name="Spawn3" type="Marker2D" parent="ServerSpawns" unique_id=1729359867 groups=["server_spawn"]]
+position = Vector2(2217, 368)
+
+[node name="Spawn4" type="Marker2D" parent="ServerSpawns" unique_id=1352955237 groups=["server_spawn"]]
+position = Vector2(1457, 265)
+
+[node name="Spawn5" type="Marker2D" parent="ServerSpawns" unique_id=1992655819 groups=["server_spawn"]]
+position = Vector2(1603, 617)
+
+[node name="Spawn6" type="Marker2D" parent="ServerSpawns" unique_id=1330903493 groups=["server_spawn"]]
+position = Vector2(1836, 489)
+
+[node name="Spawn7" type="Marker2D" parent="ServerSpawns" unique_id=1308867875 groups=["server_spawn"]]
+position = Vector2(2105, 619)
+
+[node name="FallingPlatform3" parent="." unique_id=909169386 instance=ExtResource("6_fp")]
+position = Vector2(1545, 538)
+
+[node name="MovingPlatform2" parent="." unique_id=1915422223 instance=ExtResource("5_mp")]
+position = Vector2(2217, 187)
+travel = Vector2(400, 0)
+speed = 50.0
+downtime = 0.0
+
+[node name="End" type="Marker2D" parent="MovingPlatform2" unique_id=1717035608]
+position = Vector2(-1204, 0)
 
 [connection signal="body_entered" from="BossZone" to="." method="_on_boss_zone_entered"]
 [connection signal="body_entered" from="Stage5Portal" to="." method="_on_stage_5_portal_body_entered"]

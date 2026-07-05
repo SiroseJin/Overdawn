@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://cfinalboss001"]
+
+[ext_resource type="Script" path="res://scene/actors/enemies/finalboss/finalboss_enemy.gd" id="1_fb"]
+[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_font"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_boss"]
+radius = 32.0
+
+[node name="FinalBoss" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_fb")
+
+[node name="CoreOuter" type="Polygon2D" parent="."]
+color = Color(0.12, 0.07, 0.18, 1)
+polygon = PackedVector2Array(30, 0, 15, 26, -15, 26, -30, 0, -15, -26, 15, -26)
+
+[node name="CoreMid" type="Polygon2D" parent="."]
+color = Color(0.5, 0.15, 0.55, 1)
+polygon = PackedVector2Array(22, 0, 11, 19, -11, 19, -22, 0, -11, -19, 11, -19)
+
+[node name="CoreInner" type="Polygon2D" parent="."]
+color = Color(1, 0.35, 0.85, 1)
+polygon = PackedVector2Array(0, -16, 16, 0, 0, 16, -16, 0)
+
+[node name="Muzzle" type="Marker2D" parent="."]
+
+[node name="BodyCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_boss")
+disabled = true
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("CircleShape2D_boss")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="NameLabel" type="Label" parent="HUD"]
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 16.0
+offset_right = 200.0
+offset_bottom = 36.0
+theme_override_colors/font_color = Color(1, 0.6, 0.9, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "THE SYSTEM CORE"
+horizontal_alignment = 1
+
+[node name="HPBar" type="ProgressBar" parent="HUD"]
+self_modulate = Color(0.9, 0.15, 0.35, 1)
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -220.0
+offset_top = 40.0
+offset_right = 220.0
+offset_bottom = 58.0
+show_percentage = false
+
+[node name="Tick1" type="ColorRect" parent="HUD/HPBar"]
+offset_left = 110.0
+offset_right = 112.0
+offset_bottom = 18.0
+color = Color(0, 0, 0, 0.8)
+
+[node name="Tick2" type="ColorRect" parent="HUD/HPBar"]
+offset_left = 220.0
+offset_right = 222.0
+offset_bottom = 18.0
+color = Color(0, 0, 0, 0.8)
+
+[node name="Tick3" type="ColorRect" parent="HUD/HPBar"]
+offset_left = 330.0
+offset_right = 332.0
+offset_bottom = 18.0
+color = Color(0, 0, 0, 0.8)
+
+[node name="ShieldBar" type="ProgressBar" parent="HUD"]
+self_modulate = Color(0.35, 0.7, 1, 1)
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -220.0
+offset_top = 60.0
+offset_right = 220.0
+offset_bottom = 70.0
+show_percentage = false
+
+[node name="StatusLabel" type="Label" parent="HUD"]
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -220.0
+offset_top = 72.0
+offset_right = 220.0
+offset_bottom = 90.0
+theme_override_colors/font_color = Color(0.5, 0.85, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 12
+text = "SHIELDED"
+horizontal_alignment = 1

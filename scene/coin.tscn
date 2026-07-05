@@ -1,7 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://cn6xex6j56w3n"]
+[gd_scene format=3 uid="uid://cuiga54w00chd"]
 
 [ext_resource type="Texture2D" uid="uid://b1h0u76jnh4b8" path="res://art/2D Pixel Dungeon Asset Pack/items and trap_animation/coin/coin_1.png" id="1_0a7rk"]
-[ext_resource type="Script" path="res://script/coin.gd" id="1_jx7wd"]
 [ext_resource type="Texture2D" uid="uid://cre71siw00mtk" path="res://art/2D Pixel Dungeon Asset Pack/items and trap_animation/coin/coin_2.png" id="2_4sbe4"]
 [ext_resource type="Texture2D" uid="uid://d0kov52fja6ee" path="res://art/2D Pixel Dungeon Asset Pack/items and trap_animation/coin/coin_3.png" id="4_f282r"]
 [ext_resource type="Texture2D" uid="uid://711b2b7v3ed8" path="res://art/2D Pixel Dungeon Asset Pack/items and trap_animation/coin/coin_4.png" id="4_necwi"]
@@ -77,18 +76,6 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("pickupsound:playing")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_rhgew"]
@@ -168,29 +155,26 @@ tracks/5/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fcpmi"]
 _data = {
-"RESET": SubResource("Animation_8rivo"),
-"pickup": SubResource("Animation_rhgew")
+&"RESET": SubResource("Animation_8rivo"),
+&"pickup": SubResource("Animation_rhgew")
 }
 
-[node name="Coin" type="Area2D"]
+[node name="Coin" type="Area2D" unique_id=362409691]
 collision_mask = 2
-script = ExtResource("1_jx7wd")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1033313011]
 sprite_frames = SubResource("SpriteFrames_sk88o")
 autoplay = "default"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1269227640]
 shape = SubResource("CircleShape2D_6cy4f")
 
-[node name="pickupsound" type="AudioStreamPlayer" parent="."]
+[node name="pickupsound" type="AudioStreamPlayer" parent="." unique_id=1359026811]
 stream = ExtResource("6_05ku7")
 volume_db = -5.0
 bus = &"sfx"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_fcpmi")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1175092248]
+libraries/ = SubResource("AnimationLibrary_fcpmi")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

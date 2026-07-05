@@ -8,12 +8,11 @@ extends Node2D
 # ends the game.
 # ───────────────────────────────────────────────────────────────────────────────
 
-const BOSS_SCENE    := preload("res://scene/finalboss_enemy.tscn")
-const BAIT_SCENE    := preload("res://scene/bait_platform.tscn")
-const DEBT_WALL     := preload("res://scene/debt_wall.tscn")
-const PULL_ZONE     := preload("res://scene/pull_zone.tscn")
-const FALLING_PLAT  := preload("res://scene/falling_platform.tscn")
-const COIN_SCENE    := preload("res://scene/coin.tscn")
+const BAIT_SCENE    := preload("res://scene/Levels/Level2/gimmicks/bait_platform/bait_platform.tscn")
+const DEBT_WALL     := preload("res://scene/Levels/Level6/gimmicks/debt_wall/debt_wall.tscn")
+const PULL_ZONE     := preload("res://scene/Levels/Level4/gimmicks/pull_zone/pull_zone.tscn")
+const FALLING_PLAT  := preload("res://scene/gimmicks/falling_platform/falling_platform.tscn")
+const COIN_SCENE    := preload("res://scene/pickups/coin/coin.tscn")
 
 # Active gimmick nodes for the current phase (removed when the next phase starts).
 var _phase_transient: Array[Node] = []
@@ -21,6 +20,7 @@ var _phase_transient: Array[Node] = []
 @onready var scene_transition_anim: AnimationPlayer  = $SceneTransitionAnimation/AnimationPlayer
 @onready var audio_bgm:             AudioStreamPlayer = $AudioBGM
 @onready var close_door: StaticBody2D = $CloseDoor
+@onready var boss:       FinalBossEnemy = $Boss
 
 var _started := false
 var _transitioning := false
@@ -33,6 +33,10 @@ func _ready() -> void:
 	close_door.visible = false
 	$CloseDoor/CollisionShape2D.disabled = true
 	$BossZone.body_entered.connect(_on_boss_zone_entered)
+	# The boss is placed in the editor but dormant/hidden until the countdown ends.
+	boss.visible = false
+	boss.died.connect(_on_boss_died)
+	boss.phase_changed.connect(_on_boss_phase)
 
 func _on_boss_zone_entered(body: Node2D) -> void:
 	if _started or not (body is Player):
@@ -65,22 +69,9 @@ func _countdown_then_summon() -> void:
 	label.text = tr("SURVIVE")
 	await get_tree().create_timer(0.7).timeout
 	layer.queue_free()
-	_summon_boss()
-
-func _summon_boss() -> void:
-	var boss := BOSS_SCENE.instantiate()
-	boss.position = Vector2(1400, 450)
-	boss.activation_x = -100000.0   # already trapped in the arena — fight now
-	# Server spawn spots — only on the floor and STATIC platforms, so servers are
-	# always reachable no matter which moving/falling gimmick is active.
-	boss.server_spots = [
-		Vector2(400, 620), Vector2(625, 535), Vector2(1000, 620),
-		Vector2(1400, 535), Vector2(1600, 620), Vector2(1825, 535),
-		Vector2(2050, 620),
-	]
-	boss.died.connect(_on_boss_died)
-	boss.phase_changed.connect(_on_boss_phase)
-	add_child(boss)
+	# Reveal & wake the boss that's already placed in the arena. Servers spawn at
+	# the ServerSpawn markers (see the scene) — 4 of the 7 picked at random.
+	boss.summon()
 
 # ── Boss-phase gimmicks ─────────────────────────────────────────────────────────
 # Each HP-quarter phase brings back one earlier stage's gimmick, so the whole
@@ -172,7 +163,7 @@ func _show_victory() -> void:
 	layer.add_child(label)
 
 	await get_tree().create_timer(5.0).timeout
-	_fade_then_load("res://scene/main_menu.tscn")
+	_fade_then_load("res://scene/ui/main_menu.tscn")
 
 func _on_stage_5_portal_body_entered(body: Node2D) -> void:
 	if body is Player and not _transitioning and not _started:

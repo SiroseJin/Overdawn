@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Overdawn 1"
-run/main_scene="res://scene/main_menu.tscn"
+run/main_scene="res://scene/ui/main_menu.tscn"
 config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"
 
@@ -25,68 +25,87 @@ buses/default_bus_layout="uid://deolkwypii4ig"
 
 [autoload]
 
-Global="*res://script/global.gd"
+Global="*res://script/managers/global.gd"
 PreviousSceneManager="*res://script/previous_scene_manager.gd"
-SaveManager="*res://script/save_manager.gd"
+SaveManager="*res://script/managers/save_manager.gd"
 Dialogic="*uid://ds2q0uclmolvu"
-TranslationManager="*res://script/translation_manager.gd"
-SettingsManager="*res://script/settings_manager.gd"
-ProgressionManager="*res://script/progression_manager.gd"
-QuizManager="*res://script/quiz_manager.gd"
+TranslationManager="*res://script/managers/translation_manager.gd"
+SettingsManager="*res://script/managers/settings_manager.gd"
+ProgressionManager="*res://script/managers/progression_manager.gd"
+QuizManager="*res://script/managers/quiz_manager.gd"
 
 [dialogic]
 
 directories/dch_directory={
-"npc1": "res://scene/npc1.dch",
-"unit_test_character": "res://Tests/Resources/unit_test_character.dch"
+"npc/ana": "res://scene/Levels/Level1/npc/ana.dch",
+"npc/arif": "res://scene/Levels/Level5/npc/arif.dch",
+"npc/bayu": "res://scene/Levels/Level1/npc/bayu.dch",
+"npc/damar": "res://scene/Levels/Level3/npc/damar.dch",
+"npc/eko": "res://scene/Levels/Level2/npc/eko.dch",
+"npc/gatekeeper": "res://scene/Levels/Level1/npc/gatekeeper.dch",
+"npc/guntur": "res://scene/Levels/Level4/npc/guntur.dch",
+"npc/hendra": "res://scene/Levels/Level1/npc/hendra.dch",
+"npc/laras": "res://scene/Levels/Level4/npc/laras.dch",
+"npc/mega": "res://scene/Levels/Level4/npc/mega.dch",
+"npc/nadia": "res://scene/Levels/Level2/npc/nadia.dch",
+"npc/npc1": "res://scene/actors/npc/npc1.dch",
+"npc/rafi": "res://scene/Levels/Level2/npc/rafi.dch",
+"npc/rina": "res://scene/Levels/Level3/npc/rina.dch",
+"npc/sari": "res://scene/Levels/Level1/npc/sari.dch",
+"npc/sinta": "res://scene/Levels/Level3/npc/sinta.dch",
+"npc/toni": "res://scene/Levels/Level3/npc/toni.dch",
+"npc/vino": "res://scene/Levels/Level4/npc/vino.dch",
+"npc/wira": "res://scene/Levels/Level5/npc/wira.dch",
+"npc/yani": "res://scene/Levels/Level2/npc/yani.dch",
+"npc1": "res://scene/npc1.dch"
 }
 directories/dtl_directory={
-"lobbytutorial": "res://script/lobbytutorial.dtl",
-"lobbytutorial_id": "res://script/lobbytutorial_id.dtl",
-"npc1timeline": "res://script/npc1timeline.dtl",
-"npc1timeline_id": "res://script/npc1timeline_id.dtl",
-"npc2timeline": "res://script/npc2timeline.dtl",
-"npc2timeline_id": "res://script/npc2timeline_id.dtl",
-"npc3timeline": "res://script/npc3timeline.dtl",
-"npc3timeline_id": "res://script/npc3timeline_id.dtl",
-"npc4timeline": "res://script/npc4timeline.dtl",
-"npc4timeline_id": "res://script/npc4timeline_id.dtl",
-"s1endpost": "res://script/s1endpost.dtl",
-"s1endpost_id": "res://script/s1endpost_id.dtl",
-"s1gatekeepertimeline": "res://script/s1gatekeepertimeline.dtl",
-"s1gatekeepertimeline_id": "res://script/s1gatekeepertimeline_id.dtl",
-"s1quiztimeline": "res://script/s1quiztimeline.dtl",
-"s1quiztimeline_id": "res://script/s1quiztimeline_id.dtl",
-"s2npc1timeline": "res://script/s2npc1timeline.dtl",
-"s2npc1timeline_id": "res://script/s2npc1timeline_id.dtl",
-"s2npc2timeline": "res://script/s2npc2timeline.dtl",
-"s2npc2timeline_id": "res://script/s2npc2timeline_id.dtl",
-"s2npc3timeline": "res://script/s2npc3timeline.dtl",
-"s2npc3timeline_id": "res://script/s2npc3timeline_id.dtl",
-"s2npc4timeline": "res://script/s2npc4timeline.dtl",
-"s2npc4timeline_id": "res://script/s2npc4timeline_id.dtl",
-"s3npc1timeline": "res://script/s3npc1timeline.dtl",
-"s3npc1timeline_id": "res://script/s3npc1timeline_id.dtl",
-"s3npc2timeline": "res://script/s3npc2timeline.dtl",
-"s3npc2timeline_id": "res://script/s3npc2timeline_id.dtl",
-"s3npc3timeline": "res://script/s3npc3timeline.dtl",
-"s3npc3timeline_id": "res://script/s3npc3timeline_id.dtl",
-"s3npc4timeline": "res://script/s3npc4timeline.dtl",
-"s3npc4timeline_id": "res://script/s3npc4timeline_id.dtl",
-"s4npc1timeline": "res://script/s4npc1timeline.dtl",
-"s4npc1timeline_id": "res://script/s4npc1timeline_id.dtl",
-"s4npc2timeline": "res://script/s4npc2timeline.dtl",
-"s4npc2timeline_id": "res://script/s4npc2timeline_id.dtl",
-"s4npc3timeline": "res://script/s4npc3timeline.dtl",
-"s4npc3timeline_id": "res://script/s4npc3timeline_id.dtl",
-"s4npc4timeline": "res://script/s4npc4timeline.dtl",
-"s4npc4timeline_id": "res://script/s4npc4timeline_id.dtl",
-"s5bossgate": "res://script/s5bossgate.dtl",
-"s5bossgate_id": "res://script/s5bossgate_id.dtl",
-"s5bossgatepost": "res://script/s5bossgatepost.dtl",
-"s5bossgatepost_id": "res://script/s5bossgatepost_id.dtl",
-"s5npc1timeline": "res://script/s5npc1timeline.dtl",
-"s5npc1timeline_id": "res://script/s5npc1timeline_id.dtl"
+"lobbytutorial": "res://scene/actors/npc/lobbytutorial.dtl",
+"lobbytutorial_id": "res://scene/actors/npc/lobbytutorial_id.dtl",
+"npc1timeline": "res://scene/Levels/Level1/npc/npc1timeline.dtl",
+"npc1timeline_id": "res://scene/Levels/Level1/npc/npc1timeline_id.dtl",
+"npc2timeline": "res://scene/Levels/Level1/npc/npc2timeline.dtl",
+"npc2timeline_id": "res://scene/Levels/Level1/npc/npc2timeline_id.dtl",
+"npc3timeline": "res://scene/Levels/Level1/npc/npc3timeline.dtl",
+"npc3timeline_id": "res://scene/Levels/Level1/npc/npc3timeline_id.dtl",
+"npc4timeline": "res://scene/Levels/Level1/npc/npc4timeline.dtl",
+"npc4timeline_id": "res://scene/Levels/Level1/npc/npc4timeline_id.dtl",
+"s1endpost": "res://scene/Levels/Level1/npc/s1endpost.dtl",
+"s1endpost_id": "res://scene/Levels/Level1/npc/s1endpost_id.dtl",
+"s1gatekeepertimeline": "res://scene/Levels/Level1/npc/s1gatekeepertimeline.dtl",
+"s1gatekeepertimeline_id": "res://scene/Levels/Level1/npc/s1gatekeepertimeline_id.dtl",
+"s1quiztimeline": "res://scene/Levels/Level1/npc/s1quiztimeline.dtl",
+"s1quiztimeline_id": "res://scene/Levels/Level1/npc/s1quiztimeline_id.dtl",
+"s2npc1timeline": "res://scene/Levels/Level2/npc/s2npc1timeline.dtl",
+"s2npc1timeline_id": "res://scene/Levels/Level2/npc/s2npc1timeline_id.dtl",
+"s2npc2timeline": "res://scene/Levels/Level2/npc/s2npc2timeline.dtl",
+"s2npc2timeline_id": "res://scene/Levels/Level2/npc/s2npc2timeline_id.dtl",
+"s2npc3timeline": "res://scene/Levels/Level2/npc/s2npc3timeline.dtl",
+"s2npc3timeline_id": "res://scene/Levels/Level2/npc/s2npc3timeline_id.dtl",
+"s2npc4timeline": "res://scene/Levels/Level2/npc/s2npc4timeline.dtl",
+"s2npc4timeline_id": "res://scene/Levels/Level2/npc/s2npc4timeline_id.dtl",
+"s3npc1timeline": "res://scene/Levels/Level3/npc/s3npc1timeline.dtl",
+"s3npc1timeline_id": "res://scene/Levels/Level3/npc/s3npc1timeline_id.dtl",
+"s3npc2timeline": "res://scene/Levels/Level3/npc/s3npc2timeline.dtl",
+"s3npc2timeline_id": "res://scene/Levels/Level3/npc/s3npc2timeline_id.dtl",
+"s3npc3timeline": "res://scene/Levels/Level3/npc/s3npc3timeline.dtl",
+"s3npc3timeline_id": "res://scene/Levels/Level3/npc/s3npc3timeline_id.dtl",
+"s3npc4timeline": "res://scene/Levels/Level3/npc/s3npc4timeline.dtl",
+"s3npc4timeline_id": "res://scene/Levels/Level3/npc/s3npc4timeline_id.dtl",
+"s4npc1timeline": "res://scene/Levels/Level4/npc/s4npc1timeline.dtl",
+"s4npc1timeline_id": "res://scene/Levels/Level4/npc/s4npc1timeline_id.dtl",
+"s4npc2timeline": "res://scene/Levels/Level4/npc/s4npc2timeline.dtl",
+"s4npc2timeline_id": "res://scene/Levels/Level4/npc/s4npc2timeline_id.dtl",
+"s4npc3timeline": "res://scene/Levels/Level4/npc/s4npc3timeline.dtl",
+"s4npc3timeline_id": "res://scene/Levels/Level4/npc/s4npc3timeline_id.dtl",
+"s4npc4timeline": "res://scene/Levels/Level4/npc/s4npc4timeline.dtl",
+"s4npc4timeline_id": "res://scene/Levels/Level4/npc/s4npc4timeline_id.dtl",
+"s5bossgate": "res://scene/Levels/Level5/npc/s5bossgate.dtl",
+"s5bossgate_id": "res://scene/Levels/Level5/npc/s5bossgate_id.dtl",
+"s5bossgatepost": "res://scene/Levels/Level5/npc/s5bossgatepost.dtl",
+"s5bossgatepost_id": "res://scene/Levels/Level5/npc/s5bossgatepost_id.dtl",
+"s5npc1timeline": "res://scene/Levels/Level5/npc/s5npc1timeline.dtl",
+"s5npc1timeline_id": "res://scene/Levels/Level5/npc/s5npc1timeline_id.dtl"
 }
 layout/style_directory={}
 glossary/default_case_sensitive=true

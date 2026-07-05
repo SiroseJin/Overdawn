@@ -1,11 +1,17 @@
 extends Node2D
 
-# ─── Stage 3 ──────────────────────────────────────────────────────────────────
+# ─── Stage 3 — The Debt Tower (vertical parkour) ────────────────────────────────
+# A tall, narrow Jump-King-style climb: small staggered ledges, precise arced
+# double-jumps, and a long fall cascades you back down the tower. The stage's
+# gimmick — the Debt — is re-themed here as a slow flood rising from the bottom:
+# climb steadily or keep falling and it drags you under. The mandatory key waits
+# at the summit and opens the gate to Stage 4.
+# ───────────────────────────────────────────────────────────────────────────────
 
 @onready var scene_transition_anim: AnimationPlayer    = $SceneTransitionAnimation/AnimationPlayer
 @onready var audio_bgm:             AudioStreamPlayer = $AudioBGM
 
-const DEBT_WALL := preload("res://scene/debt_wall.tscn")
+const TRADER     := "res://art/Free-City-Trader-Character-Sprite-Sheets-Pixel-Art/"
 
 var _transitioning := false
 
@@ -13,18 +19,31 @@ func _ready() -> void:
 	Global.gameStarted = true
 	scene_transition_anim.play("fade_out")
 	audio_bgm.play()
-	_setup_debt_wall()
+	_apply_npc_skins()
+	_configure_npcs()
 
-# Gimmick: the Debt Wall creeps in from behind the whole level. Keep moving or it
-# grinds you down — the debt always catches up.
-func _setup_debt_wall() -> void:
-	var wall := DEBT_WALL.instantiate()
-	wall.position = Vector2(-320, 400)
-	wall.speed = 45.0
-	add_child(wall)
+# Distinct look + stable id per NPC. Damar (network guide), Rina (who the Collector
+# was), Toni (saw her, found her weakness), Sinta (the casino ahead).
+func _apply_npc_skins() -> void:
+	_skin("Damar", "Trader_1")
+	_skin("Rina", "Trader_3")
+	_skin("Toni", "Trader_2")
+	_skin("Sinta", "Trader_1")
 
-func _process(_delta: float) -> void:
-	pass
+func _skin(npc_name: String, trader: String) -> void:
+	var npc := get_node_or_null(npc_name)
+	if npc and npc.has_method("set_appearance"):
+		npc.set_appearance(
+			load(TRADER + trader + "/Idle.png"),
+			load(TRADER + trader + "/Dialogue.png"))
+
+func _configure_npcs() -> void:
+	for pair in [["Damar", "stage3_damar"], ["Rina", "stage3_rina"],
+			["Toni", "stage3_toni"], ["Sinta", "stage3_sinta"]]:
+		var n := get_node_or_null(pair[0])
+		if n: n.npc_id = pair[1]
+
+# ─── Transitions ─────────────────────────────────────────────────────────────────
 
 func _on_stage_4_portal_body_entered(body: Node2D) -> void:
 	if body is Player and not _transitioning:
@@ -33,8 +52,6 @@ func _on_stage_4_portal_body_entered(body: Node2D) -> void:
 
 func _fade_then_load(scene_path: String) -> void:
 	audio_bgm.stop()
-	# Load the next scene (and its heavy audio) in the background during the fade
-	# so the actual switch is instant instead of a stall on disk/audio reads.
 	ResourceLoader.load_threaded_request(scene_path)
 	scene_transition_anim.play("fade_in")
 	await get_tree().create_timer(0.5).timeout

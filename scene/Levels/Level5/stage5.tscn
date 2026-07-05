@@ -1,22 +1,24 @@
 [gd_scene format=3 uid="uid://cnyvpht4rwtvw"]
 
 [ext_resource type="Script" uid="uid://yjg5qo2bvv2l" path="res://scene/Levels/Level5/stage5.gd" id="1_stg5"]
-[ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/player.tscn" id="2_player"]
-[ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/scene_transition_animation.tscn" id="3_trans"]
+[ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/actors/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/ui/scene_transition_animation.tscn" id="3_trans"]
 [ext_resource type="AudioStream" uid="uid://028va8maeqdm" path="res://audio/Music/Caketown 1 by matthewpablo.mp3" id="4_bgm"]
-[ext_resource type="PackedScene" uid="uid://d0ib3gkf0fyen" path="res://scene/npc1.tscn" id="5_npc"]
-[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/frog_enemy.tscn" id="6_frog"]
-[ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/bat_enemy.tscn" id="7_bat"]
-[ext_resource type="PackedScene" uid="uid://chn8rr31oxv0x" path="res://scene/witch_enemy.tscn" id="8_witch"]
-[ext_resource type="PackedScene" uid="uid://jr1opep0t5q3" path="res://scene/necromancer_enemy.tscn" id="9_necro"]
-[ext_resource type="PackedScene" uid="uid://cmovingplat01" path="res://scene/moving_platform.tscn" id="10_mp"]
-[ext_resource type="PackedScene" uid="uid://cfallingplat0" path="res://scene/falling_platform.tscn" id="11_fp"]
+[ext_resource type="PackedScene" uid="uid://d0ib3gkf0fyen" path="res://scene/actors/npc/npc1.tscn" id="5_npc"]
+[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/frog/frog_enemy.tscn" id="6_frog"]
+[ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/actors/enemies/bat/bat_enemy.tscn" id="7_bat"]
+[ext_resource type="PackedScene" uid="uid://chn8rr31oxv0x" path="res://scene/actors/enemies/witch/witch_enemy.tscn" id="8_witch"]
+[ext_resource type="PackedScene" uid="uid://jr1opep0t5q3" path="res://scene/actors/enemies/necromancer/necromancer_enemy.tscn" id="9_necro"]
+[ext_resource type="PackedScene" uid="uid://cmovingplat01" path="res://scene/gimmicks/moving_platform/moving_platform.tscn" id="10_mp"]
+[ext_resource type="PackedScene" uid="uid://cfallingplat0" path="res://scene/gimmicks/falling_platform/falling_platform.tscn" id="11_fp"]
+[ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="12_spd"]
+[ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="13_hp"]
+[ext_resource type="PackedScene" uid="uid://cqkeypickup00" path="res://scene/pickups/key_pickup/key_pickup.tscn" id="14_key"]
+[ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="15_gate"]
+[ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_death"]
-size = Vector2(5200, 60)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_portalA"]
-size = Vector2(40, 80)
+size = Vector2(5800, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_portalB"]
 size = Vector2(40, 80)
@@ -26,80 +28,89 @@ script = ExtResource("1_stg5")
 
 [node name="Terrain" type="StaticBody2D" parent="." unique_id=1255593313]
 
-[node name="Floor1" type="CollisionPolygon2D" parent="Terrain" unique_id=98302283]
-polygon = PackedVector2Array(0, 648, 700, 648, 700, 680, 0, 680)
+[node name="Ground2" type="CollisionPolygon2D" parent="Terrain" unique_id=1208417331]
+position = Vector2(1585, 487)
+scale = Vector2(0.17045584, 0.27709967)
+polygon = PackedVector2Array(1550, -60, 2250, -60, 2250, 20, 1550, 20)
 
-[node name="Floor2" type="CollisionPolygon2D" parent="Terrain" unique_id=1986804628]
-polygon = PackedVector2Array(1000, 648, 1600, 648, 1600, 680, 1000, 680)
+[node name="Ground1" type="CollisionPolygon2D" parent="Terrain" unique_id=1782865623]
+polygon = PackedVector2Array(0, 680, 600, 680, 850, 720, 1350, 720, 1350, 780, 0, 780)
 
-[node name="Floor3" type="CollisionPolygon2D" parent="Terrain" unique_id=664945375]
-polygon = PackedVector2Array(2100, 648, 2800, 648, 2800, 680, 2100, 680)
+[node name="KeyPeak" type="CollisionPolygon2D" parent="Terrain" unique_id=2090322756]
+position = Vector2(940.99994, -6.0000153)
+scale = Vector2(1.3794643, 1)
+polygon = PackedVector2Array(1550, -60, 2250, -60, 2250, 20, 1550, 20)
 
-[node name="Floor4" type="CollisionPolygon2D" parent="Terrain" unique_id=972726702]
-polygon = PackedVector2Array(3100, 648, 4000, 648, 4000, 680, 3100, 680)
+[node name="PeakWall" type="CollisionPolygon2D" parent="Terrain" unique_id=1824258784]
+position = Vector2(1537, -6)
+polygon = PackedVector2Array(1500, -320, 1560, -320, 1560, 20, 1500, 20)
 
-[node name="Floor5" type="CollisionPolygon2D" parent="Terrain" unique_id=1010618256]
-polygon = PackedVector2Array(4200, 648, 4900, 648, 4900, 680, 4200, 680)
+[node name="MidPlatform" type="CollisionPolygon2D" parent="Terrain" unique_id=1269579789]
+polygon = PackedVector2Array(2900, 280, 3500, 280, 3750, 380, 4100, 380, 4100, 780, 2900, 780)
 
-[node name="P1" type="CollisionPolygon2D" parent="Terrain" unique_id=201380858]
-polygon = PackedVector2Array(1150, 560, 1300, 560, 1300, 568, 1150, 568)
+[node name="ExitPlatform" type="CollisionPolygon2D" parent="Terrain" unique_id=2003616836]
+polygon = PackedVector2Array(4450, 450, 5150, 450, 5150, 780, 4450, 780)
 
-[node name="P2" type="CollisionPolygon2D" parent="Terrain" unique_id=1132620680]
-polygon = PackedVector2Array(2180, 560, 2320, 560, 2320, 568, 2180, 568)
+[node name="LeftWall" type="CollisionPolygon2D" parent="Terrain" unique_id=2117513208]
+polygon = PackedVector2Array(-100, -400, 0, -400, 0, 800, -100, 800)
 
-[node name="P3" type="CollisionPolygon2D" parent="Terrain" unique_id=465828211]
-polygon = PackedVector2Array(2330, 480, 2470, 480, 2470, 488, 2330, 488)
+[node name="RightWall" type="CollisionPolygon2D" parent="Terrain" unique_id=1658447135]
+polygon = PackedVector2Array(5150, -400, 5250, -400, 5250, 800, 5150, 800)
 
-[node name="KeyPlatform" type="CollisionPolygon2D" parent="Terrain" unique_id=1276757631]
-polygon = PackedVector2Array(2420, 460, 2560, 460, 2560, 468, 2420, 468)
+[node name="SkyBarrier" type="CollisionPolygon2D" parent="Terrain" unique_id=794293695]
+position = Vector2(-17, -573)
+polygon = PackedVector2Array(-100, -440, 5250, -440, 5250, -380, -100, -380)
 
-[node name="LeftWall" type="CollisionPolygon2D" parent="Terrain" unique_id=283196416]
-polygon = PackedVector2Array(-100, -300, 0, -300, 0, 800, -100, 800)
+[node name="Ground3" type="CollisionPolygon2D" parent="Terrain" unique_id=917671978]
+position = Vector2(4419, -51.000004)
+scale = Vector2(0.14872922, 0.24511717)
+polygon = PackedVector2Array(1550, -60, 2250, -60, 2250, 20, 1550, 20)
 
-[node name="RightWall" type="CollisionPolygon2D" parent="Terrain" unique_id=928109757]
-polygon = PackedVector2Array(4900, -300, 5000, -300, 5000, 800, 4900, 800)
+[node name="RightWall2" type="CollisionPolygon2D" parent="Terrain" unique_id=620162514]
+position = Vector2(-9711, -565.56244)
+scale = Vector2(2.85, 0.97031236)
+polygon = PackedVector2Array(5150, -400, 5250, -400, 5248.772, 872.46375, 5150.5264, 872.46375)
 
-[node name="MovingPlatform1" parent="." unique_id=924019853 instance=ExtResource("10_mp")]
-position = Vector2(760, 645)
-travel = Vector2(250, 0)
+[node name="Lift1" parent="." unique_id=809115017 instance=ExtResource("10_mp")]
+position = Vector2(2009, 479)
+travel = Vector2(0, -520)
+speed = 60.0
+downtime = 0.5
+move_on_stand = true
+auto_return = false
+start_active = false
 
-[node name="MovingPlatform2" parent="." unique_id=1887732441 instance=ExtResource("10_mp")]
-position = Vector2(2860, 645)
-travel = Vector2(240, 0)
+[node name="End" type="Marker2D" parent="Lift1" unique_id=900011814]
+position = Vector2(850, -190)
 
-[node name="MovingPlatform3" parent="." unique_id=1646808557 instance=ExtResource("10_mp")]
-position = Vector2(4040, 645)
-travel = Vector2(160, 0)
+[node name="FallA1" parent="." unique_id=784155301 instance=ExtResource("11_fp")]
+position = Vector2(1450, 658)
 
-[node name="FallingPlatform1" parent="." unique_id=114795995 instance=ExtResource("11_fp")]
-position = Vector2(1720, 600)
+[node name="FallA2" parent="." unique_id=561634564 instance=ExtResource("11_fp")]
+position = Vector2(1600, 588)
 
-[node name="FallingPlatform2" parent="." unique_id=636116812 instance=ExtResource("11_fp")]
-position = Vector2(1870, 560)
+[node name="FallA3" parent="." unique_id=2096090642 instance=ExtResource("11_fp")]
+position = Vector2(1750, 518)
 
-[node name="FallingPlatform3" parent="." unique_id=1329956596 instance=ExtResource("11_fp")]
-position = Vector2(2020, 600)
+[node name="FallB5" parent="." unique_id=1759521369 instance=ExtResource("11_fp")]
+position = Vector2(4200, 410)
+
+[node name="FallB6" parent="." unique_id=2119167695 instance=ExtResource("11_fp")]
+position = Vector2(4350, 450)
 
 [node name="DeathZone" type="Area2D" parent="." unique_id=366546281]
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone" unique_id=8837003]
-position = Vector2(2450, 760)
+position = Vector2(2600, 850)
 shape = SubResource("RectangleShape2D_death")
-
-[node name="Stage4Portal" type="Area2D" parent="." unique_id=162732717]
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Stage4Portal" unique_id=63153806]
-position = Vector2(30, 608)
-shape = SubResource("RectangleShape2D_portalA")
 
 [node name="Stage6Portal" type="Area2D" parent="." unique_id=829922716]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stage6Portal" unique_id=1633575462]
-position = Vector2(4850, 608)
+position = Vector2(5128, 410)
 shape = SubResource("RectangleShape2D_portalB")
 
 [node name="SceneTransitionAnimation" parent="." unique_id=1608430325 instance=ExtResource("3_trans")]
@@ -113,34 +124,126 @@ stream = ExtResource("4_bgm")
 volume_db = -4.0
 bus = &"bgm"
 
-[node name="Npc1" parent="." unique_id=1571475650 instance=ExtResource("5_npc")]
-position = Vector2(150, 641)
+[node name="Arif" parent="." unique_id=1571475650 instance=ExtResource("5_npc")]
+position = Vector2(200, 675)
 dialogue_timeline = "s5npc1timeline"
 
-[node name="QuizNpc" parent="." unique_id=134998758 instance=ExtResource("5_npc")]
-position = Vector2(4400, 641)
+[node name="Wira" parent="." unique_id=134998758 instance=ExtResource("5_npc")]
+position = Vector2(4678, 447)
 
-[node name="Bat1" parent="." unique_id=702771751 instance=ExtResource("7_bat")]
-position = Vector2(400, 570)
+[node name="Bat1" parent="." unique_id=394333644 instance=ExtResource("7_bat")]
+position = Vector2(450, 580)
 
-[node name="Frog1" parent="." unique_id=2038829546 instance=ExtResource("6_frog")]
-position = Vector2(1300, 635)
+[node name="Frog1" parent="." unique_id=354254762 instance=ExtResource("6_frog")]
+position = Vector2(1000, 700)
 
-[node name="Bat2" parent="." unique_id=555840681 instance=ExtResource("7_bat")]
-position = Vector2(1400, 500)
+[node name="Witch1" parent="." unique_id=1028765526 instance=ExtResource("8_witch")]
+position = Vector2(3665, -101)
 
-[node name="Witch1" parent="." unique_id=2128957536 instance=ExtResource("8_witch")]
-position = Vector2(2400, 635)
+[node name="Necromancer1" parent="." unique_id=867063269 instance=ExtResource("9_necro")]
+position = Vector2(3442, -109)
 
-[node name="Necromancer1" parent="." unique_id=1733766344 instance=ExtResource("9_necro")]
-position = Vector2(3500, 630)
+[node name="Witch2" parent="." unique_id=399106065 instance=ExtResource("8_witch")]
+position = Vector2(3574, -106)
 
-[node name="Frog2" parent="." unique_id=953677410 instance=ExtResource("6_frog")]
-position = Vector2(3750, 635)
+[node name="Frog2" parent="." unique_id=419607088 instance=ExtResource("6_frog")]
+position = Vector2(3467, 260)
+
+[node name="Bat3" parent="." unique_id=1820312505 instance=ExtResource("7_bat")]
+position = Vector2(3923, 350)
+
+[node name="SpeedPickup" parent="." unique_id=1629406918 instance=ExtResource("12_spd")]
+position = Vector2(400, 655)
+
+[node name="HealthPickup" parent="." unique_id=763166944 instance=ExtResource("13_hp")]
+position = Vector2(3000, 262)
+
+[node name="Key" parent="." unique_id=796434059 instance=ExtResource("14_key")]
+position = Vector2(3165, -86)
+key_id = "stage5_key"
+
+[node name="Boss Gate" parent="." unique_id=1847186985 instance=ExtResource("15_gate")]
+position = Vector2(5013, 364)
+required_key = "stage5_key"
 
 [node name="Player" parent="." unique_id=893853448 instance=ExtResource("2_player")]
-position = Vector2(100, 610)
+position = Vector2(15, 664)
+
+[node name="Bat4" parent="." unique_id=925523153 instance=ExtResource("7_bat")]
+position = Vector2(2214, 230)
+
+[node name="Bat5" parent="." unique_id=2040935625 instance=ExtResource("7_bat")]
+position = Vector2(2549, 256)
+
+[node name="Bat6" parent="." unique_id=1704993805 instance=ExtResource("7_bat")]
+position = Vector2(2862, 132)
+
+[node name="Bat7" parent="." unique_id=830869594 instance=ExtResource("7_bat")]
+position = Vector2(1527, 485)
+
+[node name="Bat8" parent="." unique_id=203399589 instance=ExtResource("7_bat")]
+position = Vector2(1838, 303)
+
+[node name="Lift2" parent="." unique_id=1581570788 instance=ExtResource("10_mp")]
+visible = false
+position = Vector2(4797, 460)
+travel = Vector2(0, -520)
+downtime = 0.5
+move_on_stand = true
+start_active = false
+
+[node name="End" type="Marker2D" parent="Lift2" unique_id=833471251]
+position = Vector2(0, -517)
+
+[node name="Lift3" parent="." unique_id=1892248931 instance=ExtResource("10_mp")]
+visible = false
+position = Vector2(4608, -58)
+travel = Vector2(0, -520)
+downtime = 0.5
+move_on_stand = true
+start_active = false
+
+[node name="End" type="Marker2D" parent="Lift3" unique_id=2112163312]
+position = Vector2(-521, 0)
+
+[node name="Coin1" parent="." unique_id=1731679680 instance=ExtResource("itm_coin")]
+position = Vector2(300, 655)
+
+[node name="Coin2" parent="." unique_id=284083362 instance=ExtResource("itm_coin")]
+position = Vector2(1450, 632)
+
+[node name="Coin3" parent="." unique_id=2060043365 instance=ExtResource("itm_coin")]
+position = Vector2(1600, 562)
+
+[node name="Coin4" parent="." unique_id=1613060102 instance=ExtResource("itm_coin")]
+position = Vector2(1750, 492)
+
+[node name="Coin5" parent="." unique_id=55554887 instance=ExtResource("itm_coin")]
+position = Vector2(2050, -40)
+
+[node name="Coin6" parent="." unique_id=1472049798 instance=ExtResource("itm_coin")]
+position = Vector2(2350, 2)
+
+[node name="Coin7" parent="." unique_id=1588006166 instance=ExtResource("itm_coin")]
+position = Vector2(2500, 82)
+
+[node name="Coin8" parent="." unique_id=927153228 instance=ExtResource("itm_coin")]
+position = Vector2(2650, 162)
+
+[node name="Coin9" parent="." unique_id=446985627 instance=ExtResource("itm_coin")]
+position = Vector2(2800, 242)
+
+[node name="Coin10" parent="." unique_id=1865628802 instance=ExtResource("itm_coin")]
+position = Vector2(3100, 262)
+
+[node name="Coin11" parent="." unique_id=635351015 instance=ExtResource("itm_coin")]
+position = Vector2(4200, 392)
+
+[node name="Coin12" parent="." unique_id=352393126 instance=ExtResource("itm_coin")]
+position = Vector2(4350, 432)
+
+[node name="Coin13" parent="." unique_id=411865979 instance=ExtResource("itm_coin")]
+position = Vector2(4700, 432)
 
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
-[connection signal="body_entered" from="Stage4Portal" to="." method="_on_stage_4_portal_body_entered"]
 [connection signal="body_entered" from="Stage6Portal" to="." method="_on_stage_6_portal_body_entered"]

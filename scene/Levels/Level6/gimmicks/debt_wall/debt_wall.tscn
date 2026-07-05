@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdebtwall0001"]
+
+[ext_resource type="Script" path="res://scene/Levels/Level6/gimmicks/debt_wall/debt_wall.gd" id="1_dw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_upper"]
+size = Vector2(44, 400)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lower"]
+size = Vector2(44, 100)
+
+[node name="DebtWall" type="Node2D"]
+script = ExtResource("1_dw")
+
+[node name="UpperVisual" type="Polygon2D" parent="."]
+color = Color(0.55, 0.08, 0.12, 0.85)
+polygon = PackedVector2Array(-22, -300, 22, -300, 22, 100, -22, 100)
+
+[node name="LowerVisual" type="Polygon2D" parent="."]
+color = Color(0.55, 0.08, 0.12, 0.85)
+polygon = PackedVector2Array(-22, 200, 22, 200, 22, 300, -22, 300)
+
+[node name="Edge" type="Polygon2D" parent="."]
+color = Color(1, 0.3, 0.3, 0.9)
+polygon = PackedVector2Array(18, -300, 22, -300, 22, 300, 18, 300)
+
+[node name="GapMarkerTop" type="Polygon2D" parent="."]
+color = Color(0.4, 1, 0.7, 0.9)
+polygon = PackedVector2Array(-24, 92, 24, 92, 24, 100, -24, 100)
+
+[node name="GapMarkerBottom" type="Polygon2D" parent="."]
+color = Color(0.4, 1, 0.7, 0.9)
+polygon = PackedVector2Array(-24, 200, 24, 200, 24, 208, -24, 208)
+
+[node name="Hurt" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="UpperShape" type="CollisionShape2D" parent="Hurt"]
+position = Vector2(0, -100)
+shape = SubResource("RectangleShape2D_upper")
+
+[node name="LowerShape" type="CollisionShape2D" parent="Hurt"]
+position = Vector2(0, 250)
+shape = SubResource("RectangleShape2D_lower")

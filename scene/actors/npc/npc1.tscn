@@ -1,0 +1,136 @@
+[gd_scene format=3 uid="uid://d0ib3gkf0fyen"]
+
+[ext_resource type="Script" uid="uid://cuv8ghi02bo6s" path="res://scene/actors/npc/npc_1.gd" id="1_4hgyg"]
+[ext_resource type="Texture2D" uid="uid://bxxq1jl0my4tu" path="res://art/Free-City-Trader-Character-Sprite-Sheets-Pixel-Art/Trader_3/Idle.png" id="1_15n37"]
+[ext_resource type="Texture2D" uid="uid://bpu6b0wvtr57k" path="res://art/Free-City-Trader-Character-Sprite-Sheets-Pixel-Art/Trader_3/Dialogue.png" id="1_sxijf"]
+[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_font"]
+[ext_resource type="Script" uid="uid://cx2mbhe5mu2aw" path="res://scene/actors/npc/npc1_chat_detection_zone.gd" id="3_4hgyg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wo54f"]
+atlas = ExtResource("1_sxijf")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rvyog"]
+atlas = ExtResource("1_sxijf")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g8wjb"]
+atlas = ExtResource("1_sxijf")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dpeqt"]
+atlas = ExtResource("1_sxijf")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0fon"]
+atlas = ExtResource("1_15n37")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwpc7"]
+atlas = ExtResource("1_15n37")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33t1g"]
+atlas = ExtResource("1_15n37")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ug04j"]
+atlas = ExtResource("1_15n37")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hw6vx"]
+atlas = ExtResource("1_15n37")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wv5x1"]
+atlas = ExtResource("1_15n37")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f56f5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wo54f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rvyog")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g8wjb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dpeqt")
+}],
+"loop": false,
+"name": &"dialog",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i0fon")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwpc7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_33t1g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ug04j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hw6vx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wv5x1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4dbx6"]
+radius = 14.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hcji2"]
+
+[node name="Npc1" type="CharacterBody2D" unique_id=1937046261]
+script = ExtResource("1_4hgyg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1296207160]
+position = Vector2(2, -27)
+scale = Vector2(0.433594, 0.421875)
+sprite_frames = SubResource("SpriteFrames_f56f5")
+animation = &"dialog"
+autoplay = "idle"
+
+[node name="ChatDetectionZone" type="Area2D" parent="." unique_id=1450532726]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("3_4hgyg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChatDetectionZone" unique_id=552824089]
+position = Vector2(0, -14)
+shape = SubResource("CapsuleShape2D_4dbx6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1929895191]
+shape = SubResource("CircleShape2D_hcji2")
+disabled = true
+
+[node name="InteractHint" type="Label" parent="." unique_id=1870217038]
+auto_translate_mode = 1
+visible = false
+offset_left = -50.0
+offset_top = -100.0
+offset_right = 50.0
+offset_bottom = -80.0
+theme_override_colors/font_color = Color(1, 1, 0.2, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 11
+text = "[F] Talk"
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="ChatDetectionZone" to="ChatDetectionZone" method="_on_body_entered"]
+[connection signal="body_exited" from="ChatDetectionZone" to="ChatDetectionZone" method="_on_body_exited"]

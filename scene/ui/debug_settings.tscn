@@ -1,0 +1,222 @@
+[gd_scene format=3 uid="uid://debug_settings_01"]
+
+[ext_resource type="Script" path="res://scene/ui/debug_settings.gd" id="1_dbg"]
+[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_font"]
+
+[node name="DebugSettings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+auto_translate_mode = 1
+script = ExtResource("1_dbg")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 0.27451)
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 30.0
+offset_right = 852.0
+offset_bottom = 618.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="DebugTitle" type="Label" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+text = "DEBUG"
+horizontal_alignment = 1
+
+[node name="HSep1" type="HSeparator" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="StageSelectorLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "Stage Selector"
+horizontal_alignment = 1
+
+[node name="StageRow" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 6
+
+[node name="LobbyBtn" type="Button" parent="ColorRect/MarginContainer/VBoxContainer/StageRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+text = "Lobby"
+
+[node name="Stage1Btn" type="Button" parent="ColorRect/MarginContainer/VBoxContainer/StageRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+text = "Stage 1"
+
+[node name="Stage2Btn" type="Button" parent="ColorRect/MarginContainer/VBoxContainer/StageRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+text = "Stage 2"
+
+[node name="Stage3Btn" type="Button" parent="ColorRect/MarginContainer/VBoxContainer/StageRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+text = "Stage 3"
+
+[node name="Stage4Btn" type="Button" parent="ColorRect/MarginContainer/VBoxContainer/StageRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+text = "Stage 4"
+
+[node name="Stage5Btn" type="Button" parent="ColorRect/MarginContainer/VBoxContainer/StageRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+text = "Stage 5"
+
+[node name="Stage6Btn" type="Button" parent="ColorRect/MarginContainer/VBoxContainer/StageRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+text = "Stage 6"
+
+[node name="HSep2" type="HSeparator" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ArcadeModeToggle" type="CheckButton" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+text = "Arcade Mode"
+
+[node name="HSep3" type="HSeparator" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HPEditorLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "HP Editor"
+horizontal_alignment = 1
+
+[node name="HPRow" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 8
+
+[node name="HPLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/HPRow"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+text = "HP:"
+
+[node name="CurrentHPSpin" type="SpinBox" parent="ColorRect/MarginContainer/VBoxContainer/HPRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.0
+max_value = 9999.0
+step = 1.0
+value = 100.0
+
+[node name="SlashLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/HPRow"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+text = "/"
+
+[node name="MaxHPSpin" type="SpinBox" parent="ColorRect/MarginContainer/VBoxContainer/HPRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 9999.0
+step = 1.0
+value = 100.0
+
+[node name="ApplyHP" type="Button" parent="ColorRect/MarginContainer/VBoxContainer/HPRow"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+text = "Apply"
+
+[node name="LevelEditorLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "Level Editor"
+horizontal_alignment = 1
+
+[node name="LevelRow" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 8
+
+[node name="LevelLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/LevelRow"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+text = "Level:"
+
+[node name="LevelSpin" type="SpinBox" parent="ColorRect/MarginContainer/VBoxContainer/LevelRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 99.0
+step = 1.0
+value = 1.0
+
+[node name="ApplyLevel" type="Button" parent="ColorRect/MarginContainer/VBoxContainer/LevelRow"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+text = "Apply"
+
+[node name="HSep4" type="HSeparator" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="DeadTest" type="Button" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 13
+text = "Dead Test"
+
+[node name="Back" type="Button" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+text = "Back"
+
+[connection signal="toggled" from="ColorRect/MarginContainer/VBoxContainer/ArcadeModeToggle" to="." method="_on_arcade_mode_toggle_toggled"]
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/StageRow/LobbyBtn" to="." method="_on_lobby_pressed"]
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/StageRow/Stage1Btn" to="." method="_on_stage1_pressed"]
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/StageRow/Stage2Btn" to="." method="_on_stage2_pressed"]
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/StageRow/Stage3Btn" to="." method="_on_stage3_pressed"]
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/StageRow/Stage4Btn" to="." method="_on_stage4_pressed"]
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/StageRow/Stage5Btn" to="." method="_on_stage5_pressed"]
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/StageRow/Stage6Btn" to="." method="_on_stage6_pressed"]
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/HPRow/ApplyHP" to="." method="_on_apply_hp_pressed"]
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/LevelRow/ApplyLevel" to="." method="_on_apply_level_pressed"]
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/DeadTest" to="." method="_on_dead_test_pressed"]
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]

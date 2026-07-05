@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cbaitplatform"]
+
+[ext_resource type="Script" path="res://scene/Levels/Level2/gimmicks/bait_platform/bait_platform.gd" id="1_bp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(80, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trig"]
+size = Vector2(76, 10)
+
+[node name="BaitPlatform" type="AnimatableBody2D"]
+script = ExtResource("1_bp")
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(1, 0.78, 0.2, 1)
+polygon = PackedVector2Array(-40, -8, 40, -8, 40, 8, -40, 8)
+
+[node name="Sheen" type="Polygon2D" parent="."]
+color = Color(1, 0.95, 0.7, 1)
+polygon = PackedVector2Array(-40, -8, 40, -8, 40, -5, -40, -5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_body")
+
+[node name="Trigger" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger"]
+position = Vector2(0, -11)
+shape = SubResource("RectangleShape2D_trig")
