@@ -34,33 +34,10 @@ func _on_start_pressed():
 func _on_load_pressed():
 	audio_click.play()
 	menu_ui.hide()
-	_refresh_load_menu()
+	# The LoadMenu builds its own slot rows (auto-save slot + manual slots).
+	if load_menu.has_method("refresh"):
+		load_menu.refresh()
 	load_menu.show()
-
-func _refresh_load_menu() -> void:
-	for i in range(1, SaveManager.MAX_SLOTS + 1):
-		var btn   = load_menu.get_node_or_null("LoadMenuUI/LoadMenuSelect/Slot%dRow/Save%d" % [i, i])
-		var thumb = load_menu.get_node_or_null("LoadMenuUI/LoadMenuSelect/Slot%dRow/Thumb%d" % [i, i])
-
-		if btn == null:
-			continue
-
-		var exists : bool = SaveManager.slot_exists(i)
-		btn.text     = SaveManager.slot_label(i)
-		btn.disabled = not exists
-
-		if thumb != null:
-			thumb.texture = SaveManager.slot_thumbnail(i) if exists else null
-
-		if not btn.pressed.is_connected(_on_load_slot_pressed.bind(i)):
-			btn.pressed.connect(_on_load_slot_pressed.bind(i))
-
-	var back = load_menu.get_node_or_null("LoadMenuUI/LoadMenuSelect/Back")
-	if back and not back.pressed.is_connected(_on_back_pressed):
-		back.pressed.connect(_on_back_pressed)
-
-func _on_load_slot_pressed(slot: int) -> void:
-	SaveManager.load_game(slot)
 
 func _on_arcade_pressed():
 	audio_click.play()

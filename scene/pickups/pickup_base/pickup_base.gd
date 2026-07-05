@@ -27,13 +27,11 @@ func _ready() -> void:
 func _apply_appearance() -> void:
 	match kind:
 		Kind.HEALTH:
-			# "Lifeline" — reaching out for support pulls you back up
 			visual.color = Color(0.3, 0.9, 0.45)
-			tag.text = tr("Lifeline")
+			tag.text = tr("Health")
 		Kind.SPEED:
-			# "Lucky Streak" — the rush feels unstoppable, but it always runs out
 			visual.color = Color(0.35, 0.8, 1.0)
-			tag.text = tr("Lucky Streak")
+			tag.text = tr("Speed Boost")
 
 func _start_float() -> void:
 	var base_y := position.y
@@ -52,12 +50,12 @@ func _on_body_entered(body: Node2D) -> void:
 			if body.has_method("heal_player"):
 				body.heal_player(heal_amount)
 			if body.has_method("show_toast"):
-				body.show_toast(tr("Lifeline") + " +%d" % heal_amount)
+				body.show_toast(tr("Health") + " +%d" % heal_amount)
 		Kind.SPEED:
 			if body.has_method("apply_speed_boost"):
 				body.apply_speed_boost(speed_multiplier, speed_duration)
 			if body.has_method("show_toast"):
-				body.show_toast(tr("Lucky Streak — it won't last"))
+				body.show_toast(tr("Speed Boost!"))
 
 	_collect()
 

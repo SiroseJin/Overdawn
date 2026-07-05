@@ -70,20 +70,22 @@ func _process(_delta):
 # ───────────────────────────────────────────────────────────────────────────────
 
 func move(_delta):
+	if not dead and _knockback_active():
+		return
 	# No gravity — bats fly freely in all directions
 	if dead:
 		velocity = Vector2.ZERO
 		move_and_slide()
 		return
 
-	if not taking_damage and is_bat_chase and Global.playerAlive:
+	if not taking_damage and is_bat_chase and Global.playerAlive and is_instance_valid(Global.PlayerBody):
 		Player    = Global.PlayerBody
 		# Fly directly toward the player on both axes
 		velocity  = position.direction_to(Player.position) * speed
 		dir.x     = sign(velocity.x)
 
-	elif taking_damage and is_bat_chase:
-		velocity = position.direction_to(Player.position) * -80
+	elif taking_damage and is_bat_chase and is_instance_valid(Global.PlayerBody):
+		velocity = position.direction_to(Global.PlayerBody.position) * -80
 
 	elif not taking_damage and is_bat_roaming:
 		# Drift toward the current roam target at 40% speed
@@ -139,6 +141,45 @@ func take_damage(amount: float):
 		health = 0
 		dead   = true
 	health_bar.value = health
+	if not dead:
+		_hit_knockback()
+
+# ─── Hit reaction (knockback + red flash) ────────────────────────────────────────
+const KB_SPEED: float = 230.0
+const KB_TIME: float  = 0.15
+var _kb_vel: Vector2 = Vector2.ZERO
+var _kb_time: float  = 0.0
+var _hit_tween: Tween
+
+# While knocked back, override the AI: ride the impulse and let it decay.
+func _knockback_active() -> bool:
+	if _kb_time <= 0.0:
+		return false
+	var d := get_process_delta_time()
+	_kb_time -= d
+	velocity = _kb_vel
+	move_and_slide()
+	_kb_vel = _kb_vel.move_toward(Vector2.ZERO, 1100.0 * d)
+	return true
+
+# Fling away from the player and flash red — called on a non-fatal hit.
+func _hit_knockback() -> void:
+	var dir := Vector2(1, 0)
+	var p = Global.PlayerBody
+	if is_instance_valid(p):
+		dir = (global_position - p.global_position).normalized()
+	if dir == Vector2.ZERO:
+		dir = Vector2(1, 0)
+	_kb_vel  = dir * KB_SPEED + Vector2(0, -70)
+	_kb_time = KB_TIME
+	_flash_red()
+
+func _flash_red() -> void:
+	if _hit_tween and _hit_tween.is_valid():
+		_hit_tween.kill()
+	modulate = Color(1.0, 0.3, 0.3)
+	_hit_tween = create_tween()
+	_hit_tween.tween_property(self, "modulate", Color.WHITE, 0.25)
 
 func handle_death():
 	if Global.PlayerBody:

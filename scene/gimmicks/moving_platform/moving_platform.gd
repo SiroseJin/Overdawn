@@ -15,6 +15,9 @@ class_name MovingPlatform
 #   • downtime      — pause (s) at each end before heading back (auto mode only).
 #   • move_on_stand — only move while the player is standing on it (otherwise it
 #                     moves on its own). Great for elevators you ride.
+#   • start_on_touch — sit still until the player first steps on it, THEN commit to
+#                     the run and keep going to the end even after they leave. (A
+#                     one-shot trigger; overrides move_on_stand's "hold to move".)
 #   • auto_return   — after the end, return to start (loop). If false it makes a
 #                     one-way trip and stays at the end (or, with move_on_stand,
 #                     stays wherever you left it).
@@ -32,6 +35,9 @@ class_name MovingPlatform
 @export var downtime: float = 0.3
 ## Only move while the player is standing on it; otherwise it moves on its own.
 @export var move_on_stand: bool = false
+## Sit still until the player first touches it, then run to the end on its own and
+## don't stop when they step off. A one-shot trigger (takes priority over move_on_stand).
+@export var start_on_touch: bool = false
 ## After reaching the far end, return to the start. If false: one-way trip, stays.
 @export var auto_return: bool = true
 ## When false, the platform starts hidden + non-solid and does NOT move until
@@ -39,6 +45,7 @@ class_name MovingPlatform
 @export var start_active: bool = true
 
 var _active := false
+var _awaiting_trigger := false   # start_on_touch: placed but waiting for first touch
 var _start: Vector2
 var _end: Vector2
 var _progress: float = 0.0   # 0 = at start, 1 = at end (used by move_on_stand)
@@ -68,6 +75,13 @@ func activate() -> void:
 	_end = position + _travel_offset()
 	if move_on_stand:
 		return   # movement is handled per-frame in _physics_process
+	if start_on_touch:
+		_awaiting_trigger = true   # wait for the player to step on it (see _physics_process)
+		return
+	_start_tween_run()
+
+# Kick off the automatic run to the end (looping if auto_return, else one-way stay).
+func _start_tween_run() -> void:
 	var leg := _leg_time()
 	if auto_return:
 		var t := create_tween().set_loops().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
@@ -85,7 +99,15 @@ func _leg_time() -> float:
 	return dist / speed if speed > 0.0 and dist > 0.0 else 2.0
 
 func _physics_process(delta: float) -> void:
-	if Engine.is_editor_hint() or not _active or not move_on_stand:
+	if Engine.is_editor_hint() or not _active:
+		return
+	# start_on_touch: once the player steps on, commit to the run and stop waiting.
+	if _awaiting_trigger:
+		if _player_on_top():
+			_awaiting_trigger = false
+			_start_tween_run()
+		return
+	if not move_on_stand:
 		return
 	var dist := _start.distance_to(_end)
 	if dist <= 0.0:

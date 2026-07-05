@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://cbahifur4venj"]
 
-[ext_resource type="PackedScene" uid="uid://cqpickup0item" path="res://scene/pickups/pickup/pickup.tscn" id="1_pk"]
+[ext_resource type="PackedScene" uid="uid://cqpickup0item" path="res://scene/pickups/pickup_base/pickup_base.tscn" id="1_pk"]
 
-[node name="HealthPickup" instance=ExtResource("1_pk")]
-kind = 0
+[node name="HealthPickup" unique_id=564248535 instance=ExtResource("1_pk")]

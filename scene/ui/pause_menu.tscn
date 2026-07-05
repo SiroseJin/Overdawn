@@ -114,14 +114,14 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_fgjmp")
 text = "Back"
 
-[node name="SaveMenu" type="MarginContainer" parent="." unique_id=814124933]
+[node name="SaveMenu" type="CenterContainer" parent="." unique_id=814124933]
 visible = false
-layout_mode = 0
-anchor_left = 0.4
-anchor_top = 0.355556
-anchor_right = 0.65
-anchor_bottom = 0.516667
-metadata/_edit_use_anchors_ = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SaveMenu" unique_id=1224354]
 layout_mode = 2
@@ -146,14 +146,14 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_fgjmp")
 text = "Back"
 
-[node name="LoadMenu" type="MarginContainer" parent="." unique_id=1769886307]
+[node name="LoadMenu" type="CenterContainer" parent="." unique_id=1769886307]
 visible = false
-layout_mode = 0
-anchor_left = 0.3
-anchor_top = 0.3
-anchor_right = 0.75
-anchor_bottom = 0.7
-metadata/_edit_use_anchors_ = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="LoadMenu" unique_id=1642207682]
 layout_mode = 2

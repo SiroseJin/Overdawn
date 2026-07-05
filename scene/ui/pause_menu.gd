@@ -24,22 +24,10 @@ func _ready():
 # ─────────────────────────────────────────────────────────────────────────────
 
 func _refresh_slot_labels() -> void:
-	for i in range(1, SaveManager.MAX_SLOTS + 1):
-		var label : String = SaveManager.slot_label(i)
-
-		if save_menu:
-			var btn: Button = save_menu.get_node_or_null("VBoxContainer/SaveSlot%d" % i) as Button
-			if btn:
-				btn.text = label
-
-		if load_menu:
-			var btn:   Button      = load_menu.get_node_or_null("VBoxContainer/Slot%dRow/LoadSlot%d" % [i, i]) as Button
-			var thumb: TextureRect = load_menu.get_node_or_null("VBoxContainer/Slot%dRow/Thumb%d" % [i, i]) as TextureRect
-			if btn:
-				btn.text     = label
-				btn.disabled = not SaveManager.slot_exists(i)
-			if thumb:
-				thumb.texture = SaveManager.slot_thumbnail(i) if SaveManager.slot_exists(i) else null
+	if save_menu:
+		SaveManager.populate_slots(save_menu.get_node_or_null("VBoxContainer"), _do_save, true)
+	if load_menu:
+		SaveManager.populate_slots(load_menu.get_node_or_null("VBoxContainer"), _do_load, false)
 
 func _show_only(container: Node) -> void:
 	for c in [margin_container, save_menu, load_menu, confirm_panel]:
@@ -115,9 +103,13 @@ func _on_quit_pressed():
 # Save slots
 # ─────────────────────────────────────────────────────────────────────────────
 
+# Legacy .tscn connections resolve here; rows are now built in _refresh_slot_labels().
 func _on_save_slot_1_pressed(): _do_save(1)
 func _on_save_slot_2_pressed(): _do_save(2)
 func _on_save_slot_3_pressed(): _do_save(3)
+func _on_load_slot_1_pressed(): _do_load(1)
+func _on_load_slot_2_pressed(): _do_load(2)
+func _on_load_slot_3_pressed(): _do_load(3)
 
 func _do_save(slot: int) -> void:
 	await SaveManager.save_game(slot)
@@ -128,10 +120,6 @@ func _do_save(slot: int) -> void:
 # ─────────────────────────────────────────────────────────────────────────────
 # Load slots
 # ─────────────────────────────────────────────────────────────────────────────
-
-func _on_load_slot_1_pressed(): _do_load(1)
-func _on_load_slot_2_pressed(): _do_load(2)
-func _on_load_slot_3_pressed(): _do_load(3)
 
 func _do_load(slot: int) -> void:
 	if not SaveManager.slot_exists(slot):

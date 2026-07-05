@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://cspd0pickup01"]
 
-[ext_resource type="PackedScene" uid="uid://cqpickup0item" path="res://scene/pickups/pickup/pickup.tscn" id="1_pk"]
+[ext_resource type="PackedScene" uid="uid://cqpickup0item" path="res://scene/pickups/pickup_base/pickup_base.tscn" id="1_pk"]
 
 [node name="SpeedPickup" unique_id=1288012059 instance=ExtResource("1_pk")]
 kind = 1
 
 [node name="Tag" parent="." index="1"]
-text = "Speed"
+text = "Speed Boost"

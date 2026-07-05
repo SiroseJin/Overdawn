@@ -101,6 +101,8 @@ func _process(_delta):
 # ───────────────────────────────────────────────────────────────────────────────
 
 func move(delta):
+	if not dead and _knockback_active():
+		return
 	if dead:
 		# On death let her fall normally (use standard gravity)
 		velocity.y = min(velocity.y + 900.0 * delta, 800.0)
@@ -119,15 +121,15 @@ func move(delta):
 		hover_timer = 0.0
 
 	# ── Horizontal chasing ────────────────────────────────────────────────────
-	if not taking_damage and is_witch_chase and Global.playerAlive:
+	if not taking_damage and is_witch_chase and Global.playerAlive and is_instance_valid(Global.PlayerBody):
 		Player = Global.PlayerBody
 		var move_speed = speed / 2.0 if charging else speed
 		var chase_dir  = sign(Player.position.x - position.x)
 		velocity.x     = chase_dir * move_speed
 		dir.x          = chase_dir
 
-	elif taking_damage and is_witch_chase:
-		velocity.x = sign(position.x - Player.position.x) * 60
+	elif taking_damage and is_witch_chase and is_instance_valid(Global.PlayerBody):
+		velocity.x = sign(position.x - Global.PlayerBody.position.x) * 60
 
 	elif not taking_damage and is_witch_roaming:
 		# Drift horizontally toward the current roam target at 30% speed
@@ -209,11 +211,16 @@ func _on_charging_timeout():
 func release_fireball():
 	if dead:
 		return
+	# The charge timer can fire before a chase state assigned Player — resolve it
+	# now and bail if there's genuinely no player to aim at.
+	var target = Player if is_instance_valid(Player) else Global.PlayerBody
+	if not is_instance_valid(target):
+		return
 	var fireball_scene = preload("res://scene/actors/enemies/witch/witch_fireball.tscn")
 	var fireball       = fireball_scene.instantiate()
 	get_parent().add_child(fireball)
 	fireball.global_position = $ProjectileOutput.global_position
-	fireball.direction = (Player.global_position - $ProjectileOutput.global_position).normalized()
+	fireball.direction = (target.global_position - $ProjectileOutput.global_position).normalized()
 
 func take_damage(amount: float):
 	health        -= amount
@@ -223,6 +230,45 @@ func take_damage(amount: float):
 		dead   = true
 		charging_timer.stop()
 	health_bar.value = health
+	if not dead:
+		_hit_knockback()
+
+# ─── Hit reaction (knockback + red flash) ────────────────────────────────────────
+const KB_SPEED: float = 230.0
+const KB_TIME: float  = 0.15
+var _kb_vel: Vector2 = Vector2.ZERO
+var _kb_time: float  = 0.0
+var _hit_tween: Tween
+
+# While knocked back, override the AI: ride the impulse and let it decay.
+func _knockback_active() -> bool:
+	if _kb_time <= 0.0:
+		return false
+	var d := get_process_delta_time()
+	_kb_time -= d
+	velocity = _kb_vel
+	move_and_slide()
+	_kb_vel = _kb_vel.move_toward(Vector2.ZERO, 1100.0 * d)
+	return true
+
+# Fling away from the player and flash red — called on a non-fatal hit.
+func _hit_knockback() -> void:
+	var dir := Vector2(1, 0)
+	var p = Global.PlayerBody
+	if is_instance_valid(p):
+		dir = (global_position - p.global_position).normalized()
+	if dir == Vector2.ZERO:
+		dir = Vector2(1, 0)
+	_kb_vel  = dir * KB_SPEED + Vector2(0, -70)
+	_kb_time = KB_TIME
+	_flash_red()
+
+func _flash_red() -> void:
+	if _hit_tween and _hit_tween.is_valid():
+		_hit_tween.kill()
+	modulate = Color(1.0, 0.3, 0.3)
+	_hit_tween = create_tween()
+	_hit_tween.tween_property(self, "modulate", Color.WHITE, 0.25)
 
 func handle_death():
 	if Global.PlayerBody:

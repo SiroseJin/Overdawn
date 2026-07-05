@@ -6,33 +6,102 @@ extends Node
 # and decoded back to an ImageTexture when loading the slot UI.
 # ─────────────────────────────────────────────────────────────────────────────
 
-const MAX_SLOTS      : int    = 3
+const MAX_SLOTS      : int    = 5     # manual save slots (1..MAX_SLOTS)
+const AUTO_SLOT      : int    = 0     # dedicated auto-save slot (shown at the top)
+const AUTOSAVE_INTERVAL : float = 300.0   # auto-save every 5 minutes of play
 const SAVE_DIR       : String = "user://saves/"
 const SAVE_PREFIX    : String = "save_slot_"
 const SAVE_EXT       : String = ".json"
 const THUMB_WIDTH    : int    = 160   # Thumbnail resolution stored in JSON
 const THUMB_HEIGHT   : int    = 90
 
+var _autosave_accum : float = 0.0
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Public API
 # ─────────────────────────────────────────────────────────────────────────────
+
+func is_auto(slot: int) -> bool:
+	return slot == AUTO_SLOT
+
+# Manual slots only.
+func manual_slots() -> Array:
+	return range(1, MAX_SLOTS + 1)
+
+# Every slot to list in the UI: the auto-save slot first, then the manual slots.
+func all_slots() -> Array:
+	var list := [AUTO_SLOT]
+	list.append_array(manual_slots())
+	return list
+
+func _slot_name(slot: int) -> String:
+	return "Auto-Save" if is_auto(slot) else "Slot %d" % slot
+
+# ─── Slot-list UI builder (shared by every save/load menu) ────────────────────────
+# Rebuilds `container`'s slot rows from all_slots() — the auto-save slot first, then
+# the manual slots — so adding/removing slots is data-driven and no menu hardcodes
+# rows. Old hardcoded rows are removed at runtime; nodes named in `keep` (e.g. the
+# Back button) are preserved. `on_pressed` is called with the slot int on click.
+const _SLOT_FONT := "res://art/Fonts/skeleboom.ttf"
+
+func populate_slots(container: Node, on_pressed: Callable, save_mode: bool = false, keep: Array = ["Back"]) -> void:
+	if container == null:
+		return
+	for c in container.get_children():
+		if String(c.name) in keep:
+			continue
+		container.remove_child(c)
+		c.queue_free()
+
+	var font: Font = load(_SLOT_FONT)
+	var index := 0
+	for slot in all_slots():
+		var exists: bool = slot_exists(slot)
+
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 8)
+
+		var thumb := TextureRect.new()
+		thumb.custom_minimum_size = Vector2(120, 68)
+		thumb.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		if exists:
+			thumb.texture = slot_thumbnail(slot)
+		row.add_child(thumb)
+
+		var btn := Button.new()
+		# Fixed width so every row matches (the parent CenterContainer sizes the list
+		# to content, so EXPAND_FILL wouldn't stretch here).
+		btn.custom_minimum_size = Vector2(300, 0)
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		if font:
+			btn.add_theme_font_override("font", font)
+		btn.text = slot_label(slot)
+		btn.disabled = is_auto(slot) if save_mode else (not exists)
+		var s: int = slot
+		btn.pressed.connect(func(): on_pressed.call(s))
+		row.add_child(btn)
+
+		container.add_child(row)
+		container.move_child(row, index)
+		index += 1
 
 func slot_exists(slot: int) -> bool:
 	return FileAccess.file_exists(_slot_path(slot))
 
 func slot_label(slot: int) -> String:
+	var label_name := _slot_name(slot)
 	if not slot_exists(slot):
-		return "Slot %d — Empty" % slot
+		return "%s — Empty" % label_name
 	var data := _read_json(slot)
 	if data.is_empty():
-		return "Slot %d — Corrupted" % slot
+		return "%s — Corrupted" % label_name
 	var ts         : String = data.get("timestamp", "??:??:??")
 	var lvl        : String = "Level %s" % str(data.get("player_level", "?"))
 	var scene_path : String = data.get("current_scene", "")
 	var scene_name : String = scene_path.get_file().get_basename().capitalize()
 	if data.get("arcade_mode", false):
 		scene_name = "Arcade — Wave %d" % int(data.get("current_wave", 0))
-	return "Slot %d — %s | %s | %s" % [slot, lvl, ts, scene_name]
+	return "%s — %s | %s | %s" % [label_name, lvl, ts, scene_name]
 
 ## Returns an ImageTexture thumbnail for the slot, or null if none exists.
 func slot_thumbnail(slot: int) -> ImageTexture:
@@ -48,14 +117,53 @@ func slot_thumbnail(slot: int) -> ImageTexture:
 		return null
 	return ImageTexture.create_from_image(image)
 
-func save_game(slot: int) -> void:
+func save_game(slot: int, capture_shot: bool = true, hide_ui: bool = true) -> void:
 	_ensure_save_dir()
 	var data := collect_save_data()
 	data["timestamp"]  = _formatted_time()
-	# Screenshot must be taken before writing — capture now, store as base64 PNG
-	data["screenshot"] = await _capture_screenshot()
+	# Screenshot must be taken before writing — capture now, store as base64 PNG.
+	# `hide_ui` off = grab the current frame instantly (HUD included, no flicker) so
+	# auto-saves can still get a thumbnail while the game is live.
+	if capture_shot:
+		data["screenshot"] = await _capture_screenshot(hide_ui)
+	else:
+		data["screenshot"] = ""
 	_write_json(slot, data)
 	print("[SaveManager] Saved to slot %d" % slot)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Auto-save — fires on stage entry (stages call autosave()) and every 5 minutes.
+# ─────────────────────────────────────────────────────────────────────────────
+
+func _process(delta: float) -> void:
+	if not _in_gameplay():
+		_autosave_accum = 0.0
+		return
+	_autosave_accum += delta
+	if _autosave_accum >= AUTOSAVE_INTERVAL:
+		autosave()
+
+# Write the dedicated auto-save slot (no screenshot, so no flicker). Safe to call
+# from anywhere — it no-ops outside of live gameplay.
+func autosave() -> void:
+	if not _in_gameplay():
+		return
+	_autosave_accum = 0.0
+	# Capture a thumbnail, but WITHOUT hiding the HUD (that would flicker mid-play).
+	save_game(AUTO_SLOT, true, false)
+	print("[SaveManager] Auto-saved")
+
+# Stage-entry auto-save: wait out the fade-in first so the thumbnail isn't a black
+# screen. Stages call this (fire-and-forget) from their _ready.
+func autosave_on_enter() -> void:
+	await get_tree().create_timer(0.7).timeout
+	autosave()
+
+func _in_gameplay() -> bool:
+	return Global.gameStarted \
+		and get_tree().current_scene != null \
+		and is_instance_valid(Global.PlayerBody) \
+		and Global.playerAlive
 
 func load_game(slot: int) -> bool:
 	if not slot_exists(slot):
@@ -79,18 +187,15 @@ func delete_slot(slot: int) -> void:
 # Screenshot capture
 # ─────────────────────────────────────────────────────────────────────────────
 
-func _capture_screenshot() -> String:
-	# Collect every CanvasLayer in the entire tree and hide them all
+func _capture_screenshot(hide_ui: bool = true) -> String:
+	# Optionally hide every CanvasLayer (HUD/menus) for a clean shot. Auto-saves pass
+	# hide_ui=false so the grab is instant (no 2-frame UI-hide flicker during play).
 	var hidden : Array = []
-	for node in get_tree().get_nodes_in_group(""):
-		pass  # dummy — we use get_nodes_in_group below
-
-	# Hide all CanvasLayers recursively from root
-	_hide_canvas_layers(get_tree().root, hidden)
-
-	# Wait two frames so the engine re-renders without any UI
-	await get_tree().process_frame
-	await get_tree().process_frame
+	if hide_ui:
+		_hide_canvas_layers(get_tree().root, hidden)
+		# Wait two frames so the engine re-renders without any UI.
+		await get_tree().process_frame
+		await get_tree().process_frame
 
 	var vp    : Viewport = get_tree().root
 	var image : Image    = vp.get_texture().get_image()

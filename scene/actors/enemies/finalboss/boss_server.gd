@@ -36,9 +36,9 @@ func take_damage(amount: float) -> void:
 		_destroy()
 
 func _flash() -> void:
-	modulate = Color(1.6, 1.6, 1.6)
-	await get_tree().create_timer(0.05).timeout
-	if is_instance_valid(self):
+	modulate = Color(1.8, 0.45, 0.45)   # reddish "hit" flash
+	await get_tree().create_timer(0.06).timeout
+	if is_instance_valid(self) and not _destroyed:
 		modulate = Color.WHITE
 
 func _destroy() -> void:

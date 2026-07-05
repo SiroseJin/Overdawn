@@ -1,4 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://w42cyxltseel"]
+[gd_scene load_steps=7 format=3 uid="uid://w42cyxltseel"]
+
+[ext_resource type="Script" path="res://scene/ui/scene_transition_animation.gd" id="1_stanim"]
 
 [sub_resource type="Animation" id="Animation_f7ucd"]
 length = 0.001
@@ -71,6 +73,7 @@ _data = {
 }
 
 [node name="SceneTransitionAnimation" type="Node2D"]
+script = ExtResource("1_stanim")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 128

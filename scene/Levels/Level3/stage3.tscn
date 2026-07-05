@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/frog/frog_enemy.tscn" id="13_6pt3j"]
 [ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="14_8ol0d"]
 [ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="15_ha050"]
+[ext_resource type="Script" path="res://scene/pickups/pickup/pickup.gd" id="15_w4r13"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 [ext_resource type="PackedScene" uid="uid://htdn64tverd8" path="res://scene/Levels/Level3/gimmicks/rising_debt/rising_debt.tscn" id="itm_debt"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="itm_door"]
@@ -150,8 +151,7 @@ position = Vector2(387, 356)
 travel = Vector2(400, 0)
 speed = 100.0
 downtime = 0.5
-move_on_stand = true
-start_active = false
+start_on_touch = true
 
 [node name="End" type="Marker2D" parent="MoveA" unique_id=744604384]
 position = Vector2(249, -108)
@@ -160,31 +160,28 @@ position = Vector2(249, -108)
 position = Vector2(1211, -30)
 travel = Vector2(400, 0)
 speed = 100.0
-move_on_stand = true
-start_active = false
+start_on_touch = true
 
 [node name="End" type="Marker2D" parent="MoveB" unique_id=1562057400]
 position = Vector2(400, 0)
 
 [node name="Lift1" parent="." unique_id=1900787792 instance=ExtResource("8_mp")]
-position = Vector2(872, -236)
+position = Vector2(872, -198)
 travel = Vector2(0, -210)
 speed = 100.0
-move_on_stand = true
-start_active = false
+start_on_touch = true
 
 [node name="End" type="Marker2D" parent="Lift1" unique_id=916172910]
-position = Vector2(0, -210)
+position = Vector2(-3, -247)
 
 [node name="Lift2" parent="." unique_id=54686763 instance=ExtResource("8_mp")]
-position = Vector2(659, -446)
+position = Vector2(665, -446)
 travel = Vector2(0, -200)
 speed = 100.0
-move_on_stand = true
-start_active = false
+start_on_touch = true
 
 [node name="End" type="Marker2D" parent="Lift2" unique_id=362757503]
-position = Vector2(0, -200)
+position = Vector2(2, -200)
 
 [node name="Damar" parent="." unique_id=1757803171 instance=ExtResource("5_npc1")]
 position = Vector2(150, 695)
@@ -215,7 +212,7 @@ position = Vector2(86, 678)
 position = Vector2(1084, -773)
 
 [node name="FallB7" parent="." unique_id=661331903 instance=ExtResource("9_fp")]
-position = Vector2(743, -648)
+position = Vector2(750, -647)
 
 [node name="FallB8" parent="." unique_id=1014279745 instance=ExtResource("9_fp")]
 position = Vector2(855, -682)
@@ -272,19 +269,22 @@ locked_hint = "Locked. The key is at the top of the climb."
 position = Vector2(875, 900)
 
 [node name="Bat4" parent="." unique_id=925523153 instance=ExtResource("7_bat")]
-position = Vector2(781, -727)
+position = Vector2(829, -726)
 
 [node name="frog_enemy" parent="." unique_id=1556349936 instance=ExtResource("13_6pt3j")]
 position = Vector2(1072, -213.00005)
 
 [node name="HealthPickup" parent="." unique_id=1244312233 instance=ExtResource("14_8ol0d")]
 position = Vector2(1261, -172)
+script = ExtResource("15_w4r13")
 
 [node name="SpeedPickup" parent="." unique_id=1288012059 instance=ExtResource("15_ha050")]
 position = Vector2(720, 221)
+script = ExtResource("15_w4r13")
 
 [node name="HealthPickup2" parent="." unique_id=1470939253 instance=ExtResource("14_8ol0d")]
 position = Vector2(770, -471)
+script = ExtResource("15_w4r13")
 
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Stage4Portal" to="." method="_on_stage_4_portal_body_entered"]

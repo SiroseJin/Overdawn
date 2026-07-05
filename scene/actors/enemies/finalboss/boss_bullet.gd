@@ -31,7 +31,7 @@ func _process(delta: float) -> void:
 func _on_area_entered(area: Area2D) -> void:
 	var parent := area.get_parent()
 	if parent is Player:
-		parent.take_damage(damage)
+		parent.take_damage(damage, global_position)   # knock the player off the bullet
 		queue_free()
 
 # Terrain (walls, floors, platforms — layer 1 physics bodies) blocks bullets,

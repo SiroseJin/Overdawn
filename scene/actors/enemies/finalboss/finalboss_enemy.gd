@@ -28,9 +28,14 @@ signal hp_changed(hp: float, hp_max: float)
 
 const BULLET := preload("res://scene/actors/enemies/finalboss/boss_bullet.tscn")
 const SERVER := preload("res://scene/actors/enemies/finalboss/boss_server.tscn")
-const ADD_SCENES := [
+# Adds scale with how hurt the boss is: weak fodder early, tougher foes as HP drops.
+const WEAK_ADDS := [
 	preload("res://scene/actors/enemies/bat/bat_enemy.tscn"),
 	preload("res://scene/actors/enemies/frog/frog_enemy.tscn"),
+]
+const TOUGH_ADDS := [
+	preload("res://scene/actors/enemies/witch/witch_enemy.tscn"),
+	preload("res://scene/actors/enemies/necromancer/necromancer_enemy.tscn"),
 ]
 
 # Pickup drops. GOOD are rewards; the shield-break gamble can also roll a fake_coin.
@@ -96,6 +101,10 @@ var _down_amount := 0.0   # 0 = hovering, 1 = crashed to the floor; tweened cras
 var _path: Path2D = null
 var _path_offset := 0.0   # distance travelled along the path
 var _path_dir := 1.0      # +1 / -1 for back-and-forth patrol
+var _wob_phase := 0.0     # accumulated wobble phase (speed varies, so integrate it)
+var _jitter := Vector2.ZERO        # current erratic offset
+var _jitter_target := Vector2.ZERO # where the jitter is easing toward
+var _jitter_timer := 0.0
 
 var _servers: Array = []
 var _adds: Array = []
@@ -143,15 +152,27 @@ func _process(delta: float) -> void:
 	if not Global.playerAlive:
 		return
 
-	# Hover centre: travel loosely along the path (while shielded) or stay put.
+	# Everything ramps with how hurt the boss is: the lower its HP, the faster and
+	# more erratic it moves.
+	var intensity := _intensity()
+
+	# Hover centre: travel loosely along the path (faster at low HP) or stay put.
 	if _has_path() and state == "shielded":
-		_advance_path(delta)
+		_advance_path(delta, 1.0 + intensity * 1.6)
 	var hover_centre := _path_point() if _has_path() else Vector2(_base_x, _base_y)
-	# Loose circular wobble so it's never exactly on the line.
-	var wobble := Vector2(cos(_bob * orbit_speed), sin(_bob * orbit_speed)) * orbit_radius
+
+	# Loose circular wobble — faster and a touch wider as HP drops. Integrate the
+	# phase so changing speed doesn't snap it.
+	_wob_phase += delta * orbit_speed * (1.0 + intensity * 1.6)
+	var wob_r := orbit_radius * (1.0 + intensity * 0.5)
+	var wobble := Vector2(cos(_wob_phase), sin(_wob_phase)) * wob_r
+
+	# Erratic darting — grows with intensity, retargets faster when badly hurt.
+	_update_jitter(delta, intensity)
+
 	# Blend toward a straight crash-down column while downed (0 = hover, 1 = floor).
 	# _process is the ONLY writer of position — the crash/rise just tweens _down_amount.
-	position = (hover_centre + wobble).lerp(Vector2(_down_x, _down_y), _down_amount)
+	position = (hover_centre + wobble + _jitter).lerp(Vector2(_down_x, _down_y), _down_amount)
 
 	match state:
 		"shielded": _process_shielded(delta)
@@ -271,6 +292,23 @@ func _spawn_servers() -> void:
 		get_parent().add_child(s)
 		_servers.append(s)
 
+# ─── Intensity (0 at full HP → 1 near death) ──────────────────────────────────────
+
+func _intensity() -> float:
+	if health_max <= 0.0:
+		return 0.0
+	return clampf(1.0 - health / health_max, 0.0, 1.0)
+
+# Ease an erratic offset toward a random target that grows and retargets faster
+# the more hurt the boss is.
+func _update_jitter(delta: float, intensity: float) -> void:
+	_jitter_timer -= delta
+	if _jitter_timer <= 0.0:
+		var amp := intensity * 75.0
+		_jitter_target = Vector2(randf_range(-amp, amp), randf_range(-amp, amp))
+		_jitter_timer = lerpf(0.7, 0.18, intensity)
+	_jitter = _jitter.lerp(_jitter_target, clampf(delta * lerpf(3.0, 10.0, intensity), 0.0, 1.0))
+
 # ─── Pickup drops ────────────────────────────────────────────────────────────────
 
 # Spawn a pickup into the arena at a world position. Deferred add_child because
@@ -287,9 +325,9 @@ func _has_path() -> bool:
 		and _path.curve.get_baked_length() > 0.0
 
 # Move the hover centre back and forth along the path (ping-pong between its ends).
-func _advance_path(delta: float) -> void:
+func _advance_path(delta: float, speed_mult: float = 1.0) -> void:
 	var length := _path.curve.get_baked_length()
-	_path_offset += _path_dir * path_speed * delta
+	_path_offset += _path_dir * path_speed * speed_mult * delta
 	if _path_offset >= length:
 		_path_offset = length
 		_path_dir = -1.0
@@ -332,12 +370,14 @@ func _clear_servers() -> void:
 	_servers.clear()
 
 func _spawn_adds() -> void:
-	var count := clampi(phase, 1, 3)   # 1..3 adds, scaling with phase — moderate
+	var intensity := _intensity()
+	var count := 2 + int(round(intensity * 4.0))   # 2 (full HP) → 6 (near death)
 	for i in count:
-		var scene = ADD_SCENES[i % ADD_SCENES.size()]
-		var e = scene.instantiate()
-		e.global_position = global_position + Vector2(randf_range(-360, 360), -30)
+		# Tougher foes become more likely as the boss weakens.
+		var pool: Array = TOUGH_ADDS if randf() < intensity * 0.8 else WEAK_ADDS
+		var e = pool.pick_random().instantiate()
 		get_parent().add_child(e)
+		e.global_position = global_position + Vector2(randf_range(-360, 360), randf_range(-40, 20))
 		e.add_to_group("enemies")
 		_adds.append(e)
 
@@ -415,6 +455,7 @@ func take_damage(amount: float) -> void:
 	if state == "shielded":
 		# Shield eats most of a direct hit — servers are the real answer
 		_reduce_shield(amount * shield_chip_mult)
+		_flash()
 	else:
 		health = max(0.0, health - amount)
 		_hp_bar.value = health
@@ -424,7 +465,7 @@ func take_damage(amount: float) -> void:
 			_die()
 
 func _flash() -> void:
-	modulate = Color(1.7, 1.7, 1.7)
+	modulate = Color(1.8, 0.4, 0.4)   # reddish "hit" flash
 	await get_tree().create_timer(0.06).timeout
 	if not dead:
 		modulate = Color.WHITE

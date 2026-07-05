@@ -67,7 +67,7 @@ shape = SubResource("RectangleShape2D_death")
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stage5Portal" unique_id=7739585]
-position = Vector2(4680, 600)
+position = Vector2(4679, 579)
 shape = SubResource("RectangleShape2D_portalB")
 
 [node name="SceneTransitionAnimation" parent="." unique_id=1128865039 instance=ExtResource("3_trans")]
@@ -94,7 +94,7 @@ position = Vector2(2150, 645)
 dialogue_timeline = "s4npc3timeline"
 
 [node name="Laras" parent="." unique_id=2070531529 instance=ExtResource("5_npc")]
-position = Vector2(4550, 615)
+position = Vector2(4499, 613)
 dialogue_timeline = "s4npc4timeline"
 
 [node name="Frog1" parent="." unique_id=1623953216 instance=ExtResource("6_frog")]
@@ -110,10 +110,12 @@ position = Vector2(2864, 506)
 position = Vector2(4004, 508)
 
 [node name="MovingPlatform1" parent="." unique_id=1204431063 instance=ExtResource("10_mp")]
-position = Vector2(1643, 657)
+position = Vector2(1642, 658)
 travel = Vector2(300, 0)
 speed = 100.0
 downtime = 0.5
+start_on_touch = true
+auto_return = false
 
 [node name="End" type="Marker2D" parent="MovingPlatform1" unique_id=2006539095]
 position = Vector2(397, 0)
@@ -151,9 +153,6 @@ position = Vector2(3600, 505)
 [node name="Coin6" parent="." unique_id=912421908 instance=ExtResource("itm_coin")]
 position = Vector2(3600, 430)
 
-[node name="Coin7" parent="." unique_id=545431624 instance=ExtResource("itm_coin")]
-position = Vector2(4500, 605)
-
 [node name="SpeedPickup" parent="." unique_id=356791474 instance=ExtResource("itm_spd")]
 position = Vector2(650, 545)
 
@@ -163,21 +162,26 @@ position = Vector2(4400, 605)
 [node name="PullZone1" parent="." unique_id=623960205 instance=ExtResource("itm_pull")]
 position = Vector2(900, 600)
 pull = Vector2(-95, 0)
+travel = Vector2(700, 0)
 
 [node name="PullZone2" parent="." unique_id=831252954 instance=ExtResource("itm_pull")]
 position = Vector2(2450, 570)
 pull = Vector2(-95, 0)
+travel = Vector2(550, 0)
+move_speed = 100.0
 
 [node name="PullZone3" parent="." unique_id=939874969 instance=ExtResource("itm_pull")]
 position = Vector2(3600, 505)
 pull = Vector2(-95, 0)
+travel = Vector2(900, 0)
+move_speed = 110.0
 
 [node name="Key" parent="." unique_id=1666602362 instance=ExtResource("itm_key")]
 position = Vector2(2800, 384)
 key_id = "stage4_key"
 
 [node name="Door" parent="." unique_id=320390425 instance=ExtResource("itm_door")]
-position = Vector2(4350, 542)
+position = Vector2(4584, 535)
 required_key = "stage4_key"
 
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]

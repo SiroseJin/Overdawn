@@ -46,12 +46,13 @@ func _physics_process(delta: float):
 		if target != null and not target is Player:
 			_hit(target)
 			return
-		elif target == null:
-			# Solid geometry with nothing to damage → stop here
+		elif target == null and hit.collider is PhysicsBody2D:
+			# Solid geometry (walls, floors, platforms) → stop here
 			_spent = true
 			queue_free()
 			return
-		# else: it's the player's own hitbox — pass through and keep flying
+		# else: a non-damageable Area2D (pickups, the player's own hitbox) → pass
+		# through and keep flying
 
 	position += move
 

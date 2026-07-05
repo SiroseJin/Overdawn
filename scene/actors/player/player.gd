@@ -67,6 +67,14 @@ var slow_factor: float         = 1.0
 # input is negated. Toggled by reverse_controls() and its status expiry.
 var _controls_reversed: bool = false
 
+# Hit feedback: a brief knockback impulse (input is suppressed while it decays) plus
+# a red flash/blink, so taking damage reads as a real hit.
+const KNOCKBACK_SPEED: float = 170.0
+const KNOCKBACK_LIFT: float  = 140.0
+const KNOCKBACK_TIME: float  = 0.18
+var _knockback_time: float = 0.0
+var _hit_tween: Tween
+
 # Constant external velocity applied by pull zones (Stage 4 gimmick). Set/cleared
 # by the zone on enter/exit; added to horizontal movement each frame.
 var external_push: Vector2 = Vector2.ZERO
@@ -202,6 +210,9 @@ func _physics_process(delta):
 	if not DASH:
 		if not is_on_floor():
 			velocity.y = min(velocity.y + GRAVITY * delta, MAX_FALL_SPEED)
+		elif _knockback_time > 0.0:
+			# Let a hit's upward pop lift the player instead of snapping to the floor.
+			velocity.y = min(velocity.y + GRAVITY * delta, MAX_FALL_SPEED)
 		else:
 			velocity.y = 0
 			# Restore double jump when the player lands (only if not on cooldown)
@@ -211,10 +222,15 @@ func _physics_process(delta):
 	# ── Horizontal movement ────────────────────────────────────────────────────
 	# Only apply normal input when not in a dash (dash sets its own velocity)
 	if not DASH:
-		var direction_x = Input.get_axis("left", "right")
-		if _controls_reversed:
-			direction_x = -direction_x
-		velocity.x = direction_x * SPEED + external_push.x
+		if _knockback_time > 0.0:
+			# Ride the knockback impulse and let it decay; input is suppressed briefly.
+			_knockback_time -= delta
+			velocity.x = move_toward(velocity.x, external_push.x, 500.0 * delta)
+		else:
+			var direction_x = Input.get_axis("left", "right")
+			if _controls_reversed:
+				direction_x = -direction_x
+			velocity.x = direction_x * SPEED + external_push.x
 
 	# ── Jump & Double Jump ─────────────────────────────────────────────────────
 	if Input.is_action_just_pressed("jump"):
@@ -444,7 +460,9 @@ func update_score_label():
 # Health
 # ───────────────────────────────────────────────────────────────────────────────
 
-func take_damage(damage: int):
+# `source_pos` (optional) is the hit's origin — the player is knocked away from it.
+# When omitted, the knockback is simply opposite the player's facing.
+func take_damage(damage: int, source_pos: Vector2 = Vector2.INF):
 	if damage == 0 or health <= 0:
 		return
 	# Blocked by an active firewall, safe during a conversation/quiz, or god mode
@@ -458,11 +476,39 @@ func take_damage(damage: int):
 		health             = 0
 		dead               = true
 		Global.playerAlive = false
+		if _hit_tween and _hit_tween.is_valid():
+			_hit_tween.kill()
+		animated_sprite_2d.modulate = Color.WHITE
 		handle_death_animation()
+	else:
+		_apply_hit_feedback(source_pos)   # flash + knockback only while still alive
 
 	take_damage_cooldown(1.0)
 	health = min(health, health_max)
 	ProgressionManager.capture_player(self)
+
+# Red flash + blink and a short knockback so a hit genuinely reads as a hit.
+func _apply_hit_feedback(source_pos: Vector2) -> void:
+	# Knockback direction: away from the source, else opposite the way we're facing.
+	var kb_dir: float = 1.0 if animated_sprite_2d.flip_h else -1.0
+	if source_pos != Vector2.INF:
+		var d := signf(global_position.x - source_pos.x)
+		if d != 0.0:
+			kb_dir = d
+	velocity.x = kb_dir * KNOCKBACK_SPEED
+	velocity.y = -KNOCKBACK_LIFT
+	_knockback_time = KNOCKBACK_TIME
+
+	# Flash red, then blink in/out a few times, ending back to normal.
+	if _hit_tween and _hit_tween.is_valid():
+		_hit_tween.kill()
+	var spr: AnimatedSprite2D = animated_sprite_2d
+	spr.modulate = Color(1.0, 0.25, 0.25, 1.0)
+	_hit_tween = create_tween()
+	for i in 3:
+		_hit_tween.tween_property(spr, "modulate", Color(1.0, 1.0, 1.0, 0.2), 0.08)
+		_hit_tween.tween_property(spr, "modulate", Color(1.0, 0.4, 0.4, 1.0), 0.08)
+	_hit_tween.tween_property(spr, "modulate", Color.WHITE, 0.1)
 
 func heal_player(amount: int):
 	health = min(health + amount, health_max)
@@ -845,11 +891,20 @@ func _on_coins_changed(total: int):
 
 func _setup_toast():
 	_toast_label = Label.new()
+	# Span the FULL viewport width and sit in the upper-middle (above the player,
+	# who's centred by the camera). Parenting to the CanvasLayer (not the offset HUD
+	# Control) makes the anchors map to the whole screen so text never gets cut off.
 	_toast_label.anchor_left   = 0.0
 	_toast_label.anchor_right  = 1.0
-	_toast_label.offset_top    = 80.0
-	_toast_label.offset_bottom = 120.0
+	_toast_label.anchor_top    = 0.32
+	_toast_label.anchor_bottom = 0.32
+	_toast_label.offset_left   = 0.0
+	_toast_label.offset_right  = 0.0
+	_toast_label.offset_top    = 0.0
+	_toast_label.offset_bottom = 48.0
 	_toast_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_toast_label.vertical_alignment   = VERTICAL_ALIGNMENT_CENTER
+	_toast_label.autowrap_mode        = TextServer.AUTOWRAP_WORD_SMART
 	_toast_label.add_theme_font_override("font", load("res://art/Fonts/skeleboom.ttf"))
 	_toast_label.add_theme_font_size_override("font_size", 22)
 	_toast_label.add_theme_color_override("font_color", Color(1, 1, 0.6))
@@ -857,7 +912,7 @@ func _setup_toast():
 	_toast_label.add_theme_constant_override("outline_size", 6)
 	_toast_label.modulate.a = 0.0
 	_toast_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	$CanvasLayer/Control.add_child(_toast_label)
+	$CanvasLayer.add_child(_toast_label)
 
 func show_toast(text: String):
 	if _toast_label == null:

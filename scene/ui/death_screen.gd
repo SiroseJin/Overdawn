@@ -20,15 +20,7 @@ func _show_only(panel: Control) -> void:
 	panel.show()
 
 func _refresh_load_slots() -> void:
-	for i in range(1, SaveManager.MAX_SLOTS + 1):
-		var label := SaveManager.slot_label(i)
-		var btn: Button      = load_panel.get_node_or_null("VBoxContainer/Slot%dRow/LoadSlot%d" % [i, i]) as Button
-		var thumb: TextureRect = load_panel.get_node_or_null("VBoxContainer/Slot%dRow/Thumb%d" % [i, i]) as TextureRect
-		if btn:
-			btn.text     = label
-			btn.disabled = not SaveManager.slot_exists(i)
-		if thumb:
-			thumb.texture = SaveManager.slot_thumbnail(i) if SaveManager.slot_exists(i) else null
+	SaveManager.populate_slots(load_panel.get_node_or_null("VBoxContainer"), _do_load, false, ["LoadBackButton"])
 
 # ─── Main panel ───────────────────────────────────────────────────────────────
 
@@ -52,6 +44,7 @@ func _on_menu_pressed() -> void:
 
 # ─── Load panel ───────────────────────────────────────────────────────────────
 
+# Legacy .tscn connections resolve here; rows are now built in _refresh_load_slots().
 func _on_load_slot_1_pressed(): _do_load(1)
 func _on_load_slot_2_pressed(): _do_load(2)
 func _on_load_slot_3_pressed(): _do_load(3)

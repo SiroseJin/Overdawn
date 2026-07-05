@@ -18,11 +18,11 @@ size = Vector2(30, 615)
 size = Vector2(40, 80)
 
 [sub_resource type="Curve2D" id="Curve2D_bosspath"]
-bake_interval = 178.98
+bake_interval = 347.99
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1200, 460, 0, 0, 0, 0, 1450, 400, 0, 0, 0, 0, 1636, 430, 0, 0, 0, 0, 1850, 400, 0, 0, 0, 0, 2050, 460)
+"points": PackedVector2Array(0, 0, 0, 0, 1200, 460, 0, 0, 0, 0, 1365.9999, 421.09274, 0, 0, 0, 0, 1445, 345, 0, 0, 0, 0, 1641.9999, 436.8212, 0, 0, 0, 0, 1897, 335, 0, 0, 0, 0, 1944.9999, 419.4371, 0, 0, 0, 0, 2050, 460)
 }
-point_count = 5
+point_count = 7
 
 [node name="Stage6" type="Node2D" unique_id=1039610357]
 script = ExtResource("1_stg6")
@@ -82,8 +82,8 @@ polygon = PackedVector2Array(1320, 560, 1413.4625, 560, 1480, 560, 1480, 568, 13
 [node name="MovingPlatform1" parent="." unique_id=1609207014 instance=ExtResource("5_mp")]
 position = Vector2(1000, 600)
 travel = Vector2(400, 0)
-speed = 50.0
-downtime = 0.0
+speed = 70.0
+downtime = 1.0
 
 [node name="End" type="Marker2D" parent="MovingPlatform1" unique_id=1609207101]
 position = Vector2(1214, 0)
@@ -145,6 +145,8 @@ use_path = true
 path_node = NodePath("../BossPath")
 
 [node name="BossPath" type="Path2D" parent="." unique_id=190435817]
+position = Vector2(0, -69.68002)
+scale = Vector2(1, 1.208)
 curve = SubResource("Curve2D_bosspath")
 
 [node name="ServerSpawns" type="Node2D" parent="." unique_id=1312267116]
@@ -153,22 +155,28 @@ curve = SubResource("Curve2D_bosspath")
 position = Vector2(1880, 225)
 
 [node name="Spawn2" type="Marker2D" parent="ServerSpawns" unique_id=893465231 groups=["server_spawn"]]
-position = Vector2(1000, 378)
+position = Vector2(1160, 316)
 
 [node name="Spawn3" type="Marker2D" parent="ServerSpawns" unique_id=1729359867 groups=["server_spawn"]]
-position = Vector2(2217, 368)
+position = Vector2(2364, 272)
 
 [node name="Spawn4" type="Marker2D" parent="ServerSpawns" unique_id=1352955237 groups=["server_spawn"]]
 position = Vector2(1457, 265)
 
 [node name="Spawn5" type="Marker2D" parent="ServerSpawns" unique_id=1992655819 groups=["server_spawn"]]
-position = Vector2(1603, 617)
+position = Vector2(1673, 615)
 
 [node name="Spawn6" type="Marker2D" parent="ServerSpawns" unique_id=1330903493 groups=["server_spawn"]]
-position = Vector2(1836, 489)
+position = Vector2(1823, 482)
 
 [node name="Spawn7" type="Marker2D" parent="ServerSpawns" unique_id=1308867875 groups=["server_spawn"]]
-position = Vector2(2105, 619)
+position = Vector2(1011, 485)
+
+[node name="Spawn8" type="Marker2D" parent="ServerSpawns" unique_id=723811254 groups=["server_spawn"]]
+position = Vector2(1309, 501)
+
+[node name="Spawn9" type="Marker2D" parent="ServerSpawns" unique_id=1780107281 groups=["server_spawn"]]
+position = Vector2(2362, 497)
 
 [node name="FallingPlatform3" parent="." unique_id=909169386 instance=ExtResource("6_fp")]
 position = Vector2(1545, 538)
@@ -176,8 +184,8 @@ position = Vector2(1545, 538)
 [node name="MovingPlatform2" parent="." unique_id=1915422223 instance=ExtResource("5_mp")]
 position = Vector2(2217, 187)
 travel = Vector2(400, 0)
-speed = 50.0
-downtime = 0.0
+speed = 70.0
+downtime = 1.0
 
 [node name="End" type="Marker2D" parent="MovingPlatform2" unique_id=1717035608]
 position = Vector2(-1204, 0)

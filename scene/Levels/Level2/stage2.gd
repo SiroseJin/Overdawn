@@ -11,6 +11,7 @@ var _transitioning := false
 
 func _ready() -> void:
 	Global.gameStarted = true
+	SaveManager.autosave_on_enter()   # auto-save (after fade-in) on entering the stage
 	scene_transition_anim.play("fade_out")
 	audio_bgm.play()
 	_apply_npc_skins()

@@ -14,8 +14,15 @@ const PULL_ZONE     := preload("res://scene/Levels/Level4/gimmicks/pull_zone/pul
 const FALLING_PLAT  := preload("res://scene/gimmicks/falling_platform/falling_platform.tscn")
 const COIN_SCENE    := preload("res://scene/pickups/coin/coin.tscn")
 
-# Active gimmick nodes for the current phase (removed when the next phase starts).
-var _phase_transient: Array[Node] = []
+# Gimmicks now spawn continuously through the whole fight (not one-per-phase), and
+# more often + several at once as the boss's HP drops. Roots are tracked so they can
+# be cleared on death; each also self-despawns after a lifetime so they cycle.
+var _active_gimmicks: Array[Node] = []
+var _fight_active := false
+var _gimmick_timer := 0.0
+var _pull_zone: Node = null   # at most one pull wall active at a time (shared push var)
+
+const GIMMICK_KINDS := ["bait", "debt", "pull", "falling"]
 
 @onready var scene_transition_anim: AnimationPlayer  = $SceneTransitionAnimation/AnimationPlayer
 @onready var audio_bgm:             AudioStreamPlayer = $AudioBGM
@@ -27,6 +34,7 @@ var _transitioning := false
 
 func _ready() -> void:
 	Global.gameStarted = true
+	SaveManager.autosave_on_enter()   # auto-save (after fade-in) on entering the stage
 	scene_transition_anim.play("fade_out")
 	audio_bgm.play()
 	# Door starts open (passable) until the trap is sprung.
@@ -72,64 +80,121 @@ func _countdown_then_summon() -> void:
 	# Reveal & wake the boss that's already placed in the arena. Servers spawn at
 	# the ServerSpawn markers (see the scene) — 4 of the 7 picked at random.
 	boss.summon()
+	_fight_active = true
+	_gimmick_timer = 3.0   # short grace before the first gimmick wave
 
-# ── Boss-phase gimmicks ─────────────────────────────────────────────────────────
-# Each HP-quarter phase brings back one earlier stage's gimmick, so the whole
-# game's lessons resurface in the final fight. The active/pressuring gimmicks
-# (debt wall, pull zones) are cleared when the next phase begins so it never
-# piles into an unfair wall of mechanics.
-func _on_boss_phase(p: int) -> void:
-	_clear_transient()
-	match p:
-		1: _phase_bait()      # Stage 2 — bait platforms (glowing false footing)
-		2: _phase_debt()      # Stage 3 — a debt wall sweeps the arena
-		3: _phase_pull()      # Stage 4 — the floor drags you toward the core
-		4: _phase_falling()   # Stage 5 — perches crumble underfoot
+# ── Continuous gimmicks ─────────────────────────────────────────────────────────
+# Every earlier stage's gimmick can resurface at any time (phase no longer gates
+# them), and several run at once. As the boss's HP falls, waves come faster and
+# bring more gimmicks — the whole game's lessons pile onto you at the climax.
 
-func _clear_transient() -> void:
-	for n in _phase_transient:
+func _process(delta: float) -> void:
+	if not _fight_active:
+		return
+	if not is_instance_valid(boss) or boss.dead or not boss.active:
+		return
+	_gimmick_timer -= delta
+	if _gimmick_timer <= 0.0:
+		_spawn_gimmick_wave()
+		_gimmick_timer = lerpf(5.0, 1.5, _intensity())   # faster waves at low HP
+
+# A phase change also fires an immediate wave for a spike of pressure.
+func _on_boss_phase(_p: int) -> void:
+	if _fight_active:
+		_spawn_gimmick_wave()
+
+# 0 at full boss HP → 1 near death.
+func _intensity() -> float:
+	if not is_instance_valid(boss) or boss.health_max <= 0.0:
+		return 0.0
+	return clampf(1.0 - boss.health / boss.health_max, 0.0, 1.0)
+
+func _spawn_gimmick_wave() -> void:
+	# Drop already-freed entries, then cap how many can coexist so it stays fair-ish.
+	_active_gimmicks = _active_gimmicks.filter(func(n): return is_instance_valid(n))
+	if _active_gimmicks.size() >= 8:
+		return
+	var kinds := GIMMICK_KINDS.duplicate()
+	kinds.shuffle()
+	var n := 1 + int(round(_intensity() * 2.0))       # 1 → 3 gimmicks per wave
+	for i in min(n, kinds.size()):
+		_spawn_gimmick(kinds[i])
+
+func _spawn_gimmick(kind: String) -> void:
+	match kind:
+		"bait":    _g_bait()
+		"debt":    _g_debt()
+		"pull":    _g_pull()
+		"falling": _g_falling()
+
+# Stage 2 — glowing false footing with a coin lure, a couple at random spots.
+func _g_bait() -> void:
+	for i in 2:
+		var x := randf_range(500.0, 1900.0)
+		var y := randf_range(430.0, 520.0)
+		var b := BAIT_SCENE.instantiate()
+		b.position = Vector2(x, y)
+		_add_gimmick(b, 10.0)
+		var c := COIN_SCENE.instantiate()
+		c.position = Vector2(x, y - 28.0)
+		_add_gimmick(c, 10.0)
+
+# Stage 3 — a debt wall sweeping across (faster the more hurt the boss is).
+func _g_debt() -> void:
+	var w := DEBT_WALL.instantiate()
+	w.position = Vector2(-120.0, randf_range(300.0, 460.0))
+	w.speed = lerpf(60.0, 130.0, _intensity())
+	w.damage = 16
+	w.loop = true
+	_add_gimmick(w, 9.0)
+
+# Stage 4 — the pull wall, now MOVING: it sweeps back and forth across the arena
+# while dragging the player, instead of sitting in one place. Only one at a time
+# (the player has a single external_push slot).
+func _g_pull() -> void:
+	if is_instance_valid(_pull_zone):
+		return
+	var z := PULL_ZONE.instantiate()
+	var start_x := randf_range(700.0, 1700.0)
+	z.position = Vector2(start_x, 600.0)
+	z.pull = Vector2(randf_range(70.0, 110.0) * (1.0 if randf() < 0.5 else -1.0), 0.0)
+	_add_gimmick(z, 9.0)
+	_pull_zone = z
+	# Sweep the wall across the arena and back, faster at low HP. Bound to the node
+	# so the tween dies with it.
+	var leg := lerpf(2.6, 1.3, _intensity())
+	var t := z.create_tween().set_loops()
+	t.tween_property(z, "position:x", clampf(start_x + 650.0, 300.0, 2100.0), leg)
+	t.tween_property(z, "position:x", clampf(start_x - 650.0, 300.0, 2100.0), leg)
+
+# Stage 5 — crumbling perches under random footing.
+func _g_falling() -> void:
+	for i in 3:
+		var fp := FALLING_PLAT.instantiate()
+		fp.position = Vector2(randf_range(500.0, 1900.0), randf_range(480.0, 545.0))
+		_add_gimmick(fp, 8.0)
+
+# Add a gimmick to the arena, track it, and auto-remove after `lifetime` seconds.
+func _add_gimmick(node: Node, lifetime: float) -> void:
+	add_child(node)
+	_active_gimmicks.append(node)
+	_despawn_after(node, lifetime)
+
+func _despawn_after(node: Node, secs: float) -> void:
+	await get_tree().create_timer(secs).timeout
+	if is_instance_valid(node):
+		node.queue_free()
+
+func _end_fight() -> void:
+	_fight_active = false
+	for n in _active_gimmicks:
 		if is_instance_valid(n):
 			n.queue_free()
-	_phase_transient.clear()
-
-func _phase_bait() -> void:
-	for pos in [Vector2(850, 470), Vector2(1950, 470)]:
-		var b := BAIT_SCENE.instantiate()
-		b.position = pos
-		add_child(b)
-		var c := COIN_SCENE.instantiate()
-		c.position = pos + Vector2(0, -28)
-		add_child(c)
-
-func _phase_debt() -> void:
-	var w := DEBT_WALL.instantiate()
-	w.position = Vector2(-120, 400)
-	w.speed = 70.0
-	w.damage = 18
-	w.loop = true
-	add_child(w)
-	_phase_transient.append(w)
-
-func _phase_pull() -> void:
-	var left := PULL_ZONE.instantiate()
-	left.position = Vector2(760, 600)
-	left.pull = Vector2(70, 0)          # pulls you right, toward the core
-	add_child(left)
-	_phase_transient.append(left)
-	var right := PULL_ZONE.instantiate()
-	right.position = Vector2(2040, 600)
-	right.pull = Vector2(-70, 0)         # pulls you left, toward the core
-	add_child(right)
-	_phase_transient.append(right)
-
-func _phase_falling() -> void:
-	for pos in [Vector2(700, 520), Vector2(1400, 520), Vector2(2100, 520)]:
-		var fp := FALLING_PLAT.instantiate()
-		fp.position = pos
-		add_child(fp)
+	_active_gimmicks.clear()
+	_pull_zone = null
 
 func _on_boss_died() -> void:
-	_clear_transient()
+	_end_fight()
 	_show_victory()
 
 # ─── Victory / transitions ───────────────────────────────────────────────────────
