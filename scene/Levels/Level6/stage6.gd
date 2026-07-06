@@ -224,7 +224,7 @@ func _show_victory() -> void:
 	label.add_theme_color_override("font_color", Color(1, 0.85, 0.5))
 	label.add_theme_color_override("font_outline_color", Color.BLACK)
 	label.add_theme_constant_override("outline_size", 6)
-	label.text = tr("The system is down.\nYou made it out — now help others do the same.")
+	label.text = tr("The House is down.\nThe game was always rigged — and you walked away.\nNow help others do the same.")
 	layer.add_child(label)
 
 	await get_tree().create_timer(5.0).timeout

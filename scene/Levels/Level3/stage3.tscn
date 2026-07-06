@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/frog/frog_enemy.tscn" id="13_6pt3j"]
 [ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="14_8ol0d"]
 [ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="15_ha050"]
-[ext_resource type="Script" path="res://scene/pickups/pickup/pickup.gd" id="15_w4r13"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 [ext_resource type="PackedScene" uid="uid://htdn64tverd8" path="res://scene/Levels/Level3/gimmicks/rising_debt/rising_debt.tscn" id="itm_debt"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="itm_door"]
@@ -276,15 +275,12 @@ position = Vector2(1072, -213.00005)
 
 [node name="HealthPickup" parent="." unique_id=1244312233 instance=ExtResource("14_8ol0d")]
 position = Vector2(1261, -172)
-script = ExtResource("15_w4r13")
 
 [node name="SpeedPickup" parent="." unique_id=1288012059 instance=ExtResource("15_ha050")]
 position = Vector2(720, 221)
-script = ExtResource("15_w4r13")
 
 [node name="HealthPickup2" parent="." unique_id=1470939253 instance=ExtResource("14_8ol0d")]
 position = Vector2(770, -471)
-script = ExtResource("15_w4r13")
 
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Stage4Portal" to="." method="_on_stage_4_portal_body_entered"]
