@@ -770,7 +770,7 @@ position = Vector2(1001, 648)
 position = Vector2(3082, 632)
 dialogue_timeline = "s1gatekeepertimeline"
 npc_id = "stage1_gatekeeper"
-unlocks_skill = "double_jump"
+unlocks_skill = "dash"
 grants_key = "stage1_key"
 
 [node name="Stage1Door" parent="." unique_id=1479382046 instance=ExtResource("itm_door")]

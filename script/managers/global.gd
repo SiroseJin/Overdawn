@@ -26,6 +26,16 @@ var moving_to_next_wave: bool
 var arcade_mode: bool = false   # When true, enemies always chase — DetectionZone is ignored
 var settings_return_path: String = "res://scene/ui/main_menu.tscn"
 
+# True only when every "must" NPC in the current scene has had its requirement met
+# (skill unlocked / key granted / required quiz passed). Stage exit portals call this
+# to forbid leaving until the mandatory NPCs have been spoken to.
+func all_required_npcs_done() -> bool:
+	for n in get_tree().get_nodes_in_group("npc"):
+		if n.has_method("is_required") and n.is_required() \
+				and n.has_method("is_requirement_met") and not n.is_requirement_met():
+			return false
+	return true
+
 # ─── Enemy Damage (shared per enemy type) ──────────────────────────────────────
 # Each enemy writes its stats here every frame so the player can read them
 # without holding a direct reference to each individual enemy.

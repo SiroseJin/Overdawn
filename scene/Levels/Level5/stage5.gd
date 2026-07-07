@@ -62,6 +62,10 @@ func _reveal_hidden_lifts(_npc_id: String) -> void:
 
 func _on_stage_6_portal_body_entered(body: Node2D) -> void:
 	if body is Player and not _transitioning:
+		if not Global.all_required_npcs_done():
+			if body.has_method("show_toast"):
+				body.show_toast(tr("Someone here still needs to speak with you."))
+			return
 		_transitioning = true
 		ProgressionManager.clear_stage("stage5")
 		_fade_then_load("res://scene/Levels/Level6/stage6.tscn")

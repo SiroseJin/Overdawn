@@ -77,7 +77,6 @@ travel = Vector2(0, -520)
 speed = 60.0
 downtime = 0.5
 move_on_stand = true
-start_on_touch = null
 auto_return = false
 
 [node name="End" type="Marker2D" parent="Lift1" unique_id=900011814]
@@ -190,7 +189,6 @@ position = Vector2(4797, 460)
 travel = Vector2(0, -520)
 downtime = 0.5
 move_on_stand = true
-start_on_touch = null
 start_active = false
 
 [node name="End" type="Marker2D" parent="Lift2" unique_id=833471251]
@@ -202,7 +200,6 @@ position = Vector2(4608, -58)
 travel = Vector2(0, -520)
 downtime = 0.5
 move_on_stand = true
-start_on_touch = null
 start_active = false
 
 [node name="End" type="Marker2D" parent="Lift3" unique_id=2112163312]

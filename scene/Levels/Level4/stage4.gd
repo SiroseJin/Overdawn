@@ -41,8 +41,14 @@ func _skin(npc_name: String, trader: String) -> void:
 func _configure_npcs() -> void:
 	var n1 := get_node_or_null("Vino")
 	if n1: n1.npc_id = "stage4_vino"
+	# Mega: must-talk NPC. Speaking to her unlocks Firewall AND brings up the bridge
+	# platform (MovingPlatform1, dormant until then) so you can cross the first gap.
 	var n2 := get_node_or_null("Mega")
-	if n2: n2.npc_id = "stage4_mega"
+	if n2:
+		n2.npc_id = "stage4_mega"
+		n2.unlocks_skill = "firewall"
+		if not n2.talked.is_connected(_on_mega_talked):
+			n2.talked.connect(_on_mega_talked)
 	var n3 := get_node_or_null("Guntur")
 	if n3: n3.npc_id = "stage4_guntur"
 
@@ -55,10 +61,20 @@ func _configure_npcs() -> void:
 		n4.quiz_bonus_coins   = 25
 		n4.quiz_bonus_skill_point = true
 
+# Bring up the dormant bridge platform once Mega has been spoken to.
+func _on_mega_talked(_npc_id: String) -> void:
+	var plat := get_node_or_null("MovingPlatform1")
+	if plat and plat.has_method("activate"):
+		plat.activate()
+
 # ─── Transitions ─────────────────────────────────────────────────────────────────
 
 func _on_stage_5_portal_body_entered(body: Node2D) -> void:
 	if body is Player and not _transitioning:
+		if not Global.all_required_npcs_done():
+			if body.has_method("show_toast"):
+				body.show_toast(tr("Someone here still needs to speak with you."))
+			return
 		_transitioning = true
 		ProgressionManager.clear_stage("stage4")
 		_fade_then_load("res://scene/Levels/Level5/stage5.tscn")

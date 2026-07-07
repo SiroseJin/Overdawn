@@ -35,12 +35,12 @@ func _configure_npcs() -> void:
 		teach.npc_id = "stage1_npc2"
 		teach.dialogue_timeline = "npc2timeline"
 
-	# Ana unlocks the Firewall defensive skill
+	# Ana: a teaching NPC — the personal cost of gambling (her brother's story).
+	# Optional lore now; the Firewall skill moved to Stage 3 so skills aren't all in S1.
 	var skill_npc := get_node_or_null("Ana")
 	if skill_npc:
-		skill_npc.npc_id            = "stage1_firewall_npc"
+		skill_npc.npc_id            = "stage1_ana"
 		skill_npc.dialogue_timeline = "npc3timeline"
-		skill_npc.unlocks_skill     = "firewall"
 
 	# Bayu: the END-of-stage OPTIONAL quiz. After learning from the NPCs across
 	# the stage, the player can choose to be quizzed here for a bonus — fully
@@ -73,6 +73,10 @@ func _skin(npc_name: String, trader: String) -> void:
 
 func _on_stage_2_portal_body_entered(body: Node2D) -> void:
 	if body is Player and not _transitioning:
+		if not Global.all_required_npcs_done():
+			if body.has_method("show_toast"):
+				body.show_toast(tr("Someone here still needs to speak with you."))
+			return
 		_transitioning = true
 		ProgressionManager.clear_stage("stage1")
 		_fade_then_load("res://scene/Levels/Level2/stage2.tscn")

@@ -24,10 +24,10 @@ signal skill_points_changed(total: int)
 # Skills the player starts with. `false` here means the ability is gated until
 # unlocked through gameplay (e.g. beating a stage and talking to its NPC).
 const DEFAULT_SKILLS := {
-	"dash": true,          # core movement — available from the start
 	"arrows": true,        # basic ranged attack — available from the start
-	"double_jump": false,  # reward skill — unlocked by Stage 1's exit NPC
-	"firewall": false,     # defensive shield — unlocked by an NPC (gambling ref)
+	"dash": false,         # unlocked by Stage 1's Gatekeeper ("break away fast")
+	"double_jump": false,  # unlocked by Yani at the Stage 2 gate ("second chance")
+	"firewall": false,     # unlocked by Damar in Stage 3 (network firewall)
 }
 
 # Highest upgrade level each skill can reach.
@@ -79,9 +79,8 @@ func reset() -> void:
 # ─── Skills: unlock / level ──────────────────────────────────────────────────────
 
 func is_skill_unlocked(skill: String) -> bool:
-	# Arcade mode hands the player the full kit so wave survival is fair.
-	if Global.arcade_mode:
-		return true
+	# Skills are earned by unlocking them through the story NPCs — arcade uses whatever
+	# you've actually unlocked (it does NOT hand out the full kit).
 	return unlocked_skills.get(skill, false)
 
 func unlock_skill(skill: String) -> void:
@@ -94,8 +93,6 @@ func unlock_skill(skill: String) -> void:
 
 # Current upgrade level (0 = still locked, 1 = unlocked/base, up to MAX_SKILL_LEVEL).
 func get_skill_level(skill: String) -> int:
-	if Global.arcade_mode:
-		return MAX_SKILL_LEVEL
 	return int(skill_levels.get(skill, 0))
 
 func can_upgrade_skill(skill: String) -> bool:

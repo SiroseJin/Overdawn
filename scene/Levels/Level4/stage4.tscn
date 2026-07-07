@@ -46,15 +46,6 @@ polygon = PackedVector2Array(-100, -300, 0, -300, 0, 800, -100, 800)
 [node name="RightWall" type="CollisionPolygon2D" parent="Terrain" unique_id=1262511015]
 polygon = PackedVector2Array(4700, -300, 4800, -300, 4800, 800, 4700, 800)
 
-[node name="MidWall" type="CollisionPolygon2D" parent="Terrain" unique_id=1966126502]
-position = Vector2(-2901, -302)
-polygon = PackedVector2Array(4700, -300, 4800, -300, 4800, 800, 4700, 800)
-
-[node name="MidWall2" type="CollisionPolygon2D" parent="Terrain" unique_id=595075928]
-position = Vector2(-2901, 701.00006)
-scale = Vector2(1, 0.41306818)
-polygon = PackedVector2Array(4700, -300, 4800, -300, 4800, 800, 4700, 800)
-
 [node name="DeathZone" type="Area2D" parent="." unique_id=859840589]
 collision_layer = 0
 collision_mask = 2
@@ -116,6 +107,7 @@ speed = 100.0
 downtime = 0.5
 start_on_touch = true
 auto_return = false
+start_active = false
 
 [node name="End" type="Marker2D" parent="MovingPlatform1" unique_id=2006539095]
 position = Vector2(397, 0)

@@ -47,11 +47,62 @@ var is_chatting    := false
 var player_nearby  := false
 
 func _ready():
+	add_to_group("npc")
+	_setup_marker()
+	# The stage's _ready configures npc_id / unlocks_skill / grants_key AFTER this
+	# node's _ready, so colour/show the marker one frame later.
+	call_deferred("refresh_marker")
 	if sprite == null:
 		print("ERROR: AnimatedSprite2D not found")
 		return
 	if idle_texture and dialogue_texture:
 		_build_frames()
+
+# ─── Required / optional ─────────────────────────────────────────────────────────
+# A "must" NPC either unlocks a skill or hands over a key that opens the way forward.
+# Everyone else is optional lore/teaching. The stage forbids leaving until every
+# must NPC's requirement is met (see Global.all_required_npcs_done).
+
+func is_required() -> bool:
+	return unlocks_skill != "" or grants_key != "" or quiz_grants_key != ""
+
+# Has this NPC's gate condition been satisfied? Skill/key NPCs: talked to. Quiz-key
+# NPCs: the quiz has actually been passed.
+func is_requirement_met() -> bool:
+	if not is_required():
+		return true
+	if quiz_grants_key != "":
+		return quiz_id != "" and ProgressionManager.has_talked_to("quizpass_" + quiz_id)
+	return npc_id != "" and ProgressionManager.has_talked_to(npc_id)
+
+# ─── "!" marker (red = must talk, yellow = optional) ─────────────────────────────
+
+var _marker: Label
+
+func _setup_marker() -> void:
+	_marker = Label.new()
+	_marker.text = "!"
+	_marker.add_theme_font_override("font", load("res://art/Fonts/skeleboom.ttf"))
+	_marker.add_theme_font_size_override("font_size", 30)
+	_marker.add_theme_color_override("font_outline_color", Color.BLACK)
+	_marker.add_theme_constant_override("outline_size", 5)
+	_marker.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_marker.custom_minimum_size = Vector2(20, 0)
+	_marker.position = Vector2(-10, -86)
+	_marker.z_index = 20
+	add_child(_marker)
+
+# Colour by must/optional and hide once satisfied. Safe to call any time.
+func refresh_marker() -> void:
+	if _marker == null:
+		return
+	var required := is_required()
+	_marker.add_theme_color_override("font_color",
+		Color(1, 0.25, 0.2) if required else Color(1, 0.85, 0.2))
+	if required:
+		_marker.visible = not is_requirement_met()
+	else:
+		_marker.visible = npc_id == "" or not ProgressionManager.has_talked_to(npc_id)
 
 # Swap this NPC's sprite sheets at runtime (used by stage scripts to give each
 # placed NPC a distinct look without duplicating the scene).
@@ -92,6 +143,7 @@ func on_player_enter():
 	if sprite:
 		sprite.play("dialog")
 	interact_hint.show()
+	refresh_marker()
 
 func on_player_exit():
 	player_nearby = false
@@ -172,6 +224,8 @@ func _on_dialogue_finished():
 	elif is_instance_valid(Global.PlayerBody):
 		Global.PlayerBody.conversation_safe = false
 
+	refresh_marker()   # update / hide the "!" now that we've been talked to
+
 # Called when the player closes the quiz results. A perfect score is a pass and
 # grants the configured key / bonus once; otherwise they can talk again to retry.
 func _on_quiz_finished(correct: int, total: int) -> void:
@@ -197,3 +251,4 @@ func _on_quiz_finished(correct: int, total: int) -> void:
 			p.show_toast(tr("Quiz passed! Bonus earned"))
 	elif has_toast:
 		p.show_toast(tr("Quiz passed"))
+	refresh_marker()   # a passed quiz may clear a "must" requirement

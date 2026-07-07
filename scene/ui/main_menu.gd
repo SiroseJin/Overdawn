@@ -26,8 +26,10 @@ func _handle_transition():
 
 func _on_start_pressed():
 	audio_click.play()
-	# Fresh run: wipe carried-over progression (coins, skills, level/exp/health…)
-	# so a new game never inherits stats from a previous playthrough this session.
+	# Fresh STORY run: leave arcade mode (which hands out the full skill kit) and wipe
+	# carried-over progression (coins, skills, level/exp/health…) so a new game never
+	# inherits arcade buffs or stats from a previous playthrough this session.
+	Global.arcade_mode = false
 	ProgressionManager.reset()
 	get_tree().change_scene_to_file("res://scene/system/lobby_level.tscn")
 

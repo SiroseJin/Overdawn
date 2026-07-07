@@ -23,6 +23,12 @@ func _configure_npcs() -> void:
 			["Rafi", "stage2_rafi"], ["Yani", "stage2_yani"]]:
 		var n := get_node_or_null(pair[0])
 		if n: n.npc_id = pair[1]
+	# Yani is the must-talk gate NPC: speaking to her unlocks Double Jump AND hands
+	# over the key that opens the exit door — no key to hunt for.
+	var yani := get_node_or_null("Yani")
+	if yani:
+		yani.unlocks_skill = "double_jump"
+		yani.grants_key    = "stage2_key"
 
 # Give each placed NPC a distinct trader look.
 func _apply_npc_skins() -> void:
@@ -40,6 +46,10 @@ func _skin(npc_name: String, trader: String) -> void:
 
 func _on_stage_3_portal_body_entered(body: Node2D) -> void:
 	if body is Player and not _transitioning:
+		if not Global.all_required_npcs_done():
+			if body.has_method("show_toast"):
+				body.show_toast(tr("Someone here still needs to speak with you."))
+			return
 		_transitioning = true
 		ProgressionManager.clear_stage("stage2")
 		_fade_then_load("res://scene/Levels/Level3/stage3.tscn")

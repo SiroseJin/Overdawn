@@ -32,6 +32,7 @@ func _on_stage_1_portal_body_entered(body: Node2D) -> void:
 	if body is Player and not _transitioning:
 		_transitioning = true
 		Global.gameStarted = true
+		Global.arcade_mode = false   # story run — don't inherit arcade's full skill kit
 		_fade_then_load("res://scene/Levels/Level1/stage1.tscn")
 
 func _on_arcade_portal_body_entered(body: Node2D) -> void:

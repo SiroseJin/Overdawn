@@ -10,12 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://cmovingplat01" path="res://scene/gimmicks/moving_platform/moving_platform.tscn" id="8_mp"]
 [ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="14_nbhar"]
 [ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="15_gfr2h"]
-[ext_resource type="Script" path="res://scene/pickups/pickup/pickup.gd" id="15_y6upe"]
 [ext_resource type="PackedScene" uid="uid://cbaitplatform" path="res://scene/Levels/Level2/gimmicks/bait_platform/bait_platform.tscn" id="itm_bait"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="itm_door"]
 [ext_resource type="PackedScene" uid="uid://bwiyib8fihf07" path="res://scene/pickups/fake_coin/fake_coin.tscn" id="itm_fakecoin"]
-[ext_resource type="PackedScene" uid="uid://cqkeypickup00" path="res://scene/pickups/key_pickup/key_pickup.tscn" id="itm_key"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_death"]
 size = Vector2(5200, 60)
@@ -86,7 +84,6 @@ speed = 100.0
 downtime = 0.5
 start_on_touch = true
 auto_return = false
-start_active = false
 
 [node name="End" type="Marker2D" parent="MovingPlatform2" unique_id=101010202]
 position = Vector2(365, 2)
@@ -132,7 +129,7 @@ position = Vector2(100, 630)
 position = Vector2(350, 630)
 
 [node name="Coin2" parent="." unique_id=859765874 instance=ExtResource("itm_coin")]
-position = Vector2(1300, 560)
+position = Vector2(1061, 570)
 
 [node name="Coin3" parent="." unique_id=1154647060 instance=ExtResource("itm_coin")]
 position = Vector2(2182, 512)
@@ -152,9 +149,6 @@ position = Vector2(1643, 588)
 [node name="Bait2" parent="." unique_id=2109161155 instance=ExtResource("itm_bait")]
 position = Vector2(2182, 532)
 
-[node name="Bait4" parent="." unique_id=992404703 instance=ExtResource("itm_bait")]
-position = Vector2(2991, 426)
-
 [node name="FakeCoin1" parent="." unique_id=492666077 instance=ExtResource("itm_fakecoin")]
 position = Vector2(584, 635)
 
@@ -170,23 +164,16 @@ position = Vector2(2991, 508)
 [node name="FakeCoin5" parent="." unique_id=553800498 instance=ExtResource("itm_fakecoin")]
 position = Vector2(4155, 524)
 
-[node name="Key" parent="." unique_id=1889557774 instance=ExtResource("itm_key")]
-position = Vector2(2989, 401)
-key_id = "stage2_key"
-obtained_message = "Backdoor key found"
-
 [node name="Door" parent="." unique_id=1352600287 instance=ExtResource("itm_door")]
 position = Vector2(4541, 484)
 required_key = "stage2_key"
-locked_hint = "Locked. The key is up where the 'bonus' hangs."
+locked_hint = "Locked. Talk to Yani — she'll open the way."
 
 [node name="SpeedPickup" parent="." unique_id=1148672304 instance=ExtResource("14_nbhar")]
 position = Vector2(415, 634)
-script = ExtResource("15_y6upe")
 
 [node name="SpeedPickup2" parent="." unique_id=394242383 instance=ExtResource("14_nbhar")]
 position = Vector2(1546, 560)
-script = ExtResource("15_y6upe")
 
 [node name="HealthPickup" parent="." unique_id=1866581782 instance=ExtResource("15_gfr2h")]
 position = Vector2(2339, 563)

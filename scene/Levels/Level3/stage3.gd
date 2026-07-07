@@ -48,6 +48,10 @@ func _configure_npcs() -> void:
 
 func _on_stage_4_portal_body_entered(body: Node2D) -> void:
 	if body is Player and not _transitioning:
+		if not Global.all_required_npcs_done():
+			if body.has_method("show_toast"):
+				body.show_toast(tr("Someone here still needs to speak with you."))
+			return
 		_transitioning = true
 		_fade_then_load("res://scene/Levels/Level4/stage4.tscn")
 
