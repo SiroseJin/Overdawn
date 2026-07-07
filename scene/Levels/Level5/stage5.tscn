@@ -184,7 +184,6 @@ position = Vector2(1527, 485)
 position = Vector2(1838, 303)
 
 [node name="Lift2" parent="." unique_id=1581570788 instance=ExtResource("10_mp")]
-visible = false
 position = Vector2(4797, 460)
 travel = Vector2(0, -520)
 downtime = 0.5
@@ -195,7 +194,6 @@ start_active = false
 position = Vector2(0, -517)
 
 [node name="Lift3" parent="." unique_id=1892248931 instance=ExtResource("10_mp")]
-visible = false
 position = Vector2(4608, -58)
 travel = Vector2(0, -520)
 downtime = 0.5
