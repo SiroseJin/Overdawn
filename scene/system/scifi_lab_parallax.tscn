@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://c0o24xbnx1jwl"]
+
+[ext_resource type="Texture2D" path="res://art/LabBG/back.png" id="1_back"]
+[ext_resource type="Texture2D" path="res://art/LabBG/middle.png" id="2_mid"]
+[ext_resource type="Texture2D" path="res://art/LabBG/front.png" id="3_front"]
+
+[node name="SciFiLabParallax" type="ParallaxBackground"]
+
+[node name="Back" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(960, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Back"]
+texture_filter = 1
+scale = Vector2(3, 3)
+centered = false
+texture = ExtResource("1_back")
+
+[node name="Middle" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.3, 0.28)
+motion_mirroring = Vector2(960, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Middle"]
+texture_filter = 1
+scale = Vector2(3, 3)
+centered = false
+texture = ExtResource("2_mid")
+
+[node name="Front" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.5, 0.45)
+motion_mirroring = Vector2(960, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Front"]
+texture_filter = 1
+scale = Vector2(3, 3)
+centered = false
+texture = ExtResource("3_front")

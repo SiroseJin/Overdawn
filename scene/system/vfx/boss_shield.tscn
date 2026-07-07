@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbossshield01"]
+
+[ext_resource type="Script" path="res://scene/system/vfx/sheet_anim.gd" id="1_anim"]
+[ext_resource type="Texture2D" path="res://art/VFX/shield_265x265_6x5.png" id="2_tex"]
+
+[sub_resource type="CanvasItemMaterial" id="mat_add"]
+blend_mode = 1
+
+[node name="BossShield" type="Sprite2D"]
+texture_filter = 1
+material = SubResource("mat_add")
+modulate = Color(0.55, 0.85, 1, 0.85)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("2_tex")
+hframes = 6
+vframes = 5
+script = ExtResource("1_anim")
+fps = 26.0
+loop = true

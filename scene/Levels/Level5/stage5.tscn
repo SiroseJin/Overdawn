@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="13_hp"]
 [ext_resource type="PackedScene" uid="uid://cqkeypickup00" path="res://scene/pickups/key_pickup/key_pickup.tscn" id="14_key"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="15_gate"]
+[ext_resource type="PackedScene" uid="uid://cmountainduskparallax" path="res://scene/system/mountain_dusk_parallax.tscn" id="bg_city"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_death"]
@@ -25,6 +26,9 @@ size = Vector2(40, 80)
 
 [node name="Stage5" type="Node2D" unique_id=1529574299]
 script = ExtResource("1_stg5")
+
+[node name="MountainDuskParallax" parent="." unique_id=1342997040 instance=ExtResource("bg_city")]
+layer = -1
 
 [node name="Terrain" type="StaticBody2D" parent="." unique_id=1255593313]
 

@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://xib287qfxjb8"]
+
+[ext_resource type="Texture2D" path="res://art/CityBG/skyline-a.png" id="1_sky"]
+[ext_resource type="Texture2D" path="res://art/CityBG/buildings-bg.png" id="2_far"]
+[ext_resource type="Texture2D" path="res://art/CityBG/near-buildings-bg.png" id="3_near"]
+[ext_resource type="Texture2D" path="res://art/CityBG/skyline-b.png" id="4_skyb"]
+
+[node name="CityParallax" type="ParallaxBackground"]
+
+[node name="Sky" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(410, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Sky"]
+texture_filter = 1
+position = Vector2(0, 0)
+scale = Vector2(3.2, 3.2)
+centered = false
+texture = ExtResource("1_sky")
+
+[node name="SkyB" type="Sprite2D" parent="Sky"]
+texture_filter = 1
+position = Vector2(205, 0)
+scale = Vector2(3.2, 3.2)
+centered = false
+modulate = Color(1, 1, 1, 0.6)
+texture = ExtResource("4_skyb")
+
+[node name="Far" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.3, 0.25)
+motion_mirroring = Vector2(432, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Far"]
+texture_filter = 1
+position = Vector2(0, 348)
+scale = Vector2(3, 3)
+centered = false
+texture = ExtResource("2_far")
+
+[node name="Near" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.55, 0.45)
+motion_mirroring = Vector2(1232, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Near"]
+texture_filter = 1
+position = Vector2(0, 198)
+scale = Vector2(2.5, 2.5)
+centered = false
+modulate = Color(0.85, 0.85, 1, 1)
+texture = ExtResource("3_near")

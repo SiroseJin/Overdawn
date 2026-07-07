@@ -191,7 +191,17 @@ func _capture_screenshot(hide_ui: bool = true) -> String:
 	# Optionally hide every CanvasLayer (HUD/menus) for a clean shot. Auto-saves pass
 	# hide_ui=false so the grab is instant (no 2-frame UI-hide flicker during play).
 	var hidden : Array = []
+	# This runs from the PAUSE MENU (Save), where the game is paused via
+	# Engine.time_scale = 0. The two frame-waits below only resume while the main loop
+	# advances at normal speed; at time_scale 0 they can stall — and since hiding the
+	# UI also hides the pause menu itself (it lives under the same CanvasLayer), a stall
+	# leaves the HUD + pause menu hidden with no way to click Resume = a frozen, grey
+	# screen (grey on stages whose only backdrop is the parallax). Force real time for
+	# the duration so the capture always completes and the UI is guaranteed restored.
+	var prev_scale := Engine.time_scale
 	if hide_ui:
+		if prev_scale == 0.0:
+			Engine.time_scale = 1.0
 		_hide_canvas_layers(get_tree().root, hidden)
 		# Wait two frames so the engine re-renders without any UI.
 		await get_tree().process_frame
@@ -199,17 +209,25 @@ func _capture_screenshot(hide_ui: bool = true) -> String:
 
 	var vp    : Viewport = get_tree().root
 	var image : Image    = vp.get_texture().get_image()
-	image.resize(THUMB_WIDTH, THUMB_HEIGHT, Image.INTERPOLATE_BILINEAR)
-	var bytes := image.save_png_to_buffer()
 
-	# Restore all hidden nodes
+	# Restore the hidden UI and the previous (paused) time scale IMMEDIATELY after the
+	# grab — before the resize/encode below, which could error out. If restore ran after
+	# and something threw, the HUD would be left invisible for the rest of play.
 	for node in hidden:
 		node.show()
+	Engine.time_scale = prev_scale
 
+	image.resize(THUMB_WIDTH, THUMB_HEIGHT, Image.INTERPOLATE_BILINEAR)
+	var bytes := image.save_png_to_buffer()
 	return Marshalls.raw_to_base64(bytes)
 
 func _hide_canvas_layers(node: Node, hidden: Array) -> void:
 	for child in node.get_children():
+		# ParallaxBackground is a CanvasLayer, but it's the world backdrop, not UI.
+		# Never hide it: it belongs in the thumbnail, and on stages whose only visible
+		# backdrop IS the parallax, leaving it hidden turns the screen fully grey.
+		if child is ParallaxBackground:
+			continue
 		if child is CanvasLayer and child.visible:
 			child.hide()
 			hidden.append(child)

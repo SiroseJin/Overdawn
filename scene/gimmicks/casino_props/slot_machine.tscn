@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cslotmachine01"]
+
+[ext_resource type="Script" path="res://scene/system/vfx/sheet_anim.gd" id="1_anim"]
+[ext_resource type="Texture2D" path="res://art/Casino/slot_machines_8x5_32x48.png" id="2_tex"]
+
+[node name="SlotMachine" type="Sprite2D"]
+texture_filter = 1
+scale = Vector2(1.4, 1.4)
+texture = ExtResource("2_tex")
+hframes = 8
+vframes = 5
+frame = 8
+script = ExtResource("1_anim")
+fps = 8.0
+loop = true
+start_frame = 8
+frame_count = 8

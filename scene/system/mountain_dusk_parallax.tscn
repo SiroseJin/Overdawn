@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://b7dp1fygj5tuh"]
+
+[ext_resource type="Texture2D" path="res://art/MountainBG/sky.png" id="1_sky"]
+[ext_resource type="Texture2D" path="res://art/MountainBG/far-clouds.png" id="2_fc"]
+[ext_resource type="Texture2D" path="res://art/MountainBG/far-mountains.png" id="3_fm"]
+[ext_resource type="Texture2D" path="res://art/MountainBG/mountains.png" id="4_m"]
+[ext_resource type="Texture2D" path="res://art/MountainBG/near-clouds.png" id="5_nc"]
+[ext_resource type="Texture2D" path="res://art/MountainBG/trees.png" id="6_tr"]
+
+[node name="MountainDuskParallax" type="ParallaxBackground"]
+
+[node name="Sky" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.05, 0)
+motion_mirroring = Vector2(960, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Sky"]
+texture_filter = 1
+scale = Vector2(3, 3)
+centered = false
+texture = ExtResource("1_sky")
+
+[node name="FarClouds" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.15, 0)
+motion_mirroring = Vector2(384, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="FarClouds"]
+texture_filter = 1
+scale = Vector2(3, 3)
+centered = false
+texture = ExtResource("2_fc")
+
+[node name="FarMountains" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.25, 0)
+motion_mirroring = Vector2(480, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="FarMountains"]
+texture_filter = 1
+scale = Vector2(3, 3)
+centered = false
+texture = ExtResource("3_fm")
+
+[node name="Mountains" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.4, 0)
+motion_mirroring = Vector2(960, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Mountains"]
+texture_filter = 1
+scale = Vector2(3, 3)
+centered = false
+texture = ExtResource("4_m")
+
+[node name="NearClouds" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.5, 0)
+motion_mirroring = Vector2(432, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="NearClouds"]
+texture_filter = 1
+modulate = Color(1, 1, 1, 0.8)
+scale = Vector2(3, 3)
+centered = false
+texture = ExtResource("5_nc")
+
+[node name="Trees" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.7, 0)
+motion_mirroring = Vector2(720, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Trees"]
+texture_filter = 1
+scale = Vector2(3, 3)
+centered = false
+texture = ExtResource("6_tr")

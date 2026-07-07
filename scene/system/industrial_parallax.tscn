@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://2u6ko5ggbnkl"]
+
+[ext_resource type="Texture2D" path="res://art/IndustrialBG/bg.png" id="1_bg"]
+[ext_resource type="Texture2D" path="res://art/IndustrialBG/far-buildings.png" id="2_far"]
+[ext_resource type="Texture2D" path="res://art/IndustrialBG/buildings.png" id="3_bld"]
+[ext_resource type="Texture2D" path="res://art/IndustrialBG/skill-foreground.png" id="4_fg"]
+
+[node name="IndustrialParallax" type="ParallaxBackground"]
+
+[node name="BG" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.1, 0)
+motion_mirroring = Vector2(1224, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="BG"]
+texture_filter = 1
+position = Vector2(0, 0)
+scale = Vector2(4.5, 4.5)
+centered = false
+texture = ExtResource("1_bg")
+
+[node name="FarBuildings" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.25, 0)
+motion_mirroring = Vector2(959, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="FarBuildings"]
+texture_filter = 1
+position = Vector2(0, 81)
+scale = Vector2(4.5, 4.5)
+centered = false
+texture = ExtResource("2_far")
+
+[node name="Buildings" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.4, 0)
+motion_mirroring = Vector2(1224, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Buildings"]
+texture_filter = 1
+position = Vector2(0, 45)
+scale = Vector2(4.5, 4.5)
+centered = false
+texture = ExtResource("3_bld")
+
+[node name="Foreground" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.6, 0)
+motion_mirroring = Vector2(1224, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Foreground"]
+texture_filter = 1
+position = Vector2(0, 252)
+scale = Vector2(4.5, 4.5)
+centered = false
+texture = ExtResource("4_fg")

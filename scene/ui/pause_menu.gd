@@ -42,10 +42,30 @@ func _show_only(container: Node) -> void:
 
 func _on_resume_pressed():
 	if audio_close: audio_close.play()
-	Global.PlayerBody.is_game_paused = false
+	# Unfreeze FIRST and guard the player ref: if PlayerBody were invalid, the old
+	# order threw here and left time_scale at 0 = permanently frozen/unplayable.
 	Engine.time_scale = 1
 	Dialogic.paused = false
+	if is_instance_valid(Global.PlayerBody):
+		Global.PlayerBody.is_game_paused = false
+	_ensure_backgrounds_visible()
 	hide()
+
+# Safety net against the "grey screen" bug: a ParallaxBackground is the world backdrop
+# and must never stay hidden. If anything (e.g. an interrupted screenshot capture) ever
+# leaves one hidden, un-hide every ParallaxBackground in the scene on resume so we never
+# come back to an empty grey screen on parallax-only stages.
+func _ensure_backgrounds_visible() -> void:
+	var scene := get_tree().current_scene
+	if scene:
+		_show_parallax(scene)
+
+func _show_parallax(node: Node) -> void:
+	for child in node.get_children():
+		if child is ParallaxBackground:
+			child.visible = true
+		else:
+			_show_parallax(child)
 
 func _on_save_pressed():
 	if audio_open: audio_open.play()

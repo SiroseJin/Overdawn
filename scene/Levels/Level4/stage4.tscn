@@ -9,12 +9,14 @@
 [ext_resource type="PackedScene" uid="uid://chn8rr31oxv0x" path="res://scene/actors/enemies/witch/witch_enemy.tscn" id="8_witch"]
 [ext_resource type="PackedScene" uid="uid://jr1opep0t5q3" path="res://scene/actors/enemies/necromancer/necromancer_enemy.tscn" id="9_necro"]
 [ext_resource type="PackedScene" uid="uid://cmovingplat01" path="res://scene/gimmicks/moving_platform/moving_platform.tscn" id="10_mp"]
+[ext_resource type="PackedScene" uid="uid://dumfvyytw8b8n" path="res://scene/system/casino_parallax.tscn" id="bg_city"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="itm_door"]
 [ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="itm_hp"]
 [ext_resource type="PackedScene" uid="uid://cqkeypickup00" path="res://scene/pickups/key_pickup/key_pickup.tscn" id="itm_key"]
 [ext_resource type="PackedScene" uid="uid://cpull0one0001" path="res://scene/Levels/Level4/gimmicks/pull_zone/pull_zone.tscn" id="itm_pull"]
 [ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="itm_spd"]
+[ext_resource type="PackedScene" uid="uid://bkpom03w265c7" path="res://scene/gimmicks/casino_props/slot_machine.tscn" id="prop_slot"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_death"]
 size = Vector2(5200, 60)
@@ -24,6 +26,9 @@ size = Vector2(40, 80)
 
 [node name="Stage4" type="Node2D" unique_id=146396940]
 script = ExtResource("1_stg4")
+
+[node name="CasinoParallax" parent="." unique_id=352724243 instance=ExtResource("bg_city")]
+layer = -1
 
 [node name="Terrain" type="StaticBody2D" parent="." unique_id=1490386655]
 
@@ -175,6 +180,28 @@ key_id = "stage4_key"
 [node name="Door" parent="." unique_id=320390425 instance=ExtResource("itm_door")]
 position = Vector2(4584, 535)
 required_key = "stage4_key"
+
+[node name="SlotMachine1" parent="." unique_id=449084194 instance=ExtResource("prop_slot")]
+z_index = -1
+position = Vector2(320, 526)
+
+[node name="SlotMachine2" parent="." unique_id=1909863495 instance=ExtResource("prop_slot")]
+z_index = -1
+position = Vector2(760, 526)
+frame = 16
+start_frame = 16
+
+[node name="SlotMachine3" parent="." unique_id=1638999957 instance=ExtResource("prop_slot")]
+z_index = -1
+position = Vector2(2250, 616)
+frame = 24
+start_frame = 24
+
+[node name="SlotMachine4" parent="." unique_id=627713830 instance=ExtResource("prop_slot")]
+z_index = -1
+position = Vector2(3760, 486)
+frame = 0
+start_frame = 0
 
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Stage5Portal" to="." method="_on_stage_5_portal_body_entered"]

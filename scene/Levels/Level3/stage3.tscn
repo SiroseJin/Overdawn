@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/frog/frog_enemy.tscn" id="13_6pt3j"]
 [ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="14_8ol0d"]
 [ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="15_ha050"]
+[ext_resource type="PackedScene" uid="uid://2u6ko5ggbnkl" path="res://scene/system/industrial_parallax.tscn" id="bg_city"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 [ext_resource type="PackedScene" uid="uid://htdn64tverd8" path="res://scene/Levels/Level3/gimmicks/rising_debt/rising_debt.tscn" id="itm_debt"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="itm_door"]
@@ -24,6 +25,9 @@ size = Vector2(40, 80)
 
 [node name="Stage3" type="Node2D" unique_id=500126194]
 script = ExtResource("1_ofun6")
+
+[node name="IndustrialParallax" parent="." unique_id=978442604 instance=ExtResource("bg_city")]
+layer = -1
 
 [node name="Terrain" type="StaticBody2D" parent="." unique_id=667954419]
 

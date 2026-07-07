@@ -49,6 +49,10 @@ var _awaiting_trigger := false   # start_on_touch: placed but waiting for first 
 var _start: Vector2
 var _end: Vector2
 var _progress: float = 0.0   # 0 = at start, 1 = at end (used by move_on_stand)
+var _run_tween: Tween = null   # the automatic-run tween, so we can pause it with the game
+
+func _game_paused() -> bool:
+	return is_instance_valid(Global.PlayerBody) and Global.PlayerBody.is_game_paused
 
 # The effective travel offset: the "End" marker child if present, else `travel`.
 func _travel_offset() -> Vector2:
@@ -89,10 +93,12 @@ func _start_tween_run() -> void:
 		t.tween_interval(downtime)
 		t.tween_property(self, "position", _start, leg).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		t.tween_interval(downtime)
+		_run_tween = t
 	else:
 		# One-way: travel to the end and stay there.
 		var t := create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 		t.tween_property(self, "position", _end, leg).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		_run_tween = t
 
 func _leg_time() -> float:
 	var dist := _travel_offset().length()
@@ -101,6 +107,16 @@ func _leg_time() -> float:
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint() or not _active:
 		return
+	# While the game is paused, hold the platform completely still (pause its run tween
+	# and skip move_on_stand stepping). An AnimatableBody2D that jumps position on the
+	# resume frame flings whoever is standing on it off into the void — that was the
+	# "grey/unplayable after pausing on the moving platform" bug.
+	if _game_paused():
+		if _run_tween and _run_tween.is_valid() and _run_tween.is_running():
+			_run_tween.pause()
+		return
+	elif _run_tween and _run_tween.is_valid() and not _run_tween.is_running():
+		_run_tween.play()
 	# start_on_touch: once the player steps on, commit to the run and stop waiting.
 	if _awaiting_trigger:
 		if _player_on_top():

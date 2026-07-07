@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvfxburst0001"]
+
+[ext_resource type="Script" path="res://scene/system/vfx/sheet_anim.gd" id="1_anim"]
+[ext_resource type="Texture2D" path="res://art/VFX/explosion_517x517_6x5.png" id="2_tex"]
+
+[sub_resource type="CanvasItemMaterial" id="mat_add"]
+blend_mode = 1
+
+[node name="VfxBurst" type="Sprite2D"]
+texture_filter = 1
+material = SubResource("mat_add")
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("2_tex")
+hframes = 6
+vframes = 5
+script = ExtResource("1_anim")
+fps = 34.0
+loop = false
+free_on_finish = true

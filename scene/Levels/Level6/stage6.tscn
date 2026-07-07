@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cmovingplat01" path="res://scene/gimmicks/moving_platform/moving_platform.tscn" id="5_mp"]
 [ext_resource type="PackedScene" uid="uid://cfallingplat0" path="res://scene/gimmicks/falling_platform/falling_platform.tscn" id="6_fp"]
 [ext_resource type="PackedScene" uid="uid://cfinalboss001" path="res://scene/actors/enemies/finalboss/finalboss_enemy.tscn" id="7_boss"]
+[ext_resource type="PackedScene" uid="uid://c0o24xbnx1jwl" path="res://scene/system/scifi_lab_parallax.tscn" id="bg_city"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_zone"]
 size = Vector2(100, 520)
@@ -26,6 +27,9 @@ point_count = 7
 
 [node name="Stage6" type="Node2D" unique_id=1039610357]
 script = ExtResource("1_stg6")
+
+[node name="SciFiLabParallax" parent="." unique_id=1362539314 instance=ExtResource("bg_city")]
+layer = -1
 
 [node name="Terrain" type="StaticBody2D" parent="." unique_id=1314738730]
 

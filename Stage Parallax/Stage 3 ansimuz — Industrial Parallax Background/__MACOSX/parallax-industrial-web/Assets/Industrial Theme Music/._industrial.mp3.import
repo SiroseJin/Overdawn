@@ -1,0 +1,18 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bs2r223ftumea"
+valid=false
+
+[deps]
+
+source_file="res://Stage Parallax/Stage 3 ansimuz — Industrial Parallax Background/__MACOSX/parallax-industrial-web/Assets/Industrial Theme Music/._industrial.mp3"
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

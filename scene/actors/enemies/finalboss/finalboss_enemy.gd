@@ -46,6 +46,9 @@ const PU_FAKE   := preload("res://scene/pickups/fake_coin/fake_coin.tscn")
 const GOOD_PICKUPS := [PU_COIN, PU_HEALTH, PU_SPEED]
 const GAMBLE_PICKUPS := [PU_COIN, PU_HEALTH, PU_SPEED, PU_FAKE]   # may include a fake
 
+const VFX_BURST  := preload("res://scene/system/vfx/vfx_burst.tscn")
+const VFX_SHIELD := preload("res://scene/system/vfx/boss_shield.tscn")
+
 @export var health_max: float = 400.0
 @export var shield_max: float = 75.0
 @export var activation_x: float = 145.0
@@ -117,6 +120,7 @@ var _jitter_timer := 0.0
 
 var _servers: Array = []
 var _adds: Array = []
+var _shield_fx: Node2D = null   # electric-shield VFX, follows the boss while shielded
 
 @onready var _hud:          CanvasLayer = $HUD
 @onready var _hp_bar:       ProgressBar = $HUD/HPBar
@@ -223,6 +227,7 @@ func _activate() -> void:
 	phase = 1
 	phase_changed.emit(1)
 	_spawn_servers()
+	_show_shield()
 	_update_status()
 
 # ─── SHIELDED ────────────────────────────────────────────────────────────────────
@@ -244,6 +249,7 @@ func on_server_destroyed(at: Vector2) -> void:
 	if dead or state != "shielded":
 		return
 	_servers = _servers.filter(func(s): return is_instance_valid(s))
+	_spawn_burst(at, 0.7)   # server pops
 	# Reward for taking down a server: 1–2 random GOOD pickups where it stood.
 	for i in randi_range(1, 2):
 		_drop(GOOD_PICKUPS.pick_random(), at + Vector2(randf_range(-24, 24), randf_range(-22, -4)))
@@ -262,6 +268,8 @@ func _reduce_shield(amount: float) -> void:
 
 func _enter_down() -> void:
 	state = "down"
+	_hide_shield()
+	_spawn_burst(global_position, 1.6)   # shield shatters as it crashes
 	_clear_servers()
 	_spawn_adds()
 	_down_left = down_time
@@ -297,6 +305,7 @@ func _recover(new_phase: int) -> void:
 	_shield_bar.value = shield
 	shield_changed.emit(shield, shield_max)
 	_spawn_servers()
+	_show_shield()
 	state = "shielded"
 	var t := create_tween()
 	t.tween_property(self, "_down_amount", 0.0, 0.4).set_ease(Tween.EASE_OUT)
@@ -515,8 +524,29 @@ func _flash() -> void:
 	if not dead:
 		modulate = Color.WHITE
 
+# ─── VFX ───────────────────────────────────────────────────────────────────────────
+
+# One-shot explosion burst in world space (parented to the arena so it survives us).
+func _spawn_burst(at: Vector2, size := 1.0) -> void:
+	var fx := VFX_BURST.instantiate() as Node2D
+	fx.global_position = at
+	fx.scale *= size
+	get_parent().add_child(fx)
+
+func _show_shield() -> void:
+	if _shield_fx == null:
+		_shield_fx = VFX_SHIELD.instantiate() as Node2D
+		add_child(_shield_fx)          # child of the boss → tracks its position
+	_shield_fx.visible = true
+
+func _hide_shield() -> void:
+	if _shield_fx != null:
+		_shield_fx.visible = false
+
 func _die() -> void:
 	dead = true
+	_hide_shield()
+	_spawn_burst(global_position, 2.2)   # the House goes down
 	_clear_servers()
 	_clear_adds()
 	$HitBox/CollisionShape2D.set_deferred("disabled", true)

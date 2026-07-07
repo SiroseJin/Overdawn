@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://c5smarxtqoyvb"]
+
+[ext_resource type="Texture2D" path="res://art/Stage1BG/background.png" id="1_bg"]
+[ext_resource type="Texture2D" path="res://art/Stage1BG/sun.png" id="2_sun"]
+[ext_resource type="Texture2D" path="res://art/Stage1BG/city4plan.png" id="3_c4"]
+[ext_resource type="Texture2D" path="res://art/Stage1BG/city3plan.png" id="4_c3"]
+[ext_resource type="Texture2D" path="res://art/Stage1BG/city2plan.png" id="5_c2"]
+[ext_resource type="Texture2D" path="res://art/Stage1BG/city1plan.png" id="6_c1"]
+[ext_resource type="Texture2D" path="res://art/Stage1BG/smog1.png" id="7_s1"]
+[ext_resource type="Texture2D" path="res://art/Stage1BG/smog2.png" id="8_s2"]
+[ext_resource type="Texture2D" path="res://art/Stage1BG/light.png" id="9_lt"]
+
+[sub_resource type="CanvasItemMaterial" id="mat_add"]
+blend_mode = 1
+
+[node name="FuturisticCityParallax" type="ParallaxBackground"]
+
+[node name="Background" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.05, 0.05)
+motion_mirroring = Vector2(1260, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background"]
+texture_filter = 1
+scale = Vector2(2, 2)
+centered = false
+texture = ExtResource("1_bg")
+
+[node name="Sun" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.05, 0.05)
+motion_mirroring = Vector2(1260, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Sun"]
+texture_filter = 1
+scale = Vector2(2, 2)
+centered = false
+texture = ExtResource("2_sun")
+
+[node name="City4" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.15, 0.15)
+motion_mirroring = Vector2(1260, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="City4"]
+texture_filter = 1
+scale = Vector2(2, 2)
+centered = false
+texture = ExtResource("3_c4")
+
+[node name="City3" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.25, 0.25)
+motion_mirroring = Vector2(1260, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="City3"]
+texture_filter = 1
+scale = Vector2(2, 2)
+centered = false
+texture = ExtResource("4_c3")
+
+[node name="City2" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.4, 0.4)
+motion_mirroring = Vector2(1260, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="City2"]
+texture_filter = 1
+scale = Vector2(2, 2)
+centered = false
+texture = ExtResource("5_c2")
+
+[node name="City1" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.6, 0.6)
+motion_mirroring = Vector2(1260, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="City1"]
+texture_filter = 1
+scale = Vector2(2, 2)
+centered = false
+texture = ExtResource("6_c1")
+
+[node name="Smog1" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.3, 0.3)
+motion_mirroring = Vector2(1260, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Smog1"]
+texture_filter = 1
+modulate = Color(1, 1, 1, 0.55)
+scale = Vector2(2, 2)
+centered = false
+texture = ExtResource("7_s1")
+
+[node name="Smog2" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.5, 0.5)
+motion_mirroring = Vector2(1260, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Smog2"]
+texture_filter = 1
+modulate = Color(1, 1, 1, 0.45)
+scale = Vector2(2, 2)
+centered = false
+texture = ExtResource("8_s2")
+
+[node name="Light" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(1260, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Light"]
+texture_filter = 1
+material = SubResource("mat_add")
+scale = Vector2(2, 2)
+centered = false
+texture = ExtResource("9_lt")

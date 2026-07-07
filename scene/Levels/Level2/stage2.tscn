@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cmovingplat01" path="res://scene/gimmicks/moving_platform/moving_platform.tscn" id="8_mp"]
 [ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="14_nbhar"]
 [ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="15_gfr2h"]
+[ext_resource type="PackedScene" uid="uid://xib287qfxjb8" path="res://scene/system/city_parallax.tscn" id="bg_city"]
 [ext_resource type="PackedScene" uid="uid://cbaitplatform" path="res://scene/Levels/Level2/gimmicks/bait_platform/bait_platform.tscn" id="itm_bait"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="itm_door"]
@@ -23,6 +24,9 @@ size = Vector2(40, 80)
 
 [node name="Stage2" type="Node2D" unique_id=464765020]
 script = ExtResource("1_27d72")
+
+[node name="CityParallax" parent="." unique_id=2134745605 instance=ExtResource("bg_city")]
+layer = -1
 
 [node name="Terrain" type="StaticBody2D" parent="." unique_id=1244107896]
 
