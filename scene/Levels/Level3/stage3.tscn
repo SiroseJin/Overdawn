@@ -5,10 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/ui/scene_transition_animation.tscn" id="2_ctrbp"]
 [ext_resource type="AudioStream" uid="uid://028va8maeqdm" path="res://audio/Music/Caketown 1 by matthewpablo.mp3" id="3_s4f8y"]
 [ext_resource type="PackedScene" uid="uid://d0ib3gkf0fyen" path="res://scene/actors/npc/npc1.tscn" id="5_npc1"]
-[ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/actors/enemies/bat/bat_enemy.tscn" id="7_bat"]
+[ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/actors/enemies/adbot/adbot_enemy.tscn" id="7_bat"]
 [ext_resource type="PackedScene" uid="uid://cmovingplat01" path="res://scene/gimmicks/moving_platform/moving_platform.tscn" id="8_mp"]
 [ext_resource type="PackedScene" uid="uid://cfallingplat0" path="res://scene/gimmicks/falling_platform/falling_platform.tscn" id="9_fp"]
-[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/frog/frog_enemy.tscn" id="13_6pt3j"]
+[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/bandit/bandit_enemy.tscn" id="13_6pt3j"]
 [ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="14_8ol0d"]
 [ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="15_ha050"]
 [ext_resource type="PackedScene" uid="uid://2u6ko5ggbnkl" path="res://scene/system/industrial_parallax.tscn" id="bg_city"]
@@ -202,10 +202,10 @@ dialogue_timeline = "s3npc3timeline"
 position = Vector2(1258, -784)
 dialogue_timeline = "s3npc4timeline"
 
-[node name="Bat1" parent="." unique_id=1750918350 instance=ExtResource("7_bat")]
+[node name="Adbot1" parent="." unique_id=1750918350 instance=ExtResource("7_bat")]
 position = Vector2(507, 209)
 
-[node name="Bat2" parent="." unique_id=723628676 instance=ExtResource("7_bat")]
+[node name="Adbot2" parent="." unique_id=723628676 instance=ExtResource("7_bat")]
 position = Vector2(1584, -161)
 
 [node name="Player" parent="." unique_id=597947263 instance=ExtResource("2_5pl4s")]
@@ -271,7 +271,7 @@ locked_hint = "Locked. The key is at the top of the climb."
 [node name="RisingDebt" parent="." unique_id=822828934 instance=ExtResource("itm_debt")]
 position = Vector2(875, 900)
 
-[node name="Bat4" parent="." unique_id=925523153 instance=ExtResource("7_bat")]
+[node name="Adbot4" parent="." unique_id=925523153 instance=ExtResource("7_bat")]
 position = Vector2(829, -726)
 
 [node name="frog_enemy" parent="." unique_id=1556349936 instance=ExtResource("13_6pt3j")]

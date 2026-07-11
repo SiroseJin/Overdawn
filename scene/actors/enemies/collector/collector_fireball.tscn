@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://bx0a45nyavbv2"]
 
-[ext_resource type="Script" path="res://scene/actors/enemies/witch/witch_fireball.gd" id="1_sujlx"]
+[ext_resource type="Script" path="res://scene/actors/enemies/collector/collector_fireball.gd" id="1_sujlx"]
 [ext_resource type="Texture2D" uid="uid://bt6ddupsxd0cn" path="res://art/blue fireball/FB001.png" id="2_4k5v3"]
 [ext_resource type="Texture2D" uid="uid://c5vxya86iolqs" path="res://art/v1.1 dungeon crawler 16X16 pixel pack/effects (new)/explosion_anim_spritesheet.png" id="2_iff0p"]
 [ext_resource type="Texture2D" uid="uid://c1laq2xmcatw5" path="res://art/blue fireball/FB002.png" id="3_2sc3t"]

@@ -36,6 +36,7 @@ func _on_body_entered(body: Node2D) -> void:
 	_collect()
 
 func _collect() -> void:
+	Global.spawn_burst(global_position, Color(1, 0.9, 0.3), 16)   # golden key sparkle
 	set_deferred("monitoring", false)
 	if _float_tween:
 		_float_tween.kill()

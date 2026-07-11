@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://chn8rr31oxv0x"]
 
-[ext_resource type="Script" uid="uid://bonxfhx07kjod" path="res://scene/actors/enemies/witch/witch_enemy.gd" id="1_cgiv3"]
+[ext_resource type="Script" uid="uid://bonxfhx07kjod" path="res://scene/actors/enemies/collector/collector_enemy.gd" id="1_cgiv3"]
 [ext_resource type="Texture2D" uid="uid://b27h2w7juqdh2" path="res://art/craftpix-net-516149-city-man-pixel-art-character-sprite-sheets/City_men_2/Attack.png" id="2_wymkg"]
 [ext_resource type="Texture2D" uid="uid://dxeb2xvj41bcm" path="res://art/craftpix-net-516149-city-man-pixel-art-character-sprite-sheets/City_men_2/Walk.png" id="3_fnoie"]
 [ext_resource type="Texture2D" uid="uid://dfcspj47ggwxb" path="res://art/craftpix-net-516149-city-man-pixel-art-character-sprite-sheets/City_men_2/Dead.png" id="4_h070j"]
@@ -314,7 +314,7 @@ height = 28.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_detect"]
 radius = 259.03088
 
-[node name="WitchEnemy" type="CharacterBody2D" unique_id=687139458]
+[node name="CollectorEnemy" type="CharacterBody2D" unique_id=687139458]
 z_index = 1
 safe_margin = 2.0
 script = ExtResource("1_cgiv3")

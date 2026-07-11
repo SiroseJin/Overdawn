@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dsxx5fkcrw8f5"]
 
-[ext_resource type="Script" uid="uid://cfmhu4dph7vwa" path="res://scene/actors/enemies/frog/frog_enemy.gd" id="1_k55gl"]
+[ext_resource type="Script" uid="uid://cfmhu4dph7vwa" path="res://scene/actors/enemies/bandit/bandit_enemy.gd" id="1_k55gl"]
 [ext_resource type="Texture2D" uid="uid://c3qsrkkxsdfsk" path="res://art/craftpix-net-913026-free-gangster-pixel-character-sprite-sheets-pack/Gangsters_2/Attack_1.png" id="2_76hn7"]
 [ext_resource type="Texture2D" uid="uid://cermyyvwokosc" path="res://art/craftpix-net-913026-free-gangster-pixel-character-sprite-sheets-pack/Gangsters_2/Dead.png" id="3_wdigd"]
 [ext_resource type="Texture2D" uid="uid://7kvrth25wgnd" path="res://art/craftpix-net-913026-free-gangster-pixel-character-sprite-sheets-pack/Gangsters_2/Hurt.png" id="4_5sxlq"]

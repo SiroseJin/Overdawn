@@ -1,6 +1,6 @@
 extends Area2D
 
-class_name WitchFireball
+class_name CollectorFireball
 
 # ─── Witch Fireball ────────────────────────────────────────────────────────────
 # Projectile fired by the Witch enemy. Travels in a straight line toward the
@@ -36,6 +36,7 @@ func _on_area_entered(area: Area2D):
 	if area.get_parent() is Player:
 		area.get_parent().take_damage(DAMAGE_AMOUNT)
 		animated_sprite_2d.play("hit")
+		Global.spawn_fx("splosion", global_position, 0.55)   # fiery impact
 		queue_free()
 
 # Clean up when the fireball leaves the visible screen area

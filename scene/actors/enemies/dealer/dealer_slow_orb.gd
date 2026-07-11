@@ -1,6 +1,6 @@
 extends Area2D
 
-class_name NecroSlowOrb
+class_name DealerSlowOrb
 
 # ─── Necromancer Slow Orb ──────────────────────────────────────────────────────
 # Projectile fired by the Necromancer. On hitting the player it deals a small
@@ -36,7 +36,7 @@ func _on_area_entered(area: Area2D):
 	if area.get_parent() is Player:
 		area.get_parent().take_damage(DAMAGE_AMOUNT)
 		animated_sprite_2d.play("hit")
-		summon_necro_dot_field()
+		Global.spawn_fx("splosion", global_position, 0.55, Color(0.75, 0.5, 1.0))   # purple slow-orb splash
 		queue_free()
 
 # ───────────────────────────────────────────────────────────────────────────────

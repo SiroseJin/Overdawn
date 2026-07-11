@@ -9,8 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://boujfk62x2t1g" path="res://art/Sidescroller Shooter - Central City/Assets/Buildings.png" id="4_p0vne"]
 [ext_resource type="Texture2D" uid="uid://dug2a02qdeg2f" path="res://art/Sidescroller Shooter - Central City/Background/Background Props.png" id="5_xkbnk"]
 [ext_resource type="PackedScene" uid="uid://d0ib3gkf0fyen" path="res://scene/actors/npc/npc1.tscn" id="9_26d74"]
-[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/frog/frog_enemy.tscn" id="10_x525m"]
-[ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/actors/enemies/bat/bat_enemy.tscn" id="11_baten"]
+[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/bandit/bandit_enemy.tscn" id="10_x525m"]
+[ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/actors/enemies/adbot/adbot_enemy.tscn" id="11_baten"]
 [ext_resource type="PackedScene" uid="uid://cfuturecityparallax" path="res://scene/system/futuristic_city_parallax.tscn" id="bg_city"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="itm_door"]
@@ -714,7 +714,7 @@ position = Vector2(34, 667)
 [node name="Hendra" parent="." unique_id=1937046261 instance=ExtResource("9_26d74")]
 position = Vector2(152, 667)
 
-[node name="FrogEnemy" parent="." unique_id=309038319 instance=ExtResource("10_x525m")]
+[node name="BanditEnemy" parent="." unique_id=309038319 instance=ExtResource("10_x525m")]
 position = Vector2(1893, 621)
 
 [node name="Sari" parent="." unique_id=454119333 instance=ExtResource("9_26d74")]
@@ -729,13 +729,13 @@ dialogue_timeline = "npc3timeline"
 position = Vector2(3345, 630)
 dialogue_timeline = "npc4timeline"
 
-[node name="Bat2" parent="." unique_id=1689417740 instance=ExtResource("11_baten")]
+[node name="Adbot2" parent="." unique_id=1689417740 instance=ExtResource("11_baten")]
 position = Vector2(588, 620)
 
-[node name="Bat3" parent="." unique_id=2038592968 instance=ExtResource("11_baten")]
+[node name="Adbot3" parent="." unique_id=2038592968 instance=ExtResource("11_baten")]
 position = Vector2(2692, 520)
 
-[node name="Frog2" parent="." unique_id=1565383430 instance=ExtResource("10_x525m")]
+[node name="Bandit2" parent="." unique_id=1565383430 instance=ExtResource("10_x525m")]
 position = Vector2(2738, 625.00006)
 
 [node name="DeathZone" type="Area2D" parent="." unique_id=1390101666]

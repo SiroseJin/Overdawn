@@ -21,6 +21,7 @@ func _on_body_entered(body):
 	if Global.PlayerBody:
 		Global.PlayerBody.gain_score(SCORE_VALUE)
 		ProgressionManager.add_coins(COIN_VALUE)   # currency for the main game
+		Global.spawn_burst(global_position, Color(1, 0.85, 0.2), 14)   # gold pop
 		animation_player.play("pickup")
 		await get_tree().create_timer(0.4).timeout
 	queue_free()

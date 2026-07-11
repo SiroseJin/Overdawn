@@ -1,20 +1,29 @@
 extends CharacterBody2D
 
-class_name BatEnemy
+class_name BanditEnemy
 
-# ─── Bat Enemy ─────────────────────────────────────────────────────────────────
-# Fast but fragile flying enemy. Chases the player freely in both axes —
-# no gravity, bats fly directly toward their target.
+# ─── Frog Enemy ────────────────────────────────────────────────────────────────
+# Slow, tanky melee enemy that walks along the ground.
+# Affected by gravity — falls off ledges and lands on platforms.
+# Being a frog, it also has a periodic jump to reach higher platforms.
 # ───────────────────────────────────────────────────────────────────────────────
 
 # ─── Stats ─────────────────────────────────────────────────────────────────────
 
-var speed: float        = 35
-var health: float       = 20
-var health_max: float   = 20
-var damage_to_deal: int = 10
-var exp_value: int      = 5
-var score_value: int    = 10
+var speed: float        = 17
+var health: float       = 35
+var health_max: float   = 35
+var damage_to_deal: int = 20
+var exp_value: int      = 10
+var score_value: int    = 20
+
+# Gravity & Jump
+const GRAVITY: float        = 900.0
+const MAX_FALL_SPEED: float = 800.0
+const JUMP_FORCE: float     = -180.0  # Reduced — small hop, not a leap  # Frogs hop periodically to reach platforms
+
+var jump_timer: float = 0.0
+const JUMP_INTERVAL: float = 2.5  # Seconds between hops
 
 # ─── State ─────────────────────────────────────────────────────────────────────
 
@@ -22,14 +31,14 @@ var dir: Vector2            # Horizontal movement direction, used for sprite fli
 var dead: bool              = false
 var taking_damage: bool     = false
 var is_dealing_damage: bool = false
-var is_bat_chase: bool      = false
-var is_bat_roaming: bool    = false
+var is_frog_chase: bool     = false
+var is_frog_roaming: bool   = false
 
 # Detection zone / roaming
 var player_in_range: bool = false
 var spawn_position: Vector2
-var roam_target: Vector2
-var roam_range: float = 80.0
+var roam_direction: int = 1   # +1 = right, -1 = left
+var roam_range: float = 60.0
 
 var Player: CharacterBody2D
 var health_bar: ProgressBar
@@ -44,59 +53,70 @@ func _ready():
 	health_bar.value     = health
 
 	spawn_position   = position
-	roam_target      = position
-	$Timer.wait_time = 2.5
+	$Timer.wait_time = 3.0
 
 func _process(_delta):
 	move(_delta)
 	handle_animation()
 
 	# NOTE: "Amount" typo is intentional — matches the Global variable name
-	Global.batDamageAmount = damage_to_deal
-	Global.batDamageZone    = $BatDealDamageArea
+	Global.banditDamageAmount = damage_to_deal
+	Global.frogDamageZone    = $FrogDealDamageArea
 
 	if not Global.playerAlive:
-		is_bat_chase   = false
-		is_bat_roaming = false
+		is_frog_chase   = false
+		is_frog_roaming = false
 	elif Global.arcade_mode or (player_in_range and has_line_of_sight_to_player()):
-		is_bat_chase   = true
-		is_bat_roaming = false
+		is_frog_chase   = true
+		is_frog_roaming = false
 	else:
-		is_bat_chase   = false
-		is_bat_roaming = true
+		is_frog_chase   = false
+		is_frog_roaming = true
 
 # ───────────────────────────────────────────────────────────────────────────────
 # Movement
 # ───────────────────────────────────────────────────────────────────────────────
 
-func move(_delta):
+func move(delta):
 	if not dead and _knockback_active():
 		return
-	# No gravity — bats fly freely in all directions
+	# Always apply gravity
+	if not is_on_floor():
+		velocity.y = min(velocity.y + GRAVITY * delta, MAX_FALL_SPEED)
+	else:
+		velocity.y = 0
+
 	if dead:
-		velocity = Vector2.ZERO
+		velocity.x = 0
 		move_and_slide()
 		return
 
-	if not taking_damage and is_bat_chase and Global.playerAlive and is_instance_valid(Global.PlayerBody):
-		Player    = Global.PlayerBody
-		# Fly directly toward the player on both axes
-		velocity  = position.direction_to(Player.position) * speed
-		dir.x     = sign(velocity.x)
+	if not taking_damage and is_frog_chase and Global.playerAlive and is_instance_valid(Global.PlayerBody):
+		Player = Global.PlayerBody
+		var chase_dir = sign(Player.position.x - position.x)
+		velocity.x    = chase_dir * speed
+		dir.x         = chase_dir
 
-	elif taking_damage and is_bat_chase and is_instance_valid(Global.PlayerBody):
-		velocity = position.direction_to(Global.PlayerBody.position) * -80
+		# Periodic hop — lets the frog navigate up onto platforms
+		jump_timer += delta
+		if jump_timer >= JUMP_INTERVAL and is_on_floor():
+			velocity.y  = JUMP_FORCE
+			jump_timer  = 0.0
 
-	elif not taking_damage and is_bat_roaming:
-		# Drift toward the current roam target at 40% speed
-		if position.distance_to(roam_target) > 5.0:
-			velocity = position.direction_to(roam_target) * (speed * 0.4)
-			dir.x    = sign(velocity.x)
-		else:
-			velocity = Vector2.ZERO
+	elif taking_damage and is_frog_chase and is_instance_valid(Global.PlayerBody):
+		# Recoil away from the player (resolve it here — the chase branch above may
+		# never have run to assign Player, e.g. if hit the instant it spawned).
+		velocity.x = sign(position.x - Global.PlayerBody.position.x) * 50
+
+	elif not taking_damage and is_frog_roaming:
+		# Walk back and forth within roam_range of spawn position
+		if abs(position.x - spawn_position.x) >= roam_range:
+			roam_direction *= -1
+		velocity.x = roam_direction * speed * 0.4
+		dir.x      = roam_direction
 
 	else:
-		velocity = Vector2.ZERO
+		velocity.x = 0
 
 	move_and_slide()
 
@@ -108,7 +128,7 @@ func handle_animation():
 	var sprite = $AnimatedSprite2D
 
 	if not dead and not taking_damage and not is_dealing_damage:
-		sprite.play("idle")
+		sprite.play("walk")
 		if dir.x == -1:
 			sprite.flip_h = true
 		elif dir.x == 1:
@@ -123,9 +143,9 @@ func handle_animation():
 		taking_damage = false
 
 	elif dead:
-		$CollisionShape2D.disabled                   = true
-		$BatDealDamageArea/CollisionShape2D.disabled = true
-		$HitBox/CollisionShape2D.disabled            = true
+		$CollisionShape2D.disabled                    = true
+		$FrogDealDamageArea/CollisionShape2D.disabled = true
+		$HitBox/CollisionShape2D.disabled             = true
 		sprite.play("death")
 		await get_tree().create_timer(0.8).timeout
 		handle_death()
@@ -200,12 +220,8 @@ func has_line_of_sight_to_player() -> bool:
 	var result = space_state.intersect_ray(query)
 	return result.is_empty() or result.get("collider") == Global.PlayerBody
 
-func _on_timer_timeout():
-	# Pick a new random roam target within roam_range of the spawn position
-	roam_target = spawn_position + Vector2(
-		randf_range(-roam_range, roam_range),
-		randf_range(-roam_range, roam_range)
-	)
+func _on_direction_timer_timeout():
+	roam_direction *= -1
 
 func _on_detection_zone_body_entered(body: Node2D):
 	if body == Global.PlayerBody:
@@ -215,14 +231,14 @@ func _on_detection_zone_body_exited(body: Node2D):
 	if body == Global.PlayerBody:
 		player_in_range = false
 
-func _on_bat_hit_box_area_entered(area: Area2D):
+func _on_frog_hit_box_area_entered(area: Area2D):
 	if area == Global.playerDamageZone:
 		take_damage(Global.playerDamageAmount)
 
-func _on_bat_deal_damage_area_area_entered(area: Area2D):
+func _on_frog_deal_damage_area_area_entered(area: Area2D):
 	if area == Global.playerHitbox:
 		is_dealing_damage = true
 
-func _on_bat_deal_damage_area_area_exited(area: Area2D):
+func _on_frog_deal_damage_area_area_exited(area: Area2D):
 	if area == Global.playerHitbox:
 		is_dealing_damage = false

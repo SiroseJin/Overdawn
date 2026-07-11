@@ -18,10 +18,10 @@ extends Control
 @onready var _back_btn        = $ColorRect/MarginContainer/VBoxContainer/Back
 
 const ENEMY_SCENES := {
-	"Bat":   preload("res://scene/actors/enemies/bat/bat_enemy.tscn"),
-	"Frog":  preload("res://scene/actors/enemies/frog/frog_enemy.tscn"),
-	"Witch": preload("res://scene/actors/enemies/witch/witch_enemy.tscn"),
-	"Necro": preload("res://scene/actors/enemies/necromancer/necromancer_enemy.tscn"),
+	"Bat":   preload("res://scene/actors/enemies/adbot/adbot_enemy.tscn"),
+	"Frog":  preload("res://scene/actors/enemies/bandit/bandit_enemy.tscn"),
+	"Witch": preload("res://scene/actors/enemies/collector/collector_enemy.tscn"),
+	"Necro": preload("res://scene/actors/enemies/dealer/dealer_enemy.tscn"),
 	"Boss":  preload("res://scene/actors/enemies/finalboss/finalboss_enemy.tscn"),
 }
 
@@ -73,6 +73,11 @@ func _build_tools(has_player: bool) -> void:
 	toggles.add_child(_check("God Mode", _get_flag("god_mode"), _on_god_toggled, not has_player))
 	toggles.add_child(_check("Inf Arrows", _get_flag("infinite_arrows"), _on_inf_arrows_toggled, not has_player))
 	_vbox.add_child(toggles)
+
+	var toggles2 := _row()
+	toggles2.add_child(_check("Noclip", _get_flag("noclip"), _on_noclip_toggled, not has_player))
+	toggles2.add_child(_check("Fly (up/down)", _get_flag("fly_mode"), _on_fly_toggled, not has_player))
+	_vbox.add_child(toggles2)
 
 	# Quick actions
 	var r1 := _row()
@@ -186,6 +191,14 @@ func _on_inf_arrows_toggled(on: bool) -> void:
 	if is_instance_valid(Global.PlayerBody):
 		Global.PlayerBody.infinite_arrows = on
 
+func _on_noclip_toggled(on: bool) -> void:
+	if is_instance_valid(Global.PlayerBody):
+		Global.PlayerBody.noclip = on
+
+func _on_fly_toggled(on: bool) -> void:
+	if is_instance_valid(Global.PlayerBody):
+		Global.PlayerBody.fly_mode = on
+
 func _on_refill_hp() -> void:
 	var p = Global.PlayerBody
 	if is_instance_valid(p):
@@ -211,7 +224,7 @@ func _find_enemies(node: Node) -> Array:
 	if node == null:
 		return out
 	for c in node.get_children():
-		if c is BatEnemy or c is FrogEnemy or c is WitchEnemy or c is NecroEnemy or c is FinalBossEnemy:
+		if c is AdbotEnemy or c is BanditEnemy or c is CollectorEnemy or c is DealerEnemy or c is FinalBossEnemy:
 			out.append(c)
 		out.append_array(_find_enemies(c))
 	return out

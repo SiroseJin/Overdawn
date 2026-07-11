@@ -30,12 +30,12 @@ const BULLET := preload("res://scene/actors/enemies/finalboss/boss_bullet.tscn")
 const SERVER := preload("res://scene/actors/enemies/finalboss/boss_server.tscn")
 # Adds scale with how hurt the boss is: weak fodder early, tougher foes as HP drops.
 const WEAK_ADDS := [
-	preload("res://scene/actors/enemies/bat/bat_enemy.tscn"),
-	preload("res://scene/actors/enemies/frog/frog_enemy.tscn"),
+	preload("res://scene/actors/enemies/adbot/adbot_enemy.tscn"),
+	preload("res://scene/actors/enemies/bandit/bandit_enemy.tscn"),
 ]
 const TOUGH_ADDS := [
-	preload("res://scene/actors/enemies/witch/witch_enemy.tscn"),
-	preload("res://scene/actors/enemies/necromancer/necromancer_enemy.tscn"),
+	preload("res://scene/actors/enemies/collector/collector_enemy.tscn"),
+	preload("res://scene/actors/enemies/dealer/dealer_enemy.tscn"),
 ]
 
 # Pickup drops. GOOD are rewards; the shield-break gamble can also roll a fake_coin.

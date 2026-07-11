@@ -1,48 +1,51 @@
 extends CharacterBody2D
 
-class_name WitchEnemy
+class_name DealerEnemy
 
-# ─── Witch Enemy ───────────────────────────────────────────────────────────────
-# Ranged mini-boss with a floaty hover movement. She is affected by a very weak
-# gravity and bobs up and down slowly, giving the impression of levitation.
-# Fires fireballs at the player after a charge wind-up.
+# ─── Necromancer Enemy ─────────────────────────────────────────────────────────
+# The heaviest enemy. Walks along the ground and has two special abilities:
+#   • Charge + Orb: winds up and fires a slow orb at the player.
+#   • Summon: stops and spawns a pack of bats on a 15-second cooldown.
+# Affected by gravity — falls and lands on platforms.
 # ───────────────────────────────────────────────────────────────────────────────
 
 # ─── Stats ─────────────────────────────────────────────────────────────────────
 
-var speed: float        = 40
-var health: float       = 80
-var health_max: float   = 80
-var damage_to_deal: int = 20
-var exp_value: int      = 20
-var score_value: int    = 40
+var speed: float        = 50
+var health: float       = 200
+var health_max: float   = 200
+var damage_to_deal: int = 30
+var exp_value: int      = 80
+var score_value: int    = 200
 
-# Floaty movement — very weak gravity so she drifts rather than falls
-const GRAVITY: float        = 120.0   # Much lower than normal (900) for a floaty feel
-const MAX_FALL_SPEED: float = 20.0    # Very low terminal velocity — she barely sinks
-const HOVER_FORCE: float    = -50.0   # Upward nudge applied periodically to maintain hover
-const HOVER_INTERVAL: float = 2    # Seconds between hover nudges
-
-var hover_timer: float = 0.0
+# Gravity
+const GRAVITY: float        = 900.0
+const MAX_FALL_SPEED: float = 800.0
 
 # ─── State ─────────────────────────────────────────────────────────────────────
 
-var dir: Vector2            # Horizontal movement direction
+var dir: Vector2            # Horizontal movement direction, used for sprite flipping
 var dead: bool              = false
 var taking_damage: bool     = false
 var is_dealing_damage: bool = false
-var is_witch_chase: bool    = false
-var is_witch_roaming: bool  = false
+var is_necro_chase: bool    = false
+var is_necro_roaming: bool  = false
 
 # Detection zone / roaming
 var player_in_range: bool = false
 var spawn_position: Vector2
-var roam_target_x: float
-var roam_range: float = 80.0
+var roam_direction: int = 1   # +1 = right, -1 = left
+var roam_range: float = 50.0
 
-# Charge state: witch slows down then fires after the timer elapses
+# Charge ability (leads into the slow-orb projectile)
 var charging: bool = false
 var charging_timer: Timer
+
+# Summon ability (spawns bats)
+var summoning: bool          = false
+var can_summon: bool         = true
+var summon_timer: Timer
+var summon_cooldown_timer: Timer
 
 var Player: CharacterBody2D
 var health_bar: ProgressBar
@@ -52,49 +55,67 @@ var health_bar: ProgressBar
 # ───────────────────────────────────────────────────────────────────────────────
 
 func _ready():
-	is_dealing_damage = false
+	is_necro_chase    = true
 	taking_damage     = false
 	charging          = false
+	is_dealing_damage = false
+	summoning         = false
 
+	# Charge timer — fires the orb when it expires
 	charging_timer           = Timer.new()
-	charging_timer.wait_time = 5.0
+	charging_timer.wait_time = 3.0
 	charging_timer.one_shot  = true
 	charging_timer.connect("timeout", Callable(self, "_on_charging_timeout"))
 	add_child(charging_timer)
+
+	# Summon timer — actually spawns the bats when it expires
+	summon_timer           = Timer.new()
+	summon_timer.wait_time = 3.0
+	summon_timer.one_shot  = true
+	summon_timer.connect("timeout", Callable(self, "_on_summon_timeout"))
+	add_child(summon_timer)
+
+	# Cooldown before the necromancer can summon again
+	summon_cooldown_timer           = Timer.new()
+	summon_cooldown_timer.wait_time = 15.0
+	summon_cooldown_timer.one_shot  = true
+	summon_cooldown_timer.connect("timeout", Callable(self, "_on_summon_cooldown_timeout"))
+	add_child(summon_cooldown_timer)
 
 	health_bar           = $HealthBar
 	health_bar.max_value = health_max
 	health_bar.value     = health
 
 	spawn_position   = position
-	roam_target_x    = position.x
-	$Timer.wait_time = 2.5
+	$Timer.wait_time = 4.0
 
 func _process(_delta):
 	move(_delta)
 	handle_animation()
 
 	# NOTE: "Amount" typo is intentional — matches the Global variable name
-	Global.witchDamageAmount = damage_to_deal
-	Global.witchDamageZone    = $WitchDealDamageArea
+	Global.dealerDamageAmount = damage_to_deal
+	Global.necroDamageZone    = $NecroDealDamageArea
 
 	if not Global.playerAlive:
-		is_witch_chase   = false
-		is_witch_roaming = false
+		is_necro_chase   = false
+		is_necro_roaming = false
 	elif Global.arcade_mode or (player_in_range and has_line_of_sight_to_player()):
-		is_witch_chase   = true
-		is_witch_roaming = false
+		is_necro_chase   = true
+		is_necro_roaming = false
 		Player = Global.PlayerBody
 
-		var distance_to_player = position.distance_to(Player.position)
-		if distance_to_player >= 140:
+		var dist = position.distance_to(Player.position)
+		if dist >= 80 and can_summon:
+			enter_summon_state()
+		elif dist >= 120:
 			charge()
 		else:
 			charging = false
 			charging_timer.stop()
 	else:
-		is_witch_chase   = false
-		is_witch_roaming = true
+		is_necro_chase   = false
+		is_necro_roaming = true
 
 # ───────────────────────────────────────────────────────────────────────────────
 # Movement
@@ -103,42 +124,38 @@ func _process(_delta):
 func move(delta):
 	if not dead and _knockback_active():
 		return
+	# Always apply gravity
+	if not is_on_floor():
+		velocity.y = min(velocity.y + GRAVITY * delta, MAX_FALL_SPEED)
+	else:
+		velocity.y = 0
+
 	if dead:
-		# On death let her fall normally (use standard gravity)
-		velocity.y = min(velocity.y + 900.0 * delta, 800.0)
 		velocity.x = 0
 		move_and_slide()
 		return
 
-	# ── Floaty vertical movement ──────────────────────────────────────────────
-	# Apply weak gravity so she gently sinks between hover nudges
-	velocity.y = min(velocity.y + GRAVITY * delta, MAX_FALL_SPEED)
+	if summoning:
+		# Stand completely still while summoning
+		velocity.x = 0
 
-	# Periodic upward nudge creates the bobbing hover effect
-	hover_timer += delta
-	if hover_timer >= HOVER_INTERVAL:
-		velocity.y  = HOVER_FORCE
-		hover_timer = 0.0
-
-	# ── Horizontal chasing ────────────────────────────────────────────────────
-	if not taking_damage and is_witch_chase and Global.playerAlive and is_instance_valid(Global.PlayerBody):
+	elif not taking_damage and is_necro_chase and Global.playerAlive and is_instance_valid(Global.PlayerBody):
 		Player = Global.PlayerBody
-		var move_speed = speed / 2.0 if charging else speed
+		# Move at 1/5 speed while charging (winding up the orb shot)
+		var move_speed = speed / 5.0 if charging else speed
 		var chase_dir  = sign(Player.position.x - position.x)
 		velocity.x     = chase_dir * move_speed
 		dir.x          = chase_dir
 
-	elif taking_damage and is_witch_chase and is_instance_valid(Global.PlayerBody):
-		velocity.x = sign(position.x - Global.PlayerBody.position.x) * 60
+	elif taking_damage and is_necro_chase and is_instance_valid(Global.PlayerBody):
+		velocity.x = sign(position.x - Global.PlayerBody.position.x) * 30
 
-	elif not taking_damage and is_witch_roaming:
-		# Drift horizontally toward the current roam target at 30% speed
-		var dist = roam_target_x - position.x
-		if abs(dist) > 5.0:
-			velocity.x = sign(dist) * speed * 0.3
-			dir.x      = sign(velocity.x)
-		else:
-			velocity.x = 0
+	elif not taking_damage and is_necro_roaming:
+		# Slow patrol back and forth within roam_range of spawn position
+		if abs(position.x - spawn_position.x) >= roam_range:
+			roam_direction *= -1
+		velocity.x = roam_direction * speed * 0.2
+		dir.x      = roam_direction
 
 	else:
 		velocity.x = 0
@@ -151,17 +168,22 @@ func move(delta):
 
 func handle_animation():
 	var sprite = $AnimatedSprite2D
+	var fvx    = $FVX
 
 	if not dead and not taking_damage and not is_dealing_damage:
-		if charging:
+		if summoning:
+			sprite.play("summon")
+			fvx.play("summoning")
+		elif charging:
 			sprite.play("charge")
-		elif is_witch_chase:
+		elif is_necro_chase:
 			sprite.play("run")
-		else:
+		elif is_necro_roaming:
 			sprite.play("idle")
 
-		var facing_left = (is_witch_chase and Player and Player.position.x < position.x) \
-			or (is_witch_roaming and dir.x == -1)
+		# Flip sprite and reposition projectile origin to face movement direction
+		var facing_left = (is_necro_chase and Player and Player.position.x < position.x) \
+			or (is_necro_roaming and dir.x == -1)
 		if facing_left:
 			sprite.flip_h                = true
 			$ProjectileOutput.position.x = -12
@@ -179,21 +201,22 @@ func handle_animation():
 
 	elif dead:
 		$CollisionShape2D.disabled                     = true
-		$WitchDealDamageArea/CollisionShape2D.disabled = true
+		$NecroDealDamageArea/CollisionShape2D.disabled = true
 		$HitBox/CollisionShape2D.disabled              = true
 		charging         = false
-		is_witch_roaming = false
+		is_necro_roaming = false
 		sprite.play("death")
-		await get_tree().create_timer(2.7).timeout
+		await get_tree().create_timer(3.5).timeout
 		handle_death()
 
 # ───────────────────────────────────────────────────────────────────────────────
-# Combat
+# Charge Ability (slow orb)
 # ───────────────────────────────────────────────────────────────────────────────
 
 func charge():
 	if not charging and not dead:
 		charging = true
+		Global.spawn_fx("green", global_position, 0.3)   # gathering energy blast — telegraph
 		charging_timer.start()
 	elif dead:
 		charging = false
@@ -208,6 +231,7 @@ func _on_charging_timeout():
 	is_dealing_damage = false
 	charging          = false
 
+# Spawn a slow orb aimed at the player
 func release_fireball():
 	if dead:
 		return
@@ -216,11 +240,49 @@ func release_fireball():
 	var target = Player if is_instance_valid(Player) else Global.PlayerBody
 	if not is_instance_valid(target):
 		return
-	var fireball_scene = preload("res://scene/actors/enemies/witch/witch_fireball.tscn")
-	var fireball       = fireball_scene.instantiate()
-	get_parent().add_child(fireball)
-	fireball.global_position = $ProjectileOutput.global_position
-	fireball.direction = (target.global_position - $ProjectileOutput.global_position).normalized()
+	var orb_scene = preload("res://scene/actors/enemies/dealer/dealer_slow_orb.tscn")
+	var orb       = orb_scene.instantiate()
+	get_parent().add_child(orb)
+	orb.global_position = $ProjectileOutput.global_position
+	orb.direction = (target.global_position - $ProjectileOutput.global_position).normalized()
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Summon Ability (bat pack)
+# ───────────────────────────────────────────────────────────────────────────────
+
+func enter_summon_state():
+	if can_summon and not summoning:
+		summoning  = true
+		can_summon = false
+		summon_timer.start()
+		summon_cooldown_timer.start()
+
+func _on_summon_timeout():
+	if not dead:
+		summon_bats()
+	summoning = false
+
+# Spawn 3–6 bats in a tight cluster around the necromancer
+func summon_bats():
+	var fvx       = $FVX
+	var bat_scene = preload("res://scene/actors/enemies/adbot/adbot_enemy.tscn")
+	if not bat_scene:
+		return
+
+	var num_bats = randi_range(3, 6)
+	for i in range(num_bats):
+		var bat = bat_scene.instantiate()
+		fvx.play("summoned")
+		get_parent().add_child(bat)
+		var offset = Vector2(randf_range(-20, 20), randf_range(-20, 20))
+		bat.global_position = position + offset
+
+func _on_summon_cooldown_timeout():
+	can_summon = true
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Combat
+# ───────────────────────────────────────────────────────────────────────────────
 
 func take_damage(amount: float):
 	health        -= amount
@@ -229,6 +291,7 @@ func take_damage(amount: float):
 		health = 0
 		dead   = true
 		charging_timer.stop()
+		summon_timer.stop()
 	health_bar.value = health
 	if not dead:
 		_hit_knockback()
@@ -290,8 +353,7 @@ func has_line_of_sight_to_player() -> bool:
 	return result.is_empty() or result.get("collider") == Global.PlayerBody
 
 func _on_timer_timeout():
-	# Pick a new random horizontal roam target within roam_range of spawn position
-	roam_target_x = spawn_position.x + randf_range(-roam_range, roam_range)
+	roam_direction *= -1
 
 func _on_detection_zone_body_entered(body: Node2D):
 	if body == Global.PlayerBody:
@@ -305,10 +367,20 @@ func _on_hit_box_area_entered(area: Area2D):
 	if area == Global.playerDamageZone:
 		take_damage(Global.playerDamageAmount)
 
-func _on_witch_deal_damage_area_area_entered(area: Area2D):
+func _on_necro_deal_damage_area_area_entered(area: Area2D):
 	if area == Global.playerHitbox:
 		is_dealing_damage = true
 
-func _on_witch_deal_damage_area_area_exited(area: Area2D):
+func _on_necro_deal_damage_area_area_exited(area: Area2D):
 	if area == Global.playerHitbox:
 		is_dealing_damage = false
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Utilities
+# ───────────────────────────────────────────────────────────────────────────────
+
+func randi_range(min_val: int, max_val: int) -> int:
+	return randi() % (max_val - min_val + 1) + min_val
+
+func randf_range(min_val: float, max_val: float) -> float:
+	return randf() * (max_val - min_val) + min_val

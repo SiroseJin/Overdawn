@@ -5,9 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/ui/scene_transition_animation.tscn" id="3_trans"]
 [ext_resource type="AudioStream" uid="uid://028va8maeqdm" path="res://audio/Music/Caketown 1 by matthewpablo.mp3" id="4_bgm"]
 [ext_resource type="PackedScene" uid="uid://d0ib3gkf0fyen" path="res://scene/actors/npc/npc1.tscn" id="5_npc"]
-[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/frog/frog_enemy.tscn" id="6_frog"]
-[ext_resource type="PackedScene" uid="uid://chn8rr31oxv0x" path="res://scene/actors/enemies/witch/witch_enemy.tscn" id="8_witch"]
-[ext_resource type="PackedScene" uid="uid://jr1opep0t5q3" path="res://scene/actors/enemies/necromancer/necromancer_enemy.tscn" id="9_necro"]
+[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/bandit/bandit_enemy.tscn" id="6_frog"]
+[ext_resource type="PackedScene" uid="uid://chn8rr31oxv0x" path="res://scene/actors/enemies/collector/collector_enemy.tscn" id="8_witch"]
+[ext_resource type="PackedScene" uid="uid://jr1opep0t5q3" path="res://scene/actors/enemies/dealer/dealer_enemy.tscn" id="9_necro"]
 [ext_resource type="PackedScene" uid="uid://cmovingplat01" path="res://scene/gimmicks/moving_platform/moving_platform.tscn" id="10_mp"]
 [ext_resource type="PackedScene" uid="uid://dumfvyytw8b8n" path="res://scene/system/casino_parallax.tscn" id="bg_city"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
@@ -93,16 +93,16 @@ dialogue_timeline = "s4npc3timeline"
 position = Vector2(4499, 613)
 dialogue_timeline = "s4npc4timeline"
 
-[node name="Frog1" parent="." unique_id=1623953216 instance=ExtResource("6_frog")]
+[node name="Bandit1" parent="." unique_id=1623953216 instance=ExtResource("6_frog")]
 position = Vector2(571, 549)
 
-[node name="Frog2" parent="." unique_id=1426389987 instance=ExtResource("6_frog")]
+[node name="Bandit2" parent="." unique_id=1426389987 instance=ExtResource("6_frog")]
 position = Vector2(2540, 628)
 
-[node name="Witch1" parent="." unique_id=875828768 instance=ExtResource("8_witch")]
+[node name="Collector1" parent="." unique_id=875828768 instance=ExtResource("8_witch")]
 position = Vector2(2864, 506)
 
-[node name="Necromancer1" parent="." unique_id=706318264 instance=ExtResource("9_necro")]
+[node name="Dealer1" parent="." unique_id=706318264 instance=ExtResource("9_necro")]
 position = Vector2(4004, 508)
 
 [node name="MovingPlatform1" parent="." unique_id=1204431063 instance=ExtResource("10_mp")]
@@ -129,7 +129,7 @@ position = Vector2(312, 0)
 [node name="Player" parent="." unique_id=145377820 instance=ExtResource("2_player")]
 position = Vector2(16, 547)
 
-[node name="Witch2" parent="." unique_id=687139458 instance=ExtResource("8_witch")]
+[node name="Collector2" parent="." unique_id=687139458 instance=ExtResource("8_witch")]
 position = Vector2(1059, 626)
 
 [node name="Coin1" parent="." unique_id=1851696348 instance=ExtResource("itm_coin")]

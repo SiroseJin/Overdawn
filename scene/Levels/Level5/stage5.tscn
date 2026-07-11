@@ -5,10 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/ui/scene_transition_animation.tscn" id="3_trans"]
 [ext_resource type="AudioStream" uid="uid://028va8maeqdm" path="res://audio/Music/Caketown 1 by matthewpablo.mp3" id="4_bgm"]
 [ext_resource type="PackedScene" uid="uid://d0ib3gkf0fyen" path="res://scene/actors/npc/npc1.tscn" id="5_npc"]
-[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/frog/frog_enemy.tscn" id="6_frog"]
-[ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/actors/enemies/bat/bat_enemy.tscn" id="7_bat"]
-[ext_resource type="PackedScene" uid="uid://chn8rr31oxv0x" path="res://scene/actors/enemies/witch/witch_enemy.tscn" id="8_witch"]
-[ext_resource type="PackedScene" uid="uid://jr1opep0t5q3" path="res://scene/actors/enemies/necromancer/necromancer_enemy.tscn" id="9_necro"]
+[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/bandit/bandit_enemy.tscn" id="6_frog"]
+[ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/actors/enemies/adbot/adbot_enemy.tscn" id="7_bat"]
+[ext_resource type="PackedScene" uid="uid://chn8rr31oxv0x" path="res://scene/actors/enemies/collector/collector_enemy.tscn" id="8_witch"]
+[ext_resource type="PackedScene" uid="uid://jr1opep0t5q3" path="res://scene/actors/enemies/dealer/dealer_enemy.tscn" id="9_necro"]
 [ext_resource type="PackedScene" uid="uid://cmovingplat01" path="res://scene/gimmicks/moving_platform/moving_platform.tscn" id="10_mp"]
 [ext_resource type="PackedScene" uid="uid://cfallingplat0" path="res://scene/gimmicks/falling_platform/falling_platform.tscn" id="11_fp"]
 [ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="12_spd"]
@@ -134,25 +134,25 @@ dialogue_timeline = "s5npc1timeline"
 [node name="Wira" parent="." unique_id=134998758 instance=ExtResource("5_npc")]
 position = Vector2(4678, 447)
 
-[node name="Bat1" parent="." unique_id=394333644 instance=ExtResource("7_bat")]
+[node name="Adbot1" parent="." unique_id=394333644 instance=ExtResource("7_bat")]
 position = Vector2(450, 580)
 
-[node name="Frog1" parent="." unique_id=354254762 instance=ExtResource("6_frog")]
+[node name="Bandit1" parent="." unique_id=354254762 instance=ExtResource("6_frog")]
 position = Vector2(1000, 700)
 
-[node name="Witch1" parent="." unique_id=1028765526 instance=ExtResource("8_witch")]
+[node name="Collector1" parent="." unique_id=1028765526 instance=ExtResource("8_witch")]
 position = Vector2(3665, -101)
 
-[node name="Necromancer1" parent="." unique_id=867063269 instance=ExtResource("9_necro")]
+[node name="Dealer1" parent="." unique_id=867063269 instance=ExtResource("9_necro")]
 position = Vector2(3442, -109)
 
-[node name="Witch2" parent="." unique_id=399106065 instance=ExtResource("8_witch")]
+[node name="Collector2" parent="." unique_id=399106065 instance=ExtResource("8_witch")]
 position = Vector2(3574, -106)
 
-[node name="Frog2" parent="." unique_id=419607088 instance=ExtResource("6_frog")]
+[node name="Bandit2" parent="." unique_id=419607088 instance=ExtResource("6_frog")]
 position = Vector2(3467, 260)
 
-[node name="Bat3" parent="." unique_id=1820312505 instance=ExtResource("7_bat")]
+[node name="Adbot3" parent="." unique_id=1820312505 instance=ExtResource("7_bat")]
 position = Vector2(3923, 350)
 
 [node name="SpeedPickup" parent="." unique_id=1629406918 instance=ExtResource("12_spd")]
@@ -172,19 +172,19 @@ required_key = "stage5_key"
 [node name="Player" parent="." unique_id=893853448 instance=ExtResource("2_player")]
 position = Vector2(15, 664)
 
-[node name="Bat4" parent="." unique_id=925523153 instance=ExtResource("7_bat")]
+[node name="Adbot4" parent="." unique_id=925523153 instance=ExtResource("7_bat")]
 position = Vector2(2214, 230)
 
-[node name="Bat5" parent="." unique_id=2040935625 instance=ExtResource("7_bat")]
+[node name="Adbot5" parent="." unique_id=2040935625 instance=ExtResource("7_bat")]
 position = Vector2(2549, 256)
 
-[node name="Bat6" parent="." unique_id=1704993805 instance=ExtResource("7_bat")]
+[node name="Adbot6" parent="." unique_id=1704993805 instance=ExtResource("7_bat")]
 position = Vector2(2862, 132)
 
-[node name="Bat7" parent="." unique_id=830869594 instance=ExtResource("7_bat")]
+[node name="Adbot7" parent="." unique_id=830869594 instance=ExtResource("7_bat")]
 position = Vector2(1527, 485)
 
-[node name="Bat8" parent="." unique_id=203399589 instance=ExtResource("7_bat")]
+[node name="Adbot8" parent="." unique_id=203399589 instance=ExtResource("7_bat")]
 position = Vector2(1838, 303)
 
 [node name="Lift2" parent="." unique_id=1581570788 instance=ExtResource("10_mp")]

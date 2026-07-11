@@ -17,10 +17,10 @@ extends Node2D
 # ─── Enemy / Item Scenes ───────────────────────────────────────────────────────
 
 var enemy_scenes: Array = [
-	preload("res://scene/actors/enemies/bat/bat_enemy.tscn"),
-	preload("res://scene/actors/enemies/frog/frog_enemy.tscn"),
-	preload("res://scene/actors/enemies/witch/witch_enemy.tscn"),
-	preload("res://scene/actors/enemies/necromancer/necromancer_enemy.tscn"),
+	preload("res://scene/actors/enemies/adbot/adbot_enemy.tscn"),
+	preload("res://scene/actors/enemies/bandit/bandit_enemy.tscn"),
+	preload("res://scene/actors/enemies/collector/collector_enemy.tscn"),
+	preload("res://scene/actors/enemies/dealer/dealer_enemy.tscn"),
 ]
 
 var item_scenes: Array = [

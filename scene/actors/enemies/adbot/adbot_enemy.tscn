@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dyuawibkpcwfh"]
 
-[ext_resource type="Script" uid="uid://b4yhgyhcr8ygo" path="res://scene/actors/enemies/bat/bat_enemy.gd" id="1_dm5nb"]
+[ext_resource type="Script" uid="uid://b4yhgyhcr8ygo" path="res://scene/actors/enemies/adbot/adbot_enemy.gd" id="1_dm5nb"]
 [ext_resource type="Texture2D" uid="uid://id46v33cw3ne" path="res://art/free-drones-pack-pixel-art/1 Drones/1/Death.png" id="2_dequj"]
 [ext_resource type="Texture2D" uid="uid://cg8p2h2q7vyop" path="res://art/free-drones-pack-pixel-art/1 Drones/1/Scan.png" id="3_7wkd5"]
 [ext_resource type="Texture2D" uid="uid://i3yudrhxcu7h" path="res://art/free-drones-pack-pixel-art/1 Drones/1/Idle.png" id="4_odgys"]
@@ -201,7 +201,7 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_u4orr"]
 radius = 176.07101
 
-[node name="BatEnemy" type="CharacterBody2D" unique_id=925523153]
+[node name="AdbotEnemy" type="CharacterBody2D" unique_id=925523153]
 z_index = 1
 safe_margin = 2.0
 script = ExtResource("1_dm5nb")

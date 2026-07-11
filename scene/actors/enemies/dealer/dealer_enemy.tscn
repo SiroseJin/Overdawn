@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://jr1opep0t5q3"]
 
-[ext_resource type="Script" uid="uid://b1vf7aifocm0l" path="res://scene/actors/enemies/necromancer/necromancer_enemy.gd" id="1_r0fb5"]
+[ext_resource type="Script" uid="uid://b1vf7aifocm0l" path="res://scene/actors/enemies/dealer/dealer_enemy.gd" id="1_r0fb5"]
 [ext_resource type="Texture2D" uid="uid://dvix1b71ls07w" path="res://art/EVil Wizard 2/Sprites/Idle.png" id="2_1edem"]
 [ext_resource type="Texture2D" uid="uid://bfmbsucuu1dx6" path="res://art/EVil Wizard 2/Sprites/Attack1.png" id="2_pkuah"]
 [ext_resource type="Texture2D" uid="uid://bjfc0io80dig" path="res://art/EVil Wizard 2/Sprites/Attack2.png" id="3_lbiw6"]

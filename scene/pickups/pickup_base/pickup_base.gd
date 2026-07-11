@@ -60,6 +60,7 @@ func _on_body_entered(body: Node2D) -> void:
 	_collect()
 
 func _collect() -> void:
+	Global.spawn_burst(global_position, visual.color, 16)
 	set_deferred("monitoring", false)
 	if _float_tween:
 		_float_tween.kill()

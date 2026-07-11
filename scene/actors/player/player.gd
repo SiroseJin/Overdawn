@@ -133,6 +133,12 @@ var conversation_safe: bool = false
 # ─── Debug toggles (set from the Debug panel) ───────────────────────────────────
 var god_mode: bool       = false   # ignore all incoming damage
 var infinite_arrows: bool = false  # never run out of arrows
+var noclip: bool         = false   # debug: pass through terrain
+var fly_mode: bool       = false   # debug: free vertical flight (no gravity)
+const FLY_SPEED: float   = 220.0
+
+func _flying() -> bool:
+	return fly_mode or noclip
 
 # Coin counter shown on the HUD.
 var _coin_label: Label
@@ -150,6 +156,14 @@ var attack_radius: float  = 12
 var can_take_damage: bool
 var score: int            = 0
 var is_game_paused: bool
+var _last_safe_pos: Vector2   # last non-NaN position, for the moving-platform NaN guard
+
+# Particle trails (added in _ready). Toggled on during a dash / speed boost.
+const _TRAIL := preload("res://scene/system/vfx/particle_trail.tscn")
+const _FIREWALL_FX := preload("res://scene/system/vfx/firewall_shield.tscn")
+var _dash_fx: CPUParticles2D
+var _speed_fx: CPUParticles2D
+var _firewall_fx: Sprite2D   # looping shield shown while the firewall is up
 
 # ───────────────────────────────────────────────────────────────────────────────
 # Lifecycle
@@ -186,6 +200,7 @@ func _ready():
 
 	_setup_toast()
 	_setup_coin_hud()
+	_setup_fx()
 	ProgressionManager.skill_unlocked.connect(_on_skill_unlocked)
 	ProgressionManager.coins_changed.connect(_on_coins_changed)
 	refresh_stats_from_skills()
@@ -204,10 +219,16 @@ func _physics_process(delta):
 		move_and_slide()
 		return
 
+	# ── Debug noclip ─────────────────────────────────────────────────────────────
+	# Disable the body's collision shape so the player passes through terrain.
+	if $CollisionShape2D.disabled != noclip:
+		$CollisionShape2D.set_deferred("disabled", noclip)
+
 	# ── Gravity ────────────────────────────────────────────────────────────────
 	# Gravity is suppressed during a dash so it doesn't drag the player down
 	# mid-air and make the dash feel heavy. Resumes the moment the dash ends.
-	if not DASH:
+	# Also suppressed while flying (debug).
+	if not DASH and not _flying():
 		if not is_on_floor():
 			velocity.y = min(velocity.y + GRAVITY * delta, MAX_FALL_SPEED)
 		elif _knockback_time > 0.0:
@@ -232,13 +253,20 @@ func _physics_process(delta):
 				direction_x = -direction_x
 			velocity.x = direction_x * SPEED + external_push.x
 
+	# ── Debug flight ────────────────────────────────────────────────────────────
+	# Free vertical movement from up/down, no gravity.
+	if _flying():
+		velocity.y = Input.get_axis("up", "down") * FLY_SPEED
+
 	# ── Jump & Double Jump ─────────────────────────────────────────────────────
-	if Input.is_action_just_pressed("jump"):
+	if not _flying() and Input.is_action_just_pressed("jump"):
 		if is_on_floor():
 			velocity.y = JUMP_FORCE
 		elif can_double_jump and not double_jump_cooldown and ProgressionManager.is_skill_unlocked("double_jump"):
 			velocity.y      = DOUBLE_JUMP_FORCE
 			can_double_jump = false
+			# "Second chance" flourish — a puff of air kicked down beneath the feet.
+			Global.spawn_fx("poof", global_position + Vector2(0, 8), 0.22, Color(0.85, 0.92, 1.0))
 			start_double_jump_cooldown()
 
 	# ── Melee attacks (unarmed, not mid-attack) ────────────────────────────────
@@ -284,6 +312,18 @@ func _physics_process(delta):
 
 	move_and_slide()
 
+	# NaN guard: standing on an AnimatableBody2D (moving platform) that resumes from a
+	# time_scale=0 pause can hand the body a divide-by-zero platform velocity, poisoning
+	# the player's position with NaN. That makes the camera + every parallax scroll NaN,
+	# so the whole world stops rendering = grey screen. Catch it and snap back.
+	if is_nan(global_position.x) or is_nan(global_position.y) \
+			or is_nan(velocity.x) or is_nan(velocity.y):
+		velocity = Vector2.ZERO
+		external_push = Vector2.ZERO
+		global_position = _last_safe_pos
+	else:
+		_last_safe_pos = global_position
+
 func _process(delta):
 	if not _dialogue_skipping:
 		skip_button.visible = (
@@ -321,6 +361,9 @@ func _process(delta):
 		if _firewall_active_remaining <= 0.0:
 			firewall_active = false
 			modulate = Color.WHITE
+			if _firewall_fx: _firewall_fx.visible = false   # shield down
+			Global.spawn_fx("poof", global_position + Vector2(0, -8), 0.18, Color(0.6, 0.8, 1.0))  # shield-drop puff
+			show_toast(tr("Firewall down."))
 			firewall_cooldown = true
 			_firewall_cd_remaining = FIREWALL_COOLDOWN
 			update_firewall_cd(_firewall_cd_remaining)
@@ -409,10 +452,10 @@ func check_hitbox():
 	var hitbox = hitbox_areas.front()
 	var parent = hitbox.get_parent()
 
-	if   parent is BatEnemy:   damage = Global.batDamageAmount
-	elif parent is FrogEnemy:  damage = Global.frogDamageAmount
-	elif parent is WitchEnemy: damage = Global.witchDamageAmount
-	elif parent is NecroEnemy: damage = Global.necroDamageAmount
+	if   parent is AdbotEnemy:   damage = Global.adbotDamageAmount
+	elif parent is BanditEnemy:  damage = Global.banditDamageAmount
+	elif parent is CollectorEnemy: damage = Global.collectorDamageAmount
+	elif parent is DealerEnemy: damage = Global.dealerDamageAmount
 
 	if can_take_damage:
 		take_damage(damage)
@@ -489,6 +532,7 @@ func take_damage(damage: int, source_pos: Vector2 = Vector2.INF):
 
 # Red flash + blink and a short knockback so a hit genuinely reads as a hit.
 func _apply_hit_feedback(source_pos: Vector2) -> void:
+	Global.spawn_fx("splosion", global_position, 0.4, Color(1, 0.55, 0.55))   # red impact burst
 	# Knockback direction: away from the source, else opposite the way we're facing.
 	var kb_dir: float = 1.0 if animated_sprite_2d.flip_h else -1.0
 	if source_pos != Vector2.INF:
@@ -532,6 +576,8 @@ func take_damage_cooldown(_wait_time: float):
 
 func die():
 	if dead:
+		return
+	if god_mode or _flying():   # debug: don't die to death-zones while cheating
 		return
 	health             = 0
 	dead               = true
@@ -618,8 +664,23 @@ func update_deal_damage_zone():
 # Dash
 # ───────────────────────────────────────────────────────────────────────────────
 
+func _setup_fx() -> void:
+	_dash_fx = _TRAIL.instantiate()
+	_dash_fx.color = Color(0.85, 0.85, 0.95, 0.7)   # dust kicked up on dash
+	_dash_fx.position = Vector2(0, -4)
+	add_child(_dash_fx)
+	_speed_fx = _TRAIL.instantiate()
+	_speed_fx.color = Color(0.4, 0.85, 1.0, 0.85)   # cyan speed streaks
+	_speed_fx.position = Vector2(0, -8)
+	add_child(_speed_fx)
+	_firewall_fx = _FIREWALL_FX.instantiate()
+	_firewall_fx.position = Vector2(0, -10)
+	_firewall_fx.visible = false
+	add_child(_firewall_fx)
+
 func start_dash():
 	DASH = true
+	if _dash_fx: _dash_fx.emitting = true
 	audio_dash.play()
 	$PlayerHitbox/CollisionShape2D.disabled = true
 	can_take_damage = false
@@ -634,6 +695,7 @@ func start_dash():
 	await get_tree().create_timer(0.25).timeout  # Dash active window
 
 	DASH          = false
+	if _dash_fx: _dash_fx.emitting = false
 	dash_cooldown = true
 	# Higher dash level shortens the cooldown
 	_dash_cd_total     = max(0.4, DASH_COOLDOWN - 0.25 * (_skill_level("dash") - 1))
@@ -682,6 +744,12 @@ func activate_firewall():
 	firewall_active            = true
 	_firewall_active_remaining = duration
 	modulate = Color(0.45, 0.75, 1.0)        # blue shielded tint
+	var _pillar := Global.spawn_fx("pillar", global_position + Vector2(0, 10), 0.4, Color(0.6, 0.85, 1.0)) as Sprite2D
+	if _pillar:
+		# Rotated 180° but still growing up from the feet (offset flips it back above origin).
+		_pillar.offset = Vector2(0, _pillar.texture.get_height() / 2.0)
+		_pillar.rotation_degrees = 180
+	if _firewall_fx: _firewall_fx.visible = true   # persistent shield while active
 	show_toast(tr("Firewall up!"))
 	push_status("firewall", "Firewall", duration, Color(0.45, 0.75, 1.0))
 
@@ -747,10 +815,12 @@ func reverse_controls(duration: float):
 func apply_speed_boost(multiplier: float, duration: float):
 	speed_multiplier = multiplier
 	_recompute_speed()
+	if _speed_fx: _speed_fx.emitting = true
 	push_status("speed_boost", "Speed Boost", duration, Color(0.4, 1, 0.5),
 		func():
 			speed_multiplier = 1.0
 			_recompute_speed()
+			if _speed_fx: _speed_fx.emitting = false
 			show_toast(tr("The rush fades.")))
 
 # ───────────────────────────────────────────────────────────────────────────────

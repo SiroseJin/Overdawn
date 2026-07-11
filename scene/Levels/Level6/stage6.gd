@@ -35,6 +35,7 @@ var _transitioning := false
 func _ready() -> void:
 	Global.gameStarted = true
 	SaveManager.autosave_on_enter()   # auto-save (after fade-in) on entering the stage
+	Global.decorate_stage_portals()   # colour-coded portal beacons
 	scene_transition_anim.play("fade_out")
 	audio_bgm.play()
 	# Door starts open (passable) until the trap is sprung.

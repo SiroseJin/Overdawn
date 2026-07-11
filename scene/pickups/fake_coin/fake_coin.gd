@@ -30,6 +30,7 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 
 	_collected = true
+	Global.spawn_burst(global_position, Color(1, 0.25, 0.2), 16)   # rigged — angry red pop
 	$AnimationPlayer.play("pickup")
 
 	_roll_effect(body)
