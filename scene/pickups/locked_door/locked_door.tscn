@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cqlockeddoor0"]
 
+[ext_resource type="PackedScene" uid="uid://ccaptionmod01" path="res://scene/ui/caption/caption.tscn" id="cap_lbl_9"]
 [ext_resource type="Script" path="res://scene/pickups/locked_door/locked_door.gd" id="1_door"]
 [ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_font"]
 
@@ -44,3 +45,11 @@ theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 11
 text = "It's locked. Find the one who got out."
 horizontal_alignment = 1
+
+[node name="Caption" parent="." instance=ExtResource("cap_lbl_9")]
+offset_left = -60.0
+offset_top = -106.0
+offset_right = 60.0
+offset_bottom = -88.0
+text_en = "Locked Door"
+text_id = "Pintu Terkunci"

@@ -16,6 +16,10 @@ var _float_tween: Tween
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
+	# The "Tag" label is this key's caption — enroll it into the global toggle.
+	if TranslationServer.get_locale().begins_with("id"):
+		tag.text = "KUNCI"
+	Global.register_caption(tag)
 	_start_float()
 
 func _start_float() -> void:

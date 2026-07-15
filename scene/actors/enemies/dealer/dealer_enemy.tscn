@@ -1,4 +1,5 @@
 [gd_scene format=3 uid="uid://jr1opep0t5q3"]
+[ext_resource type="PackedScene" uid="uid://ccaptionmod01" path="res://scene/ui/caption/caption.tscn" id="cap_lbl_9"]
 
 [ext_resource type="Script" uid="uid://b1vf7aifocm0l" path="res://scene/actors/enemies/dealer/dealer_enemy.gd" id="1_r0fb5"]
 [ext_resource type="Texture2D" uid="uid://dvix1b71ls07w" path="res://art/EVil Wizard 2/Sprites/Idle.png" id="2_1edem"]
@@ -611,6 +612,15 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone" unique_id=1578940915]
 position = Vector2(0, -17)
 shape = SubResource("CircleShape2D_detect")
+
+
+[node name="Caption" parent="." instance=ExtResource("cap_lbl_9")]
+offset_left = -60.0
+offset_top = -64.0
+offset_right = 60.0
+offset_bottom = -46.0
+text_en = "Dealer"
+text_id = "Bandar"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]

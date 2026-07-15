@@ -70,15 +70,18 @@ func _process(delta: float) -> void:
 		_scroll += delta * 70.0
 
 	# Apply the current to everyone inside — off while resting. A dashing player
-	# punches through (dash already ignores external_push), and a raised Firewall
-	# nullifies the pull entirely (the shield cuts through the current).
+	# punches through (dash already ignores external_push), a raised Firewall
+	# nullifies the pull entirely (the shield cuts through the current), and while
+	# the player is talking to an NPC the current stops so conversations aren't
+	# fought against (matches the Stage 3 rising-debt freeze).
 	for b in _bodies:
 		if not is_instance_valid(b):
 			continue
 		if "external_push" in b:
 			var dashing: bool  = ("DASH" in b) and b.DASH
 			var shielded: bool = ("firewall_active" in b) and b.firewall_active
-			b.external_push = pull if (_on and not dashing and not shielded) else Vector2.ZERO
+			var talking: bool  = ("conversation_safe" in b) and b.conversation_safe
+			b.external_push = pull if (_on and not dashing and not shielded and not talking) else Vector2.ZERO
 
 	# Telegraph: brighten the field while a gust blows, dim it during the lull.
 	if _visual:

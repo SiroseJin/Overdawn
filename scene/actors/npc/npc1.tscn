@@ -1,4 +1,5 @@
 [gd_scene format=3 uid="uid://d0ib3gkf0fyen"]
+[ext_resource type="PackedScene" uid="uid://ccaptionmod01" path="res://scene/ui/caption/caption.tscn" id="cap_lbl_9"]
 
 [ext_resource type="Script" uid="uid://cuv8ghi02bo6s" path="res://scene/actors/npc/npc_1.gd" id="1_4hgyg"]
 [ext_resource type="Texture2D" uid="uid://bxxq1jl0my4tu" path="res://art/Free-City-Trader-Character-Sprite-Sheets-Pixel-Art/Trader_3/Idle.png" id="1_15n37"]
@@ -131,6 +132,15 @@ theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 11
 text = "[F] Talk"
 horizontal_alignment = 1
+
+
+[node name="Caption" parent="." instance=ExtResource("cap_lbl_9")]
+offset_left = -60.0
+offset_top = -96.0
+offset_right = 60.0
+offset_bottom = -78.0
+text_en = "NPC"
+text_id = "NPC"
 
 [connection signal="body_entered" from="ChatDetectionZone" to="ChatDetectionZone" method="_on_body_entered"]
 [connection signal="body_exited" from="ChatDetectionZone" to="ChatDetectionZone" method="_on_body_exited"]

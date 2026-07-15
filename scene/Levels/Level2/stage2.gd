@@ -30,6 +30,13 @@ func _configure_npcs() -> void:
 	if yani:
 		yani.unlocks_skill = "double_jump"
 		yani.grants_key    = "stage2_key"
+	# Rafi hosts the OPTIONAL end-of-stage quiz — themed on this layer's bait platforms.
+	var rafi := get_node_or_null("Rafi")
+	if rafi:
+		rafi.quiz_id                = "stage2_quiz"
+		rafi.quiz_optional          = true
+		rafi.quiz_bonus_coins       = 20
+		rafi.quiz_bonus_skill_point = true
 
 # Give each placed NPC a distinct trader look.
 func _apply_npc_skins() -> void:

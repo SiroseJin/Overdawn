@@ -106,7 +106,27 @@ var gameStarted: bool
 var current_wave: int
 var moving_to_next_wave: bool
 var arcade_mode: bool = false   # When true, enemies always chase — DetectionZone is ignored
+var tutorial_mode: bool = false # When true (tutorial stage only), every skill reads as unlocked
 var settings_return_path: String = "res://scene/ui/main_menu.tscn"
+
+# ─── Object labels / captions ───────────────────────────────────────────────────
+# Floating name-tags over gameplay objects (see scene/ui/caption/caption.tscn). Every
+# Caption node adds itself to the "caption" group on load, so this one flag + toggle
+# controls all of them at once. Persisted by SettingsManager under [game] show_captions.
+var show_captions: bool = true
+
+## Turn every object label on/off live and remember the choice for tags spawned later.
+func set_captions_enabled(on: bool) -> void:
+	show_captions = on
+	get_tree().call_group("caption", "set_visible", on)
+
+## Enroll a hand-authored Label (e.g. a pickup's existing "Tag") into the caption
+## system so it obeys the global toggle just like an instanced Caption node.
+func register_caption(node: CanvasItem) -> void:
+	if not is_instance_valid(node):
+		return
+	node.add_to_group("caption")
+	node.visible = show_captions
 
 # True only when every "must" NPC in the current scene has had its requirement met
 # (skill unlocked / key granted / required quiz passed). Stage exit portals call this

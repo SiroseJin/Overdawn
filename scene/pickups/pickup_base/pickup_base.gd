@@ -22,16 +22,20 @@ var _float_tween: Tween
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	_apply_appearance()
+	# The "Tag" label is this pickup's caption — enroll it so it obeys the global
+	# Object-labels toggle (drag/edit it in the editor like any other caption).
+	Global.register_caption(tag)
 	_start_float()
 
 func _apply_appearance() -> void:
+	var is_id := TranslationServer.get_locale().begins_with("id")
 	match kind:
 		Kind.HEALTH:
 			visual.color = Color(0.3, 0.9, 0.45)
-			tag.text = tr("Health")
+			tag.text = "Nyawa" if is_id else tr("Health")
 		Kind.SPEED:
 			visual.color = Color(0.35, 0.8, 1.0)
-			tag.text = tr("Speed Boost")
+			tag.text = "Kecepatan" if is_id else tr("Speed Boost")
 
 func _start_float() -> void:
 	var base_y := position.y

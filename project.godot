@@ -105,7 +105,11 @@ directories/dtl_directory={
 "s5bossgatepost": "res://scene/Levels/Level5/npc/s5bossgatepost.dtl",
 "s5bossgatepost_id": "res://scene/Levels/Level5/npc/s5bossgatepost_id.dtl",
 "s5npc1timeline": "res://scene/Levels/Level5/npc/s5npc1timeline.dtl",
-"s5npc1timeline_id": "res://scene/Levels/Level5/npc/s5npc1timeline_id.dtl"
+"s5npc1timeline_id": "res://scene/Levels/Level5/npc/s5npc1timeline_id.dtl",
+"tut_optional": "res://scene/Levels/Tutorial/npc/tut_optional.dtl",
+"tut_optional_id": "res://scene/Levels/Tutorial/npc/tut_optional_id.dtl",
+"tut_required": "res://scene/Levels/Tutorial/npc/tut_required.dtl",
+"tut_required_id": "res://scene/Levels/Tutorial/npc/tut_required_id.dtl"
 }
 layout/style_directory={}
 glossary/default_case_sensitive=true

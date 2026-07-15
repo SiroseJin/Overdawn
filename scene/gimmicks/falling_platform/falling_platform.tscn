@@ -1,4 +1,5 @@
 [gd_scene format=3 uid="uid://cfallingplat0"]
+[ext_resource type="PackedScene" uid="uid://ccaptionmod01" path="res://scene/ui/caption/caption.tscn" id="cap_lbl_9"]
 
 [ext_resource type="Script" path="res://scene/gimmicks/falling_platform/falling_platform.gd" id="1_fp"]
 
@@ -29,3 +30,11 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger"]
 position = Vector2(0, -11)
 shape = SubResource("RectangleShape2D_trig")
+
+[node name="Caption" parent="." instance=ExtResource("cap_lbl_9")]
+offset_left = -60.0
+offset_top = 12.0
+offset_right = 60.0
+offset_bottom = 30.0
+text_en = "Falling Platform"
+text_id = "Platform Jatuh"

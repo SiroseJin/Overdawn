@@ -24,6 +24,7 @@ func _ready():
 	# Display
 	vbox.get_node(\"FullScreenToggle\").button_pressed = (DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN)
 	vbox.get_node(\"VSyncToggle\").button_pressed = (DisplayServer.window_get_vsync_mode() != DisplayServer.VSYNC_DISABLED)
+	vbox.get_node(\"CaptionsToggle\").button_pressed = Global.show_captions
 
 	# Volume
 	var master_idx = AudioServer.get_bus_index(\"Master\")
@@ -55,6 +56,10 @@ func _on_vsync_toggle_toggled(toggled_on):
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
 	else:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+	SettingsManager.save_settings()
+
+func _on_captions_toggle_toggled(toggled_on):
+	Global.set_captions_enabled(toggled_on)
 	SettingsManager.save_settings()
 
 func _on_language_select_item_selected(index):
@@ -162,6 +167,11 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 text = "VSync"
 
+[node name="CaptionsToggle" type="CheckButton" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_el4av")
+text = "Object labels"
+
 [node name="LanguageSelect" type="OptionButton" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=644713596]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
@@ -228,6 +238,7 @@ text = "Back"
 [connection signal="item_selected" from="ColorRect/MarginContainer/VBoxContainer/ResolutionSelect" to="." method="_on_resolution_select_item_selected"]
 [connection signal="toggled" from="ColorRect/MarginContainer/VBoxContainer/FullScreenToggle" to="." method="_on_full_screen_toggle_toggled"]
 [connection signal="toggled" from="ColorRect/MarginContainer/VBoxContainer/VSyncToggle" to="." method="_on_vsync_toggle_toggled"]
+[connection signal="toggled" from="ColorRect/MarginContainer/VBoxContainer/CaptionsToggle" to="." method="_on_captions_toggle_toggled"]
 [connection signal="item_selected" from="ColorRect/MarginContainer/VBoxContainer/LanguageSelect" to="." method="_on_language_select_item_selected"]
 [connection signal="value_changed" from="ColorRect/MarginContainer/VBoxContainer/MasterVolumeSlider" to="." method="_on_master_volume_slider_value_changed"]
 [connection signal="value_changed" from="ColorRect/MarginContainer/VBoxContainer/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]

@@ -44,6 +44,13 @@ func _configure_npcs() -> void:
 			["Toni", "stage3_toni"], ["Sinta", "stage3_sinta"]]:
 		var n := get_node_or_null(pair[0])
 		if n: n.npc_id = pair[1]
+	# Sinta hosts the OPTIONAL end-of-stage quiz — themed on this layer's rising debt.
+	var sinta := get_node_or_null("Sinta")
+	if sinta:
+		sinta.quiz_id                = "stage3_quiz"
+		sinta.quiz_optional          = true
+		sinta.quiz_bonus_coins       = 20
+		sinta.quiz_bonus_skill_point = true
 
 # ─── Transitions ─────────────────────────────────────────────────────────────────
 

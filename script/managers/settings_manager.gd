@@ -42,7 +42,8 @@ func load_settings() -> void:
 	TranslationServer.set_locale(config.get_value("app", "locale", "en"))
 
 	# Gameplay
-	Global.arcade_mode = config.get_value("game", "arcade_mode", false)
+	Global.arcade_mode   = config.get_value("game", "arcade_mode", false)
+	Global.show_captions = config.get_value("game", "show_captions", true)
 
 func save_settings() -> void:
 	var config := ConfigFile.new()
@@ -73,5 +74,6 @@ func save_settings() -> void:
 
 	# Gameplay
 	config.set_value("game", "arcade_mode", Global.arcade_mode)
+	config.set_value("game", "show_captions", Global.show_captions)
 
 	config.save(CONFIG_PATH)

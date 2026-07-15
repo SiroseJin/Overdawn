@@ -1,9 +1,11 @@
-npc1: Welcome! Before you head out, let me show you the basics.
-npc1: Press [A] and [D] to move left and right.
-npc1: Press [Space] to jump. Press [Space] again while in the air for a double jump!
-npc1: When you find other survivors out there, press [F] to talk to them. They know things you need to hear.
-npc1: Keep an eye on your health bar — don't let the creatures out there wear you down.
-npc1: The portal ahead leads to Stage 1. The city is in trouble.
-npc1: Something corrupted it. Something from deep inside the internet.
-npc1: You are the only one who can trace it back to the source.
-npc1: Good luck out there.
+npc1: Welcome. Before you head out, a few things.
+npc1: Move with [A] and [D]. Jump with [Space] — tap it again in the air for a double jump.
+npc1: Press [F] to talk to survivors out there. They know things you need to hear.
+npc1: Keep an eye on your health bar — the creatures out there will wear you down.
+npc1: The city ahead was corrupted by something deep inside the internet. You are the one who can trace it to the source.
+npc1: First time here? I can walk you through everything — movement, skills, the traps — in a safe practice room.
+- Yes, show me the tutorial
+	npc1: Smart. Take your time in there.
+	[signal arg="goto_tutorial"]
+- No, I am ready
+	npc1: Brave. Good luck out there.

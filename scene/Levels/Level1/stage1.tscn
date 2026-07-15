@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://d0ib3gkf0fyen" path="res://scene/actors/npc/npc1.tscn" id="9_26d74"]
 [ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/bandit/bandit_enemy.tscn" id="10_x525m"]
 [ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/actors/enemies/adbot/adbot_enemy.tscn" id="11_baten"]
-[ext_resource type="PackedScene" uid="uid://cfuturecityparallax" path="res://scene/system/futuristic_city_parallax.tscn" id="bg_city"]
+[ext_resource type="PackedScene" uid="uid://c5smarxtqoyvb" path="res://scene/system/futuristic_city_parallax.tscn" id="bg_city"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="itm_door"]
 [ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="itm_hp"]

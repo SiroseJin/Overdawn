@@ -1,4 +1,5 @@
 [gd_scene format=3 uid="uid://dsxx5fkcrw8f5"]
+[ext_resource type="PackedScene" uid="uid://ccaptionmod01" path="res://scene/ui/caption/caption.tscn" id="cap_lbl_9"]
 
 [ext_resource type="Script" uid="uid://cfmhu4dph7vwa" path="res://scene/actors/enemies/bandit/bandit_enemy.gd" id="1_k55gl"]
 [ext_resource type="Texture2D" uid="uid://c3qsrkkxsdfsk" path="res://art/craftpix-net-913026-free-gangster-pixel-character-sprite-sheets-pack/Gangsters_2/Attack_1.png" id="2_76hn7"]
@@ -320,6 +321,15 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone" unique_id=401518288]
 position = Vector2(-0.99999994, 1.2404639)
 shape = SubResource("CircleShape2D_detect")
+
+
+[node name="Caption" parent="." instance=ExtResource("cap_lbl_9")]
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 60.0
+offset_bottom = -42.0
+text_en = "Bandit"
+text_id = "Bandit"
 
 [connection signal="timeout" from="Timer" to="." method="_on_direction_timer_timeout"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_frog_hit_box_area_entered"]

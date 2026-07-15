@@ -1,9 +1,11 @@
-npc1: Selamat datang! Sebelum kamu berangkat, izinkan aku menunjukkan dasar-dasarnya.
-npc1: Tekan [A] dan [D] untuk bergerak ke kiri dan kanan.
-npc1: Tekan [Space] untuk melompat. Tekan [Space] lagi di udara untuk melompat ganda!
-npc1: Ketika kamu menemukan penyintas lain di luar sana, tekan [F] untuk berbicara. Mereka tahu hal yang perlu kamu dengar.
-npc1: Perhatikan bilah kesehatan di atas — jangan biarkan makhluk di luar sana menghabiskanmu.
-npc1: Portal di depan menuju ke Stage 1. Kota itu dalam bahaya.
-npc1: Sesuatu telah merusaknya. Sesuatu dari jauh di dalam internet.
-npc1: Kamu adalah satu-satunya yang bisa melacaknya kembali ke sumber.
-npc1: Semoga berhasil di luar sana.
+npc1: Selamat datang. Sebelum kamu berangkat, ada beberapa hal.
+npc1: Bergerak dengan [A] dan [D]. Lompat dengan [Space] — tekan lagi di udara untuk lompat ganda.
+npc1: Tekan [F] untuk berbicara dengan penyintas di luar sana. Mereka tahu hal yang perlu kamu dengar.
+npc1: Perhatikan bilah kesehatanmu — makhluk di luar sana akan menggerogotimu.
+npc1: Kota di depan dirusak oleh sesuatu dari jauh di dalam internet. Kamu satu-satunya yang bisa melacaknya ke sumbernya.
+npc1: Pertama kali di sini? Aku bisa memandumu soal segalanya — gerakan, skill, jebakannya — di ruang latihan yang aman.
+- Ya, tunjukkan tutorialnya
+	npc1: Bagus. Santai saja di dalam sana.
+	[signal arg="goto_tutorial"]
+- Tidak, aku sudah siap
+	npc1: Berani. Semoga berhasil di luar sana.

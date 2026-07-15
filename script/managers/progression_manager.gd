@@ -79,6 +79,10 @@ func reset() -> void:
 # ─── Skills: unlock / level ──────────────────────────────────────────────────────
 
 func is_skill_unlocked(skill: String) -> bool:
+	# The tutorial hands out every skill so it can teach them, WITHOUT touching the
+	# real save (it just reads true while tutorial_mode is on).
+	if Global.tutorial_mode:
+		return true
 	# Skills are earned by unlocking them through the story NPCs — arcade uses whatever
 	# you've actually unlocked (it does NOT hand out the full kit).
 	return unlocked_skills.get(skill, false)

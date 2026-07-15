@@ -1,4 +1,5 @@
 [gd_scene format=3 uid="uid://chn8rr31oxv0x"]
+[ext_resource type="PackedScene" uid="uid://ccaptionmod01" path="res://scene/ui/caption/caption.tscn" id="cap_lbl_9"]
 
 [ext_resource type="Script" uid="uid://bonxfhx07kjod" path="res://scene/actors/enemies/collector/collector_enemy.gd" id="1_cgiv3"]
 [ext_resource type="Texture2D" uid="uid://b27h2w7juqdh2" path="res://art/craftpix-net-516149-city-man-pixel-art-character-sprite-sheets/City_men_2/Attack.png" id="2_wymkg"]
@@ -364,6 +365,15 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone" unique_id=1172053714]
 position = Vector2(0, -14)
 shape = SubResource("CircleShape2D_detect")
+
+
+[node name="Caption" parent="." instance=ExtResource("cap_lbl_9")]
+offset_left = -60.0
+offset_top = -64.0
+offset_right = 60.0
+offset_bottom = -46.0
+text_en = "Collector"
+text_id = "Penagih"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]

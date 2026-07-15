@@ -11,115 +11,240 @@ extends Node
 # ───────────────────────────────────────────────────────────────────────────────
 
 const QUIZZES := {
+	# Stage 1 — INTRO. Easy, definitional: what online gambling even is.
 	"stage1_quiz": {
 		"en": [
 			{
-				"q": "A gambling app shows you almost-winning again and again. Why?",
+				"q": "What is 'online gambling' (judol)?",
 				"options": [
-					"A big win must be coming soon",
-					"'Near-misses' are engineered to keep you playing",
-					"The app is broken",
-					"You're just unlucky today",
+					"A free game just for fun",
+					"Betting real money on games of chance through an app or website",
+					"A safe way to invest and grow your money",
+					"A normal video game",
 				],
 				"correct": 1,
-				"explain": "Near-misses aren't luck — they're designed. Your brain reacts to an almost-win almost like a real one, which keeps you hooked and betting.",
+				"explain": "Online gambling means betting real money on games of chance in apps or sites. It is dressed up like a game, but it is built to take your money.",
 			},
 			{
-				"q": "You've lost money. The app offers a 'bonus' to keep going. Smart?",
+				"q": "The glowing 'Adbots' flash 'FREE CREDITS! GUARANTEED JACKPOT!'. What are they really?",
 				"options": [
-					"Yes, it's free money",
-					"Only if you bet bigger to win it back",
-					"No — bonuses lock you in and chasing losses makes it worse",
-					"Yes, one more round will fix it",
+					"Helpful gifts",
+					"Gambling ads, luring people in",
+					"Real, guaranteed prizes",
+					"Just harmless decorations",
+				],
+				"correct": 1,
+				"explain": "Those flashy promises are gambling ADS. 'Free credit' and 'guaranteed jackpot' are just bait to get you to start.",
+			},
+			{
+				"q": "Can you reliably get rich from online gambling?",
+				"options": [
+					"Yes, with the right strategy",
+					"Yes, if you are lucky enough",
+					"No - it is rigged so the house always wins in the end",
+					"Yes, everyone wins eventually",
 				],
 				"correct": 2,
-				"explain": "Chasing losses is the trap. 'Bonuses' come with strings that keep you gambling. The winning move is to stop — and to ask for help.",
+				"explain": "No. The math and design are rigged so the operator - the house - always wins over time. It is not a way to make money.",
 			},
 		],
 		"id": [
 			{
-				"q": "Aplikasi judi terus menunjukkan kamu 'hampir menang'. Kenapa?",
+				"q": "Apa itu 'judi online' (judol)?",
 				"options": [
-					"Kemenangan besar pasti akan datang",
-					"'Hampir menang' dirancang agar kamu terus bermain",
-					"Aplikasinya rusak",
-					"Kamu sedang sial saja",
+					"Permainan gratis sekadar hiburan",
+					"Bertaruh uang sungguhan pada permainan untung-untungan lewat aplikasi atau situs",
+					"Cara aman berinvestasi dan menambah uang",
+					"Video game biasa",
 				],
 				"correct": 1,
-				"explain": "'Hampir menang' bukan keberuntungan — itu dirancang. Otakmu bereaksi terhadap hampir-menang hampir seperti menang sungguhan, sehingga kamu terus terpancing.",
+				"explain": "Judi online berarti bertaruh uang sungguhan pada permainan untung-untungan di aplikasi atau situs. Dikemas seperti game, tapi dibuat untuk mengambil uangmu.",
 			},
 			{
-				"q": "Kamu sudah kalah. Aplikasi menawarkan 'bonus' agar lanjut. Bijak?",
+				"q": "'Adbot' berkedip 'KREDIT GRATIS! JACKPOT DIJAMIN!'. Sebenarnya itu apa?",
 				"options": [
-					"Ya, itu uang gratis",
-					"Hanya jika bertaruh lebih besar untuk menebus",
-					"Tidak — bonus mengunci kamu dan mengejar kekalahan memperburuknya",
-					"Ya, satu ronde lagi pasti menutup",
+					"Hadiah yang membantu",
+					"Iklan judi, yang memancing orang",
+					"Hadiah asli yang dijamin",
+					"Sekadar hiasan tak berbahaya",
+				],
+				"correct": 1,
+				"explain": "Janji-janji mencolok itu adalah IKLAN judi. 'Kredit gratis' dan 'jackpot dijamin' cuma umpan agar kamu mulai.",
+			},
+			{
+				"q": "Bisakah kamu benar-benar jadi kaya dari judi online?",
+				"options": [
+					"Ya, dengan strategi yang tepat",
+					"Ya, kalau cukup beruntung",
+					"Tidak - dicurangi agar bandar selalu menang pada akhirnya",
+					"Ya, semua orang akhirnya menang",
 				],
 				"correct": 2,
-				"explain": "Mengejar kekalahan adalah jebakannya. 'Bonus' punya syarat yang membuatmu terus berjudi. Langkah yang benar adalah berhenti — dan minta bantuan.",
+				"explain": "Tidak. Matematika dan desainnya dicurangi agar operator - sang bandar - selalu menang dalam jangka panjang. Ini bukan cara mencari uang.",
 			},
 		],
 	},
-	# Stage 4 — inside the machine.
-	"stage4_quiz": {
+	# Stage 2 — the bait platforms. 'Free' things are bait.
+	"stage2_quiz": {
 		"en": [
 			{
-				"q": "Why does the app hand you a 'bonus' right as you're about to quit?",
+				"q": "A platform dangles a FREE coin right where you need a step. In gambling, that is a...?",
 				"options": [
-					"To thank you for playing",
-					"The algorithm saw you slowing down and is pulling you back in",
-					"Because you earned it fairly",
-					"It's completely random",
+					"Genuine gift",
+					"Bait, to get you to step in and start playing",
+					"Reward for your skill",
+					"Harmless glitch",
 				],
 				"correct": 1,
-				"explain": "The system tracks your behavior. The instant you hesitate, it offers a reward to re-hook you. The timing is deliberate — not generosity.",
+				"explain": "'Free credits' and easy bonuses are bait. They cost the operator almost nothing and get you playing - then take far more back.",
 			},
 			{
-				"q": "You're out of money, so the app offers a loan to 'win it back'. The truth?",
+				"q": "You grab one 'free credit', then another, then another. What is really happening?",
+				"options": [
+					"You are winning",
+					"You are being eased into a habit, one 'free' thing at a time",
+					"Nothing - it is harmless fun",
+					"You are getting ahead",
+				],
+				"correct": 1,
+				"explain": "Each 'free' claim pulls you a little deeper until betting feels normal. Nothing here is truly free - that is how the hook sets.",
+			},
+		],
+		"id": [
+			{
+				"q": "Sebuah platform menggantung koin GRATIS tepat di tempat kamu butuh pijakan. Dalam judi, itu...?",
+				"options": [
+					"Hadiah tulus",
+					"Umpan, agar kamu masuk dan mulai bermain",
+					"Imbalan atas keahlianmu",
+					"Bug tak berbahaya",
+				],
+				"correct": 1,
+				"explain": "'Kredit gratis' dan bonus mudah adalah umpan. Bagi operator hampir tanpa biaya, dan membuatmu bermain - lalu mengambil jauh lebih banyak.",
+			},
+			{
+				"q": "Kamu ambil satu 'kredit gratis', lalu lagi, lalu lagi. Apa yang sebenarnya terjadi?",
+				"options": [
+					"Kamu sedang menang",
+					"Kamu perlahan dibiasakan, satu 'gratisan' demi satu",
+					"Tidak apa-apa - cuma hiburan",
+					"Kamu makin untung",
+				],
+				"correct": 1,
+				"explain": "Tiap klaim 'gratis' menyeretmu sedikit lebih dalam sampai bertaruh terasa biasa. Tidak ada yang benar-benar gratis - begitulah kailnya menancap.",
+			},
+		],
+	},
+	# Stage 3 — the rising debt. Debt compounds; loans deepen the trap.
+	"stage3_quiz": {
+		"en": [
+			{
+				"q": "Here the DEBT rises the longer you linger. What does that represent?",
+				"options": [
+					"A time bonus",
+					"Interest and debt growing on their own, whether you win or not",
+					"Your score climbing",
+					"Nothing important",
+				],
+				"correct": 1,
+				"explain": "Gambling debt compounds - the interest grows by itself. Standing still, or borrowing to keep playing, only lets it climb higher.",
+			},
+			{
+				"q": "You are out of money, so the app offers a loan to 'win it back'. The truth?",
 				"options": [
 					"A helpful lifeline",
-					"Borrowing to gamble deepens the trap — the debt is the point",
+					"Borrowing to gamble only deepens the trap - you can't beat a rigged game",
 					"A smart way to recover losses",
 					"Basically free money",
 				],
 				"correct": 1,
-				"explain": "You can't win back a rigged game with borrowed money. Lending you more is exactly how the machine takes everything. The debt is the goal, not a favor.",
+				"explain": "You cannot win back a rigged game with borrowed money. Lending you more is exactly how it takes everything. The debt is the goal, not a favor.",
 			},
 		],
 		"id": [
 			{
-				"q": "Kenapa aplikasi memberimu 'bonus' tepat saat kamu hampir berhenti?",
+				"q": "Di sini UTANG naik semakin lama kamu berdiam. Itu melambangkan apa?",
 				"options": [
-					"Untuk berterima kasih karena bermain",
-					"Algoritma melihatmu melambat dan menarikmu kembali",
-					"Karena kamu memang pantas mendapatkannya",
-					"Itu benar-benar acak",
+					"Bonus waktu",
+					"Bunga dan utang yang tumbuh sendiri, entah kamu menang atau tidak",
+					"Skormu yang naik",
+					"Tidak penting",
 				],
 				"correct": 1,
-				"explain": "Sistem melacak perilakumu. Begitu kamu ragu, ia menawarkan hadiah untuk memancingmu lagi. Waktunya disengaja — bukan kemurahan hati.",
+				"explain": "Utang judi berbunga majemuk - bunganya tumbuh sendiri. Diam saja, atau berutang untuk terus main, hanya membuatnya makin tinggi.",
 			},
 			{
 				"q": "Uangmu habis, lalu aplikasi menawarkan pinjaman untuk 'menang kembali'. Faktanya?",
 				"options": [
 					"Pertolongan yang membantu",
-					"Berutang untuk berjudi memperdalam jebakan — utang itulah intinya",
+					"Berutang untuk berjudi hanya memperdalam jebakan - kamu tak bisa mengalahkan permainan curang",
 					"Cara cerdas menebus kerugian",
 					"Pada dasarnya uang gratis",
 				],
 				"correct": 1,
-				"explain": "Kamu tidak bisa memenangkan kembali permainan yang dicurangi dengan uang pinjaman. Meminjamkanmu lebih banyak justru cara mesin mengambil segalanya. Utang adalah tujuannya, bukan bantuan.",
+				"explain": "Kamu tak bisa memenangkan kembali permainan curang dengan uang pinjaman. Meminjamkanmu lebih banyak justru cara ia mengambil segalanya. Utang adalah tujuannya, bukan bantuan.",
 			},
 		],
 	},
-	# The final lesson — a must-do gate before the Stage 5 boss.
+	# Stage 4 — inside the machine / the pull zones. Engineered psychology.
+	"stage4_quiz": {
+		"en": [
+			{
+				"q": "The machine shows you 'almost won' over and over. Why?",
+				"options": [
+					"A big win is about to come",
+					"'Near-misses' are engineered to keep you playing",
+					"The machine is broken",
+					"You are just unlucky",
+				],
+				"correct": 1,
+				"explain": "Near-misses aren't luck - they're designed. Your brain reacts to an almost-win almost like a real win, which keeps you hooked and betting.",
+			},
+			{
+				"q": "The moment you decide to leave, a bonus or free spin appears and tugs you back. Why?",
+				"options": [
+					"To thank you for playing",
+					"The algorithm saw you slowing down and is pulling you back in",
+					"Because you earned it fairly",
+					"It is completely random",
+				],
+				"correct": 1,
+				"explain": "The system tracks you. The instant you hesitate, it dangles a reward to re-hook you. The timing is deliberate - not generosity. Raising your firewall is choosing to walk anyway.",
+			},
+		],
+		"id": [
+			{
+				"q": "Mesin terus menunjukkanmu 'nyaris menang' berulang kali. Kenapa?",
+				"options": [
+					"Kemenangan besar akan datang",
+					"'Nyaris menang' dirancang agar kamu terus bermain",
+					"Mesinnya rusak",
+					"Kamu sedang sial saja",
+				],
+				"correct": 1,
+				"explain": "'Nyaris menang' bukan keberuntungan - itu dirancang. Otakmu bereaksi pada nyaris-menang hampir seperti menang sungguhan, sehingga kamu terus terpancing.",
+			},
+			{
+				"q": "Begitu kamu memutuskan pergi, muncul bonus atau putaran gratis yang menarikmu kembali. Kenapa?",
+				"options": [
+					"Untuk berterima kasih karena bermain",
+					"Algoritma melihatmu melambat dan menarikmu kembali",
+					"Karena kamu memang pantas",
+					"Itu benar-benar acak",
+				],
+				"correct": 1,
+				"explain": "Sistem melacakmu. Begitu kamu ragu, ia mengumpankan hadiah untuk memancingmu lagi. Waktunya disengaja - bukan kemurahan hati. Menaikkan firewall adalah kamu memilih tetap pergi.",
+			},
+		],
+	},
+	# Stage 5 — the final lesson. A must-do gate before the boss. Hardest / synthesis.
 	"stage5_quiz": {
 		"en": [
 			{
 				"q": "After all you've seen, what is an online gambling company's real product?",
 				"options": [
 					"Fun games of chance",
-					"Your time, money and attention — engineered into a habit",
+					"Your time, money and attention - engineered into a habit",
 					"A fair shot at getting rich",
 					"Generous free bonuses",
 				],
@@ -129,7 +254,7 @@ const QUIZZES := {
 			{
 				"q": "A friend says: 'I can stop anytime, I'm just unlucky lately.' The red flag?",
 				"options": [
-					"Nothing — that's normal",
+					"Nothing - that's normal",
 					"They need a better strategy",
 					"Chasing losses while insisting you can quit is a classic warning sign",
 					"They should bet more to recover",
@@ -142,7 +267,7 @@ const QUIZZES := {
 				"options": [
 					"Winning big just once",
 					"A smarter betting system",
-					"Walking away — and helping others do the same",
+					"Walking away - and helping others do the same",
 					"Only playing on weekends",
 				],
 				"correct": 2,
@@ -154,7 +279,7 @@ const QUIZZES := {
 				"q": "Setelah semua yang kamu lihat, apa produk asli perusahaan judi online?",
 				"options": [
 					"Permainan untung-untungan yang seru",
-					"Waktu, uang, dan perhatianmu — dirancang jadi kebiasaan",
+					"Waktu, uang, dan perhatianmu - dirancang jadi kebiasaan",
 					"Kesempatan adil untuk jadi kaya",
 					"Bonus gratis yang murah hati",
 				],
@@ -164,7 +289,7 @@ const QUIZZES := {
 			{
 				"q": "Temanmu berkata: 'Aku bisa berhenti kapan saja, cuma lagi sial.' Tanda bahaya?",
 				"options": [
-					"Tidak ada — itu wajar",
+					"Tidak ada - itu wajar",
 					"Dia butuh strategi lebih baik",
 					"Mengejar kekalahan sambil merasa bisa berhenti adalah tanda peringatan klasik",
 					"Dia harus bertaruh lebih untuk menebus",
@@ -177,7 +302,7 @@ const QUIZZES := {
 				"options": [
 					"Menang besar sekali saja",
 					"Sistem taruhan yang lebih pintar",
-					"Berhenti dan pergi — serta membantu orang lain melakukannya",
+					"Berhenti dan pergi - serta membantu orang lain melakukannya",
 					"Bermain hanya di akhir pekan",
 				],
 				"correct": 2,
@@ -186,7 +311,6 @@ const QUIZZES := {
 		],
 	},
 }
-
 var _on_finished: Callable = Callable()
 
 var _layer: CanvasLayer

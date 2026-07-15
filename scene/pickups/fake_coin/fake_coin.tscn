@@ -1,4 +1,5 @@
-[gd_scene load_steps=12 format=3 uid="uid://bwiyib8fihf07"]
+[gd_scene load_steps=13 format=3 uid="uid://bwiyib8fihf07"]
+[ext_resource type="PackedScene" uid="uid://ccaptionmod01" path="res://scene/ui/caption/caption.tscn" id="cap_lbl_9"]
 
 [ext_resource type="Texture2D" uid="uid://b1h0u76jnh4b8" path="res://art/2D Pixel Dungeon Asset Pack/items and trap_animation/coin/coin_1.png" id="1_0a7rk"]
 [ext_resource type="Script" path="res://scene/pickups/fake_coin/fake_coin.gd" id="1_2jgp2"]
@@ -182,5 +183,14 @@ bus = &"sfx"
 libraries = {
 "": SubResource("AnimationLibrary_fcpmi")
 }
+
+
+[node name="Caption" parent="." instance=ExtResource("cap_lbl_9")]
+offset_left = -60.0
+offset_top = -40.0
+offset_right = 60.0
+offset_bottom = -22.0
+text_en = "Fake Coin"
+text_id = "Koin Palsu"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
