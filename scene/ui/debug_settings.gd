@@ -32,7 +32,7 @@ var _skill_checks: Dictionary = {}   # skill id -> CheckButton
 var _wave_spin: SpinBox
 
 func _ready() -> void:
-	_font = load("res://art/Fonts/skeleboom.ttf")
+	_font = load("res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf")
 	# Give the panel more room for the extra tools
 	_margin.offset_left = 264.0
 	_margin.offset_right = 888.0

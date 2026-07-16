@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://kpntph6sfj6f"]
 
-[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="1_1xjgi"]
+[ext_resource type="FontFile" uid="uid://ckwcdsnaosuys" path="res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf" id="1_1xjgi"]
 [ext_resource type="Script" path="res://scene/ui/stats_menu.gd" id="1_eak8c"]
 
 [node name="stats_menu" type="Control"]

@@ -66,7 +66,7 @@ func _countdown_then_summon() -> void:
 	label.set_anchors_preset(Control.PRESET_FULL_RECT)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	label.add_theme_font_override("font", load("res://art/Fonts/skeleboom.ttf"))
+	label.add_theme_font_override("font", load("res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf"))
 	label.add_theme_font_size_override("font_size", 96)
 	label.add_theme_color_override("font_color", Color(1, 0.4, 0.5))
 	label.add_theme_color_override("font_outline_color", Color.BLACK)
@@ -221,7 +221,7 @@ func _show_victory() -> void:
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.add_theme_font_override("font", load("res://art/Fonts/skeleboom.ttf"))
+	label.add_theme_font_override("font", load("res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf"))
 	label.add_theme_font_size_override("font_size", 30)
 	label.add_theme_color_override("font_color", Color(1, 0.85, 0.5))
 	label.add_theme_color_override("font_outline_color", Color.BLACK)

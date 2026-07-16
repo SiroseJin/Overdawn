@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cuv8ghi02bo6s" path="res://scene/actors/npc/npc_1.gd" id="1_4hgyg"]
 [ext_resource type="Texture2D" uid="uid://bxxq1jl0my4tu" path="res://art/Free-City-Trader-Character-Sprite-Sheets-Pixel-Art/Trader_3/Idle.png" id="1_15n37"]
 [ext_resource type="Texture2D" uid="uid://bpu6b0wvtr57k" path="res://art/Free-City-Trader-Character-Sprite-Sheets-Pixel-Art/Trader_3/Dialogue.png" id="1_sxijf"]
-[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_font"]
+[ext_resource type="FontFile" uid="uid://ckwcdsnaosuys" path="res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf" id="2_font"]
 [ext_resource type="Script" uid="uid://cx2mbhe5mu2aw" path="res://scene/actors/npc/npc1_chat_detection_zone.gd" id="3_4hgyg"]
 [ext_resource type="PackedScene" uid="uid://ccaptionmod01" path="res://scene/ui/caption/caption.tscn" id="cap_lbl_9"]
 

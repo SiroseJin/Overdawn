@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://x030hl3q7bot"]
 
-[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_el4av"]
+[ext_resource type="FontFile" uid="uid://ckwcdsnaosuys" path="res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf" id="2_el4av"]
 
 [sub_resource type="GDScript" id="GDScript_lov54"]
 script/source = "extends Control

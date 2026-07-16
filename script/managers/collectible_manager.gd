@@ -26,6 +26,9 @@ const SHARDS := {
 	"shard_s1_3": {"stage": "stage1", "pos": Vector2(2900, 590),
 		"en": "Truth: Ads promise jackpots to everyone. Almost no one ever collects.",
 		"id": "Fakta: Iklan menjanjikan jackpot ke semua orang. Nyaris tak ada yang dapat."},
+	"shard_s1_4": {"stage": "stage1", "pos": Vector2(3300, 590),
+		"en": "Truth: Gambling addiction is a medical condition, not weakness. Help is real — call 119 ext 8.",
+		"id": "Fakta: Kecanduan judi itu kondisi medis, bukan kelemahan. Bantuan itu nyata — hubungi 119 ext 8."},
 	# Stage 2 — the bait / near-win
 	"shard_s2_1": {"stage": "stage2", "pos": Vector2(500, 600),
 		"en": "Truth: A 'near win' is engineered. It isn't luck — it's a hook.",

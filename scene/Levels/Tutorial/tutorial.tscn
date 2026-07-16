@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/ui/scene_transition_animation.tscn" id="3_trans"]
 [ext_resource type="PackedScene" uid="uid://xib287qfxjb8" path="res://scene/system/city_parallax.tscn" id="4_bg"]
 [ext_resource type="AudioStream" uid="uid://028va8maeqdm" path="res://audio/Music/Caketown 1 by matthewpablo.mp3" id="4_bgm"]
-[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="5_font"]
+[ext_resource type="FontFile" uid="uid://ckwcdsnaosuys" path="res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf" id="5_font"]
 [ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/actors/enemies/adbot/adbot_enemy.tscn" id="adbot"]
 [ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/bandit/bandit_enemy.tscn" id="bandit"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="coin"]

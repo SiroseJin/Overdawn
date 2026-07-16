@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://w42cyxltseel"]
+[gd_scene format=3 uid="uid://w42cyxltseel"]
 
-[ext_resource type="Script" path="res://scene/ui/scene_transition_animation.gd" id="1_stanim"]
+[ext_resource type="Script" uid="uid://cjnrv4qg5jg4t" path="res://scene/ui/scene_transition_animation.gd" id="1_stanim"]
 
 [sub_resource type="Animation" id="Animation_f7ucd"]
 length = 0.001
@@ -66,28 +66,26 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b3o12"]
 _data = {
-"RESET": SubResource("Animation_f7ucd"),
-"between_wave": SubResource("Animation_arvkx"),
-"fade_in": SubResource("Animation_a4ioc"),
-"fade_out": SubResource("Animation_1grni")
+&"RESET": SubResource("Animation_f7ucd"),
+&"between_wave": SubResource("Animation_arvkx"),
+&"fade_in": SubResource("Animation_a4ioc"),
+&"fade_out": SubResource("Animation_1grni")
 }
 
-[node name="SceneTransitionAnimation" type="Node2D"]
+[node name="SceneTransitionAnimation" type="Node2D" unique_id=519783972]
 script = ExtResource("1_stanim")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=548402354]
 layer = 128
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=644258095]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0)
 mouse_filter = 2
+color = Color(0, 0, 0, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_b3o12")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1092738625]
+libraries/ = SubResource("AnimationLibrary_b3o12")

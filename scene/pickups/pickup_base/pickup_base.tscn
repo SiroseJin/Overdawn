@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cqpickup0item"]
 
 [ext_resource type="Script" path="res://scene/pickups/pickup_base/pickup_base.gd" id="1_pick"]
-[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_font"]
+[ext_resource type="FontFile" uid="uid://ckwcdsnaosuys" path="res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf" id="2_font"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pick"]
 radius = 12.0

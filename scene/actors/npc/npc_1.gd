@@ -86,7 +86,7 @@ var _marker: Label
 func _setup_marker() -> void:
 	_marker = Label.new()
 	_marker.text = "!"
-	_marker.add_theme_font_override("font", load("res://art/Fonts/skeleboom.ttf"))
+	_marker.add_theme_font_override("font", load("res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf"))
 	_marker.add_theme_font_size_override("font_size", 30)
 	_marker.add_theme_color_override("font_outline_color", Color.BLACK)
 	_marker.add_theme_constant_override("outline_size", 5)

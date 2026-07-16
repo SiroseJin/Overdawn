@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://death_screen_01"]
 
 [ext_resource type="Script" path="res://scene/ui/death_screen.gd" id="1_ds"]
-[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_font"]
+[ext_resource type="FontFile" uid="uid://ckwcdsnaosuys" path="res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf" id="2_font"]
+[ext_resource type="FontFile" uid="uid://b5knwkxrpuai6" path="res://art/Fonts/VT323/VT323-Regular.ttf" id="4_disp"]
 [ext_resource type="AudioStream" uid="uid://c1m8vs2hh2gx6" path="res://audio/SFX/menuclick.wav" id="3_sfx"]
 
 [node name="DeathScreen" type="Control"]
@@ -34,7 +35,7 @@ theme_override_constants/separation = 10
 
 [node name="TitleLabel" type="Label" parent="MainPanel/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_font")
+theme_override_fonts/font = ExtResource("4_disp")
 theme_override_font_sizes/font_size = 28
 text = "You Died"
 horizontal_alignment = 1

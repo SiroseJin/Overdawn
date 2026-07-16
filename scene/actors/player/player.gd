@@ -909,7 +909,7 @@ func _add_key_hint(bar: Control, action: String):
 	l.name = "KeyHint"
 	l.text = _key_hint(action)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	l.add_theme_font_override("font", load("res://art/Fonts/skeleboom.ttf"))
+	l.add_theme_font_override("font", load("res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf"))
 	l.add_theme_font_size_override("font_size", 10)
 	l.add_theme_color_override("font_color", Color(1, 1, 0.7))
 	l.add_theme_color_override("font_outline_color", Color.BLACK)
@@ -954,7 +954,7 @@ func _setup_coin_hud():
 	_coin_label.anchor_right = 0.0
 	_coin_label.offset_left  = 16.0
 	_coin_label.offset_top   = 52.0
-	_coin_label.add_theme_font_override("font", load("res://art/Fonts/skeleboom.ttf"))
+	_coin_label.add_theme_font_override("font", load("res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf"))
 	_coin_label.add_theme_font_size_override("font_size", 16)
 	_coin_label.add_theme_color_override("font_color", Color(1, 0.86, 0.3))
 	_coin_label.add_theme_color_override("font_outline_color", Color.BLACK)
@@ -987,7 +987,7 @@ func _setup_toast():
 	_toast_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_toast_label.vertical_alignment   = VERTICAL_ALIGNMENT_CENTER
 	_toast_label.autowrap_mode        = TextServer.AUTOWRAP_WORD_SMART
-	_toast_label.add_theme_font_override("font", load("res://art/Fonts/skeleboom.ttf"))
+	_toast_label.add_theme_font_override("font", load("res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf"))
 	_toast_label.add_theme_font_size_override("font_size", 22)
 	_toast_label.add_theme_color_override("font_color", Color(1, 1, 0.6))
 	_toast_label.add_theme_color_override("font_outline_color", Color.BLACK)

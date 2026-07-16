@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dnsbssrr88l8n"]
 
 [ext_resource type="Script" uid="uid://bosyuo8py3a7x" path="res://scene/ui/pause_menu.gd" id="1_6w1js"]
-[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="1_fgjmp"]
+[ext_resource type="FontFile" uid="uid://ckwcdsnaosuys" path="res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf" id="1_fgjmp"]
 [ext_resource type="AudioStream" uid="uid://c1m8vs2hh2gx6" path="res://audio/SFX/menuclick.wav" id="3_khiiq"]
 
 [node name="PauseMenu" type="Control" unique_id=1721985532]

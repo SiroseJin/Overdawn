@@ -42,7 +42,7 @@ func _slot_name(slot: int) -> String:
 # the manual slots — so adding/removing slots is data-driven and no menu hardcodes
 # rows. Old hardcoded rows are removed at runtime; nodes named in `keep` (e.g. the
 # Back button) are preserved. `on_pressed` is called with the slot int on click.
-const _SLOT_FONT := "res://art/Fonts/skeleboom.ttf"
+const _SLOT_FONT := "res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf"
 
 func populate_slots(container: Node, on_pressed: Callable, save_mode: bool = false, keep: Array = ["Back"]) -> void:
 	if container == null:

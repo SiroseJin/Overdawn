@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c8h8psijst4am"]
 
 [ext_resource type="Script" uid="uid://2hjtjea7d854" path="res://scene/ui/main_menu.gd" id="1_c5cew"]
-[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="1_xbuaw"]
+[ext_resource type="FontFile" uid="uid://ckwcdsnaosuys" path="res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf" id="1_xbuaw"]
 [ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/ui/scene_transition_animation.tscn" id="3_2ehx7"]
 [ext_resource type="Texture2D" uid="uid://ojrc07dasuxk" path="res://art/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Tileset.png" id="3_yqug7"]
 [ext_resource type="AudioStream" uid="uid://bknt7etc6vk2b" path="res://audio/Music/FullScores/Retro Scores/Ove Melaa - Dark.ogg" id="4_sa8jk"]

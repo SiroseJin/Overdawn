@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://buajudq12xcgo" path="res://art/Pixel Art Top Down/Texture/TX Shadow.png" id="4_cyvy5"]
 [ext_resource type="AudioStream" uid="uid://b0pp6f4y1nsjm" path="res://audio/Music/mythica.mp3" id="6_atujf"]
 [ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/ui/scene_transition_animation.tscn" id="9_lv20d"]
-[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="10_font"]
+[ext_resource type="FontFile" uid="uid://ckwcdsnaosuys" path="res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf" id="10_font"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p8uni"]
 texture = ExtResource("1_eakq8")

@@ -23,7 +23,7 @@ func _ready():
 	# The instance in player.tscn collapses our anchors; force full-screen so the
 	# centered panel lays out correctly.
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_font = load("res://art/Fonts/skeleboom.ttf")
+	_font = load("res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf")
 	_vbox = $CenterContainer/Panel/MarginContainer/VBox
 	_build_ui()
 	visibility_changed.connect(_on_visibility_changed)

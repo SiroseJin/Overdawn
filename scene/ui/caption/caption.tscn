@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ccaptionmod01"]
 
 [ext_resource type="Script" path="res://scene/ui/caption/caption.gd" id="1_cap"]
-[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_font"]
+[ext_resource type="FontFile" uid="uid://ckwcdsnaosuys" path="res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf" id="2_font"]
 
 [node name="Caption" type="Label"]
 offset_left = -60.0

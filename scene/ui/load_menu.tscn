@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cx1cvc8r7fsfi"]
 
-[ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="1_2xcpn"]
+[ext_resource type="FontFile" uid="uid://ckwcdsnaosuys" path="res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf" id="1_2xcpn"]
 [ext_resource type="Script" uid="uid://1mq2p888chr3" path="res://scene/ui/load_menu.gd" id="1_lmscr"]
 
 [node name="LoadMenu" type="Control" unique_id=1699332451]

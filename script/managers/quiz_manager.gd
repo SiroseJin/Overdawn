@@ -400,7 +400,7 @@ func _on_skip_pressed() -> void:
 func _ensure_ui() -> void:
 	if _layer != null:
 		return
-	_font = load("res://art/Fonts/skeleboom.ttf")
+	_font = load("res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf")
 
 	_layer = CanvasLayer.new()
 	_layer.layer = 50

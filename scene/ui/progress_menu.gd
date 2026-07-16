@@ -9,7 +9,8 @@ extends Control
 # (pause menu); Back handles both.
 # ──────────────────────────────────────────────────────────────────────────────────
 
-const FONT := preload("res://art/Fonts/skeleboom.ttf")
+const FONT := preload("res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf")   # BODY
+const DISPLAY := preload("res://art/Fonts/VT323/VT323-Regular.ttf")                        # DISPLAY (titles/headers)
 
 const STAGE_COLORS := {
 	1: Color(0.45, 0.85, 1.0), 2: Color(0.78, 0.45, 1.0), 3: Color(1.0, 0.65, 0.3),
@@ -177,7 +178,7 @@ func _title(text: String, size: int, col: Color) -> Label:
 	var l := Label.new()
 	l.text = text
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	l.add_theme_font_override("font", FONT)
+	l.add_theme_font_override("font", DISPLAY)   # VT323 for the PROGRESS title + section headers
 	l.add_theme_font_size_override("font_size", size)
 	l.add_theme_color_override("font_color", col)
 	return l
