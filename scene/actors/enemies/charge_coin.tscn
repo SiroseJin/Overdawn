@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cchargecoin001"]
+
+[ext_resource type="Script" path="res://scene/actors/enemies/charge_coin.gd" id="1_cc"]
+[ext_resource type="Texture2D" uid="uid://b1h0u76jnh4b8" path="res://art/2D Pixel Dungeon Asset Pack/items and trap_animation/coin/coin_1.png" id="2_coin"]
+
+[node name="ChargeCoin" type="Sprite2D"]
+texture_filter = 1
+modulate = Color(1, 0.28, 0.24, 1)
+scale = Vector2(1.4, 1.4)
+texture = ExtResource("2_coin")
+script = ExtResource("1_cc")

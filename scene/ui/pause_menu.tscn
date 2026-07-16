@@ -51,17 +51,17 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_fgjmp")
 text = "Settings"
 
-[node name="Progress" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Progress" type="Button" parent="MarginContainer/VBoxContainer" unique_id=470803480]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_fgjmp")
 text = "Progress"
 
-[node name="Debug" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Debug" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1609047176]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_fgjmp")
 text = "Debug"
 
-[node name="MainMenu" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="MainMenu" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1586677860]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_fgjmp")
 text = "Main Menu"
@@ -214,7 +214,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_fgjmp")
 text = "Back"
 
-[node name="ConfirmPanel" type="MarginContainer" parent="."]
+[node name="ConfirmPanel" type="MarginContainer" parent="." unique_id=1750515357]
 visible = false
 layout_mode = 0
 anchor_left = 0.3
@@ -223,11 +223,11 @@ anchor_right = 0.7
 anchor_bottom = 0.65
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ConfirmPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ConfirmPanel" unique_id=1380152972]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="WarningLabel" type="Label" parent="ConfirmPanel/VBoxContainer"]
+[node name="WarningLabel" type="Label" parent="ConfirmPanel/VBoxContainer" unique_id=681023127]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_fgjmp")
 theme_override_font_sizes/font_size = 14
@@ -235,24 +235,24 @@ text = "Unsaved progress will be lost!"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="ConfirmLabel" type="Label" parent="ConfirmPanel/VBoxContainer"]
+[node name="ConfirmLabel" type="Label" parent="ConfirmPanel/VBoxContainer" unique_id=652983827]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_fgjmp")
 theme_override_font_sizes/font_size = 16
 text = "Are you sure?"
 horizontal_alignment = 1
 
-[node name="ButtonRow" type="HBoxContainer" parent="ConfirmPanel/VBoxContainer"]
+[node name="ButtonRow" type="HBoxContainer" parent="ConfirmPanel/VBoxContainer" unique_id=837223865]
 layout_mode = 2
-alignment = 1
 theme_override_constants/separation = 12
+alignment = 1
 
-[node name="ConfirmBtn" type="Button" parent="ConfirmPanel/VBoxContainer/ButtonRow"]
+[node name="ConfirmBtn" type="Button" parent="ConfirmPanel/VBoxContainer/ButtonRow" unique_id=817022564]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_fgjmp")
 text = "Confirm"
 
-[node name="CancelBtn" type="Button" parent="ConfirmPanel/VBoxContainer/ButtonRow"]
+[node name="CancelBtn" type="Button" parent="ConfirmPanel/VBoxContainer/ButtonRow" unique_id=2025722725]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_fgjmp")
 text = "Cancel"
@@ -275,8 +275,6 @@ bus = &"sfx"
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Debug" to="." method="_on_debug_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
-[connection signal="pressed" from="ConfirmPanel/VBoxContainer/ButtonRow/ConfirmBtn" to="." method="_on_confirm_pressed"]
-[connection signal="pressed" from="ConfirmPanel/VBoxContainer/ButtonRow/CancelBtn" to="." method="_on_cancel_pressed"]
 [connection signal="pressed" from="OptionContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="SaveMenu/VBoxContainer/SaveSlot1" to="." method="_on_save_slot_1_pressed"]
 [connection signal="pressed" from="SaveMenu/VBoxContainer/SaveSlot2" to="." method="_on_save_slot_2_pressed"]
@@ -286,3 +284,5 @@ bus = &"sfx"
 [connection signal="pressed" from="LoadMenu/VBoxContainer/Slot2Row/LoadSlot2" to="." method="_on_load_slot_2_pressed"]
 [connection signal="pressed" from="LoadMenu/VBoxContainer/Slot3Row/LoadSlot3" to="." method="_on_load_slot_3_pressed"]
 [connection signal="pressed" from="LoadMenu/VBoxContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="ConfirmPanel/VBoxContainer/ButtonRow/ConfirmBtn" to="." method="_on_confirm_pressed"]
+[connection signal="pressed" from="ConfirmPanel/VBoxContainer/ButtonRow/CancelBtn" to="." method="_on_cancel_pressed"]

@@ -167,7 +167,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 text = "VSync"
 
-[node name="CaptionsToggle" type="CheckButton" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="CaptionsToggle" type="CheckButton" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=1766042291]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 text = "Object labels"

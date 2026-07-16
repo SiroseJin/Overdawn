@@ -14,7 +14,7 @@ var _transitioning := false
 
 # Tutorial signs are hidden until the player walks near them (keeps the screen clean).
 var _sign_labels: Array[Label] = []
-const SIGN_REVEAL_RANGE := 220.0   # how close (px, horizontal) the player must be
+const SIGN_REVEAL_RANGE := 120.0   # how close (px, horizontal) the player must be
 
 func _ready() -> void:
 	Global.gameStarted   = true

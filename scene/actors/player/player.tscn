@@ -445,12 +445,44 @@ offset_bottom = 95.0
 theme_override_fonts/font = ExtResource("2_5yx0s")
 text = "Score: "
 
+[node name="QuestList" type="VBoxContainer" parent="CanvasLayer/Control" unique_id=1024534442]
+layout_mode = 0
+offset_left = 1131.0
+offset_top = -14.0
+offset_right = 1411.0
+offset_bottom = -14.0
+theme_override_constants/separation = 2
+
+[node name="NotificationList" type="VBoxContainer" parent="CanvasLayer/Control" unique_id=1875145954]
+layout_mode = 0
+offset_left = 662.0
+offset_top = 6.0
+offset_right = 942.0
+offset_bottom = 6.0
+theme_override_constants/separation = 2
+
 [node name="StatusEffects" type="VBoxContainer" parent="CanvasLayer/Control" unique_id=182695149]
 layout_mode = 0
 offset_left = 168.0
 offset_top = 100.0
 offset_right = 448.0
 offset_bottom = 260.0
+theme_override_constants/separation = 2
+
+[node name="DamageNumbers" type="VBoxContainer" parent="CanvasLayer/Control" unique_id=382405157]
+layout_mode = 0
+offset_left = 675.0
+offset_top = 315.0
+offset_right = 955.0
+offset_bottom = 315.0
+theme_override_constants/separation = 2
+
+[node name="Badge Unlock" type="VBoxContainer" parent="CanvasLayer/Control" unique_id=654714370]
+layout_mode = 0
+offset_left = 685.0
+offset_top = 669.0
+offset_right = 965.0
+offset_bottom = 669.0
 theme_override_constants/separation = 2
 
 [node name="PauseMenu" parent="CanvasLayer" unique_id=1162781817 instance=ExtResource("2_rg4d1")]

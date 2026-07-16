@@ -47,8 +47,15 @@ var charging_timer: Timer
 # Charge telegraph: a glowing orb gathers at her hands and swells while she winds up,
 # then vanishes the moment the fireball launches.
 @export var charge_fx_color: Color = Color(0.5, 0.75, 1.0)   # bluish glow, matches the blue fireball
+## The orb halo is kept ~5% bigger than the blinking fake coin. If padding makes it
+## read too big/small, tune this "fill" fraction (how much of the 75px frame the glow uses).
+@export var charge_orb_fill: float = 0.7
 var _charge_fx: Node2D
+var _charge_coin: Node2D
 var _charge_elapsed: float = 0.0
+
+const _CHARGE_COIN := preload("res://scene/actors/enemies/charge_coin.tscn")
+const _FAKE_COIN_PROJECTILE := preload("res://scene/actors/enemies/fake_coin_projectile.tscn")
 
 var Player: CharacterBody2D
 var health_bar: ProgressBar
@@ -217,29 +224,49 @@ func _muzzle_pos() -> Vector2:
 		facing = signf(dir.x)
 	return global_position + Vector2(facing * 20.0, -26.0)
 
-# Spawn / follow / grow the glowing orb while she charges; clear it otherwise.
+# While she charges: a blinking fake coin gathers at her hands (the telegraph that a
+# rigged jackpot is coming), with the orb glow kept just ~5% bigger, blinking, and sat
+# BEHIND the coin. Cleared the instant the throw releases.
 func _update_charge_fx(delta: float) -> void:
 	if charging and not dead:
+		var muzzle := _muzzle_pos()
+		# Blinking fake coin, in front.
+		if not is_instance_valid(_charge_coin):
+			_charge_coin = _CHARGE_COIN.instantiate()
+			get_parent().add_child(_charge_coin)
+			_charge_coin.z_index = 3
+		_charge_coin.global_position = muzzle
+		# Orb halo, behind the coin, ~5% bigger, blinking.
 		if not is_instance_valid(_charge_fx):
-			_charge_fx = Global.spawn_fx("orb", _muzzle_pos(), 0.12, charge_fx_color, true)
+			_charge_fx = Global.spawn_fx("orb", muzzle, 0.2, charge_fx_color, true)
 			_charge_elapsed = 0.0
 			if is_instance_valid(_charge_fx):
-				_charge_fx.z_index = 2   # in front of the witch
+				_charge_fx.z_index = 1   # behind the coin
 		if is_instance_valid(_charge_fx):
 			_charge_elapsed += delta
-			_charge_fx.global_position = _muzzle_pos()
-			# Gather from tiny up to about the fireball's size, with a subtle pulse.
-			var wind_up: float = charging_timer.wait_time if charging_timer else 5.0
-			var t: float = clampf(_charge_elapsed / max(0.1, wind_up), 0.0, 1.0)
-			var s: float = lerpf(0.12, 0.4, t) + 0.04 * sin(_charge_elapsed * 18.0)
-			_charge_fx.scale = Vector2(s, s)
+			_charge_fx.global_position = muzzle
+			var orb_s := _orb_scale_for_coin()
+			_charge_fx.scale = Vector2(orb_s, orb_s)
+			# Blink the glow (alpha pulse), keeping the tint.
+			var a: float = 0.35 + 0.65 * (0.5 + 0.5 * sin(_charge_elapsed * 30.0))
+			_charge_fx.modulate = Color(charge_fx_color.r, charge_fx_color.g, charge_fx_color.b, a)
 	else:
 		_clear_charge_fx()
+
+# Orb scale so the visible glow is ~5% wider than the fake coin (orb frame = 75px).
+func _orb_scale_for_coin() -> float:
+	var coin_w := 22.0
+	if is_instance_valid(_charge_coin) and _charge_coin is Sprite2D and (_charge_coin as Sprite2D).texture:
+		coin_w = (_charge_coin as Sprite2D).texture.get_width() * (_charge_coin as Sprite2D).scale.x
+	return clampf(coin_w * 1.05 / (75.0 * max(0.1, charge_orb_fill)), 0.05, 1.5)
 
 func _clear_charge_fx() -> void:
 	if is_instance_valid(_charge_fx):
 		_charge_fx.queue_free()
 	_charge_fx = null
+	if is_instance_valid(_charge_coin):
+		_charge_coin.queue_free()
+	_charge_coin = null
 
 func _exit_tree() -> void:
 	_clear_charge_fx()
@@ -269,6 +296,18 @@ func release_fireball():
 	get_parent().add_child(fireball)
 	fireball.global_position = muzzle
 	fireball.direction = (target.global_position - muzzle).normalized()
+
+	# She also hurls the rigged fake coin she was charging.
+	_throw_fake_coin(muzzle, target)
+
+# Fling a fake-coin projectile from `from` toward `target`.
+func _throw_fake_coin(from: Vector2, target: Node2D) -> void:
+	if not is_instance_valid(target):
+		return
+	var fc = _FAKE_COIN_PROJECTILE.instantiate()
+	get_parent().add_child(fc)
+	fc.global_position = from
+	fc.direction = (target.global_position - from).normalized()
 
 func take_damage(amount: float):
 	health        -= amount

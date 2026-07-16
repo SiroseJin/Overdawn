@@ -41,6 +41,10 @@ var roam_range: float = 50.0
 var charging: bool = false
 var charging_timer: Timer
 
+const _CHARGE_COIN := preload("res://scene/actors/enemies/charge_coin.tscn")
+const _FAKE_COIN_PROJECTILE := preload("res://scene/actors/enemies/fake_coin_projectile.tscn")
+var _charge_coin: Node2D   # blinking fake-coin telegraph shown while charging
+
 # Summon ability (spawns bats)
 var summoning: bool          = false
 var can_summon: bool         = true
@@ -92,6 +96,8 @@ func _ready():
 func _process(_delta):
 	move(_delta)
 	handle_animation()
+	if not charging and is_instance_valid(_charge_coin):
+		_clear_charge_coin()   # telegraph coin only shows during the wind-up
 
 	# NOTE: "Amount" typo is intentional — matches the Global variable name
 	Global.dealerDamageAmount = damage_to_deal
@@ -217,10 +223,29 @@ func charge():
 	if not charging and not dead:
 		charging = true
 		Global.spawn_fx("green", global_position, 0.3)   # gathering energy blast — telegraph
+		_show_charge_coin()                              # + a blinking fake coin at his hand
 		charging_timer.start()
 	elif dead:
 		charging = false
 		charging_timer.stop()
+
+# A blinking fake coin at the muzzle while he winds up (parented to ProjectileOutput so
+# it follows and flips with facing). Freed once he stops charging (see _process).
+func _show_charge_coin() -> void:
+	if is_instance_valid(_charge_coin):
+		return
+	_charge_coin = _CHARGE_COIN.instantiate()
+	var out := get_node_or_null("ProjectileOutput")
+	if out:
+		out.add_child(_charge_coin)
+	else:
+		add_child(_charge_coin)
+	_charge_coin.z_index = 3
+
+func _clear_charge_coin() -> void:
+	if is_instance_valid(_charge_coin):
+		_charge_coin.queue_free()
+	_charge_coin = null
 
 func _on_charging_timeout():
 	if dead:
@@ -243,8 +268,15 @@ func release_fireball():
 	var orb_scene = preload("res://scene/actors/enemies/dealer/dealer_slow_orb.tscn")
 	var orb       = orb_scene.instantiate()
 	get_parent().add_child(orb)
-	orb.global_position = $ProjectileOutput.global_position
-	orb.direction = (target.global_position - $ProjectileOutput.global_position).normalized()
+	var from: Vector2 = $ProjectileOutput.global_position
+	orb.global_position = from
+	orb.direction = (target.global_position - from).normalized()
+
+	# He also throws the rigged fake coin he was charging.
+	var fc = _FAKE_COIN_PROJECTILE.instantiate()
+	get_parent().add_child(fc)
+	fc.global_position = from
+	fc.direction = (target.global_position - from).normalized()
 
 # ───────────────────────────────────────────────────────────────────────────────
 # Summon Ability (bat pack)
