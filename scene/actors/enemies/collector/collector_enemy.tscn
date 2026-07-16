@@ -313,7 +313,7 @@ radius = 4.0
 height = 28.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_detect"]
-radius = 259.03088
+radius = 130.0
 
 [node name="CollectorEnemy" type="CharacterBody2D" unique_id=687139458]
 z_index = 1

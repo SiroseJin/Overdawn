@@ -81,7 +81,8 @@ var external_push: Vector2 = Vector2.ZERO
 
 # Gravity & Jump
 const GRAVITY: float       = 900.0   # Downward acceleration in pixels/s²
-const JUMP_FORCE: float    = -380.0  # Initial upward velocity on jump (negative = up)
+const FALL_GRAVITY_MULT: float = 1.1 # Falling accelerates 10% faster than rising (snappier fall)
+const JUMP_FORCE: float    = -342.0  # Initial upward velocity on jump (negative = up). ~10% lower peak than before.
 const MAX_FALL_SPEED: float = 800.0  # Terminal velocity cap
 
 # Combat
@@ -112,7 +113,7 @@ var _dash_cd_total: float = DASH_COOLDOWN
 var _dbjump_cd_remaining: float = 0.0
 var can_double_jump: bool    = true   # Resets on landing
 var double_jump_cooldown: bool = false # True while the cooldown is ticking
-const DOUBLE_JUMP_FORCE: float = -320.0  # Slightly weaker than the first jump
+const DOUBLE_JUMP_FORCE: float = -288.0  # Slightly weaker than the first jump (~10% lower)
 const DOUBLE_JUMP_COOLDOWN: float = 1.0  # Seconds before the skill is available again
 var _dbjump_cd_total: float = DOUBLE_JUMP_COOLDOWN
 
@@ -230,7 +231,9 @@ func _physics_process(delta):
 	# Also suppressed while flying (debug).
 	if not DASH and not _flying():
 		if not is_on_floor():
-			velocity.y = min(velocity.y + GRAVITY * delta, MAX_FALL_SPEED)
+			# Falling accelerates faster than rising, so the arc feels less floaty.
+			var g: float = GRAVITY * (FALL_GRAVITY_MULT if velocity.y > 0.0 else 1.0)
+			velocity.y = min(velocity.y + g * delta, MAX_FALL_SPEED)
 		elif _knockback_time > 0.0:
 			# Let a hit's upward pop lift the player instead of snapping to the floor.
 			velocity.y = min(velocity.y + GRAVITY * delta, MAX_FALL_SPEED)

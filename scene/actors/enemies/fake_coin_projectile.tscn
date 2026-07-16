@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cfakecoinproj0"]
+[gd_scene format=3 uid="uid://do7ppnx4j4wv8"]
 
 [ext_resource type="Script" path="res://scene/actors/enemies/fake_coin_projectile.gd" id="1_fcp"]
 [ext_resource type="Texture2D" uid="uid://b1h0u76jnh4b8" path="res://art/2D Pixel Dungeon Asset Pack/items and trap_animation/coin/coin_1.png" id="2_coin"]

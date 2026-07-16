@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="13_hp"]
 [ext_resource type="PackedScene" uid="uid://cqkeypickup00" path="res://scene/pickups/key_pickup/key_pickup.tscn" id="14_key"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="15_gate"]
-[ext_resource type="PackedScene" uid="uid://cmountainduskparallax" path="res://scene/system/mountain_dusk_parallax.tscn" id="bg_city"]
+[ext_resource type="PackedScene" uid="uid://b7dp1fygj5tuh" path="res://scene/system/mountain_dusk_parallax.tscn" id="bg_city"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_death"]
@@ -144,10 +144,10 @@ position = Vector2(1000, 700)
 position = Vector2(3665, -101)
 
 [node name="Dealer1" parent="." unique_id=867063269 instance=ExtResource("9_necro")]
-position = Vector2(3442, -109)
+position = Vector2(3280, -87)
 
 [node name="Collector2" parent="." unique_id=399106065 instance=ExtResource("8_witch")]
-position = Vector2(3574, -106)
+position = Vector2(3447, -89)
 
 [node name="Bandit2" parent="." unique_id=419607088 instance=ExtResource("6_frog")]
 position = Vector2(3467, 260)
@@ -162,7 +162,7 @@ position = Vector2(400, 655)
 position = Vector2(3000, 262)
 
 [node name="Key" parent="." unique_id=796434059 instance=ExtResource("14_key")]
-position = Vector2(3165, -86)
+position = Vector2(3162, -83)
 key_id = "stage5_key"
 
 [node name="Boss Gate" parent="." unique_id=1847186985 instance=ExtResource("15_gate")]

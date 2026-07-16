@@ -18,9 +18,9 @@ var exp_value: int      = 20
 var score_value: int    = 40
 
 # Floaty movement — very weak gravity so she drifts rather than falls
-const GRAVITY: float        = 120.0   # Much lower than normal (900) for a floaty feel
-const MAX_FALL_SPEED: float = 20.0    # Very low terminal velocity — she barely sinks
-const HOVER_FORCE: float    = -50.0   # Upward nudge applied periodically to maintain hover
+const GRAVITY: float        = 480.0   # Floaty, but ~60% less than before (was 120; she sinks more now)
+const MAX_FALL_SPEED: float = 70.0    # Terminal velocity — falls noticeably faster than before
+const HOVER_FORCE: float    = -20.0   # Weaker upward hover nudge, so she drifts down more
 const HOVER_INTERVAL: float = 2    # Seconds between hover nudges
 
 var hover_timer: float = 0.0
