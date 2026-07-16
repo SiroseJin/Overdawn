@@ -136,6 +136,7 @@ func handle_animation():
 
 func take_damage(amount: float):
 	health        -= amount
+	Global.spawn_damage_number(global_position + Vector2(0, -18), int(amount))
 	taking_damage  = true
 	if health <= 0:
 		health = 0

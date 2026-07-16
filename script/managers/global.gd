@@ -128,6 +128,25 @@ func register_caption(node: CanvasItem) -> void:
 	node.add_to_group("caption")
 	node.visible = show_captions
 
+# ─── Damage numbers ──────────────────────────────────────────────────────────────
+# Floating hit numbers over whoever took damage — player (red) and enemies (gold).
+# Toggle persisted by SettingsManager under [game] show_damage_numbers.
+var show_damage_numbers: bool = true
+const _DAMAGE_NUMBER := preload("res://scene/system/vfx/damage_number.tscn")
+
+## Spawn a rising, fading damage number at a world position. No-op if the toggle is off.
+func spawn_damage_number(at: Vector2, amount: int, color: Color = Color(1, 0.9, 0.5)) -> void:
+	if not show_damage_numbers or amount <= 0:
+		return
+	var scene := get_tree().current_scene
+	if scene == null:
+		return
+	var dn := _DAMAGE_NUMBER.instantiate()
+	dn.amount = amount
+	dn.color = color
+	scene.add_child(dn)
+	dn.global_position = at + Vector2(randf_range(-6.0, 6.0), -12.0)
+
 # True only when every "must" NPC in the current scene has had its requirement met
 # (skill unlocked / key granted / required quiz passed). Stage exit portals call this
 # to forbid leaving until the mandatory NPCs have been spoken to.

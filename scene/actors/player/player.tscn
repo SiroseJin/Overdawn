@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://db2pu5tpfap8j"]
 
 [ext_resource type="Script" uid="uid://cdgfe1r263fqs" path="res://scene/actors/player/player.gd" id="1_aicbr"]
+[ext_resource type="Script" path="res://scene/actors/player/hud_feedback.gd" id="hud_fb"]
 [ext_resource type="FontFile" uid="uid://ckwcdsnaosuys" path="res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf" id="2_5yx0s"]
 [ext_resource type="Texture2D" uid="uid://dpc0fhg50xqvf" path="res://art/2D Pixel Dungeon Asset Pack/items and trap_animation/arrow/Just_arrow.png" id="2_8a1l4"]
 [ext_resource type="PackedScene" uid="uid://dnsbssrr88l8n" path="res://scene/ui/pause_menu.tscn" id="2_rg4d1"]
@@ -261,6 +262,7 @@ layer = 100
 scale = Vector2(6.0785, 4.38601)
 
 [node name="Control" type="Control" parent="CanvasLayer" unique_id=1174859178]
+script = ExtResource("hud_fb")
 layout_mode = 3
 anchors_preset = 0
 offset_left = -144.0

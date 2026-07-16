@@ -510,7 +510,9 @@ func take_damage(amount: float) -> void:
 		# Shield eats most of a direct hit — servers are the real answer
 		_reduce_shield(amount * shield_chip_mult)
 		_flash()
+		Global.spawn_damage_number(global_position + Vector2(0, -34), int(amount * shield_chip_mult), Color(0.6, 0.8, 1.0))
 	else:
+		Global.spawn_damage_number(global_position + Vector2(0, -34), int(amount))
 		health = max(0.0, health - amount)
 		_hp_bar.value = health
 		hp_changed.emit(health, health_max)

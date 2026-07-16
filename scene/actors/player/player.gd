@@ -529,6 +529,7 @@ func take_damage(damage: int, source_pos: Vector2 = Vector2.INF):
 	health -= damage
 	update_health_bar()
 	ProgressionManager.notify("player_damaged", {"amount": damage})   # feeds no-hit challenges
+	Global.spawn_damage_number(global_position + Vector2(0, -24), damage, Color(1, 0.4, 0.4))
 
 	if health <= 0:
 		health             = 0
@@ -1000,6 +1001,11 @@ func _setup_toast():
 	$CanvasLayer.add_child(_toast_label)
 
 func show_toast(text: String):
+	# Route to the stacked NotificationList HUD if present; else the fallback float label.
+	var hud := get_node_or_null("CanvasLayer/Control")
+	if hud and hud.has_method("push_notification"):
+		hud.push_notification(text)
+		return
 	if _toast_label == null:
 		return
 	_toast_label.text       = text

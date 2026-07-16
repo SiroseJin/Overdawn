@@ -319,6 +319,7 @@ func _on_summon_cooldown_timeout():
 func take_damage(amount: float):
 	health        -= amount
 	taking_damage  = true
+	Global.spawn_damage_number(global_position + Vector2(0, -22), int(amount))
 	if health <= 0:
 		health = 0
 		dead   = true

@@ -88,6 +88,22 @@ func populate_slots(container: Node, on_pressed: Callable, save_mode: bool = fal
 func slot_exists(slot: int) -> bool:
 	return FileAccess.file_exists(_slot_path(slot))
 
+# The most-recently-written slot (auto-save counts). -1 if there are no saves.
+func latest_slot() -> int:
+	var best := -1
+	var best_time: int = -1
+	for slot in all_slots():
+		if not slot_exists(slot):
+			continue
+		var mt := int(FileAccess.get_modified_time(_slot_path(slot)))
+		if mt >= best_time:
+			best_time = mt
+			best = slot
+	return best
+
+func has_any_save() -> bool:
+	return latest_slot() >= 0
+
 func slot_label(slot: int) -> String:
 	var label_name := _slot_name(slot)
 	if not slot_exists(slot):

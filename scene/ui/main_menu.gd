@@ -13,6 +13,9 @@ extends Control
 func _ready():
 	_handle_transition()
 	audio_player.play()
+	var cont := $MenuUI/MenuSelect.get_node_or_null("Continue")
+	if cont:
+		cont.disabled = not SaveManager.has_any_save()
 
 func _handle_transition():
 	scene_transition_container.show()
@@ -32,6 +35,14 @@ func _on_start_pressed():
 	Global.arcade_mode = false
 	ProgressionManager.reset()
 	get_tree().change_scene_to_file("res://scene/system/lobby_level.tscn")
+
+func _on_continue_pressed():
+	# Jump straight back into the most recent save (auto-save included).
+	audio_click.play()
+	var s := SaveManager.latest_slot()
+	if s >= 0:
+		SaveManager.load_game(s)
+	# No save yet → do nothing (the button is greyed out in _ready).
 
 func _on_load_pressed():
 	audio_click.play()

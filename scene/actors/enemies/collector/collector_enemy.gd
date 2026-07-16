@@ -312,6 +312,7 @@ func _throw_fake_coin(from: Vector2, target: Node2D) -> void:
 func take_damage(amount: float):
 	health        -= amount
 	taking_damage  = true
+	Global.spawn_damage_number(global_position + Vector2(0, -22), int(amount))
 	if health <= 0:
 		health = 0
 		dead   = true

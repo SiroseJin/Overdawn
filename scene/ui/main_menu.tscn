@@ -192,6 +192,11 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_xbuaw")
 text = "Start"
 
+[node name="Continue" type="Button" parent="MenuUI/MenuSelect"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_xbuaw")
+text = "Continue"
+
 [node name="Load" type="Button" parent="MenuUI/MenuSelect" unique_id=607875698]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_xbuaw")
@@ -267,6 +272,7 @@ offset_bottom = 1.0
 [connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
 [connection signal="mouse_entered" from="MenuUI/MenuSelect" to="." method="_on_v_box_container_mouse_entered"]
 [connection signal="pressed" from="MenuUI/MenuSelect/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MenuUI/MenuSelect/Continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="MenuUI/MenuSelect/Load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="MenuUI/MenuSelect/Arcade" to="." method="_on_arcade_pressed"]
 [connection signal="pressed" from="MenuUI/MenuSelect/Progress" to="." method="_on_progress_pressed"]
