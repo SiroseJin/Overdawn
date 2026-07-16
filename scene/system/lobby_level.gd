@@ -17,9 +17,32 @@ func _ready() -> void:
 	lobby_camera.enabled = true
 	scene_transition_anim.play("fade_out")
 	audio_bgm.play()
-	# The lobby NPC's dialogue offers a Yes/No; picking Yes emits this Dialogic signal.
+	# The lobby NPC's dialogue offers a Yes/No; picking Yes emits this Dialogic signal
+	# (kept for compatibility; the choice is now a real prompt shown on `talked`).
 	if Dialogic and not Dialogic.signal_event.is_connected(_on_dialogic_signal):
 		Dialogic.signal_event.connect(_on_dialogic_signal)
+	# Show the "Take the tutorial?" prompt when the lobby NPC's dialogue ends — this
+	# fires whether the player read it or SKIPPED it (#11), so the offer isn't lost.
+	var lobby_npc := get_node_or_null("LobbyNpc")
+	if lobby_npc and not lobby_npc.talked.is_connected(_on_lobby_npc_talked):
+		lobby_npc.talked.connect(_on_lobby_npc_talked)
+
+const TUTORIAL_PROMPT := preload("res://scene/actors/npc/tutorial_prompt.tscn")
+
+func _on_lobby_npc_talked(_npc_id: String) -> void:
+	if _transitioning:
+		return
+	var layer := CanvasLayer.new()
+	layer.layer = 50
+	add_child(layer)
+	var prompt := TUTORIAL_PROMPT.instantiate()
+	layer.add_child(prompt)
+	prompt.answered.connect(func(take: bool):
+		layer.queue_free()
+		if take and not _transitioning:
+			_transitioning = true
+			Global.tutorial_mode = true
+			_fade_then_load("res://scene/Levels/Tutorial/tutorial.tscn"))
 
 func _on_dialogic_signal(arg: Variant) -> void:
 	if arg == "goto_tutorial" and not _transitioning:

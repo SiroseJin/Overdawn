@@ -147,6 +147,7 @@ directories/dtl_directory={
 "yani_rep_id": "res://scene/Levels/Level2/npc/yani_rep_id.dtl"
 }
 layout/style_directory={}
+layout/end_behaviour=1
 glossary/default_case_sensitive=true
 
 [display]

@@ -72,6 +72,8 @@ func _on_damage_numbers_toggle_toggled(toggled_on):
 func _on_language_select_item_selected(index):
 	TranslationServer.set_locale(\"en\" if index == 0 else \"id\")
 	SettingsManager.save_settings()
+	Global.locale_changed.emit()
+	get_tree().call_group(\"localized\", \"on_locale_changed\")
 
 func _on_master_volume_slider_value_changed(value):
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(\"Master\"), linear_to_db(value))

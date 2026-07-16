@@ -34,7 +34,12 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		text = text_en
 		return
+	on_locale_changed()
+	add_to_group("caption")
+	add_to_group("localized")   # Settings re-calls on_locale_changed on language change (#8)
+	visible = Global.show_captions
+
+# Re-apply the right language. Called at load and whenever the locale changes live.
+func on_locale_changed() -> void:
 	var is_id := TranslationServer.get_locale().begins_with("id")
 	text = text_id if (is_id and text_id.strip_edges() != "") else text_en
-	add_to_group("caption")
-	visible = Global.show_captions

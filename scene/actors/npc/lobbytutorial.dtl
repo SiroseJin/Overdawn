@@ -4,8 +4,3 @@ npc1: Press [F] to talk to survivors out there. They know things you need to hea
 npc1: Keep an eye on your health bar — the creatures out there will wear you down.
 npc1: The city ahead was corrupted by something deep inside the internet. You are the one who can trace it to the source.
 npc1: First time here? I can walk you through everything — movement, skills, the traps — in a safe practice room.
-- Yes, show me the tutorial
-	npc1: Smart. Take your time in there.
-	[signal arg="goto_tutorial"]
-- No, I am ready
-	npc1: Brave. Good luck out there.

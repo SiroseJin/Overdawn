@@ -10,6 +10,10 @@ extends Node
 
 # ─── Player ────────────────────────────────────────────────────────────────────
 
+## Emitted when the in-game language changes so manually-localized text (tutorial
+## signs, captions, etc.) can re-apply itself live instead of only at _ready (#7/#8).
+signal locale_changed
+
 var PlayerBody: CharacterBody2D       # Reference to the active Player node
 var PlayerWeaponEquip: bool           # Whether the player currently has a weapon equipped
 

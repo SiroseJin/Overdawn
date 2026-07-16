@@ -47,7 +47,6 @@ func _place_exit_portal_fx() -> void:
 # just works (no need to also touch this script). To add a sign: give it a node name
 # here with its Indonesian translation.
 func _localize_signs() -> void:
-	var id := TranslationServer.get_locale().begins_with("id")
 	var id_text := {
 		"L_move":  "GERAK:  A / D",
 		"L_jump":  "LOMPAT:  SPACE",
@@ -72,10 +71,19 @@ func _localize_signs() -> void:
 	for key in id_text:
 		var lbl := get_node_or_null(key) as Label
 		if lbl:
-			if id:
-				lbl.text = id_text[key]
+			lbl.set_meta("en_text", lbl.text)       # remember the .tscn English original
+			lbl.set_meta("id_text", id_text[key])
 			lbl.visible = false          # revealed by _process when the player is near
 			_sign_labels.append(lbl)
+	add_to_group("localized")
+	on_locale_changed()
+
+# Re-apply sign language — at load and whenever the language is switched live (#7).
+func on_locale_changed() -> void:
+	var id := TranslationServer.get_locale().begins_with("id")
+	for lbl in _sign_labels:
+		if is_instance_valid(lbl) and lbl.has_meta("id_text"):
+			lbl.text = str(lbl.get_meta("id_text")) if id else str(lbl.get_meta("en_text"))
 
 # Reveal each sign only while the player is standing near it — declutters the level.
 func _process(_delta: float) -> void:
