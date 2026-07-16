@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://ctutorialprompt"]
+[gd_scene format=3 uid="uid://ctknastqvyo70"]
 
 [ext_resource type="Script" path="res://scene/actors/npc/tutorial_prompt.gd" id="1_tp"]
 

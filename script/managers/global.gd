@@ -171,6 +171,22 @@ func make_scrollable(content: Control) -> void:
 	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	content.size_flags_vertical   = Control.SIZE_SHRINK_BEGIN
 
+# ─── Dialogic warm-up ────────────────────────────────────────────────────────────
+## Pre-build the Dialogic layout (during a scene fade-in, so any flash is hidden) so
+## the FIRST dialogue of the session doesn't stall while the layout scene is built.
+## The layout lives at /root and persists, so this only does work once per run.
+func warm_dialogic() -> void:
+	if not is_instance_valid(Dialogic):
+		return
+	var styles = Dialogic.get("Styles")
+	if styles == null or styles.has_active_layout_node():
+		return
+	styles.load_style()                 # builds the layout (deferred add_child)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if styles.has_active_layout_node():
+		styles.get_layout_node().hide() # keep it hidden until a real dialogue shows it
+
 ## Spawn a rising, fading damage number at a world position. No-op if the toggle is off.
 func spawn_damage_number(at: Vector2, amount: int, color: Color = Color(1, 0.9, 0.5)) -> void:
 	if not show_damage_numbers or amount <= 0:

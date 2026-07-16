@@ -177,6 +177,7 @@ func autosave_on_enter() -> void:
 	var scn := get_tree().current_scene
 	if scn:
 		ProgressionManager.notify("stage_entered", {"stage_id": String(scn.name).to_lower()})
+	Global.warm_dialogic()   # pre-build the dialogue layout so the first NPC talk is instant
 	await get_tree().create_timer(0.7).timeout
 	autosave()
 
