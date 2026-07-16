@@ -26,6 +26,7 @@ _data = {
 point_count = 7
 
 [node name="Stage6" type="Node2D" unique_id=1039610357]
+position = Vector2(-69, -26)
 script = ExtResource("1_stg6")
 
 [node name="SciFiLabParallax" parent="." unique_id=1362539314 instance=ExtResource("bg_city")]

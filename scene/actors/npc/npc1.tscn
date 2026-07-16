@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://d0ib3gkf0fyen"]
-[ext_resource type="PackedScene" uid="uid://ccaptionmod01" path="res://scene/ui/caption/caption.tscn" id="cap_lbl_9"]
 
 [ext_resource type="Script" uid="uid://cuv8ghi02bo6s" path="res://scene/actors/npc/npc_1.gd" id="1_4hgyg"]
 [ext_resource type="Texture2D" uid="uid://bxxq1jl0my4tu" path="res://art/Free-City-Trader-Character-Sprite-Sheets-Pixel-Art/Trader_3/Idle.png" id="1_15n37"]
 [ext_resource type="Texture2D" uid="uid://bpu6b0wvtr57k" path="res://art/Free-City-Trader-Character-Sprite-Sheets-Pixel-Art/Trader_3/Dialogue.png" id="1_sxijf"]
 [ext_resource type="FontFile" uid="uid://ddajqwdacvnhs" path="res://art/Fonts/skeleboom.ttf" id="2_font"]
 [ext_resource type="Script" uid="uid://cx2mbhe5mu2aw" path="res://scene/actors/npc/npc1_chat_detection_zone.gd" id="3_4hgyg"]
+[ext_resource type="PackedScene" uid="uid://ccaptionmod01" path="res://scene/ui/caption/caption.tscn" id="cap_lbl_9"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wo54f"]
 atlas = ExtResource("1_sxijf")
@@ -133,12 +133,10 @@ theme_override_font_sizes/font_size = 11
 text = "[F] Talk"
 horizontal_alignment = 1
 
-
-[node name="Caption" parent="." instance=ExtResource("cap_lbl_9")]
-offset_left = -60.0
-offset_top = -96.0
-offset_right = 60.0
-offset_bottom = -78.0
+[node name="Caption" parent="." unique_id=1893463539 instance=ExtResource("cap_lbl_9")]
+offset_top = -41.0
+offset_bottom = -23.0
+text = "NPC"
 text_en = "NPC"
 text_id = "NPC"
 

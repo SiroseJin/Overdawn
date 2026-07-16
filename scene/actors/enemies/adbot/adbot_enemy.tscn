@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dyuawibkpcwfh"]
-[ext_resource type="PackedScene" uid="uid://ccaptionmod01" path="res://scene/ui/caption/caption.tscn" id="cap_lbl_9"]
 
 [ext_resource type="Script" uid="uid://b4yhgyhcr8ygo" path="res://scene/actors/enemies/adbot/adbot_enemy.gd" id="1_dm5nb"]
 [ext_resource type="Texture2D" uid="uid://id46v33cw3ne" path="res://art/free-drones-pack-pixel-art/1 Drones/1/Death.png" id="2_dequj"]
 [ext_resource type="Texture2D" uid="uid://cg8p2h2q7vyop" path="res://art/free-drones-pack-pixel-art/1 Drones/1/Scan.png" id="3_7wkd5"]
 [ext_resource type="Texture2D" uid="uid://i3yudrhxcu7h" path="res://art/free-drones-pack-pixel-art/1 Drones/1/Idle.png" id="4_odgys"]
+[ext_resource type="PackedScene" uid="uid://ccaptionmod01" path="res://scene/ui/caption/caption.tscn" id="cap_lbl_9"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d7ely"]
 atlas = ExtResource("2_dequj")
@@ -245,12 +245,12 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone" unique_id=258573586]
 shape = SubResource("CircleShape2D_u4orr")
 
-
-[node name="Caption" parent="." instance=ExtResource("cap_lbl_9")]
-offset_left = -60.0
-offset_top = -60.0
-offset_right = 60.0
-offset_bottom = -42.0
+[node name="Caption" parent="." unique_id=1709898216 instance=ExtResource("cap_lbl_9")]
+offset_left = -59.0
+offset_top = -19.0
+offset_right = 61.0
+offset_bottom = -1.0
+text = "Ad Bot"
 text_en = "Ad Bot"
 text_id = "Bot Iklan"
 

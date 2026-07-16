@@ -44,6 +44,12 @@ var roam_range: float = 80.0
 var charging: bool = false
 var charging_timer: Timer
 
+# Charge telegraph: a glowing orb gathers at her hands and swells while she winds up,
+# then vanishes the moment the fireball launches.
+@export var charge_fx_color: Color = Color(0.5, 0.75, 1.0)   # bluish glow, matches the blue fireball
+var _charge_fx: Node2D
+var _charge_elapsed: float = 0.0
+
 var Player: CharacterBody2D
 var health_bar: ProgressBar
 
@@ -73,6 +79,7 @@ func _ready():
 func _process(_delta):
 	move(_delta)
 	handle_animation()
+	_update_charge_fx(_delta)
 
 	# NOTE: "Amount" typo is intentional — matches the Global variable name
 	Global.collectorDamageAmount = damage_to_deal
@@ -194,11 +201,48 @@ func handle_animation():
 func charge():
 	if not charging and not dead:
 		charging = true
-		Global.spawn_fx("orb", global_position, 0.6)   # gathering fire orb — attack telegraph
-		charging_timer.start()
+		charging_timer.start()   # the swelling telegraph orb is driven by _update_charge_fx
 	elif dead:
 		charging = false
 		charging_timer.stop()
+
+# ─── Charge telegraph ────────────────────────────────────────────────────────────
+# Where the orb / fireball leaves her: forward toward the player and up at hand height.
+func _muzzle_pos() -> Vector2:
+	var facing := 1.0
+	var p = Global.PlayerBody
+	if is_instance_valid(p):
+		facing = 1.0 if p.global_position.x >= global_position.x else -1.0
+	elif dir.x != 0.0:
+		facing = signf(dir.x)
+	return global_position + Vector2(facing * 20.0, -26.0)
+
+# Spawn / follow / grow the glowing orb while she charges; clear it otherwise.
+func _update_charge_fx(delta: float) -> void:
+	if charging and not dead:
+		if not is_instance_valid(_charge_fx):
+			_charge_fx = Global.spawn_fx("orb", _muzzle_pos(), 0.12, charge_fx_color, true)
+			_charge_elapsed = 0.0
+			if is_instance_valid(_charge_fx):
+				_charge_fx.z_index = 2   # in front of the witch
+		if is_instance_valid(_charge_fx):
+			_charge_elapsed += delta
+			_charge_fx.global_position = _muzzle_pos()
+			# Gather from tiny up to about the fireball's size, with a subtle pulse.
+			var wind_up: float = charging_timer.wait_time if charging_timer else 5.0
+			var t: float = clampf(_charge_elapsed / max(0.1, wind_up), 0.0, 1.0)
+			var s: float = lerpf(0.12, 0.4, t) + 0.04 * sin(_charge_elapsed * 18.0)
+			_charge_fx.scale = Vector2(s, s)
+	else:
+		_clear_charge_fx()
+
+func _clear_charge_fx() -> void:
+	if is_instance_valid(_charge_fx):
+		_charge_fx.queue_free()
+	_charge_fx = null
+
+func _exit_tree() -> void:
+	_clear_charge_fx()
 
 func _on_charging_timeout():
 	if dead:
@@ -217,11 +261,14 @@ func release_fireball():
 	var target = Player if is_instance_valid(Player) else Global.PlayerBody
 	if not is_instance_valid(target):
 		return
+	# Spawn from the witch's hands (same point the charge orb gathered): lifted above
+	# her feet and pushed forward toward the player, so it never appears at ground level.
+	var muzzle := _muzzle_pos()
 	var fireball_scene = preload("res://scene/actors/enemies/collector/collector_fireball.tscn")
 	var fireball       = fireball_scene.instantiate()
 	get_parent().add_child(fireball)
-	fireball.global_position = $ProjectileOutput.global_position
-	fireball.direction = (target.global_position - $ProjectileOutput.global_position).normalized()
+	fireball.global_position = muzzle
+	fireball.direction = (target.global_position - muzzle).normalized()
 
 func take_damage(amount: float):
 	health        -= amount

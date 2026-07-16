@@ -270,6 +270,10 @@ locked_hint = "Locked. The key is at the top of the climb."
 
 [node name="RisingDebt" parent="." unique_id=822828934 instance=ExtResource("itm_debt")]
 position = Vector2(875, 900)
+popcorn_interval = 0.2
+popcorn_per_pop = 4
+popcorn_launch = 220.0
+popcorn_spread_x = 620.0
 
 [node name="Adbot4" parent="." unique_id=925523153 instance=ExtResource("7_bat")]
 position = Vector2(829, -726)

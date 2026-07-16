@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cdebtpopcorn0"]
+
+[ext_resource type="Script" path="res://scene/Levels/Level3/gimmicks/rising_debt/debt_popcorn.gd" id="1_pop"]
+[ext_resource type="Texture2D" uid="uid://b1h0u76jnh4b8" path="res://art/2D Pixel Dungeon Asset Pack/items and trap_animation/coin/coin_1.png" id="2_coin"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pop"]
+radius = 6.0
+
+[node name="DebtPopcorn" type="Area2D"]
+z_index = 2
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_pop")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+modulate = Color(1, 0.28, 0.24, 1)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("2_coin")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pop")
