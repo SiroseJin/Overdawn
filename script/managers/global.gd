@@ -134,6 +134,39 @@ func register_caption(node: CanvasItem) -> void:
 var show_damage_numbers: bool = true
 const _DAMAGE_NUMBER := preload("res://scene/system/vfx/damage_number.tscn")
 
+# ─── Scrollable menus ────────────────────────────────────────────────────────────
+## Wrap `content` (a menu's main container) in a ScrollContainer occupying the same
+## slot, so it scrolls vertically instead of overflowing/clipping. Idempotent and
+## layout-preserving — call it once from a menu's _ready. Future-proof: any menu that
+## might grow past its panel just calls this and stays scrollable.
+func make_scrollable(content: Control) -> void:
+	if content == null:
+		return
+	var parent := content.get_parent() as Control
+	if parent == null or parent is ScrollContainer:
+		return
+	var idx := content.get_index()
+	var scroll := ScrollContainer.new()
+	scroll.name = String(content.name) + "Scroll"
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	# Occupy the same slot/layout the content had.
+	scroll.size_flags_horizontal = content.size_flags_horizontal
+	scroll.size_flags_vertical   = content.size_flags_vertical
+	scroll.anchor_left   = content.anchor_left
+	scroll.anchor_top    = content.anchor_top
+	scroll.anchor_right  = content.anchor_right
+	scroll.anchor_bottom = content.anchor_bottom
+	scroll.offset_left   = content.offset_left
+	scroll.offset_top    = content.offset_top
+	scroll.offset_right  = content.offset_right
+	scroll.offset_bottom = content.offset_bottom
+	parent.remove_child(content)
+	parent.add_child(scroll)
+	parent.move_child(scroll, idx)
+	scroll.add_child(content)
+	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	content.size_flags_vertical   = Control.SIZE_SHRINK_BEGIN
+
 ## Spawn a rising, fading damage number at a world position. No-op if the toggle is off.
 func spawn_damage_number(at: Vector2, amount: int, color: Color = Color(1, 0.9, 0.5)) -> void:
 	if not show_damage_numbers or amount <= 0:

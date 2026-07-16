@@ -39,6 +39,8 @@ func _ready():
 	if sfx_idx != -1:
 		vbox.get_node(\"SFXVolumeSlider\").value = db_to_linear(AudioServer.get_bus_volume_db(sfx_idx))
 
+	Global.make_scrollable(vbox)   # scroll instead of overflowing the panel
+
 func _on_resolution_select_item_selected(index):
 	var res = resolutions[index]
 	DisplayServer.window_set_size(res)

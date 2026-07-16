@@ -62,6 +62,9 @@ func _ready() -> void:
 	_vbox.move_child(_dead_test_btn, _vbox.get_child_count() - 1)
 	_vbox.move_child(_back_btn, _vbox.get_child_count() - 1)
 
+	# The toolkit grows past the panel — make it scroll instead of clipping.
+	Global.make_scrollable(_vbox)
+
 # ─── Generated toolkit ──────────────────────────────────────────────────────────
 
 func _build_tools(has_player: bool) -> void:
