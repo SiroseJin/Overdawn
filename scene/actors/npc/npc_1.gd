@@ -162,6 +162,11 @@ func start_dialogue():
 	is_chatting = true
 	interact_hint.hide()
 
+	# Build the quiz UI now (hidden), while the dialogue plays, so it opens instantly
+	# when the dialogue ends instead of being constructed at that moment.
+	if quiz_id != "":
+		QuizManager.preload_ui()
+
 	# Safe zone: the player can't be hurt while a conversation is happening.
 	if is_instance_valid(Global.PlayerBody):
 		Global.PlayerBody.conversation_safe = true

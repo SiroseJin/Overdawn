@@ -333,6 +333,16 @@ var _quiz_id := ""
 # called as on_finished(correct, total) once the player closes the results —
 # the caller (an NPC) decides the reward / whether they may proceed. A perfect
 # score (correct == total) is a pass.
+# Build the quiz UI ahead of time (hidden) so opening it later is instant. Call when
+# the player starts a quiz NPC's dialogue — the (heavy) UI is constructed while they
+# read, so showing it when the dialogue ends costs nothing.
+func preload_ui() -> void:
+	if _active:
+		return
+	_ensure_ui()
+	if _layer:
+		_layer.visible = false
+
 func start_quiz(quiz_id: String, on_finished := Callable()) -> void:
 	if _begin(quiz_id, on_finished):
 		_show_question()
