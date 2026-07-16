@@ -545,6 +545,7 @@ func _hide_shield() -> void:
 
 func _die() -> void:
 	dead = true
+	ProgressionManager.notify("boss_defeated", {})   # UC-009/008: the House is beaten
 	_hide_shield()
 	_spawn_burst(global_position, 2.2)   # the House goes down
 	_clear_servers()

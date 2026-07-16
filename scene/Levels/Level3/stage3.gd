@@ -18,7 +18,8 @@ var _transitioning := false
 func _ready() -> void:
 	Global.gameStarted = true
 	SaveManager.autosave_on_enter()   # auto-save (after fade-in) on entering the stage
-	Global.decorate_stage_portals()   # colour-coded portal beacons
+	Global.decorate_stage_portals()
+	CollectibleManager.populate(self, "stage3")   # UC-004 Truth Shards   # colour-coded portal beacons
 	scene_transition_anim.play("fade_out")
 	audio_bgm.play()
 	_apply_npc_skins()
@@ -40,10 +41,14 @@ func _skin(npc_name: String, trader: String) -> void:
 			load(TRADER + trader + "/Dialogue.png"))
 
 func _configure_npcs() -> void:
+	var repeats := {"Damar": "damar_rep", "Rina": "rina_rep", "Toni": "toni_rep"}
 	for pair in [["Damar", "stage3_damar"], ["Rina", "stage3_rina"],
 			["Toni", "stage3_toni"], ["Sinta", "stage3_sinta"]]:
 		var n := get_node_or_null(pair[0])
-		if n: n.npc_id = pair[1]
+		if n:
+			n.npc_id = pair[1]
+			if repeats.has(pair[0]):
+				n.repeat_timeline = repeats[pair[0]]
 	# Sinta hosts the OPTIONAL end-of-stage quiz — themed on this layer's rising debt.
 	var sinta := get_node_or_null("Sinta")
 	if sinta:
@@ -51,6 +56,7 @@ func _configure_npcs() -> void:
 		sinta.quiz_optional          = true
 		sinta.quiz_bonus_coins       = 20
 		sinta.quiz_bonus_skill_point = true
+		sinta.post_quiz_timeline     = "s3sintapost"
 
 # ─── Transitions ─────────────────────────────────────────────────────────────────
 

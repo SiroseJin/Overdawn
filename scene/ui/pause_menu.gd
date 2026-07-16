@@ -90,6 +90,19 @@ func _on_settings_pressed():
 			show()
 	)
 
+func _on_progress_pressed():
+	if audio_open: audio_open.play()
+	if get_parent().get_node_or_null("ProgressOverlay"):
+		return
+	var pm: Node = (load("res://scene/ui/progress_menu.tscn") as PackedScene).instantiate()
+	pm.name = "ProgressOverlay"
+	get_parent().add_child(pm)
+	hide()
+	pm.tree_exited.connect(func():
+		if is_instance_valid(self):
+			show()
+	)
+
 func _on_debug_pressed():
 	if audio_open: audio_open.play()
 	var debug: Node = (load("res://scene/ui/debug_settings.tscn") as PackedScene).instantiate()

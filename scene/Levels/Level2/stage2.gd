@@ -12,7 +12,8 @@ var _transitioning := false
 func _ready() -> void:
 	Global.gameStarted = true
 	SaveManager.autosave_on_enter()   # auto-save (after fade-in) on entering the stage
-	Global.decorate_stage_portals()   # colour-coded portal beacons
+	Global.decorate_stage_portals()
+	CollectibleManager.populate(self, "stage2")   # UC-004 Truth Shards   # colour-coded portal beacons
 	scene_transition_anim.play("fade_out")
 	audio_bgm.play()
 	_apply_npc_skins()
@@ -20,10 +21,15 @@ func _ready() -> void:
 
 # Give each NPC a stable id so the game remembers who's been spoken to.
 func _configure_npcs() -> void:
+	# Each non-quiz NPC gets a shorter repeat line for return visits.
+	var repeats := {"Nadia": "nadia_rep", "Eko": "eko_rep", "Yani": "yani_rep"}
 	for pair in [["Nadia", "stage2_nadia"], ["Eko", "stage2_eko"],
 			["Rafi", "stage2_rafi"], ["Yani", "stage2_yani"]]:
 		var n := get_node_or_null(pair[0])
-		if n: n.npc_id = pair[1]
+		if n:
+			n.npc_id = pair[1]
+			if repeats.has(pair[0]):
+				n.repeat_timeline = repeats[pair[0]]
 	# Yani is the must-talk gate NPC: speaking to her unlocks Double Jump AND hands
 	# over the key that opens the exit door — no key to hunt for.
 	var yani := get_node_or_null("Yani")
@@ -37,6 +43,7 @@ func _configure_npcs() -> void:
 		rafi.quiz_optional          = true
 		rafi.quiz_bonus_coins       = 20
 		rafi.quiz_bonus_skill_point = true
+		rafi.post_quiz_timeline     = "s2rafipost"
 
 # Give each placed NPC a distinct trader look.
 func _apply_npc_skins() -> void:

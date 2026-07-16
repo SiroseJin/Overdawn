@@ -17,7 +17,8 @@ var _transitioning := false
 func _ready() -> void:
 	Global.gameStarted = true
 	SaveManager.autosave_on_enter()   # auto-save (after fade-in) on entering the stage
-	Global.decorate_stage_portals()   # colour-coded portal beacons
+	Global.decorate_stage_portals()
+	CollectibleManager.populate(self, "stage5")   # UC-004 Truth Shards   # colour-coded portal beacons
 	scene_transition_anim.play("fade_out")
 	audio_bgm.play()
 	_apply_npc_skins()
@@ -36,7 +37,9 @@ func _skin(npc_name: String, trader: String) -> void:
 
 func _configure_npcs() -> void:
 	var n1 := get_node_or_null("Arif")
-	if n1: n1.npc_id = "stage5_intro"
+	if n1:
+		n1.npc_id = "stage5_intro"
+		n1.repeat_timeline = "arif_rep"
 
 	# The must-do final quiz at the end (Wira). Passing grants the key that opens
 	# the gate to Stage 6 (the boss). Non-consuming so retries don't force a redo.
@@ -48,6 +51,9 @@ func _configure_npcs() -> void:
 		quiz.quiz_id            = "stage5_quiz"
 		quiz.quiz_optional      = false
 		quiz.quiz_grants_key    = "stage5_boss_key"
+		# Clearing the final gauntlet's quiz also pays out a bonus, not just the key.
+		quiz.quiz_bonus_coins       = 30
+		quiz.quiz_bonus_skill_point = true
 		# Talking to Wira reveals the two hidden lifts by the exit.
 		quiz.talked.connect(_reveal_hidden_lifts)
 

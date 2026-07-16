@@ -19,7 +19,8 @@ var _transitioning := false
 func _ready() -> void:
 	Global.gameStarted = true
 	SaveManager.autosave_on_enter()   # auto-save (after fade-in) on entering the stage
-	Global.decorate_stage_portals()   # colour-coded portal beacons
+	Global.decorate_stage_portals()
+	CollectibleManager.populate(self, "stage4")   # UC-004 Truth Shards   # colour-coded portal beacons
 	scene_transition_anim.play("fade_out")
 	audio_bgm.play()
 	_apply_npc_skins()
@@ -41,17 +42,22 @@ func _skin(npc_name: String, trader: String) -> void:
 
 func _configure_npcs() -> void:
 	var n1 := get_node_or_null("Vino")
-	if n1: n1.npc_id = "stage4_vino"
+	if n1:
+		n1.npc_id = "stage4_vino"
+		n1.repeat_timeline = "vino_rep"
 	# Mega: must-talk NPC. Speaking to her unlocks Firewall AND brings up the bridge
 	# platform (MovingPlatform1, dormant until then) so you can cross the first gap.
 	var n2 := get_node_or_null("Mega")
 	if n2:
 		n2.npc_id = "stage4_mega"
 		n2.unlocks_skill = "firewall"
+		n2.repeat_timeline = "mega_rep"
 		if not n2.talked.is_connected(_on_mega_talked):
 			n2.talked.connect(_on_mega_talked)
 	var n3 := get_node_or_null("Guntur")
-	if n3: n3.npc_id = "stage4_guntur"
+	if n3:
+		n3.npc_id = "stage4_guntur"
+		n3.repeat_timeline = "guntur_rep"
 
 	# Laras (end): optional quiz for a bonus, distinct post-quiz line.
 	var n4 := get_node_or_null("Laras")
@@ -61,6 +67,7 @@ func _configure_npcs() -> void:
 		n4.quiz_optional      = true
 		n4.quiz_bonus_coins   = 25
 		n4.quiz_bonus_skill_point = true
+		n4.post_quiz_timeline = "s4laraspost"
 
 # Bring up the dormant bridge platform once Mega has been spoken to.
 func _on_mega_talked(_npc_id: String) -> void:

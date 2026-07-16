@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://ctruthshard01"]
+
+[ext_resource type="Script" path="res://scene/pickups/collectible/collectible.gd" id="1_col"]
+[ext_resource type="PackedScene" uid="uid://ccaptionmod01" path="res://scene/ui/caption/caption.tscn" id="2_cap"]
+[ext_resource type="AudioStream" uid="uid://c43a8verhfptb" path="res://art/Audio/collect-points-190037.mp3" id="3_snd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_shard"]
+radius = 11.0
+
+[node name="Collectible" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_col")
+
+[node name="Glow" type="Polygon2D" parent="."]
+color = Color(0.4, 1, 0.85, 0.28)
+polygon = PackedVector2Array(0, -16, 12, 0, 0, 16, -12, 0)
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(0.55, 1, 0.9, 1)
+polygon = PackedVector2Array(0, -9, 5, 0, 0, 9, -5, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_shard")
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_snd")
+volume_db = -4.0
+bus = &"sfx"
+
+[node name="Caption" parent="." instance=ExtResource("2_cap")]
+offset_left = -60.0
+offset_top = -40.0
+offset_right = 60.0
+offset_bottom = -22.0
+text_en = "Truth Shard"
+text_id = "Pecahan Kebenaran"

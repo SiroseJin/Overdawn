@@ -29,6 +29,10 @@ signal talked(npc_id: String)
 ## Dialogue shown once the quiz has been passed — a different, closing line so the
 ## NPC doesn't just repeat the intro. Falls back to the intro if left empty.
 @export var post_quiz_timeline: String = ""
+## Dialogue shown on REPEAT visits to a NON-quiz NPC (after they've been talked to
+## once). Lets the NPC acknowledge you the second time instead of re-reading the whole
+## intro. Leave empty to just replay the intro. (Quiz NPCs use post_quiz_timeline.)
+@export var repeat_timeline: String = ""
 ## Optional distinct look. Assign idle + dialogue sprite sheets (128×128 frames)
 ## to make this NPC visually different from the others.
 @export var idle_texture: Texture2D
@@ -190,6 +194,10 @@ func start_dialogue():
 # Which dialogue (if any) to play before the quiz offer/gate, based on progress.
 func _dialogue_to_play() -> String:
 	if quiz_id == "":
+		# Non-quiz NPC: after the first chat, switch to the shorter repeat line if one
+		# is set, so returning to them isn't a re-read of the whole intro.
+		if repeat_timeline != "" and npc_id != "" and ProgressionManager.has_talked_to(npc_id):
+			return repeat_timeline
 		return dialogue_timeline
 	if ProgressionManager.has_talked_to("quizpass_" + quiz_id):
 		# Quiz already passed → show the distinct post-quiz dialogue.
@@ -240,6 +248,7 @@ func _on_quiz_finished(correct: int, total: int) -> void:
 	# Passed. Reward only the first time so retakes are review, not farming.
 	var first_pass := not ProgressionManager.has_talked_to("quizpass_" + quiz_id)
 	ProgressionManager.mark_npc_talked("quizpass_" + quiz_id)
+	ProgressionManager.notify("quiz_passed", {"quiz_id": quiz_id})   # feeds quests + quiz badges
 	if first_pass:
 		if quiz_grants_key != "" and not ProgressionManager.has_key(quiz_grants_key):
 			ProgressionManager.add_key(quiz_grants_key)

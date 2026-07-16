@@ -33,6 +33,9 @@ TranslationManager="*res://script/managers/translation_manager.gd"
 SettingsManager="*res://script/managers/settings_manager.gd"
 ProgressionManager="*res://script/managers/progression_manager.gd"
 QuizManager="*res://script/managers/quiz_manager.gd"
+CollectibleManager="*res://script/managers/collectible_manager.gd"
+QuestManager="*res://script/managers/quest_manager.gd"
+BadgeManager="*res://script/managers/badge_manager.gd"
 
 [dialogic]
 
@@ -60,8 +63,24 @@ directories/dch_directory={
 "npc1": "res://scene/npc1.dch"
 }
 directories/dtl_directory={
+"ana_rep": "res://scene/Levels/Level1/npc/ana_rep.dtl",
+"ana_rep_id": "res://scene/Levels/Level1/npc/ana_rep_id.dtl",
+"arif_rep": "res://scene/Levels/Level5/npc/arif_rep.dtl",
+"arif_rep_id": "res://scene/Levels/Level5/npc/arif_rep_id.dtl",
+"damar_rep": "res://scene/Levels/Level3/npc/damar_rep.dtl",
+"damar_rep_id": "res://scene/Levels/Level3/npc/damar_rep_id.dtl",
+"eko_rep": "res://scene/Levels/Level2/npc/eko_rep.dtl",
+"eko_rep_id": "res://scene/Levels/Level2/npc/eko_rep_id.dtl",
+"guntur_rep": "res://scene/Levels/Level4/npc/guntur_rep.dtl",
+"guntur_rep_id": "res://scene/Levels/Level4/npc/guntur_rep_id.dtl",
+"hendra_rep": "res://scene/Levels/Level1/npc/hendra_rep.dtl",
+"hendra_rep_id": "res://scene/Levels/Level1/npc/hendra_rep_id.dtl",
 "lobbytutorial": "res://scene/actors/npc/lobbytutorial.dtl",
 "lobbytutorial_id": "res://scene/actors/npc/lobbytutorial_id.dtl",
+"mega_rep": "res://scene/Levels/Level4/npc/mega_rep.dtl",
+"mega_rep_id": "res://scene/Levels/Level4/npc/mega_rep_id.dtl",
+"nadia_rep": "res://scene/Levels/Level2/npc/nadia_rep.dtl",
+"nadia_rep_id": "res://scene/Levels/Level2/npc/nadia_rep_id.dtl",
 "npc1timeline": "res://scene/Levels/Level1/npc/npc1timeline.dtl",
 "npc1timeline_id": "res://scene/Levels/Level1/npc/npc1timeline_id.dtl",
 "npc2timeline": "res://scene/Levels/Level1/npc/npc2timeline.dtl",
@@ -70,6 +89,8 @@ directories/dtl_directory={
 "npc3timeline_id": "res://scene/Levels/Level1/npc/npc3timeline_id.dtl",
 "npc4timeline": "res://scene/Levels/Level1/npc/npc4timeline.dtl",
 "npc4timeline_id": "res://scene/Levels/Level1/npc/npc4timeline_id.dtl",
+"rina_rep": "res://scene/Levels/Level3/npc/rina_rep.dtl",
+"rina_rep_id": "res://scene/Levels/Level3/npc/rina_rep_id.dtl",
 "s1endpost": "res://scene/Levels/Level1/npc/s1endpost.dtl",
 "s1endpost_id": "res://scene/Levels/Level1/npc/s1endpost_id.dtl",
 "s1gatekeepertimeline": "res://scene/Levels/Level1/npc/s1gatekeepertimeline.dtl",
@@ -84,6 +105,8 @@ directories/dtl_directory={
 "s2npc3timeline_id": "res://scene/Levels/Level2/npc/s2npc3timeline_id.dtl",
 "s2npc4timeline": "res://scene/Levels/Level2/npc/s2npc4timeline.dtl",
 "s2npc4timeline_id": "res://scene/Levels/Level2/npc/s2npc4timeline_id.dtl",
+"s2rafipost": "res://scene/Levels/Level2/npc/s2rafipost.dtl",
+"s2rafipost_id": "res://scene/Levels/Level2/npc/s2rafipost_id.dtl",
 "s3npc1timeline": "res://scene/Levels/Level3/npc/s3npc1timeline.dtl",
 "s3npc1timeline_id": "res://scene/Levels/Level3/npc/s3npc1timeline_id.dtl",
 "s3npc2timeline": "res://scene/Levels/Level3/npc/s3npc2timeline.dtl",
@@ -92,6 +115,10 @@ directories/dtl_directory={
 "s3npc3timeline_id": "res://scene/Levels/Level3/npc/s3npc3timeline_id.dtl",
 "s3npc4timeline": "res://scene/Levels/Level3/npc/s3npc4timeline.dtl",
 "s3npc4timeline_id": "res://scene/Levels/Level3/npc/s3npc4timeline_id.dtl",
+"s3sintapost": "res://scene/Levels/Level3/npc/s3sintapost.dtl",
+"s3sintapost_id": "res://scene/Levels/Level3/npc/s3sintapost_id.dtl",
+"s4laraspost": "res://scene/Levels/Level4/npc/s4laraspost.dtl",
+"s4laraspost_id": "res://scene/Levels/Level4/npc/s4laraspost_id.dtl",
 "s4npc1timeline": "res://scene/Levels/Level4/npc/s4npc1timeline.dtl",
 "s4npc1timeline_id": "res://scene/Levels/Level4/npc/s4npc1timeline_id.dtl",
 "s4npc2timeline": "res://scene/Levels/Level4/npc/s4npc2timeline.dtl",
@@ -106,10 +133,18 @@ directories/dtl_directory={
 "s5bossgatepost_id": "res://scene/Levels/Level5/npc/s5bossgatepost_id.dtl",
 "s5npc1timeline": "res://scene/Levels/Level5/npc/s5npc1timeline.dtl",
 "s5npc1timeline_id": "res://scene/Levels/Level5/npc/s5npc1timeline_id.dtl",
+"sari_rep": "res://scene/Levels/Level1/npc/sari_rep.dtl",
+"sari_rep_id": "res://scene/Levels/Level1/npc/sari_rep_id.dtl",
+"toni_rep": "res://scene/Levels/Level3/npc/toni_rep.dtl",
+"toni_rep_id": "res://scene/Levels/Level3/npc/toni_rep_id.dtl",
 "tut_optional": "res://scene/Levels/Tutorial/npc/tut_optional.dtl",
 "tut_optional_id": "res://scene/Levels/Tutorial/npc/tut_optional_id.dtl",
 "tut_required": "res://scene/Levels/Tutorial/npc/tut_required.dtl",
-"tut_required_id": "res://scene/Levels/Tutorial/npc/tut_required_id.dtl"
+"tut_required_id": "res://scene/Levels/Tutorial/npc/tut_required_id.dtl",
+"vino_rep": "res://scene/Levels/Level4/npc/vino_rep.dtl",
+"vino_rep_id": "res://scene/Levels/Level4/npc/vino_rep_id.dtl",
+"yani_rep": "res://scene/Levels/Level2/npc/yani_rep.dtl",
+"yani_rep_id": "res://scene/Levels/Level2/npc/yani_rep_id.dtl"
 }
 layout/style_directory={}
 glossary/default_case_sensitive=true

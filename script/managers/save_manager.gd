@@ -156,6 +156,11 @@ func autosave() -> void:
 # Stage-entry auto-save: wait out the fade-in first so the thumbnail isn't a black
 # screen. Stages call this (fire-and-forget) from their _ready.
 func autosave_on_enter() -> void:
+	# Fire a "stage_entered" event first (synchronously) so quests/badges reset their
+	# per-stage trackers, e.g. the no-hit challenge, before the player can be hit.
+	var scn := get_tree().current_scene
+	if scn:
+		ProgressionManager.notify("stage_entered", {"stage_id": String(scn.name).to_lower()})
 	await get_tree().create_timer(0.7).timeout
 	autosave()
 

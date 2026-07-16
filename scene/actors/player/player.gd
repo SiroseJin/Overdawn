@@ -416,13 +416,23 @@ func shoot_arrow():
 	if not infinite_arrows and arrows_held <= 0:
 		return
 
+	# Muzzle anchored to the player's OWN world position (+ a hand-height offset that
+	# flips with facing). Using global_position directly means the arrow always spawns
+	# on the player — the old code wrote a global value into the arrow's LOCAL position,
+	# which placed it off in the world when the parent stage wasn't at the origin.
+	var facing: float   = -1.0 if animated_sprite_2d.flip_h else 1.0
+	var muzzle: Vector2 = global_position + Vector2(6.0 * facing, -16.0)
+
+	var mouse_pos: Vector2 = get_global_mouse_position()
+	var aim: Vector2       = mouse_pos - muzzle
+	aim = aim.normalized() if aim.length() > 0.01 else Vector2(facing, 0.0)
+
 	var arrow_scene    = preload("res://scene/actors/player/arrow.tscn")
 	var arrow_instance = arrow_scene.instantiate()
 	get_parent().add_child(arrow_instance)
-
-	arrow_instance.position  = $ProjectileOutput.global_position
-	var mouse_pos             = get_global_mouse_position()
-	arrow_instance.direction  = (mouse_pos - $ProjectileOutput.global_position).normalized()
+	arrow_instance.global_position = muzzle
+	arrow_instance.direction       = aim
+	arrow_instance.rotation        = aim.angle() + PI / 2.0
 
 	if not infinite_arrows:
 		arrows_held -= 1
@@ -482,6 +492,7 @@ func level_up():
 	update_health_bar()
 	# RPG: each level grants a skill point to spend in the stat screen
 	ProgressionManager.add_skill_points(1)
+	ProgressionManager.notify("level_up", {"level": level})   # feeds level badges
 	show_toast(tr("Level up! +1 Skill Point"))
 
 func update_exp_lvl_label():
@@ -514,6 +525,7 @@ func take_damage(damage: int, source_pos: Vector2 = Vector2.INF):
 
 	health -= damage
 	update_health_bar()
+	ProgressionManager.notify("player_damaged", {"amount": damage})   # feeds no-hit challenges
 
 	if health <= 0:
 		health             = 0

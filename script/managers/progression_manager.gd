@@ -21,6 +21,15 @@ signal key_changed(key_id: String, held: bool)
 signal coins_changed(total: int)
 signal skill_points_changed(total: int)
 
+# ─── Gamification hub ────────────────────────────────────────────────────────────
+# A single generic event bus so quests (QuestManager) and badges (BadgeManager) can
+# react to anything that happens without every gameplay system needing to know they
+# exist. Gameplay code calls ProgressionManager.notify("quiz_passed", {...}); the
+# managers listen on `game_event`. Keeps the new systems fully additive.
+signal game_event(event_name: String, data: Dictionary)
+signal collectible_changed(total: int)
+signal badge_unlocked(badge_id: String)
+
 # Skills the player starts with. `false` here means the ability is gated until
 # unlocked through gameplay (e.g. beating a stage and talking to its NPC).
 const DEFAULT_SKILLS := {
@@ -40,6 +49,11 @@ var keys_held:       Dictionary = {}
 var npcs_talked:     Dictionary = {}
 var coins:        int = 0
 var skill_points: int = 0
+
+# Gamification state (all persisted through to_dict/from_dict → SaveManager).
+var collectibles: Dictionary = {}   # collectible_id -> true  (UC-004 "Truth Shards")
+var badges:       Dictionary = {}   # badge_id -> true        (UC-009 achievements)
+var quest_state:  Dictionary = {}   # quest_id -> { "progress": {..}, "done": bool } (UC-008)
 
 # Player RPG stats that must survive scene changes (each stage rebuilds the Player
 # node, so these can't live only on it). `player_initialized` is false until the
@@ -65,6 +79,9 @@ func reset() -> void:
 	cleared_stages  = {}
 	keys_held       = {}
 	npcs_talked     = {}
+	collectibles = {}
+	badges       = {}
+	quest_state  = {}
 	coins        = 0
 	skill_points = 0
 	player_initialized = false
@@ -158,7 +175,10 @@ func spend_coins(amount: int) -> bool:
 # ─── Stages ─────────────────────────────────────────────────────────────────────
 
 func clear_stage(stage_id: String) -> void:
+	var was_cleared: bool = cleared_stages.get(stage_id, false)
 	cleared_stages[stage_id] = true
+	if not was_cleared:
+		notify("stage_cleared", {"stage_id": stage_id})
 
 func is_stage_cleared(stage_id: String) -> bool:
 	return cleared_stages.get(stage_id, false)
@@ -224,6 +244,43 @@ func restore_player(p) -> void:
 	p.strength          = player_strength
 	p.score             = player_score
 
+# ─── Gamification: event hub, collectibles, badges (UC-004/008/009) ───────────────
+
+## Broadcast a gameplay event so QuestManager / BadgeManager can react. Safe to call
+## from anywhere; if no one listens it's a no-op.
+func notify(event_name: String, data: Dictionary = {}) -> void:
+	game_event.emit(event_name, data)
+
+# Collectibles (UC-004) — permanent, per-save. Returns true only the first time.
+func collect(collectible_id: String) -> bool:
+	if collectibles.get(collectible_id, false):
+		return false
+	collectibles[collectible_id] = true
+	collectible_changed.emit(collectibles.size())
+	notify("collectible", {"id": collectible_id})
+	return true
+
+func has_collectible(collectible_id: String) -> bool:
+	return collectibles.get(collectible_id, false)
+
+func collectible_count() -> int:
+	return collectibles.size()
+
+# Badges (UC-009). Returns true only on the first award (so callers can juice it).
+func award_badge(badge_id: String) -> bool:
+	if badges.get(badge_id, false):
+		return false
+	badges[badge_id] = true
+	badge_unlocked.emit(badge_id)
+	notify("badge_unlocked", {"id": badge_id})
+	return true
+
+func has_badge(badge_id: String) -> bool:
+	return badges.get(badge_id, false)
+
+func badge_count() -> int:
+	return badges.size()
+
 # ─── Save / Load ────────────────────────────────────────────────────────────────
 
 func to_dict() -> Dictionary:
@@ -233,6 +290,9 @@ func to_dict() -> Dictionary:
 		"cleared_stages":  cleared_stages.duplicate(true),
 		"keys_held":       keys_held.duplicate(true),
 		"npcs_talked":     npcs_talked.duplicate(true),
+		"collectibles":    collectibles.duplicate(true),
+		"badges":          badges.duplicate(true),
+		"quest_state":     quest_state.duplicate(true),
 		"coins":           coins,
 		"skill_points":    skill_points,
 		"player_initialized": player_initialized,
@@ -254,6 +314,9 @@ func from_dict(data: Dictionary) -> void:
 	cleared_stages = (data.get("cleared_stages", {}) as Dictionary).duplicate(true)
 	keys_held      = (data.get("keys_held", {}) as Dictionary).duplicate(true)
 	npcs_talked    = (data.get("npcs_talked", {}) as Dictionary).duplicate(true)
+	collectibles   = (data.get("collectibles", {}) as Dictionary).duplicate(true)
+	badges         = (data.get("badges", {}) as Dictionary).duplicate(true)
+	quest_state    = (data.get("quest_state", {}) as Dictionary).duplicate(true)
 	coins        = int(data.get("coins", 0))
 	skill_points = int(data.get("skill_points", 0))
 	player_initialized = bool(data.get("player_initialized", false))

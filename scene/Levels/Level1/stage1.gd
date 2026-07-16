@@ -14,7 +14,8 @@ var _transitioning := false
 func _ready() -> void:
 	Global.gameStarted = true
 	SaveManager.autosave_on_enter()   # auto-save (after fade-in) on entering the stage
-	Global.decorate_stage_portals()   # colour-coded portal beacons
+	Global.decorate_stage_portals()
+	CollectibleManager.populate(self, "stage1")   # UC-004 Truth Shards   # colour-coded portal beacons
 	scene_transition_anim.play("fade_out")
 	player_camera.enabled  = true
 	audio_bgm.play()
@@ -29,12 +30,14 @@ func _configure_npcs() -> void:
 	if intro:
 		intro.npc_id = "stage1_intro"
 		intro.dialogue_timeline = "npc1timeline"
+		intro.repeat_timeline   = "hendra_rep"
 
 	# Sari: a teaching NPC partway through the stage
 	var teach := get_node_or_null("Sari")
 	if teach:
 		teach.npc_id = "stage1_npc2"
 		teach.dialogue_timeline = "npc2timeline"
+		teach.repeat_timeline   = "sari_rep"
 
 	# Ana: a teaching NPC — the personal cost of gambling (her brother's story).
 	# Optional lore now; the Firewall skill moved to Stage 3 so skills aren't all in S1.
@@ -42,6 +45,7 @@ func _configure_npcs() -> void:
 	if skill_npc:
 		skill_npc.npc_id            = "stage1_ana"
 		skill_npc.dialogue_timeline = "npc3timeline"
+		skill_npc.repeat_timeline   = "ana_rep"
 
 	# Bayu: the END-of-stage OPTIONAL quiz. After learning from the NPCs across
 	# the stage, the player can choose to be quizzed here for a bonus — fully

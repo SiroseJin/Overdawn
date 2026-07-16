@@ -47,6 +47,11 @@ func _on_arcade_pressed():
 	Global.current_wave = 0
 	get_tree().change_scene_to_file("res://scene/system/stage.tscn")
 
+func _on_progress_pressed():
+	audio_click.play()
+	Global.settings_return_path = "res://scene/ui/main_menu.tscn"
+	get_tree().change_scene_to_file("res://scene/ui/progress_menu.tscn")
+
 func _on_setting_pressed():
 	audio_click.play()
 	Global.settings_return_path = "res://scene/ui/main_menu.tscn"

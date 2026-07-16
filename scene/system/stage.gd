@@ -116,6 +116,7 @@ func position_to_next_wave():
 	current_wave        += 1
 	Global.current_wave  = current_wave
 	wave_label.text      = "Waves: %d" % current_wave
+	ProgressionManager.notify("arcade_wave", {"wave": current_wave})   # repeatable quest loop
 
 	# Reward the player for surviving the previous wave
 	Global.PlayerBody.heal_player(5)
