@@ -39,11 +39,43 @@ const DEFAULT_SKILLS := {
 	"firewall": false,     # unlocked by Damar in Stage 3 (network firewall)
 }
 
-# Highest upgrade level each skill can reach.
-const MAX_SKILL_LEVEL := 3
+# Highest upgrade level each of the 4 core skills can reach.
+const MAX_SKILL_LEVEL := 5
+
+# ─── Upgrade tracks (spend Skill Points) ─────────────────────────────────────────
+# Beyond the 4 core ability skills, the Upgrade screen also offers stat / attack /
+# skill-augment tracks. Each has its own cap and (optionally) a required skill.
+#   cat: "sub" (augments a skill) | "stat" (base stat) | "attack" (attack scaling)
+#   req: skill that must be unlocked first ("" = always available)
+const UPGRADES := {
+	# Skill augments
+	"arrow_dmg": {"en": "Arrow Damage", "id": "Damage Panah", "cat": "sub", "cap": 5, "req": "arrows",
+		"en_d": "+1 damage & +1% strength per level", "id_d": "+1 damage & +1% kekuatan per level"},
+	"dash_dist": {"en": "Dash Distance", "id": "Jarak Dash", "cat": "sub", "cap": 5, "req": "dash",
+		"en_d": "+1% dash distance per level", "id_d": "+1% jarak dash per level"},
+	"dj_height": {"en": "Double Jump Height", "id": "Tinggi Lompat Ganda", "cat": "sub", "cap": 5, "req": "double_jump",
+		"en_d": "Recover the double-jump height penalty (1%/lvl)", "id_d": "Pulihkan penalti tinggi lompat ganda (1%/lvl)"},
+	# Base stats
+	"stat_health":   {"en": "Max Health", "id": "Nyawa Maks", "cat": "stat", "cap": 10, "req": "",
+		"en_d": "+1.5% max health per level", "id_d": "+1.5% nyawa maks per level"},
+	"stat_strength": {"en": "Strength", "id": "Kekuatan", "cat": "stat", "cap": 10, "req": "",
+		"en_d": "+1.5% strength per level", "id_d": "+1.5% kekuatan per level"},
+	"stat_speed":    {"en": "Move Speed", "id": "Kecepatan", "cat": "stat", "cap": 5, "req": "",
+		"en_d": "+1.5% move speed per level", "id_d": "+1.5% kecepatan per level"},
+	"stat_jump":     {"en": "Jump Height", "id": "Tinggi Lompat", "cat": "stat", "cap": 3, "req": "",
+		"en_d": "+1.5% jump height per level", "id_d": "+1.5% tinggi lompat per level"},
+	# Attack scaling
+	"atk_basic": {"en": "Basic Attack", "id": "Serangan Dasar", "cat": "attack", "cap": 5, "req": "",
+		"en_d": "+1% basic attack scaling per level", "id_d": "+1% skala serangan dasar per level"},
+	"atk_heavy": {"en": "Heavy Attack", "id": "Serangan Berat", "cat": "attack", "cap": 5, "req": "",
+		"en_d": "+1% heavy attack scaling per level", "id_d": "+1% skala serangan berat per level"},
+	"atk_dash":  {"en": "Dash Attack", "id": "Serangan Dash", "cat": "attack", "cap": 5, "req": "",
+		"en_d": "+1% dash attack scaling per level", "id_d": "+1% skala serangan dash per level"},
+}
 
 var unlocked_skills: Dictionary = {}
 var skill_levels:    Dictionary = {}   # skill -> int (1 once unlocked)
+var stat_levels:     Dictionary = {}   # upgrade_id (see UPGRADES) -> int level
 var cleared_stages:  Dictionary = {}
 var keys_held:       Dictionary = {}
 var npcs_talked:     Dictionary = {}
@@ -80,6 +112,7 @@ func reset() -> void:
 	skill_levels    = {}
 	for s in DEFAULT_SKILLS:
 		skill_levels[s] = 1 if DEFAULT_SKILLS[s] else 0
+	stat_levels     = {}
 	cleared_stages  = {}
 	keys_held       = {}
 	npcs_talked     = {}
@@ -135,6 +168,45 @@ func upgrade_skill(skill: String) -> bool:
 	skill_levels[skill] = get_skill_level(skill) + 1
 	skill_points_changed.emit(skill_points)
 	skill_upgraded.emit(skill, skill_levels[skill])
+	return true
+
+# ─── Upgrade tracks (stats / attacks / skill augments) ───────────────────────────
+
+func get_upgrade_level(id: String) -> int:
+	return int(stat_levels.get(id, 0))
+
+func upgrade_cap(id: String) -> int:
+	return int(UPGRADES.get(id, {}).get("cap", 0))
+
+## Available = its required skill (if any) is unlocked. Locked tracks show but can't buy.
+func upgrade_available(id: String) -> bool:
+	var req: String = UPGRADES.get(id, {}).get("req", "")
+	return req == "" or is_skill_unlocked(req)
+
+func can_buy_upgrade(id: String) -> bool:
+	return UPGRADES.has(id) and upgrade_available(id) \
+		and get_upgrade_level(id) < upgrade_cap(id) and skill_points > 0
+
+# Spend one skill point on an upgrade track. Returns true on success.
+func buy_upgrade(id: String) -> bool:
+	if not can_buy_upgrade(id):
+		return false
+	skill_points -= 1
+	stat_levels[id] = get_upgrade_level(id) + 1
+	skill_points_changed.emit(skill_points)
+	skill_upgraded.emit(id, stat_levels[id])
+	if all_upgrades_maxed():
+		notify("all_upgrades_maxed", {})   # BadgeManager awards the completionist badge
+	return true
+
+## True once all 4 skills AND every upgrade track are at their cap (badge trigger).
+func all_upgrades_maxed() -> bool:
+	for s in DEFAULT_SKILLS:
+		if get_skill_level(s) < MAX_SKILL_LEVEL:
+			return false
+	for id in UPGRADES:
+		if get_upgrade_level(id) < upgrade_cap(id):
+			return false
 	return true
 
 # Grant every known skill at max level (debug stage teleport safety).
@@ -299,6 +371,7 @@ func to_dict() -> Dictionary:
 		"collectibles":    collectibles.duplicate(true),
 		"badges":          badges.duplicate(true),
 		"quest_state":     quest_state.duplicate(true),
+		"stat_levels":     stat_levels.duplicate(true),
 		"coins":           coins,
 		"skill_points":    skill_points,
 		"player_name":     player_name,
@@ -319,6 +392,7 @@ func from_dict(data: Dictionary) -> void:
 		unlocked_skills[k] = data["unlocked_skills"][k]
 	for k in data.get("skill_levels", {}):
 		skill_levels[k] = data["skill_levels"][k]
+	stat_levels    = (data.get("stat_levels", {}) as Dictionary).duplicate(true)
 	cleared_stages = (data.get("cleared_stages", {}) as Dictionary).duplicate(true)
 	keys_held      = (data.get("keys_held", {}) as Dictionary).duplicate(true)
 	npcs_talked    = (data.get("npcs_talked", {}) as Dictionary).duplicate(true)

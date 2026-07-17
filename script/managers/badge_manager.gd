@@ -37,6 +37,8 @@ const BADGES := {
 		"en_d": "Complete your first quest.",     "id_d": "Selesaikan misi pertamamu."},
 	"completionist": {"en": "Completionist",     "id": "Perfeksionis",
 		"en_d": "Complete every quest.",          "id_d": "Selesaikan semua misi."},
+	"maxed_out":     {"en": "Maxed Out",          "id": "Level Maksimal",
+		"en_d": "Fully max out every upgrade.",   "id_d": "Maksimalkan semua peningkatan."},
 }
 
 const QUIZ_IDS := ["stage1_quiz", "stage2_quiz", "stage3_quiz", "stage4_quiz", "stage5_quiz"]
@@ -94,6 +96,8 @@ func _on_event(event_name: String, data: Dictionary) -> void:
 			_award("questor")
 			if QuestManager.all_completed():
 				_award("completionist")
+		"all_upgrades_maxed":
+			_award("maxed_out")
 
 func _all_quizzes_passed() -> bool:
 	for q in QUIZ_IDS:

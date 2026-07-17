@@ -270,10 +270,15 @@ func _physics_process(delta):
 	var jump_pressed: bool = Input.is_action_just_pressed("jump") \
 		or (Global.use_w_to_jump and Input.is_action_just_pressed("up"))
 	if not _flying() and jump_pressed:
+		# Jump Height upgrade (+1.5%/lvl) raises the whole jump.
+		var eff_jump := JUMP_FORCE * (1.0 + 0.015 * _up("stat_jump"))
 		if is_on_floor():
-			velocity.y = JUMP_FORCE
+			velocity.y = eff_jump
 		elif can_double_jump and not double_jump_cooldown and ProgressionManager.is_skill_unlocked("double_jump"):
-			velocity.y      = DOUBLE_JUMP_FORCE
+			# Double-jump is normally 10% lower than a normal jump; the Double Jump
+			# Height upgrade recovers 1% of that penalty per level (down to 5% at max).
+			var dj_penalty := 0.10 - 0.01 * _up("dj_height")
+			velocity.y      = eff_jump * (1.0 - dj_penalty)
 			can_double_jump = false
 			# "Second chance" flourish — a puff of air kicked down beneath the feet.
 			Global.spawn_fx("poof", global_position + Vector2(0, 8), 0.22, Color(0.85, 0.92, 1.0))
@@ -443,8 +448,11 @@ func shoot_arrow():
 	arrow_instance.global_position = muzzle
 	arrow_instance.direction       = aim
 	arrow_instance.rotation        = aim.angle() + PI / 2.0
-	# Arrow damage = 5 + 20% of base strength.
-	arrow_instance.damage          = 5 + int(round(0.20 * strength))
+	# Arrow damage = 5 + 20% of (effective) strength, plus the Arrow Damage upgrade
+	# (+1 flat & +1% of base strength per level).
+	var arrow_lvl := _up("arrow_dmg")
+	arrow_instance.damage = 5 + int(round(0.20 * _eff_strength())) \
+		+ arrow_lvl + int(round(0.01 * strength * arrow_lvl))
 
 	if not infinite_arrows:
 		arrows_held -= 1
@@ -500,7 +508,7 @@ func level_up():
 	health_max        += 1
 	health            += 1
 	strength           = int(strength + 0.6)
-	health             = min(health, health_max)
+	health             = min(health, max_hp())
 	update_health_bar()
 	# RPG: each level grants a skill point to spend in the stat screen
 	ProgressionManager.add_skill_points(1)
@@ -552,7 +560,7 @@ func take_damage(damage: int, source_pos: Vector2 = Vector2.INF):
 		_apply_hit_feedback(source_pos)   # flash + knockback only while still alive
 
 	take_damage_cooldown(1.0)
-	health = min(health, health_max)
+	health = min(health, max_hp())
 	ProgressionManager.capture_player(self)
 
 # Red flash + blink and a short knockback so a hit genuinely reads as a hit.
@@ -580,14 +588,14 @@ func _apply_hit_feedback(source_pos: Vector2) -> void:
 	_hit_tween.tween_property(spr, "modulate", Color.WHITE, 0.1)
 
 func heal_player(amount: int):
-	health = min(health + amount, health_max)
+	health = min(health + amount, max_hp())
 	update_health_bar()
 	ProgressionManager.capture_player(self)
 
 func update_health_bar():
 	health_bar.value     = health
-	health_bar.max_value = health_max
-	health_label.text    = str(health) + "/" + str(health_max)
+	health_bar.max_value = max_hp()
+	health_label.text    = str(health) + "/" + str(max_hp())
 
 # Prevent damage for a short window after being hit (i-frames)
 func take_damage_cooldown(_wait_time: float):
@@ -683,17 +691,32 @@ func toggle_damage_collision(type: String):
 # Combat – Damage Output
 # ───────────────────────────────────────────────────────────────────────────────
 
+# ─── Upgrade-derived stats (ProgressionManager.stat_levels; never mutate the base
+# vars — health_max/strength are captured into saves and would compound) ────────────
+func _up(id: String) -> int:
+	return ProgressionManager.get_upgrade_level(id)
+
+## Effective strength = base strength + Strength upgrade (+1.5%/lvl).
+func _eff_strength() -> float:
+	return strength * (1.0 + 0.015 * _up("stat_strength"))
+
+## Effective max HP = base health_max + Max Health upgrade (+1.5%/lvl).
+func max_hp() -> int:
+	return int(round(health_max * (1.0 + 0.015 * _up("stat_health"))))
+
 func set_damage(type: String):
-	# Attack damage scales off player strength: basic 100%, heavy 125%, dash 140%.
+	# Attack damage scales off effective strength: basic 100%, heavy 125%, dash 140%.
+	# The matching attack-scaling upgrade adds +1% per level on top.
 	var multiplier: float
+	var atk_bonus := 0.0
 
 	match type:
-		"normal":  multiplier = 1.00   # basic (left click)
-		"special": multiplier = 1.25   # heavy (right click)
-		"dash":    multiplier = 1.40   # dash attack
+		"normal":  multiplier = 1.00; atk_bonus = 0.01 * _up("atk_basic")   # basic (left click)
+		"special": multiplier = 1.25; atk_bonus = 0.01 * _up("atk_heavy")   # heavy (right click)
+		"dash":    multiplier = 1.40; atk_bonus = 0.01 * _up("atk_dash")    # dash attack
 		_:         multiplier = 1.00
 
-	Global.playerDamageAmount = int(round(strength * multiplier))
+	Global.playerDamageAmount = int(round(_eff_strength() * multiplier * (1.0 + atk_bonus)))
 
 func update_deal_damage_zone():
 	var dir = (get_global_mouse_position() - global_position).normalized()
@@ -727,7 +750,8 @@ func start_dash():
 	# Dash in the direction of keyboard input; fall back to sprite facing if no input
 	var input_x  = Input.get_axis("left", "right")
 	var dash_dir = sign(input_x) if input_x != 0 else (-1.0 if animated_sprite_2d.flip_h else 1.0)
-	velocity.x   = dash_dir * DASH_SPEED
+	# Dash Distance upgrade (+1%/lvl) covers more ground in the same window.
+	velocity.x   = dash_dir * DASH_SPEED * (1.0 + 0.01 * _up("dash_dist"))
 	velocity.y   = 0.0
 
 	animated_sprite_2d.play("dash")
@@ -823,7 +847,8 @@ func refresh_stats_from_skills():
 
 # Recalculate SPEED from the base speed and every active modifier.
 func _recompute_speed():
-	SPEED = int(NORMAL_SPEED * speed_multiplier * slow_factor)
+	# Move Speed upgrade adds +1.5% per level on top of the base and active modifiers.
+	SPEED = int(NORMAL_SPEED * speed_multiplier * slow_factor * (1.0 + 0.015 * _up("stat_speed")))
 
 # Temporarily reduce movement speed by a fractional factor (e.g. 0.6 = 40% slow)
 func slow_down(factor: float):
