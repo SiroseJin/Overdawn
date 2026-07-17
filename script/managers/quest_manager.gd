@@ -18,6 +18,10 @@ const QUESTS := {
 		"en": "Awakening", "id": "Kesadaran", "mandatory": true,
 		"en_d": "Learn what online gambling really is, then prove it.",
 		"id_d": "Pelajari apa itu judi online sebenarnya, lalu buktikan.",
+		"en_lore": "Every 'judol' story starts the same way — a flashy ad, a free-credit hook, a first small bet. Knowing the trap is the first step out of it.",
+		"id_lore": "Setiap cerita 'judol' dimulai sama — iklan mencolok, umpan kredit gratis, taruhan kecil pertama. Mengenali jebakannya adalah langkah pertama untuk keluar.",
+		"en_hint": "Talk to the people of Stage 1, then find the quiz NPC near the exit.",
+		"id_hint": "Bicara dengan warga Stage 1, lalu temui NPC kuis dekat pintu keluar.",
 		"objectives": [{"type": "stage_cleared", "target": "stage1"},
 					   {"type": "quiz_passed", "target": "stage1_quiz"}],
 		"reward": {"coins": 30, "skill_points": 1, "exp": 15}},
@@ -25,6 +29,10 @@ const QUESTS := {
 		"en": "Spot the Bait", "id": "Kenali Umpan",
 		"en_d": "See through the shiny lures of Stage 2.",
 		"id_d": "Lihat tembus umpan berkilau di Stage 2.",
+		"en_lore": "'Free' coins cost the house nothing and hook you fast. Stage 2's shiny lures are the same trick in platform form.",
+		"id_lore": "Koin 'gratis' tak merugikan bandar dan cepat mengailmu. Umpan berkilau Stage 2 adalah trik yang sama dalam bentuk platform.",
+		"en_hint": "Reach the Stage 2 exit and grab at least one Truth Shard on the way.",
+		"id_hint": "Capai pintu keluar Stage 2 dan ambil setidaknya satu Pecahan Kebenaran di jalan.",
 		"objectives": [{"type": "stage_cleared", "target": "stage2"},
 					   {"type": "collectible_stage", "target": "stage2", "count": 1}],
 		"reward": {"coins": 35, "exp": 20}},
@@ -32,6 +40,10 @@ const QUESTS := {
 		"en": "Break the Cycle", "id": "Putus Rantainya", "mandatory": true,
 		"en_d": "Escape the rising debt and understand why it grows.",
 		"id_d": "Lolos dari utang yang naik dan pahami kenapa ia tumbuh.",
+		"en_lore": "Debt compounds whether you win or lose. The longer you linger, the more it grows — and borrowing to chase it only deepens the trap.",
+		"id_lore": "Utang berbunga entah kamu menang atau kalah. Makin lama berdiam, makin ia tumbuh — dan berutang untuk mengejarnya hanya memperdalam jebakan.",
+		"en_hint": "Don't stand still — clear Stage 3 and pass its quiz.",
+		"id_hint": "Jangan diam — selesaikan Stage 3 dan lewati kuisnya.",
 		"objectives": [{"type": "stage_cleared", "target": "stage3"},
 					   {"type": "quiz_passed", "target": "stage3_quiz"}],
 		"reward": {"coins": 40, "skill_points": 1, "exp": 25}},
@@ -39,12 +51,20 @@ const QUESTS := {
 		"en": "Inside the Machine", "id": "Di Dalam Mesin", "mandatory": true,
 		"en_d": "Ride the machine's current and reach the core.",
 		"id_d": "Lewati arus mesin dan capai intinya.",
+		"en_lore": "Near-misses, pull-back bonuses, engineered dopamine — Stage 4 is the machine's psychology laid bare.",
+		"id_lore": "Nyaris-menang, bonus penarik, dopamin yang direkayasa — Stage 4 memperlihatkan psikologi mesin apa adanya.",
+		"en_hint": "Ride the pull zones and reach the core at the end of Stage 4.",
+		"id_hint": "Manfaatkan zona tarik dan capai inti di ujung Stage 4.",
 		"objectives": [{"type": "stage_cleared", "target": "stage4"}],
 		"reward": {"coins": 45, "exp": 30}},
 	"q_final_test": {
 		"en": "The Final Test", "id": "Ujian Terakhir", "mandatory": true,
 		"en_d": "Defeat the Dealer, then pass the last quiz before the House.",
 		"id_d": "Kalahkan Dealer, lalu lewati kuis terakhir sebelum Bandar.",
+		"en_lore": "The Dealer is the House's last salesman. Beat him, pass the final quiz, and nothing stands between you and the truth.",
+		"id_lore": "Dealer adalah penjual terakhir sang Bandar. Kalahkan dia, lewati kuis terakhir, dan tak ada lagi penghalang menuju kebenaran.",
+		"en_hint": "Defeat the Dealer in Stage 5, then pass the last quiz.",
+		"id_hint": "Kalahkan Dealer di Stage 5, lalu lewati kuis terakhir.",
 		"objectives": [{"type": "stage_cleared", "target": "stage5"},
 					   {"type": "quiz_passed", "target": "stage5_quiz"}],
 		"reward": {"coins": 50, "skill_points": 2, "exp": 40}},
@@ -52,6 +72,10 @@ const QUESTS := {
 		"en": "Overdawn", "id": "Fajar Menyingsing", "mandatory": true,
 		"en_d": "Beat the House and break the machine for good.",
 		"id_d": "Kalahkan Bandar dan hancurkan mesinnya selamanya.",
+		"en_lore": "The House always wins by design — so you don't beat it at its game. You break the machine, and help others walk away too.",
+		"id_lore": "Bandar selalu menang secara desain — jadi kamu tak mengalahkannya di permainannya. Kamu hancurkan mesinnya, dan bantu orang lain pergi juga.",
+		"en_hint": "Destroy the servers to drop the House's shield, then strike while it's down.",
+		"id_hint": "Hancurkan server untuk menjatuhkan perisai Bandar, lalu serang saat ia tumbang.",
 		"objectives": [{"type": "boss_defeated"}],
 		"reward": {"coins": 100, "skill_points": 1, "exp": 60}},
 	# ── Challenge quests (UC-007) ──
@@ -59,12 +83,20 @@ const QUESTS := {
 		"en": "Unshaken", "id": "Tak Goyah", "challenge": true,
 		"en_d": "Clear any stage without taking a single hit.",
 		"id_d": "Selesaikan stage mana pun tanpa kena serangan sekali pun.",
+		"en_lore": "Discipline beats luck. Clearing a stage untouched proves you're reading the danger, not gambling on it.",
+		"id_lore": "Disiplin mengalahkan keberuntungan. Menyelesaikan stage tanpa tergores membuktikan kamu membaca bahaya, bukan mempertaruhkannya.",
+		"en_hint": "Pick a stage you know well and clear it without taking a hit.",
+		"id_hint": "Pilih stage yang kamu kuasai dan selesaikan tanpa kena serangan.",
 		"objectives": [{"type": "no_damage_clear"}],
 		"reward": {"coins": 60, "exp": 30}},
 	"q_hunter": {
 		"en": "Truth Hunter", "id": "Pemburu Kebenaran", "challenge": true,
 		"en_d": "Collect 5 Truth Shards across the city.",
 		"id_d": "Kumpulkan 5 Pecahan Kebenaran di seantero kota.",
+		"en_lore": "Truth Shards are the words of people the machine hurt. Collect them and their stories become yours to carry.",
+		"id_lore": "Pecahan Kebenaran adalah kata-kata orang yang dilukai mesin. Kumpulkan, dan kisah mereka menjadi milikmu untuk dibawa.",
+		"en_hint": "Explore off the main path — shards hide in corners across the stages.",
+		"id_hint": "Jelajahi luar jalur utama — pecahan tersembunyi di sudut-sudut stage.",
 		"objectives": [{"type": "collectible", "count": 5}],
 		"reward": {"coins": 50, "skill_points": 1, "exp": 25}},
 	# ── Repeatable loop ──
@@ -72,6 +104,10 @@ const QUESTS := {
 		"en": "Arcade Run", "id": "Lari Arena", "repeatable": true,
 		"en_d": "Survive 5 arcade waves. Repeats — chase your streak.",
 		"id_d": "Bertahan 5 gelombang arena. Berulang — kejar rekormu.",
+		"en_lore": "The arcade never really ends — that's the point of a machine built to keep you playing. Here, you survive it on your own terms.",
+		"id_lore": "Arena tak pernah benar-benar berakhir — itulah inti mesin yang dibuat agar kamu terus main. Di sini, kamu bertahan dengan caramu sendiri.",
+		"en_hint": "Survive 5 waves in Arcade mode. It resets — chase your best streak.",
+		"id_hint": "Bertahan 5 gelombang di mode Arena. Ia mengulang — kejar rekor terbaikmu.",
 		"objectives": [{"type": "arcade_wave", "count": 5}],
 		"reward": {"coins": 25, "exp": 15}},
 }
@@ -105,19 +141,64 @@ func is_offered(qid: String) -> bool:
 # An NPC "gives" a quest, the same way an NPC hosts a quiz: the first time it's offered
 # we announce it to the player and remember it (persisted in quest_state) so it isn't
 # re-announced. Progress itself is still event-driven, so nothing else has to change.
-func offer_quest(qid: String) -> void:
+func offer_quest(qid: String, giver: String = "") -> void:
 	if not QUESTS.has(qid):
 		return
 	var st := _state(qid)
 	if st.get("offered", false) or st.get("done", false):
 		return
 	st["offered"] = true
+	if giver != "":
+		st["giver"] = giver          # remembered for the quest-list menu ("Given by …")
 	quests_changed.emit()
 	ProgressionManager.notify("quest_offered", {"id": qid})
 	var p = Global.PlayerBody
 	if is_instance_valid(p) and p.has_method("show_toast"):
 		var kind := tr("Main Quest") if is_mandatory(qid) else tr("Side Quest")
 		p.show_toast("★ " + kind + ": " + title_of(qid))
+
+# ─── Quest-list menu helpers ──────────────────────────────────────────────────────
+
+## True if the player has at least one quest that's been given and isn't finished.
+## Gates world guidance (e.g. the key guide-line) so a fresh save with no quests shows
+## no highlights.
+func has_active_quest() -> bool:
+	for qid in QUESTS:
+		var st := _state(qid)
+		if st.get("offered", false) and not st.get("done", false):
+			return true
+	return false
+
+## Quest ids the player actually knows about (has been offered), for the menu.
+func offered_quest_ids() -> Array:
+	var out: Array = []
+	for qid in QUESTS:
+		if _state(qid).get("offered", false):
+			out.append(qid)
+	return out
+
+func giver_of(qid: String) -> String:
+	return str(_state(qid).get("giver", ""))
+
+func lore_of(qid: String) -> String:
+	var q: Dictionary = QUESTS.get(qid, {})
+	return q.get("id_lore" if _is_id() else "en_lore", "")
+
+func hint_of(qid: String) -> String:
+	var q: Dictionary = QUESTS.get(qid, {})
+	return q.get("id_hint" if _is_id() else "en_hint", "")
+
+## Human-readable reward summary, e.g. "30 coins · 1 skill point · 15 XP".
+func reward_text(qid: String) -> String:
+	var r: Dictionary = QUESTS.get(qid, {}).get("reward", {})
+	var parts: Array = []
+	if int(r.get("coins", 0)) > 0:
+		parts.append("%d %s" % [int(r["coins"]), tr("coins")])
+	if int(r.get("skill_points", 0)) > 0:
+		parts.append("%d %s" % [int(r["skill_points"]), tr("skill pts")])
+	if int(r.get("exp", 0)) > 0:
+		parts.append("%d %s" % [int(r["exp"]), tr("XP")])
+	return "  ·  ".join(parts) if not parts.is_empty() else tr("—")
 
 func objective_progress(qid: String) -> Array:
 	# Returns [{text, cur, req, done}] for each objective.
@@ -162,7 +243,8 @@ func _on_event(event_name: String, data: Dictionary) -> void:
 	var changed := false
 	for qid in QUESTS:
 		var st := _state(qid)
-		if st.get("done", false):
+		# Quests only track once an NPC has GIVEN them — an untouched save has none.
+		if not st.get("offered", false) or st.get("done", false):
 			continue
 		var objs: Array = QUESTS[qid]["objectives"]
 		var advanced := false

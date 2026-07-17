@@ -25,6 +25,9 @@ func _dbg_mark_action() -> void:
 ## (like being given a quiz) and appears in the quest log. Story quests are Main
 ## (mandatory); challenge/repeat ones are Side (optional). See QuestManager.QUESTS. (#5)
 @export var quest_id: String = ""
+## Name shown as the quest-giver in the quest-list menu. Leave empty to use this
+## NPC's node name (which matches the character name, e.g. "Hendra").
+@export var quest_giver_name: String = ""
 ## Passing the quiz grants this key (use a matching LockedDoor to gate the exit).
 @export var quiz_grants_key: String = ""
 ## Passing the quiz grants these bonus coins (first pass only).
@@ -230,7 +233,10 @@ func _on_dialogue_finished():
 	ProgressionManager.mark_npc_talked(npc_id)
 	talked.emit(npc_id)
 	if quest_id != "":
-		QuestManager.offer_quest(quest_id)   # this NPC is a quest-giver (#5)
+		# Record this NPC as the giver (shown in the quest-list menu). Uses the node
+		# name (matches the character name, e.g. "Hendra") unless overridden.
+		var giver: String = quest_giver_name if quest_giver_name != "" else str(name)
+		QuestManager.offer_quest(quest_id, giver)   # this NPC is a quest-giver (#5)
 	if unlocks_skill != "":
 		ProgressionManager.unlock_skill(unlocks_skill)
 	if grants_key != "" and not ProgressionManager.has_key(grants_key):

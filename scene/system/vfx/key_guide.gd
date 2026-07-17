@@ -66,6 +66,9 @@ func _find_needed_key() -> Node2D:
 	var tree := get_tree()
 	if tree == null:
 		return null
+	# No quest given yet → no world guidance. A fresh save with no quests shows nothing.
+	if not QuestManager.has_active_quest():
+		return null
 	var doors := tree.get_nodes_in_group("locked_door")
 	if doors.is_empty():
 		return null
