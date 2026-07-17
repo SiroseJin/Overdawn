@@ -91,7 +91,21 @@ func is_requirement_met() -> bool:
 		return quiz_id != "" and ProgressionManager.has_talked_to("quizpass_" + quiz_id)
 	return npc_id != "" and ProgressionManager.has_talked_to(npc_id)
 
-# ─── "!" marker (red = must talk, yellow = optional) ─────────────────────────────
+# ─── "!" marker ──────────────────────────────────────────────────────────────────
+# Colour tells the player what kind of NPC this is at a glance:
+#   White  = lore only          Green  = quiz / reward
+#   Yellow = gimmick / enemy info   Red = must talk to progress
+# AUTO picks one from this NPC's setup (required → red, has quiz → green, else white);
+# set it explicitly in the editor to mark a lore/info NPC.
+enum MarkerKind { AUTO, LORE, REWARD, INFO, REQUIRED }
+@export var marker_kind: MarkerKind = MarkerKind.AUTO
+
+const _MARKER_COLORS := {
+	MarkerKind.LORE:     Color(1, 1, 1),
+	MarkerKind.REWARD:   Color(0.4, 1.0, 0.5),
+	MarkerKind.INFO:     Color(1, 0.85, 0.2),
+	MarkerKind.REQUIRED: Color(1, 0.25, 0.2),
+}
 
 var _marker: Label
 
@@ -108,17 +122,26 @@ func _setup_marker() -> void:
 	_marker.z_index = 20
 	add_child(_marker)
 
-# Colour by must/optional and hide once satisfied. Safe to call any time.
+# Colour by kind and hide once satisfied. Safe to call any time.
 func refresh_marker() -> void:
 	if _marker == null:
 		return
-	var required := is_required()
-	_marker.add_theme_color_override("font_color",
-		Color(1, 0.25, 0.2) if required else Color(1, 0.85, 0.2))
-	if required:
+	var kind := _resolved_marker_kind()
+	_marker.add_theme_color_override("font_color", _MARKER_COLORS[kind])
+	if kind == MarkerKind.REQUIRED:
 		_marker.visible = not is_requirement_met()
 	else:
 		_marker.visible = npc_id == "" or not ProgressionManager.has_talked_to(npc_id)
+
+# Resolve AUTO into a concrete kind from this NPC's setup.
+func _resolved_marker_kind() -> MarkerKind:
+	if marker_kind != MarkerKind.AUTO:
+		return marker_kind
+	if is_required():
+		return MarkerKind.REQUIRED
+	if quiz_id != "":
+		return MarkerKind.REWARD
+	return MarkerKind.LORE
 
 # Swap this NPC's sprite sheets at runtime (used by stage scripts to give each
 # placed NPC a distinct look without duplicating the scene).
