@@ -112,6 +112,9 @@ var moving_to_next_wave: bool
 var arcade_mode: bool = false   # When true, enemies always chase — DetectionZone is ignored
 var tutorial_mode: bool = false # When true (tutorial stage only), every skill reads as unlocked
 var settings_return_path: String = "res://scene/ui/main_menu.tscn"
+# Random scene-transition style, chosen on each fade-out and reused for the matching
+# fade-in on the next scene so the wipe/iris/fade continues seamlessly (#18).
+var transition_style: int = 0
 
 # ─── Object labels / captions ───────────────────────────────────────────────────
 # Floating name-tags over gameplay objects (see scene/ui/caption/caption.tscn). Every
