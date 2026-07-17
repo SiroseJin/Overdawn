@@ -214,6 +214,35 @@ func apply_enemy_scaling(e: Object) -> void:
 	if "speed" in e:
 		e.speed *= (1.0 + spd_buff)
 
+# ─── Enemy line-of-sight (slope-aware) ─────────────────────────────────────────────
+## Can `from` see `target` (defaults to the player)? A steep wall blocks sight, but a
+## walkable slope or floor lump the enemy could just climb does NOT — the ray steps
+## over it and keeps going. `slope_up` is how strongly a surface must face upward to
+## count as walkable (its normal.y ≤ -slope_up); anything flatter/vertical is a wall.
+## The endpoints are lifted to roughly torso height so small ground bumps never block.
+func enemy_line_of_sight(from: Node2D, target: Node2D = null, slope_up: float = 0.5) -> bool:
+	if target == null:
+		target = PlayerBody
+	if not is_instance_valid(from) or not is_instance_valid(target):
+		return false
+	var space := from.get_world_2d().direct_space_state
+	var eye := Vector2(0, -12)                     # look from/at torso height, not the feet
+	var a: Vector2 = from.global_position + eye
+	var b: Vector2 = target.global_position + eye
+	# Step the ray through any walkable slopes; a wall (or the target) ends the walk.
+	for _i in 6:
+		var q := PhysicsRayQueryParameters2D.create(a, b)
+		q.exclude = [from]
+		var r := space.intersect_ray(q)
+		if r.is_empty() or r.get("collider") == target:
+			return true
+		# Surface facing up enough to walk over → not a real blocker; step past and retry.
+		if float(r.normal.y) <= -slope_up:
+			a = r.position + (b - a).normalized() * 4.0
+			continue
+		return false                               # vertical-ish wall (or ceiling) → blocked
+	return false
+
 # ─── Scrollable menus ────────────────────────────────────────────────────────────
 ## Wrap `content` (a menu's main container) in a ScrollContainer occupying the same
 ## slot, so it scrolls vertically instead of overflowing/clipping. Idempotent and

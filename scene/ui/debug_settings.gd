@@ -95,6 +95,7 @@ func _build_tools(has_player: bool) -> void:
 	var r2 := _row()
 	r2.add_child(_button("+100 Coins", func(): ProgressionManager.add_coins(100)))
 	r2.add_child(_button("+5 Skill Pts", func(): ProgressionManager.add_skill_points(5)))
+	r2.add_child(_button("+1000 Score", _on_give_score, not has_player))
 	_vbox.add_child(r2)
 
 	# Skills
@@ -352,11 +353,25 @@ func _on_apply_hp_pressed() -> void:
 func _on_apply_level_pressed() -> void:
 	if not is_instance_valid(Global.PlayerBody):
 		return
+	var p = Global.PlayerBody
 	var target_level := int(_level_spin.value)
-	Global.PlayerBody.level = target_level
-	Global.PlayerBody.exp   = 0
-	Global.PlayerBody.exp_to_next_level = int(10 * pow(1.1, target_level - 1))
-	Global.PlayerBody.update_exp_lvl_label()
+	p.level = target_level
+	p.exp   = 0
+	p.exp_to_next_level = int(10 * pow(1.1, target_level - 1))
+	# Grow strength / max-health to match the new level so damage actually changes (#6).
+	if p.has_method("recompute_level_stats"):
+		p.recompute_level_stats()
+	p.update_exp_lvl_label()
+	p.update_health_bar()
+	# Sync the HP spinners with the recomputed max so the panel stays truthful.
+	_hp_spin.value     = p.health
+	_hp_max_spin.value = p.health_max
+	ProgressionManager.capture_player(p)
+
+# Give score (#7): the debug panel had no way to add score — now it does.
+func _on_give_score() -> void:
+	if is_instance_valid(Global.PlayerBody) and Global.PlayerBody.has_method("gain_score"):
+		Global.PlayerBody.gain_score(1000)
 
 # ─── Dead Test ────────────────────────────────────────────────────────────────
 
@@ -379,3 +394,9 @@ func _on_back_pressed() -> void:
 		get_tree().change_scene_to_file(Global.settings_return_path)
 	else:
 		queue_free()
+
+# Esc goes back too, not just the Back button (#1).
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel"):
+		_on_back_pressed()
+		get_viewport().set_input_as_handled()

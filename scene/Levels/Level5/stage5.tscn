@@ -1,5 +1,4 @@
 [gd_scene format=3 uid="uid://cnyvpht4rwtvw"]
-[ext_resource type="Script" path="res://scene/gimmicks/checkpoint/checkpoint.gd" id="cp_scr"]
 
 [ext_resource type="Script" uid="uid://yjg5qo2bvv2l" path="res://scene/Levels/Level5/stage5.gd" id="1_stg5"]
 [ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/actors/player/player.tscn" id="2_player"]
@@ -17,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://cqkeypickup00" path="res://scene/pickups/key_pickup/key_pickup.tscn" id="14_key"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="15_gate"]
 [ext_resource type="PackedScene" uid="uid://b7dp1fygj5tuh" path="res://scene/system/mountain_dusk_parallax.tscn" id="bg_city"]
+[ext_resource type="Script" uid="uid://vf6ib1x5p5s0" path="res://scene/gimmicks/checkpoint/checkpoint.gd" id="cp_scr"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_death"]
@@ -251,24 +251,24 @@ position = Vector2(4350, 432)
 position = Vector2(4700, 432)
 
 [node name="CheckPoint1" type="Area2D" parent="." unique_id=439429677]
-script = ExtResource("cp_scr")
 position = Vector2(1967, 718)
+script = ExtResource("cp_scr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint1" unique_id=202143647]
 position = Vector2(-101.25, -325.5)
 shape = SubResource("RectangleShape2D_qyppa")
 
 [node name="CheckPoint2" type="Area2D" parent="." unique_id=2042488922]
-script = ExtResource("cp_scr")
 position = Vector2(4181, 625)
+script = ExtResource("cp_scr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint2" unique_id=914747326]
 position = Vector2(-101.25, -325.5)
 shape = SubResource("RectangleShape2D_qyppa")
 
 [node name="CheckPoint3" type="Area2D" parent="." unique_id=1257717889]
-script = ExtResource("cp_scr")
 position = Vector2(4111, 181)
+script = ExtResource("cp_scr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint3" unique_id=178146165]
 position = Vector2(-101.25, -325.5)

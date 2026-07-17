@@ -193,3 +193,14 @@ func _do_load(slot: int) -> void:
 func _on_back_pressed():
 	if audio_close: audio_close.play()
 	_show_only(margin_container)
+
+# Esc: from a sub-panel (save/load/confirm) go back to the main list; from the main
+# list, resume the game — same as the buttons, just on the key (#1).
+func _unhandled_input(event: InputEvent) -> void:
+	if not visible or not event.is_action_pressed("ui_cancel"):
+		return
+	if margin_container and margin_container.visible:
+		_on_resume_pressed()
+	else:
+		_show_only(margin_container)
+	get_viewport().set_input_as_handled()

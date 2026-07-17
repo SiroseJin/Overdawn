@@ -47,6 +47,16 @@ const QUESTS := {
 		"objectives": [{"type": "stage_cleared", "target": "stage3"},
 					   {"type": "quiz_passed", "target": "stage3_quiz"}],
 		"reward": {"coins": 40, "skill_points": 1, "exp": 25}},
+	"q_find_key": {
+		"en": "The Locked Way", "id": "Jalan Terkunci", "mandatory": true,
+		"en_d": "The gate ahead is locked. Find the key at the top of the climb.",
+		"id_d": "Gerbang di depan terkunci. Temukan kunci di puncak pendakian.",
+		"en_lore": "There's no shortcut past the machine and no shortcut up this tower — only the long, honest climb. The key is earned by making it, not by chasing it.",
+		"id_lore": "Tak ada jalan pintas melewati mesin dan tak ada jalan pintas menaiki menara ini — hanya pendakian panjang yang jujur. Kunci didapat dengan menempuhnya, bukan mengejarnya.",
+		"en_hint": "Follow the glowing guide-line up the tower to the key, then take the gate.",
+		"id_hint": "Ikuti garis pemandu bercahaya menaiki menara menuju kunci, lalu lewati gerbang.",
+		"objectives": [{"type": "key_collected", "target": "stage3_key"}],
+		"reward": {"coins": 30, "exp": 20}},
 	"q_inside_machine": {
 		"en": "Inside the Machine", "id": "Di Dalam Mesin", "mandatory": true,
 		"en_d": "Ride the machine's current and reach the core.",
@@ -78,6 +88,27 @@ const QUESTS := {
 		"id_hint": "Hancurkan server untuk menjatuhkan perisai Bandar, lalu serang saat ia tumbang.",
 		"objectives": [{"type": "boss_defeated"}],
 		"reward": {"coins": 100, "skill_points": 1, "exp": 60}},
+	# ── Minor optional side quests (early stages) ──
+	"q_s1_curious": {
+		"en": "Curious Mind", "id": "Rasa Ingin Tahu",
+		"en_d": "Look a little closer at Stage 1 — pick up a Truth Shard.",
+		"id_d": "Perhatikan Stage 1 lebih dekat — ambil satu Pecahan Kebenaran.",
+		"en_lore": "The people the machine hurt left their words behind. Listening is how the truth spreads.",
+		"id_lore": "Orang-orang yang dilukai mesin meninggalkan kata-kata mereka. Mendengarkan adalah cara kebenaran menyebar.",
+		"en_hint": "Explore a little off the main path in Stage 1 and grab a Truth Shard.",
+		"id_hint": "Jelajahi sedikit di luar jalur utama di Stage 1 dan ambil satu Pecahan Kebenaran.",
+		"objectives": [{"type": "collectible_stage", "target": "stage1", "count": 1}],
+		"reward": {"coins": 20, "exp": 10}},
+	"q_s2_quiz_whiz": {
+		"en": "Quiz Whiz", "id": "Jago Kuis",
+		"en_d": "Pass the Stage 2 quiz on seeing through the bait.",
+		"id_d": "Lewati kuis Stage 2 tentang melihat tembus umpan.",
+		"en_lore": "Knowing the trick by name is half of beating it. Say it out loud and it loses its grip.",
+		"id_lore": "Mengetahui triknya sudah setengah mengalahkannya. Sebutkan, dan cengkeramannya melemah.",
+		"en_hint": "Find Rafi in Stage 2 and pass his quiz.",
+		"id_hint": "Temui Rafi di Stage 2 dan lewati kuisnya.",
+		"objectives": [{"type": "quiz_passed", "target": "stage2_quiz"}],
+		"reward": {"coins": 20, "exp": 10}},
 	# ── Challenge quests (UC-007) ──
 	"q_survivor": {
 		"en": "Unshaken", "id": "Tak Goyah", "challenge": true,
@@ -281,6 +312,11 @@ func _event_advances(obj: Dictionary, event_name: String, data: Dictionary) -> i
 				var st: String = CollectibleManager.SHARDS.get(data.get("id", ""), {}).get("stage", "")
 				if st == obj.get("target", ""):
 					return 1
+		"key_collected":
+			if event_name == "key_collected":
+				var t: String = obj.get("target", "")
+				if t == "" or data.get("key", "") == t:
+					return 1
 		"boss_defeated":
 			if event_name == "boss_defeated":
 				return 1
@@ -352,6 +388,7 @@ func _objective_text(obj: Dictionary) -> String:
 			return tr("Pass the quiz") if obj.get("target", "any") != "any" else tr("Pass any quiz")
 		"collectible":      return tr("Collect Truth Shards")
 		"collectible_stage":return tr("Collect a Truth Shard in") + " " + str(obj.get("target", "")).to_upper()
+		"key_collected":    return tr("Find the key")
 		"boss_defeated":    return tr("Defeat the House")
 		"arcade_wave":      return tr("Survive arcade waves")
 	return obj["type"]

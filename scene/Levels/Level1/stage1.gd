@@ -32,12 +32,15 @@ func _configure_npcs() -> void:
 		intro.dialogue_timeline = "npc1timeline"
 		intro.repeat_timeline   = "hendra_rep"
 
-	# Sari: a teaching NPC partway through the stage
+	# Sari: a teaching NPC partway through the stage. She also hands out a minor,
+	# easy OPTIONAL side quest — grab a Truth Shard in Stage 1 (#13).
 	var teach := get_node_or_null("Sari")
 	if teach:
 		teach.npc_id = "stage1_npc2"
 		teach.dialogue_timeline = "npc2timeline"
 		teach.repeat_timeline   = "sari_rep"
+		teach.quest_id          = "q_s1_curious"
+		teach.quest_giver_name  = "Sari"
 
 	# Ana: a teaching NPC — the personal cost of gambling (her brother's story).
 	# Optional lore now; the Firewall skill moved to Stage 3 so skills aren't all in S1.

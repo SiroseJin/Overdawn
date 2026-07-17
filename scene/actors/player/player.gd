@@ -53,6 +53,10 @@ var health_max: int = 100
 var health_min: int = 0
 var dead: bool
 
+# Grace period (invulnerability) after taking any hit, so enemies can't spam damage
+# in quick succession. Tunable in the editor. See take_damage_cooldown().
+@export var hit_grace: float = 0.6
+
 # Movement
 var SPEED: int
 const NORMAL_SPEED: int = 100
@@ -93,6 +97,15 @@ var strength: int = 11
 var level: int             = 1
 var exp: int               = 0
 var exp_to_next_level: int = 10
+
+# Level 1 is the baseline; every level past it adds a flat amount of the two stats
+# leveling is meant to raise. Derived (not incrementally mutated) so setting the
+# level directly — e.g. from the Debug panel — grows stats correctly too. Editable
+# per Player scene in the editor.
+const BASE_STRENGTH:   int = 11
+const BASE_HEALTH_MAX: int = 100
+@export var strength_per_level: int = 2
+@export var health_per_level:   int = 8
 
 # ─── Attack State ──────────────────────────────────────────────────────────────
 
@@ -182,6 +195,9 @@ func _ready():
 	# Carry RPG progress (level/exp/health/strength/score) over from the previous
 	# stage. On the first spawn this seeds the record from these defaults instead.
 	ProgressionManager.restore_player(self)
+	# Make strength / max-health match the current level (fixes old saves and any
+	# level set straight through the Debug panel).
+	recompute_level_stats()
 
 	update_health_bar()
 	update_dash_cd(0)
@@ -450,10 +466,10 @@ func shoot_arrow():
 	arrow_instance.global_position = muzzle
 	arrow_instance.direction       = aim
 	arrow_instance.rotation        = aim.angle() + PI / 2.0
-	# Arrow damage = 5 + 20% of (effective) strength, plus the Arrow Damage upgrade
+	# Arrow damage = 3 + 20% of (effective) strength, plus the Arrow Damage upgrade
 	# (+1 flat & +1% of base strength per level).
 	var arrow_lvl := _up("arrow_dmg")
-	arrow_instance.damage = 5 + int(round(0.20 * _eff_strength())) \
+	arrow_instance.damage = 3 + int(round(0.20 * _eff_strength())) \
 		+ arrow_lvl + int(round(0.01 * strength * arrow_lvl))
 
 	if not infinite_arrows:
@@ -507,15 +523,25 @@ func level_up():
 	level             += 1
 	exp               -= exp_to_next_level
 	exp_to_next_level  = int(exp_to_next_level * 1.1)
-	health_max        += 1
-	health            += 1
-	strength           = int(strength + 0.6)
-	health             = min(health, max_hp())
+	# Grow strength / max-health from the new level (heals by the max-HP gained).
+	recompute_level_stats()
 	update_health_bar()
 	# RPG: each level grants a skill point to spend in the stat screen
 	ProgressionManager.add_skill_points(1)
 	ProgressionManager.notify("level_up", {"level": level})   # feeds level badges
 	show_toast(tr("Level up! +1 Skill Point"))
+
+# Derive strength and max-health from the current level (level 1 = base). Any max-HP
+# gained is added to current health so a level-up heals a little. Called on spawn,
+# on level-up, and after the Debug panel sets the level directly.
+func recompute_level_stats() -> void:
+	strength = BASE_STRENGTH + strength_per_level * max(0, level - 1)
+	var new_max: int = BASE_HEALTH_MAX + health_per_level * max(0, level - 1)
+	var gained: int  = new_max - health_max
+	health_max = new_max
+	if gained > 0:
+		health += gained
+	health = min(health, max_hp())
 
 func update_exp_lvl_label():
 	if exp_label:
@@ -561,7 +587,7 @@ func take_damage(damage: int, source_pos: Vector2 = Vector2.INF):
 	else:
 		_apply_hit_feedback(source_pos)   # flash + knockback only while still alive
 
-	take_damage_cooldown(1.0)
+	take_damage_cooldown(hit_grace)
 	health = min(health, max_hp())
 	ProgressionManager.capture_player(self)
 
@@ -599,10 +625,10 @@ func update_health_bar():
 	health_bar.max_value = max_hp()
 	health_label.text    = str(health) + "/" + str(max_hp())
 
-# Prevent damage for a short window after being hit (i-frames)
-func take_damage_cooldown(_wait_time: float):
+# Prevent damage for a short window after being hit (i-frames / grace period).
+func take_damage_cooldown(wait_time: float):
 	can_take_damage = false
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(max(0.05, wait_time)).timeout
 	can_take_damage = true
 
 # ───────────────────────────────────────────────────────────────────────────────
@@ -840,7 +866,7 @@ func _skill_level(skill_name: String) -> int:
 # Recompute stats that depend on skill upgrade levels. Called on spawn and
 # whenever a skill is upgraded in the stat screen.
 func refresh_stats_from_skills():
-	max_arrows  = 1 + _skill_level("arrows")   # lvl1→2, lvl2→3, lvl3→4 arrows
+	max_arrows  = _skill_level("arrows")   # default stock 1 (lvl1→1, lvl2→2, …)
 	arrows_held = min(arrows_held, max_arrows)
 	update_arrow_cd()
 

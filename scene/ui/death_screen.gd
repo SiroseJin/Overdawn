@@ -76,3 +76,10 @@ func _on_confirm_pressed() -> void:
 
 func _on_cancel_pressed() -> void:
 	_show_only(main_panel)
+
+# Esc: from the load or confirm sub-panels, return to the main choices (#1). On the
+# main panel it does nothing (there's no "resume" from death).
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel") and not main_panel.visible:
+		_show_only(main_panel)
+		get_viewport().set_input_as_handled()

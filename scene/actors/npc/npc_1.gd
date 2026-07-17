@@ -139,6 +139,9 @@ func _resolved_marker_kind() -> MarkerKind:
 		return marker_kind
 	if is_required():
 		return MarkerKind.REQUIRED
+	# A giver of a MANDATORY (story) quest is a must-talk-to, so it reads red too (#4).
+	if quest_id != "" and QuestManager.is_mandatory(quest_id):
+		return MarkerKind.REQUIRED
 	if quiz_id != "":
 		return MarkerKind.REWARD
 	return MarkerKind.LORE

@@ -41,19 +41,21 @@ func _skin(npc_name: String, trader: String) -> void:
 			load(TRADER + trader + "/Dialogue.png"))
 
 func _configure_npcs() -> void:
+	# Vino (first NPC): must-talk. Speaking to him now unlocks Firewall AND brings up the
+	# bridge platform (MovingPlatform1, dormant until then) so you can cross the first gap
+	# — moved here from Mega so the shield comes from the very first NPC you meet (#14).
 	var n1 := get_node_or_null("Vino")
 	if n1:
 		n1.npc_id = "stage4_vino"
+		n1.unlocks_skill = "firewall"
 		n1.repeat_timeline = "vino_rep"
-	# Mega: must-talk NPC. Speaking to her unlocks Firewall AND brings up the bridge
-	# platform (MovingPlatform1, dormant until then) so you can cross the first gap.
+		if not n1.talked.is_connected(_on_bridge_npc_talked):
+			n1.talked.connect(_on_bridge_npc_talked)
+	# Mega: now a normal lore NPC (the algorithm-learns-you beat).
 	var n2 := get_node_or_null("Mega")
 	if n2:
 		n2.npc_id = "stage4_mega"
-		n2.unlocks_skill = "firewall"
 		n2.repeat_timeline = "mega_rep"
-		if not n2.talked.is_connected(_on_mega_talked):
-			n2.talked.connect(_on_mega_talked)
 	var n3 := get_node_or_null("Guntur")
 	if n3:
 		n3.npc_id = "stage4_guntur"
@@ -69,8 +71,8 @@ func _configure_npcs() -> void:
 		n4.quiz_bonus_skill_point = true
 		n4.post_quiz_timeline = "s4laraspost"
 
-# Bring up the dormant bridge platform once Mega has been spoken to.
-func _on_mega_talked(_npc_id: String) -> void:
+# Bring up the dormant bridge platform once the first NPC (Vino) has been spoken to.
+func _on_bridge_npc_talked(_npc_id: String) -> void:
 	var plat := get_node_or_null("MovingPlatform1")
 	if plat and plat.has_method("activate"):
 		plat.activate()

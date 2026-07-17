@@ -24,6 +24,7 @@ const UI_SCALE := 1.15
 @onready var badge_box:  VBoxContainer = get_node_or_null("Badge Unlock")
 
 const QUEST_MENU := preload("res://scene/ui/quest_menu.tscn")
+const QUEST_LAYER_NAME := "QuestHUDMenuLayer"
 
 func _ready() -> void:
 	if QuestManager.has_signal("quests_changed"):
@@ -45,19 +46,28 @@ func _on_quest_list_input(event: InputEvent) -> void:
 		_open_quest_menu()
 
 func _open_quest_menu() -> void:
+	# Guard against duplicates: clicking the box repeatedly used to stack menus (#2).
+	if get_tree().root.get_node_or_null(QUEST_LAYER_NAME) != null:
+		return
 	# Overlay on its own always-processing layer, and pause the game while it's open.
 	var layer := CanvasLayer.new()
+	layer.name = QUEST_LAYER_NAME
 	layer.layer = 60
 	layer.process_mode = Node.PROCESS_MODE_ALWAYS
 	var menu := QUEST_MENU.instantiate()
 	layer.add_child(menu)
 	get_tree().root.add_child(layer)
+	# Hide the rest of the HUD (quest box, notifications, health, score…) while the
+	# menu is up so nothing shows through or can be re-clicked (#2).
+	visible = false
 	Engine.time_scale = 0.0
 	if is_instance_valid(Global.PlayerBody):
 		Global.PlayerBody.is_game_paused = true
 	menu.tree_exited.connect(func():
 		if is_instance_valid(layer):
 			layer.queue_free()
+		if is_instance_valid(self):
+			visible = true
 		Engine.time_scale = 1.0
 		if is_instance_valid(Global.PlayerBody):
 			Global.PlayerBody.is_game_paused = false)
@@ -69,12 +79,19 @@ func _refresh_quests() -> void:
 		return
 	for c in quest_list.get_children():
 		c.queue_free()
-	_mk_label(quest_list, tr("QUESTS"), 13, Color(0.7, 0.85, 1.0), DISPLAY)
-	var shown := 0
+	# Gather quests an NPC has given that aren't finished yet (cap 4 on the HUD).
+	var active: Array = []
 	for qid in QuestManager.QUESTS:
-		# Only quests an NPC has actually given, and that aren't finished.
-		if not QuestManager.is_offered(qid) or QuestManager.is_done(qid) or shown >= 4:
-			continue
+		if QuestManager.is_offered(qid) and not QuestManager.is_done(qid):
+			active.append(qid)
+			if active.size() >= 4:
+				break
+	# No active quests → hide the whole quest box so it doesn't sit empty on the HUD (#12).
+	quest_list.visible = not active.is_empty()
+	if active.is_empty():
+		return
+	_mk_label(quest_list, tr("QUESTS"), 13, Color(0.7, 0.85, 1.0), DISPLAY)
+	for qid in active:
 		var objs: Array = QuestManager.objective_progress(qid)
 		var done_obj := 0
 		for o in objs:
@@ -82,9 +99,6 @@ func _refresh_quests() -> void:
 				done_obj += 1
 		_mk_label(quest_list, "◆ %s  %d/%d" % [QuestManager.title_of(qid), done_obj, objs.size()],
 			11, Color(0.85, 0.9, 1.0))
-		shown += 1
-	if shown == 0:
-		_mk_label(quest_list, tr("No active quests"), 11, Color(0.6, 0.65, 0.72))
 
 # ─── Notifications ────────────────────────────────────────────────────────────────
 

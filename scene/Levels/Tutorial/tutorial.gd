@@ -61,7 +61,7 @@ func _localize_signs() -> void:
 		"L_enemy": "FIREWALL:  Q\npasang tameng, menahan tembakan",
 		"L_dashatk": "SERANGAN DASH: Shift, lalu\nKlik Kiri/Kanan saat dash",
 		"L_enemy2": "Klik Kanan: Serangan berat",
-		"L_npc":   "TANDA ! :\nPUTIH = cerita    HIJAU = kuis / hadiah\nKUNING = info gimmick / musuh    MERAH = wajib diajak bicara",
+		"L_npc":   "TANDA !  (empat di depan menunjukkan tiap warna):\nPUTIH = cerita    HIJAU = kuis / hadiah\nKUNING = info gimmick / musuh    MERAH = wajib diajak bicara",
 		"L_exit":  "KELUAR ke Lobby",
 		# platform name-tags (children of the platforms, shown just below them)
 		"PitStatic/solid":    "Padat",

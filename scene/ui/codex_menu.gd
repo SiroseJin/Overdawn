@@ -65,10 +65,33 @@ func _add_card(kind: String, id: String, unlocked: bool) -> void:
 	head.text = ("◆ " + CodexManager.name_of(kind, id)) if unlocked else ("🔒 " + tr("Undiscovered"))
 	box.add_child(head)
 
+	# Optional illustration on unlocked entries — bigger card to fit it (#8).
+	if unlocked:
+		var img_path := CodexManager.img_of(kind, id)
+		if img_path != "" and ResourceLoader.exists(img_path):
+			var tex := load(img_path) as Texture2D
+			if tex:
+				var pic := TextureRect.new()
+				pic.texture = tex
+				pic.custom_minimum_size = Vector2(0, 128)
+				pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+				pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+				pic.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST   # crisp pixel art
+				box.add_child(pic)
+
 	var body := _label(12, Color(0.9, 0.92, 0.97) if unlocked else Color(0.45, 0.47, 0.52))
 	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	body.text = CodexManager.desc_of(kind, id) if unlocked else tr("Keep playing to reveal this entry.")
 	box.add_child(body)
+
+	# On a locked entry, tell the player how to unlock it (#9).
+	if not unlocked:
+		var hint := CodexManager.hint_of(kind, id)
+		if hint != "":
+			var h := _label(11, Color(0.85, 0.72, 0.4))
+			h.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			h.text = "💡 " + hint
+			box.add_child(h)
 
 	_list.add_child(card)
 
@@ -86,3 +109,9 @@ func _on_back() -> void:
 		get_tree().change_scene_to_file(Global.settings_return_path)
 	else:
 		queue_free()
+
+# Esc goes back too, not just the Back button (#1).
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel"):
+		_on_back()
+		get_viewport().set_input_as_handled()

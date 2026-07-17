@@ -49,14 +49,22 @@ func _configure_npcs() -> void:
 			n.npc_id = pair[1]
 			if repeats.has(pair[0]):
 				n.repeat_timeline = repeats[pair[0]]
-	# Sinta hosts the OPTIONAL end-of-stage quiz — themed on this layer's rising debt.
+	# Toni now hosts the OPTIONAL end-of-stage quiz (moved off Sinta) — themed on the
+	# rising debt, so the stage keeps its anti-gambling teaching beat.
+	var toni := get_node_or_null("Toni")
+	if toni:
+		toni.quiz_id                = "stage3_quiz"
+		toni.quiz_optional          = true
+		toni.quiz_bonus_coins       = 20
+		toni.quiz_bonus_skill_point = true
+	# Sinta (last NPC) now hands out the MANDATORY key-hunt quest instead of a quiz (#4):
+	# a red "!" must-talk-to, and the glowing guide-line then points to the summit key
+	# that unlocks the gate to Stage 4.
 	var sinta := get_node_or_null("Sinta")
 	if sinta:
-		sinta.quiz_id                = "stage3_quiz"
-		sinta.quiz_optional          = true
-		sinta.quiz_bonus_coins       = 20
-		sinta.quiz_bonus_skill_point = true
-		sinta.post_quiz_timeline     = "s3sintapost"
+		sinta.quest_id          = "q_find_key"
+		sinta.quest_giver_name  = "Sinta"
+		sinta.repeat_timeline   = "s3sintapost"
 
 # ─── Transitions ─────────────────────────────────────────────────────────────────
 

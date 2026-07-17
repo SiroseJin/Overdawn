@@ -268,8 +268,11 @@ func is_stage_cleared(stage_id: String) -> bool:
 # ─── Keys ───────────────────────────────────────────────────────────────────────
 
 func add_key(key_id: String) -> void:
+	var was_held: bool = keys_held.get(key_id, false)
 	keys_held[key_id] = true
 	key_changed.emit(key_id, true)
+	if not was_held:
+		notify("key_collected", {"key": key_id})   # feeds "find the key" quests (#4)
 
 func has_key(key_id: String) -> bool:
 	return keys_held.get(key_id, false)

@@ -125,3 +125,9 @@ func _on_back() -> void:
 		get_tree().change_scene_to_file(Global.settings_return_path)
 	else:
 		queue_free()
+
+# Esc goes back too, not just the Back button (#1).
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel"):
+		_on_back()
+		get_viewport().set_input_as_handled()

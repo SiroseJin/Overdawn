@@ -36,6 +36,11 @@ func _configure_npcs() -> void:
 	if yani:
 		yani.unlocks_skill = "double_jump"
 		yani.grants_key    = "stage2_key"
+	# Nadia (first NPC) hands out a minor, easy OPTIONAL side quest — pass Rafi's quiz (#13).
+	var nadia := get_node_or_null("Nadia")
+	if nadia:
+		nadia.quest_id         = "q_s2_quiz_whiz"
+		nadia.quest_giver_name = "Nadia"
 	# Rafi hosts the OPTIONAL end-of-stage quiz — themed on this layer's bait platforms.
 	var rafi := get_node_or_null("Rafi")
 	if rafi:

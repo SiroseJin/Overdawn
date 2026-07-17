@@ -206,6 +206,12 @@ func _on_resume_pressed() -> void:
 	Engine.time_scale = 1
 	hide()
 
+# Esc closes the Upgrades screen too, not just the Return button (#1).
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel"):
+		_on_resume_pressed()
+		get_viewport().set_input_as_handled()
+
 # ─── Helpers ───────────────────────────────────────────────────────────────────────
 
 func _add(node: Node) -> void:

@@ -65,6 +65,10 @@ const _FAKE_COIN_PROJECTILE := preload("res://scene/actors/enemies/fake_coin_pro
 var Player: CharacterBody2D
 var health_bar: ProgressBar
 
+# ── Attack pacing (anti-spam): min seconds between melee contact hits (#16). ──
+@export var attack_cooldown: float = 0.9
+var _atk_cd_remaining: float = 0.0
+
 # ───────────────────────────────────────────────────────────────────────────────
 # Lifecycle
 # ───────────────────────────────────────────────────────────────────────────────
@@ -94,6 +98,7 @@ func _process(_delta):
 	move(_delta)
 	handle_animation()
 	_update_charge_fx(_delta)
+	_tick_attack(_delta)
 
 	# NOTE: "Amount" typo is intentional — matches the Global variable name
 	Global.collectorDamageAmount = damage_to_deal
@@ -377,14 +382,25 @@ func handle_death():
 # Signals
 # ───────────────────────────────────────────────────────────────────────────────
 
+# Slope-aware sight (walls block, walkable slopes don't) — shared in Global (#11).
 func has_line_of_sight_to_player() -> bool:
-	if not Global.PlayerBody:
-		return false
-	var space_state = get_world_2d().direct_space_state
-	var query = PhysicsRayQueryParameters2D.create(global_position, Global.PlayerBody.global_position)
-	query.exclude = [self]
-	var result = space_state.intersect_ray(query)
-	return result.is_empty() or result.get("collider") == Global.PlayerBody
+	return Global.enemy_line_of_sight(self)
+
+# Pace melee contact damage so she can't spam-hit at close range (#16). One hit
+# lands, then the contact hitbox disarms for `attack_cooldown` before the next.
+func _tick_attack(delta: float) -> void:
+	if dead:
+		return
+	var col: CollisionShape2D = $WitchDealDamageArea/CollisionShape2D
+	if _atk_cd_remaining > 0.0:
+		_atk_cd_remaining -= delta
+		if _atk_cd_remaining <= 0.0 and is_instance_valid(col):
+			col.set_deferred("disabled", false)
+		return
+	if is_instance_valid(Global.playerHitbox) and $WitchDealDamageArea.overlaps_area(Global.playerHitbox):
+		_atk_cd_remaining = attack_cooldown
+		if is_instance_valid(col):
+			col.set_deferred("disabled", true)
 
 func _on_timer_timeout():
 	# Pick a new random horizontal roam target within roam_range of spawn position

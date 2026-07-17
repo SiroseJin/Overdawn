@@ -316,7 +316,7 @@ height = 28.0
 radius = 240.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_melee"]
-radius = 74.0
+radius = 58.0
 
 [node name="CollectorEnemy" type="CharacterBody2D" unique_id=687139458]
 z_index = 1

@@ -35,6 +35,7 @@ const GUIDE := {
 		"en_d": "Q raises a Firewall that blocks incoming hits for a moment — a shield against the machine's pull.",
 		"id_d": "Q menaikkan Firewall yang menahan serangan sesaat — tameng dari tarikan mesin."},
 	"g_upgrades": {"en": "Upgrades", "id": "Peningkatan", "default": true,
+		"img": "res://art/v1.1 dungeon crawler 16X16 pixel pack/props_itens/bag_coins.png",
 		"en_d": "TAB opens the Upgrades screen. Spend Skill Points (earned each level) on skills, stats and attacks.",
 		"id_d": "TAB membuka layar Peningkatan. Pakai Skill Point (didapat tiap level) untuk skill, stat, dan serangan."},
 	"g_quests": {"en": "Quests", "id": "Misi", "default": true,
@@ -67,6 +68,7 @@ const GUIDE := {
 		"en_d": "Solid platforms hold. Moving ones carry you. Falling ones drop the moment you stand on them — don't linger.",
 		"id_d": "Platform padat kokoh. Yang bergerak membawamu. Yang jatuh runtuh begitu kau injak — jangan berlama-lama."},
 	"g_key": {"en": "Keys & Doors", "id": "Kunci & Pintu", "ev": "stage_entered", "key": "stage_id", "val": "stage2",
+		"img": "res://art/v1.1 dungeon crawler 16X16 pixel pack/props_itens/key_silver.png",
 		"en_d": "Locked doors block the exit. Find the matching key — a glowing guide-line points you to it while a quest needs it.",
 		"id_d": "Pintu terkunci menghalangi jalan keluar. Temukan kuncinya — garis pemandu bercahaya menunjukkannya saat misi membutuhkannya."},
 	"g_debt": {"en": "Rising Debt", "id": "Utang Menanjak", "ev": "stage_entered", "key": "stage_id", "val": "stage3",
@@ -77,34 +79,44 @@ const GUIDE := {
 		"id_d": "Arus Stage 4 menyeretmu ke mesin — tarikan kembali begitu kau coba pergi. Naikkan Firewall dan tetap melangkah."},
 }
 
+# Each locked LORE entry carries a hint (en_h/id_h) telling the player HOW to reveal
+# it — which stage, what to do, or who to talk to (#9). Shown on the locked card.
 const LORE := {
 	"l_judol": {"en": "What Is Judol", "id": "Apa Itu Judol", "default": true,
 		"en_d": "'Judi online' (judol) is betting real money on games of chance in apps and sites. It's dressed up like a game, but it's built to take your money.",
 		"id_d": "'Judi online' (judol) adalah bertaruh uang sungguhan pada permainan untung-untungan di aplikasi dan situs. Dikemas seperti game, tapi dibuat untuk mengambil uangmu."},
 	"l_house": {"en": "The House Always Wins", "id": "Bandar Selalu Menang", "ev": "stage_cleared", "key": "stage_id", "val": "stage1",
 		"en_d": "The odds are set so the operator — the house — profits over time. It is not a way to make money. Any win is bait to keep you playing.",
-		"id_d": "Peluangnya diatur agar operator — sang bandar — untung dalam jangka panjang. Ini bukan cara mencari uang. Kemenangan apa pun adalah umpan agar kau terus main."},
+		"id_d": "Peluangnya diatur agar operator — sang bandar — untung dalam jangka panjang. Ini bukan cara mencari uang. Kemenangan apa pun adalah umpan agar kau terus main.",
+		"en_h": "Clear Stage 1 to reveal this.", "id_h": "Selesaikan Stage 1 untuk membukanya."},
 	"l_bait": {"en": "Free Credit Is Bait", "id": "Kredit Gratis Itu Umpan", "ev": "stage_cleared", "key": "stage_id", "val": "stage2",
 		"en_d": "'Free credits' and 'guaranteed jackpots' cost the operator almost nothing. They get you playing — then take back far more.",
-		"id_d": "'Kredit gratis' dan 'jackpot dijamin' hampir tanpa biaya bagi operator. Membuatmu bermain — lalu mengambil jauh lebih banyak."},
+		"id_d": "'Kredit gratis' dan 'jackpot dijamin' hampir tanpa biaya bagi operator. Membuatmu bermain — lalu mengambil jauh lebih banyak.",
+		"en_h": "Clear Stage 2 to reveal this.", "id_h": "Selesaikan Stage 2 untuk membukanya."},
 	"l_debt": {"en": "The Debt Trap", "id": "Jebakan Utang", "ev": "stage_cleared", "key": "stage_id", "val": "stage3",
 		"en_d": "Losses pile up and the apps offer loans to 'win it back'. Borrowing to chase a rigged game only digs the hole deeper. The debt is the goal.",
-		"id_d": "Kekalahan menumpuk dan aplikasi menawarkan pinjaman untuk 'menang kembali'. Berutang mengejar permainan curang hanya memperdalam lubang. Utang adalah tujuannya."},
+		"id_d": "Kekalahan menumpuk dan aplikasi menawarkan pinjaman untuk 'menang kembali'. Berutang mengejar permainan curang hanya memperdalam lubang. Utang adalah tujuannya.",
+		"en_h": "Clear Stage 3 (the Debt Tower) to reveal this.", "id_h": "Selesaikan Stage 3 (Menara Utang) untuk membukanya."},
 	"l_nearmiss": {"en": "Engineered Near-Misses", "id": "Nyaris Menang yang Direkayasa", "ev": "stage_cleared", "key": "stage_id", "val": "stage4",
 		"en_d": "'Almost won' isn't luck — it's designed. Your brain treats a near-miss like a real win, and a bonus appears the moment you try to quit.",
-		"id_d": "'Nyaris menang' bukan keberuntungan — itu dirancang. Otakmu memperlakukan nyaris-menang seperti menang, dan bonus muncul begitu kau coba berhenti."},
+		"id_d": "'Nyaris menang' bukan keberuntungan — itu dirancang. Otakmu memperlakukan nyaris-menang seperti menang, dan bonus muncul begitu kau coba berhenti.",
+		"en_h": "Clear Stage 4 (Inside the Machine) to reveal this.", "id_h": "Selesaikan Stage 4 (Di Dalam Mesin) untuk membukanya."},
 	"l_signs": {"en": "Warning Signs", "id": "Tanda Bahaya", "ev": "quiz_passed", "key": "quiz_id", "val": "stage5_quiz",
 		"en_d": "Chasing losses while insisting 'I can stop anytime' is a classic sign of harm. Recovery starts with honesty and asking for help.",
-		"id_d": "Mengejar kekalahan sambil bersikeras 'aku bisa berhenti kapan saja' adalah tanda klasik kecanduan. Pemulihan dimulai dari kejujuran dan meminta bantuan."},
+		"id_d": "Mengejar kekalahan sambil bersikeras 'aku bisa berhenti kapan saja' adalah tanda klasik kecanduan. Pemulihan dimulai dari kejujuran dan meminta bantuan.",
+		"en_h": "Pass the Stage 5 quiz (talk to the NPC before the House) to reveal this.", "id_h": "Lewati kuis Stage 5 (bicara NPC sebelum Bandar) untuk membukanya."},
 	"l_shard": {"en": "Voices of the Hurt", "id": "Suara yang Terluka", "ev": "collectible",
 		"en_d": "Truth Shards are the words of people the machine hurt — savings gone, families strained, time lost. Collecting them carries their stories forward.",
-		"id_d": "Pecahan Kebenaran adalah kata-kata orang yang dilukai mesin — tabungan lenyap, keluarga tegang, waktu hilang. Mengumpulkannya membawa kisah mereka."},
+		"id_d": "Pecahan Kebenaran adalah kata-kata orang yang dilukai mesin — tabungan lenyap, keluarga tegang, waktu hilang. Mengumpulkannya membawa kisah mereka.",
+		"en_h": "Collect any Truth Shard (hidden off the path in the stages) to reveal this.", "id_h": "Ambil satu Pecahan Kebenaran (tersembunyi di luar jalur) untuk membukanya."},
 	"l_help": {"en": "Getting Help", "id": "Mencari Bantuan", "ev": "quiz_passed",
 		"en_d": "If gambling has a grip on you or someone you know, help is real. In Indonesia call 119 ext 8 (mental-health line). Talking to someone is the first step out.",
-		"id_d": "Jika judi mencengkerammu atau orang yang kau kenal, bantuan itu nyata. Di Indonesia hubungi 119 ext 8 (layanan kesehatan jiwa). Bicara pada seseorang adalah langkah pertama keluar."},
+		"id_d": "Jika judi mencengkerammu atau orang yang kau kenal, bantuan itu nyata. Di Indonesia hubungi 119 ext 8 (layanan kesehatan jiwa). Bicara pada seseorang adalah langkah pertama keluar.",
+		"en_h": "Pass any quiz (talk to a quiz NPC) to reveal this.", "id_h": "Lewati kuis mana pun (bicara NPC kuis) untuk membukanya."},
 	"l_overdawn": {"en": "Overdawn", "id": "Fajar Menyingsing", "ev": "boss_defeated",
 		"en_d": "No betting system beats a rigged game. The only real win is to walk away — and to help others see the trap too. You made it out. Now help others do the same.",
-		"id_d": "Tak ada sistem taruhan yang mengalahkan permainan curang. Kemenangan sejati adalah pergi — dan membantu orang lain melihat jebakannya. Kau berhasil keluar. Kini bantu orang lain melakukannya."},
+		"id_d": "Tak ada sistem taruhan yang mengalahkan permainan curang. Kemenangan sejati adalah pergi — dan membantu orang lain melihat jebakannya. Kau berhasil keluar. Kini bantu orang lain melakukannya.",
+		"en_h": "Defeat the House (Stage 6 final boss) to reveal this.", "id_h": "Kalahkan Bandar (bos terakhir Stage 6) untuk membukanya."},
 }
 
 func _ready() -> void:
@@ -140,6 +152,17 @@ func name_of(kind: String, id: String) -> String:
 func desc_of(kind: String, id: String) -> String:
 	var e: Dictionary = (GUIDE if kind == "guide" else LORE).get(id, {})
 	return e.get("id_d" if _is_id() else "en_d", "")
+
+## Optional illustration for an entry (res:// path, "" if none). Editable per entry —
+## drop an "img" field on any GUIDE/LORE entry and it shows on the card (#8).
+func img_of(kind: String, id: String) -> String:
+	var e: Dictionary = (GUIDE if kind == "guide" else LORE).get(id, {})
+	return str(e.get("img", ""))
+
+## Hint telling the player how to unlock a still-locked entry (#9). "" if none.
+func hint_of(kind: String, id: String) -> String:
+	var e: Dictionary = (GUIDE if kind == "guide" else LORE).get(id, {})
+	return e.get("id_h" if _is_id() else "en_h", "")
 
 # ─── Unlocking ────────────────────────────────────────────────────────────────────
 
