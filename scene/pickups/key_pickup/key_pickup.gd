@@ -15,6 +15,7 @@ extends Area2D
 var _float_tween: Tween
 
 func _ready() -> void:
+	add_to_group("key")   # so the key-guide line can find and point to it (#5)
 	body_entered.connect(_on_body_entered)
 	# The "Tag" label is this key's caption — enroll it into the global toggle.
 	if TranslationServer.get_locale().begins_with("id"):

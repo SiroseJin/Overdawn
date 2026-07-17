@@ -162,6 +162,7 @@ var _last_safe_pos: Vector2   # last non-NaN position, for the moving-platform N
 # Particle trails (added in _ready). Toggled on during a dash / speed boost.
 const _TRAIL := preload("res://scene/system/vfx/particle_trail.tscn")
 const _FIREWALL_FX := preload("res://scene/system/vfx/firewall_shield.tscn")
+const _KEY_GUIDE := preload("res://scene/system/vfx/key_guide.tscn")
 var _dash_fx: CPUParticles2D
 var _speed_fx: CPUParticles2D
 var _firewall_fx: Sprite2D   # looping shield shown while the firewall is up
@@ -207,6 +208,7 @@ func _ready():
 	refresh_stats_from_skills()
 	_refresh_skill_huds()
 	_setup_skill_key_hints()
+	add_child(_KEY_GUIDE.instantiate())   # faint line to a needed key, if any (#5)
 
 func _physics_process(delta):
 	if is_game_paused:

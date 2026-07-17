@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkeyguide0001"]
+
+[ext_resource type="Script" path="res://scene/system/vfx/key_guide.gd" id="1_kg"]
+
+[node name="KeyGuide" type="Node2D"]
+script = ExtResource("1_kg")

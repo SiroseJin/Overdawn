@@ -21,6 +21,7 @@ extends StaticBody2D
 var _opened := false
 
 func _ready() -> void:
+	add_to_group("locked_door")   # the key-guide line reads our required_key (#5)
 	detect.body_entered.connect(_on_detect_entered)
 	detect.body_exited.connect(_on_detect_exited)
 	if locked_hint != "":
