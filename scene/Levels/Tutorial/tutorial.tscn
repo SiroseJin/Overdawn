@@ -271,20 +271,31 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("5_font")
 theme_override_font_sizes/font_size = 15
-text = "RED ! = must talk (opens the way / gives a skill).
-YELLOW ! = optional (a tip or story)."
+text = "! MARKERS:
+WHITE = lore    GREEN = quiz / reward
+YELLOW = gimmick / enemy info    RED = must talk to progress"
 horizontal_alignment = 1
 
 [node name="NpcRequired" parent="." unique_id=61750356 instance=ExtResource("npc")]
 position = Vector2(5232, 554)
 dialogue_timeline = "tut_required"
 npc_id = "tut_required"
+marker_kind = 4
 grants_key = "tutorial_demo_key"
+
+[node name="Caption" parent="NpcRequired" index="4"]
+text_en = "Guide"
+text_id = "Pemandu"
 
 [node name="NpcOptional" parent="." unique_id=1176548597 instance=ExtResource("npc")]
 position = Vector2(5105, 551)
 dialogue_timeline = "tut_optional"
 npc_id = "tut_optional"
+marker_kind = 3
+
+[node name="Caption" parent="NpcOptional" index="4"]
+text_en = "Friend"
+text_id = "Teman"
 
 [node name="ExitDoor" parent="." unique_id=1353503438 instance=ExtResource("door")]
 position = Vector2(5350, 500)

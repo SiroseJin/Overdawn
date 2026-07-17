@@ -74,9 +74,6 @@ func _on_w_to_jump_toggle_toggled(toggled_on):
 	Global.use_w_to_jump = toggled_on
 	SettingsManager.save_settings()
 
-func _on_view_quests_pressed():
-	# Overlay the quest-list menu on top of settings; its Back frees it.
-	add_child(load(\"res://scene/ui/quest_menu.tscn\").instantiate())
 
 func _on_language_select_item_selected(index):
 	TranslationServer.set_locale(\"en\" if index == 0 else \"id\")
@@ -266,11 +263,6 @@ max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="ViewQuests" type="Button" parent="ColorRect/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_el4av")
-text = "View Quests"
-
 [node name="Back" type="Button" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=126814835]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
@@ -286,5 +278,4 @@ text = "Back"
 [connection signal="value_changed" from="ColorRect/MarginContainer/VBoxContainer/MasterVolumeSlider" to="." method="_on_master_volume_slider_value_changed"]
 [connection signal="value_changed" from="ColorRect/MarginContainer/VBoxContainer/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
 [connection signal="value_changed" from="ColorRect/MarginContainer/VBoxContainer/SFXVolumeSlider" to="." method="_on_sfx_volume_slider_value_changed"]
-[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/ViewQuests" to="." method="_on_view_quests_pressed"]
 [connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]
