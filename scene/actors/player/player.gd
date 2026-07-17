@@ -626,12 +626,8 @@ func handle_death_animation():
 	await get_tree().create_timer(0.5).timeout
 	$Camera2D.zoom = Vector2(4, 4)
 	await get_tree().create_timer(1.5).timeout
-	# If a checkpoint is active for this stage, roll back to it instead of the death
-	# screen; otherwise show the normal death screen (retry from the start).
-	if CheckpointManager.can_respawn():
-		CheckpointManager.respawn()
-	else:
-		death_screen.show_screen()
+	# The death screen offers both "from the beginning" and "from the last checkpoint".
+	death_screen.show_screen()
 
 # ───────────────────────────────────────────────────────────────────────────────
 # Animation

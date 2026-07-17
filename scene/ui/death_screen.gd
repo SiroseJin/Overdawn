@@ -6,11 +6,14 @@ extends Control
 @onready var load_panel:    Control = $LoadPanel
 @onready var confirm_panel: Control = $ConfirmPanel
 @onready var confirm_label: Label   = $ConfirmPanel/VBoxContainer/ConfirmLabel
+@onready var checkpoint_button: Button = $MainPanel/VBoxContainer/CheckpointButton
 
 var _pending_scene := ""
 
 func show_screen() -> void:
 	_refresh_load_slots()
+	# Only offer "From Checkpoint" when there's a checkpoint to return to in this stage.
+	checkpoint_button.visible = CheckpointManager.can_respawn()
 	_show_only(main_panel)
 	show()
 
@@ -25,8 +28,15 @@ func _refresh_load_slots() -> void:
 # ─── Main panel ───────────────────────────────────────────────────────────────
 
 func _on_retry_pressed() -> void:
+	# From the beginning: restart the whole stage (progression as it stands is kept).
 	Engine.time_scale = 1
 	get_tree().reload_current_scene()
+
+func _on_checkpoint_pressed() -> void:
+	# From the last checkpoint: roll progression back to the checkpoint snapshot and
+	# reload the stage with the player dropped there.
+	Engine.time_scale = 1
+	CheckpointManager.respawn()
 
 func _on_load_pressed() -> void:
 	_refresh_load_slots()

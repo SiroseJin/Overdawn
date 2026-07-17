@@ -43,7 +43,12 @@ horizontal_alignment = 1
 [node name="RetryButton" type="Button" parent="MainPanel/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_font")
-text = "Retry"
+text = "From Beginning"
+
+[node name="CheckpointButton" type="Button" parent="MainPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+text = "From Checkpoint"
 
 [node name="LoadButton" type="Button" parent="MainPanel/VBoxContainer"]
 layout_mode = 2
@@ -167,6 +172,7 @@ theme_override_fonts/font = ExtResource("2_font")
 text = "Cancel"
 
 [connection signal="pressed" from="MainPanel/VBoxContainer/RetryButton" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="MainPanel/VBoxContainer/CheckpointButton" to="." method="_on_checkpoint_pressed"]
 [connection signal="pressed" from="MainPanel/VBoxContainer/LoadButton" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="MainPanel/VBoxContainer/LobbyButton" to="." method="_on_lobby_pressed"]
 [connection signal="pressed" from="MainPanel/VBoxContainer/MenuButton" to="." method="_on_menu_pressed"]
