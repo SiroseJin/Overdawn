@@ -6,10 +6,11 @@ extends Area2D
 # hits, then frees itself. Also frees itself when it leaves the screen.
 # ───────────────────────────────────────────────────────────────────────────────
 
-var speed: int         = 270
+var speed: int         = 338   # +25% velocity (was 270)
 var direction: Vector2 = Vector2.ZERO
 
-const DAMAGE_AMOUNT: int = 15
+## Damage is set by the shooter (player): 5 + 20% of base strength. Falls back to 15.
+var damage: int = 15
 
 var _spent := false   # guards against applying damage / freeing twice
 
@@ -75,7 +76,7 @@ func _hit(target: Node) -> void:
 	if _spent:
 		return
 	_spent = true
-	target.take_damage(DAMAGE_AMOUNT)
+	target.take_damage(damage)
 	queue_free()
 
 # ───────────────────────────────────────────────────────────────────────────────

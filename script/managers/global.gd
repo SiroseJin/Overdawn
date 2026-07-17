@@ -181,6 +181,34 @@ const _DAMAGE_NUMBER := preload("res://scene/system/vfx/damage_number.tscn")
 # SettingsManager under [game] use_w_to_jump; toggled from the Settings menu.
 var use_w_to_jump: bool = false
 
+# ─── Story-mode enemy scaling ────────────────────────────────────────────────────
+# In STORY mode only, enemies get a mild stat buff that grows with the player's level
+# so the world doesn't feel trivial once you out-level it: +1% per 5 player levels
+# (Lv5 = +1%, Lv10 = +2%, …). Speed gets only a quarter of that, capped at +10%, so
+# it never becomes an unfair chase. Arcade mode is unaffected (it has its own scaling).
+func story_enemy_buff() -> float:
+	if arcade_mode or not is_instance_valid(PlayerBody) or not ("level" in PlayerBody):
+		return 0.0
+	return floor(int(PlayerBody.level) / 5.0) * 0.01
+
+## Apply the story-mode buff to an enemy's stats. Call once from the enemy's _ready.
+## Safe on any enemy — only touches the stats it actually has.
+func apply_enemy_scaling(e: Object) -> void:
+	var buff := story_enemy_buff()
+	if buff <= 0.0:
+		return
+	var spd_buff := minf(buff * 0.25, 0.10)
+	if "health_max" in e:
+		e.health_max *= (1.0 + buff)
+		if "health" in e:
+			e.health = e.health_max
+	elif "health" in e:
+		e.health *= (1.0 + buff)
+	if "damage_to_deal" in e:
+		e.damage_to_deal = int(round(e.damage_to_deal * (1.0 + buff)))
+	if "speed" in e:
+		e.speed *= (1.0 + spd_buff)
+
 # ─── Scrollable menus ────────────────────────────────────────────────────────────
 ## Wrap `content` (a menu's main container) in a ScrollContainer occupying the same
 ## slot, so it scrolls vertically instead of overflowing/clipping. Idempotent and

@@ -59,6 +59,7 @@ var health_bar: ProgressBar
 # ───────────────────────────────────────────────────────────────────────────────
 
 func _ready():
+	Global.apply_enemy_scaling(self)   # story-mode level scaling (#6)
 	is_necro_chase    = true
 	taking_damage     = false
 	charging          = false

@@ -141,6 +141,7 @@ var _shield_fx: Node2D = null   # electric-shield VFX, follows the boss while sh
 @onready var _body_collision: CollisionShape2D = $BodyCollision
 
 func _ready() -> void:
+	Global.apply_enemy_scaling(self)   # story-mode level scaling (#6)
 	health = health_max
 	shield = shield_max
 	_base_x = position.x

@@ -146,8 +146,8 @@ var _coin_label: Label
 
 # ─── Arrows ────────────────────────────────────────────────────────────────────
 
-var max_arrows: int              = 2
-var arrows_held: int             = 2
+var max_arrows: int              = 1   # default stack is 1 (upgradable later)
+var arrows_held: int             = 1
 var arrow_refill_time: float     = 1.0
 var current_arrow_refill_time: float = 0.0
 
@@ -443,6 +443,8 @@ func shoot_arrow():
 	arrow_instance.global_position = muzzle
 	arrow_instance.direction       = aim
 	arrow_instance.rotation        = aim.angle() + PI / 2.0
+	# Arrow damage = 5 + 20% of base strength.
+	arrow_instance.damage          = 5 + int(round(0.20 * strength))
 
 	if not infinite_arrows:
 		arrows_held -= 1
@@ -651,17 +653,30 @@ func _on_animated_sprite_2d_animation_finished():
 	current_attack = false
 
 func toggle_damage_collision(type: String):
+	# Keep the damage hitbox in sync with the attack ANIMATION: it goes live only for
+	# the "swing" frames (skipping the wind-up and recovery frames), driven by the
+	# actual sprite-frame count and speed instead of a fixed timer.
 	var damage_col = deal_damage_zone.get_node("CollisionShape2D")
-	var wait_time: float
+	var anim := str(type, "_attack")
+	var frames: SpriteFrames = animated_sprite_2d.sprite_frames
 
-	match type:
-		"normal":  wait_time = 0.5
-		"special": wait_time = 0.8
-		"dash":    wait_time = 0.3
-		_:         wait_time = 0.5
+	if frames == null or not frames.has_animation(anim):
+		# Fallback: brief fixed window if the animation is missing.
+		damage_col.disabled = false
+		await get_tree().create_timer(0.4).timeout
+		damage_col.disabled = true
+		return
 
-	damage_col.disabled = false
-	await get_tree().create_timer(wait_time).timeout
+	var n: int = frames.get_frame_count(anim)
+	var frame_dur := 1.0 / maxf(frames.get_animation_speed(anim), 0.1)
+	var active_start := 1 if n >= 3 else 0        # let the wind-up frame pass first
+	var active_end := maxi(active_start + 1, n - 1)  # stop before the recovery frame
+
+	damage_col.disabled = true
+	await get_tree().create_timer(frame_dur * active_start).timeout
+	if current_attack:                            # attack still going → open the hitbox
+		damage_col.disabled = false
+	await get_tree().create_timer(frame_dur * (active_end - active_start)).timeout
 	damage_col.disabled = true
 
 # ───────────────────────────────────────────────────────────────────────────────
@@ -669,15 +684,16 @@ func toggle_damage_collision(type: String):
 # ───────────────────────────────────────────────────────────────────────────────
 
 func set_damage(type: String):
+	# Attack damage scales off player strength: basic 100%, heavy 125%, dash 140%.
 	var multiplier: float
 
 	match type:
-		"normal":  multiplier = 1.0
-		"special": multiplier = 1.5
-		"dash":    multiplier = 2.5
-		_:         multiplier = 1.0
+		"normal":  multiplier = 1.00   # basic (left click)
+		"special": multiplier = 1.25   # heavy (right click)
+		"dash":    multiplier = 1.40   # dash attack
+		_:         multiplier = 1.00
 
-	Global.playerDamageAmount = int(strength * multiplier)
+	Global.playerDamageAmount = int(round(strength * multiplier))
 
 func update_deal_damage_zone():
 	var dir = (get_global_mouse_position() - global_position).normalized()
