@@ -16,6 +16,10 @@ signal talked(npc_id: String)
 ## The player must answer everything correctly to pass; failing lets them talk
 ## again to retry. Once passed, the quiz won't re-appear.
 @export var quiz_id: String = ""
+## Quest this NPC hands out. When first talked to, the quest is announced to the player
+## (like being given a quiz) and appears in the quest log. Story quests are Main
+## (mandatory); challenge/repeat ones are Side (optional). See QuestManager.QUESTS. (#5)
+@export var quest_id: String = ""
 ## Passing the quiz grants this key (use a matching LockedDoor to gate the exit).
 @export var quiz_grants_key: String = ""
 ## Passing the quiz grants these bonus coins (first pass only).
@@ -215,6 +219,8 @@ func _dialogue_to_play() -> String:
 func _on_dialogue_finished():
 	ProgressionManager.mark_npc_talked(npc_id)
 	talked.emit(npc_id)
+	if quest_id != "":
+		QuestManager.offer_quest(quest_id)   # this NPC is a quest-giver (#5)
 	if unlocks_skill != "":
 		ProgressionManager.unlock_skill(unlocks_skill)
 	if grants_key != "" and not ProgressionManager.has_key(grants_key):

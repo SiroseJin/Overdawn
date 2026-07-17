@@ -15,7 +15,7 @@ signal quests_changed()
 # collectible_stage(target,count), boss_defeated, no_damage_clear, arcade_wave(count).
 const QUESTS := {
 	"q_awakening": {
-		"en": "Awakening", "id": "Kesadaran",
+		"en": "Awakening", "id": "Kesadaran", "mandatory": true,
 		"en_d": "Learn what online gambling really is, then prove it.",
 		"id_d": "Pelajari apa itu judi online sebenarnya, lalu buktikan.",
 		"objectives": [{"type": "stage_cleared", "target": "stage1"},
@@ -29,27 +29,27 @@ const QUESTS := {
 					   {"type": "collectible_stage", "target": "stage2", "count": 1}],
 		"reward": {"coins": 35, "exp": 20}},
 	"q_break_the_cycle": {
-		"en": "Break the Cycle", "id": "Putus Rantainya",
+		"en": "Break the Cycle", "id": "Putus Rantainya", "mandatory": true,
 		"en_d": "Escape the rising debt and understand why it grows.",
 		"id_d": "Lolos dari utang yang naik dan pahami kenapa ia tumbuh.",
 		"objectives": [{"type": "stage_cleared", "target": "stage3"},
 					   {"type": "quiz_passed", "target": "stage3_quiz"}],
 		"reward": {"coins": 40, "skill_points": 1, "exp": 25}},
 	"q_inside_machine": {
-		"en": "Inside the Machine", "id": "Di Dalam Mesin",
+		"en": "Inside the Machine", "id": "Di Dalam Mesin", "mandatory": true,
 		"en_d": "Ride the machine's current and reach the core.",
 		"id_d": "Lewati arus mesin dan capai intinya.",
 		"objectives": [{"type": "stage_cleared", "target": "stage4"}],
 		"reward": {"coins": 45, "exp": 30}},
 	"q_final_test": {
-		"en": "The Final Test", "id": "Ujian Terakhir",
-		"en_d": "Pass the gauntlet and the last quiz before the House.",
-		"id_d": "Lewati rintangan dan kuis terakhir sebelum Bandar.",
+		"en": "The Final Test", "id": "Ujian Terakhir", "mandatory": true,
+		"en_d": "Defeat the Dealer, then pass the last quiz before the House.",
+		"id_d": "Kalahkan Dealer, lalu lewati kuis terakhir sebelum Bandar.",
 		"objectives": [{"type": "stage_cleared", "target": "stage5"},
 					   {"type": "quiz_passed", "target": "stage5_quiz"}],
 		"reward": {"coins": 50, "skill_points": 2, "exp": 40}},
 	"q_overdawn": {
-		"en": "Overdawn", "id": "Fajar Menyingsing",
+		"en": "Overdawn", "id": "Fajar Menyingsing", "mandatory": true,
 		"en_d": "Beat the House and break the machine for good.",
 		"id_d": "Kalahkan Bandar dan hancurkan mesinnya selamanya.",
 		"objectives": [{"type": "boss_defeated"}],
@@ -93,6 +93,31 @@ func desc_of(qid: String) -> String:
 
 func is_done(qid: String) -> bool:
 	return _state(qid).get("done", false)
+
+## Story quests are MANDATORY (they gate the climb); challenge/repeatable ones are
+## optional side quests. Used by NPC quest-givers and the quest log (#5).
+func is_mandatory(qid: String) -> bool:
+	return QUESTS.get(qid, {}).get("mandatory", false)
+
+func is_offered(qid: String) -> bool:
+	return _state(qid).get("offered", false)
+
+# An NPC "gives" a quest, the same way an NPC hosts a quiz: the first time it's offered
+# we announce it to the player and remember it (persisted in quest_state) so it isn't
+# re-announced. Progress itself is still event-driven, so nothing else has to change.
+func offer_quest(qid: String) -> void:
+	if not QUESTS.has(qid):
+		return
+	var st := _state(qid)
+	if st.get("offered", false) or st.get("done", false):
+		return
+	st["offered"] = true
+	quests_changed.emit()
+	ProgressionManager.notify("quest_offered", {"id": qid})
+	var p = Global.PlayerBody
+	if is_instance_valid(p) and p.has_method("show_toast"):
+		var kind := tr("Main Quest") if is_mandatory(qid) else tr("Side Quest")
+		p.show_toast("★ " + kind + ": " + title_of(qid))
 
 func objective_progress(qid: String) -> Array:
 	# Returns [{text, cur, req, done}] for each objective.

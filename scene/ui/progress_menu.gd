@@ -88,7 +88,8 @@ func _build_quests() -> void:
 		var done: bool = QuestManager.is_done(qid)
 		var head := _label(13, Color(0.5, 0.9, 0.6) if done else Color(0.85, 0.85, 0.9))
 		head.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		head.text = ("✓ " if done else "• ") + QuestManager.title_of(qid) + " — " + QuestManager.desc_of(qid)
+		var kind := "[%s] " % (tr("Main") if QuestManager.is_mandatory(qid) else tr("Side"))
+		head.text = ("✓ " if done else "• ") + kind + QuestManager.title_of(qid) + " — " + QuestManager.desc_of(qid)
 		_quests.add_child(head)
 		for ob in QuestManager.objective_progress(qid):
 			var o := _label(11, Color(0.55, 0.85, 0.6) if ob["done"] else Color(0.6, 0.6, 0.66), false)
@@ -116,11 +117,11 @@ func _clear(node: Node) -> void:
 	for c in node.get_children():
 		c.queue_free()
 
-func _label(size: int, color: Color, use_font := true) -> Label:
+func _label(font_size: int, color: Color, use_font := true) -> Label:
 	var l := Label.new()
 	if use_font:
 		l.add_theme_font_override("font", FONT)
-	l.add_theme_font_size_override("font_size", size)
+	l.add_theme_font_size_override("font_size", font_size)
 	l.add_theme_color_override("font_color", color)
 	return l
 
