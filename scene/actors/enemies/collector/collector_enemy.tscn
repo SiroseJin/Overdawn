@@ -313,7 +313,10 @@ radius = 4.0
 height = 28.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_detect"]
-radius = 130.0
+radius = 240.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_melee"]
+radius = 74.0
 
 [node name="CollectorEnemy" type="CharacterBody2D" unique_id=687139458]
 z_index = 1
@@ -366,6 +369,14 @@ collision_mask = 2
 position = Vector2(0, -14)
 shape = SubResource("CircleShape2D_detect")
 
+[node name="MeleeZone" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeZone"]
+position = Vector2(0, -14)
+shape = SubResource("CircleShape2D_melee")
+
 
 [node name="Caption" parent="." instance=ExtResource("cap_lbl_9")]
 offset_left = -60.0
@@ -381,3 +392,5 @@ text_id = "Penagih"
 [connection signal="area_exited" from="WitchDealDamageArea" to="." method="_on_witch_deal_damage_area_area_exited"]
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]
+[connection signal="body_entered" from="MeleeZone" to="." method="_on_melee_zone_body_entered"]
+[connection signal="body_exited" from="MeleeZone" to="." method="_on_melee_zone_body_exited"]

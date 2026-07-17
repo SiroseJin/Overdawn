@@ -34,8 +34,13 @@ var is_dealing_damage: bool = false
 var is_witch_chase: bool    = false
 var is_witch_roaming: bool  = false
 
-# Detection zone / roaming
+# Detection zones / roaming. Two coexisting, editor-resizable trigger circles:
+#   • DetectionZone (big)  → the player is close enough to engage / wind up the ranged
+#                            attack. Resize its CircleShape2D to change ranged reach.
+#   • MeleeZone     (small)→ the player is close enough that she drops the ranged
+#                            charge and rushes in for a melee hit instead.
 var player_in_range: bool = false
+var player_in_melee: bool = false
 var spawn_position: Vector2
 var roam_target_x: float
 var roam_range: float = 80.0
@@ -100,12 +105,14 @@ func _process(_delta):
 		is_witch_roaming = false
 		Player = Global.PlayerBody
 
-		var distance_to_player = position.distance_to(Player.position)
-		if distance_to_player >= 140:
-			charge()
-		else:
+		# Coexisting states: far (inside DetectionZone, outside MeleeZone) → wind up and
+		# fire the ranged attack while drifting closer; close (inside MeleeZone) → drop
+		# the charge and rush in for a melee hit.
+		if player_in_melee:
 			charging = false
 			charging_timer.stop()
+		else:
+			charge()
 	else:
 		is_witch_chase   = false
 		is_witch_roaming = true
@@ -388,6 +395,14 @@ func _on_detection_zone_body_entered(body: Node2D):
 func _on_detection_zone_body_exited(body: Node2D):
 	if body == Global.PlayerBody:
 		player_in_range = false
+
+func _on_melee_zone_body_entered(body: Node2D):
+	if body == Global.PlayerBody:
+		player_in_melee = true
+
+func _on_melee_zone_body_exited(body: Node2D):
+	if body == Global.PlayerBody:
+		player_in_melee = false
 
 func _on_hit_box_area_entered(area: Area2D):
 	if area == Global.playerDamageZone:
