@@ -15,6 +15,10 @@ const DISPLAY := preload("res://art/Fonts/VT323/VT323-Regular.ttf")             
 
 const MAX_NOTIFS := 5
 
+## Global size multiplier for the feedback text (quests / notifications / badge popup).
+## Bumped to make these read a bit bigger — tweak in one place.
+const UI_SCALE := 1.15
+
 @onready var quest_list: VBoxContainer = get_node_or_null("QuestList")
 @onready var notif_list: VBoxContainer = get_node_or_null("NotificationList")
 @onready var badge_box:  VBoxContainer = get_node_or_null("Badge Unlock")
@@ -95,7 +99,7 @@ func _mk_label(parent: Node, text: String, size: int, color: Color, font: Font =
 	var l := Label.new()
 	l.text = text
 	l.add_theme_font_override("font", font)
-	l.add_theme_font_size_override("font_size", size)
+	l.add_theme_font_size_override("font_size", int(round(size * UI_SCALE)))
 	l.add_theme_color_override("font_color", color)
 	l.add_theme_color_override("font_outline_color", Color.BLACK)
 	l.add_theme_constant_override("outline_size", 4)

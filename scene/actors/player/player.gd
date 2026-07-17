@@ -136,7 +136,7 @@ var god_mode: bool       = false   # ignore all incoming damage
 var infinite_arrows: bool = false  # never run out of arrows
 var noclip: bool         = false   # debug: pass through terrain
 var fly_mode: bool       = false   # debug: free vertical flight (no gravity)
-const FLY_SPEED: float   = 220.0
+const FLY_SPEED: float   = 500.0   # debug flight speed, horizontal & vertical
 
 func _flying() -> bool:
 	return fly_mode or noclip
@@ -256,7 +256,9 @@ func _physics_process(delta):
 			var direction_x = Input.get_axis("left", "right")
 			if _controls_reversed:
 				direction_x = -direction_x
-			velocity.x = direction_x * SPEED + external_push.x
+			# While debug-flying, move horizontally at the fast flight speed too.
+			var move_speed: float = FLY_SPEED if _flying() else float(SPEED)
+			velocity.x = direction_x * move_speed + external_push.x
 
 	# ── Debug flight ────────────────────────────────────────────────────────────
 	# Free vertical movement from up/down, no gravity.
@@ -264,7 +266,10 @@ func _physics_process(delta):
 		velocity.y = Input.get_axis("up", "down") * FLY_SPEED
 
 	# ── Jump & Double Jump ─────────────────────────────────────────────────────
-	if not _flying() and Input.is_action_just_pressed("jump"):
+	# Optional "W to jump" (settings): the up/W key also triggers a jump.
+	var jump_pressed: bool = Input.is_action_just_pressed("jump") \
+		or (Global.use_w_to_jump and Input.is_action_just_pressed("up"))
+	if not _flying() and jump_pressed:
 		if is_on_floor():
 			velocity.y = JUMP_FORCE
 		elif can_double_jump and not double_jump_cooldown and ProgressionManager.is_skill_unlocked("double_jump"):
@@ -861,7 +866,7 @@ func push_status(id: String, display_name: String, duration: float,
 		var f: Font = level_label.get_theme_font("font")
 		if f:
 			lbl.add_theme_font_override("font", f)
-		lbl.add_theme_font_size_override("font_size", 16)
+		lbl.add_theme_font_size_override("font_size", 18)   # ~+15% (status HUD bumped)
 		lbl.modulate = color
 		status_container.add_child(lbl)
 		_statuses[id] = {

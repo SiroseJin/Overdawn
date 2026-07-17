@@ -177,6 +177,10 @@ func register_caption(node: CanvasItem) -> void:
 var show_damage_numbers: bool = true
 const _DAMAGE_NUMBER := preload("res://scene/system/vfx/damage_number.tscn")
 
+# When true, the up/W key also jumps (in addition to the jump key). Persisted by
+# SettingsManager under [game] use_w_to_jump; toggled from the Settings menu.
+var use_w_to_jump: bool = false
+
 # ─── Scrollable menus ────────────────────────────────────────────────────────────
 ## Wrap `content` (a menu's main container) in a ScrollContainer occupying the same
 ## slot, so it scrolls vertically instead of overflowing/clipping. Idempotent and
