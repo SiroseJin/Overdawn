@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://ccodexmenu0001"]
+[gd_scene format=3 uid="uid://30qclt4peaea"]
 
 [ext_resource type="Script" path="res://scene/ui/codex_menu.gd" id="1_cx"]
 [ext_resource type="FontFile" uid="uid://b5knwkxrpuai6" path="res://art/Fonts/VT323/VT323-Regular.ttf" id="2_disp"]
