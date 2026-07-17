@@ -4,6 +4,11 @@ extends CharacterBody2D
 ## hidden platform once the player has talked to them).
 signal talked(npc_id: String)
 
+# [DBG-TIMING] remove after diagnosing the dialogue→quiz gap.
+var _dbg_last_action_ms: int = 0
+func _dbg_mark_action() -> void:
+	_dbg_last_action_ms = Time.get_ticks_msec()
+
 @export var dialogue_timeline: String = "npc1timeline"
 ## Optional id so the game can remember this NPC was spoken to.
 @export var npc_id: String = ""
@@ -192,8 +197,13 @@ func start_dialogue():
 		if dtl_dir.has(id_variant):
 			timeline = id_variant
 
+	# [DBG-TIMING] measure the perceived dialogue→quiz gap. Remove after diagnosis.
+	if not Dialogic.Inputs.dialogic_action.is_connected(_dbg_mark_action):
+		Dialogic.Inputs.dialogic_action.connect(_dbg_mark_action)
+
 	Dialogic.start(timeline)
 	Dialogic.timeline_ended.connect(func():
+		print("[DBG] timeline_ended @%d  (+%dms since last advance press)" % [Time.get_ticks_msec(), Time.get_ticks_msec() - _dbg_last_action_ms])
 		is_chatting = false
 		_on_dialogue_finished()
 		if player_nearby:

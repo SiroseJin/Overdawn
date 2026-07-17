@@ -96,7 +96,7 @@ position = Vector2(0, 74)
 polygon = PackedVector2Array(-40, -1090, 1820, -1090, 1820, -1030, -40, -1030)
 
 [node name="KeyPlatform" type="CollisionPolygon2D" parent="Terrain" unique_id=1743815290]
-position = Vector2(1180.9999, 162)
+position = Vector2(909, -173)
 scale = Vector2(0.390625, 1.0000002)
 polygon = PackedVector2Array(1230, -250, 1259.5703, -250, 1273.5101, -250, 1290.896, -250, 1350, -250, 1350, -242, 1230, -242)
 
@@ -148,6 +148,9 @@ position = Vector2(720, 108)
 
 [node name="FallB4" parent="." unique_id=845429718 instance=ExtResource("9_fp")]
 position = Vector2(820, 38)
+
+[node name="FallB9" parent="." unique_id=962945668 instance=ExtResource("9_fp")]
+position = Vector2(1273, -395)
 
 [node name="MoveA" parent="." unique_id=1970138580 instance=ExtResource("8_mp")]
 position = Vector2(387, 356)
@@ -206,7 +209,7 @@ dialogue_timeline = "s3npc4timeline"
 position = Vector2(507, 209)
 
 [node name="Adbot2" parent="." unique_id=723628676 instance=ExtResource("7_bat")]
-position = Vector2(1584, -161)
+position = Vector2(1603, -99)
 
 [node name="Player" parent="." unique_id=597947263 instance=ExtResource("2_5pl4s")]
 position = Vector2(86, 678)
@@ -260,7 +263,7 @@ position = Vector2(857, -709)
 position = Vector2(1322, -790)
 
 [node name="Key" parent="." unique_id=2111838427 instance=ExtResource("itm_key")]
-position = Vector2(1684, -105)
+position = Vector2(1412, -446)
 key_id = "stage3_key"
 
 [node name="Door" parent="." unique_id=959219398 instance=ExtResource("itm_door")]

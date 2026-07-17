@@ -372,7 +372,9 @@ func _begin(quiz_id: String, on_finished: Callable) -> bool:
 	_correct_count = 0
 	_active        = true
 
+	var _t0 := Time.get_ticks_msec()   # [DBG-TIMING] remove after diagnosis
 	_ensure_ui()
+	print("[DBG] quiz _begin: _ensure_ui took %dms, showing now @%d" % [Time.get_ticks_msec() - _t0, Time.get_ticks_msec()])
 	_layer.visible = true
 	_set_paused(true)
 	if is_instance_valid(Global.PlayerBody):
