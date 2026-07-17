@@ -1,4 +1,5 @@
 [gd_scene format=3 uid="uid://cnyvpht4rwtvw"]
+[ext_resource type="Script" path="res://scene/gimmicks/checkpoint/checkpoint.gd" id="cp_scr"]
 
 [ext_resource type="Script" uid="uid://yjg5qo2bvv2l" path="res://scene/Levels/Level5/stage5.gd" id="1_stg5"]
 [ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/actors/player/player.tscn" id="2_player"]
@@ -23,6 +24,9 @@ size = Vector2(5800, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_portalB"]
 size = Vector2(40, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qyppa"]
+size = Vector2(27, 179)
 
 [node name="Stage5" type="Node2D" unique_id=1529574299]
 script = ExtResource("1_stg5")
@@ -245,6 +249,30 @@ position = Vector2(4350, 432)
 
 [node name="Coin13" parent="." unique_id=411865979 instance=ExtResource("itm_coin")]
 position = Vector2(4700, 432)
+
+[node name="CheckPoint1" type="Area2D" parent="." unique_id=439429677]
+script = ExtResource("cp_scr")
+position = Vector2(1967, 718)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint1" unique_id=202143647]
+position = Vector2(-101.25, -325.5)
+shape = SubResource("RectangleShape2D_qyppa")
+
+[node name="CheckPoint2" type="Area2D" parent="." unique_id=2042488922]
+script = ExtResource("cp_scr")
+position = Vector2(4181, 625)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint2" unique_id=914747326]
+position = Vector2(-101.25, -325.5)
+shape = SubResource("RectangleShape2D_qyppa")
+
+[node name="CheckPoint3" type="Area2D" parent="." unique_id=1257717889]
+script = ExtResource("cp_scr")
+position = Vector2(4111, 181)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint3" unique_id=178146165]
+position = Vector2(-101.25, -325.5)
+shape = SubResource("RectangleShape2D_qyppa")
 
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Stage6Portal" to="." method="_on_stage_6_portal_body_entered"]

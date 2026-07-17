@@ -27,6 +27,7 @@ func _ready():
 	vbox.get_node(\"CaptionsToggle\").button_pressed = Global.show_captions
 	vbox.get_node(\"DamageNumbersToggle\").button_pressed = Global.show_damage_numbers
 	vbox.get_node(\"WToJumpToggle\").button_pressed = Global.use_w_to_jump
+	vbox.get_node(\"CheckpointsToggle\").button_pressed = Global.checkpoints_enabled
 
 	# Volume
 	var master_idx = AudioServer.get_bus_index(\"Master\")
@@ -72,6 +73,10 @@ func _on_damage_numbers_toggle_toggled(toggled_on):
 
 func _on_w_to_jump_toggle_toggled(toggled_on):
 	Global.use_w_to_jump = toggled_on
+	SettingsManager.save_settings()
+
+func _on_checkpoints_toggle_toggled(toggled_on):
+	Global.checkpoints_enabled = toggled_on
 	SettingsManager.save_settings()
 
 
@@ -205,6 +210,11 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 text = "Use W to jump"
 
+[node name="CheckpointsToggle" type="CheckButton" parent="ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_el4av")
+text = "Checkpoints"
+
 [node name="LanguageSelect" type="OptionButton" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=644713596]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
@@ -274,6 +284,7 @@ text = "Back"
 [connection signal="toggled" from="ColorRect/MarginContainer/VBoxContainer/CaptionsToggle" to="." method="_on_captions_toggle_toggled"]
 [connection signal="toggled" from="ColorRect/MarginContainer/VBoxContainer/DamageNumbersToggle" to="." method="_on_damage_numbers_toggle_toggled"]
 [connection signal="toggled" from="ColorRect/MarginContainer/VBoxContainer/WToJumpToggle" to="." method="_on_w_to_jump_toggle_toggled"]
+[connection signal="toggled" from="ColorRect/MarginContainer/VBoxContainer/CheckpointsToggle" to="." method="_on_checkpoints_toggle_toggled"]
 [connection signal="item_selected" from="ColorRect/MarginContainer/VBoxContainer/LanguageSelect" to="." method="_on_language_select_item_selected"]
 [connection signal="value_changed" from="ColorRect/MarginContainer/VBoxContainer/MasterVolumeSlider" to="." method="_on_master_volume_slider_value_changed"]
 [connection signal="value_changed" from="ColorRect/MarginContainer/VBoxContainer/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]

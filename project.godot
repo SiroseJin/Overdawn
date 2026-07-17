@@ -37,6 +37,7 @@ CollectibleManager="*res://script/managers/collectible_manager.gd"
 QuestManager="*res://script/managers/quest_manager.gd"
 BadgeManager="*res://script/managers/badge_manager.gd"
 CodexManager="*res://script/managers/codex_manager.gd"
+CheckpointManager="*res://script/managers/checkpoint_manager.gd"
 
 [dialogic]
 

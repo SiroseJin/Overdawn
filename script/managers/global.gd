@@ -181,6 +181,11 @@ const _DAMAGE_NUMBER := preload("res://scene/system/vfx/damage_number.tscn")
 # SettingsManager under [game] use_w_to_jump; toggled from the Settings menu.
 var use_w_to_jump: bool = false
 
+# When true (default), mid-stage checkpoints are active: dying respawns the player at
+# the last checkpoint (rolling progression back to it) instead of the death screen.
+# Persisted by SettingsManager under [game] checkpoints_enabled.
+var checkpoints_enabled: bool = true
+
 # ─── Story-mode enemy scaling ────────────────────────────────────────────────────
 # In STORY mode only, enemies get a mild stat buff that grows with the player's level
 # so the world doesn't feel trivial once you out-level it: +1% per 5 player levels

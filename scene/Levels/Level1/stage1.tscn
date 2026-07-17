@@ -1,4 +1,5 @@
 [gd_scene format=3 uid="uid://c8tpv5p1ku4gd"]
+[ext_resource type="Script" path="res://scene/gimmicks/checkpoint/checkpoint.gd" id="cp_scr"]
 
 [ext_resource type="Script" uid="uid://1bp0jh8saegr" path="res://scene/Levels/Level1/stage1.gd" id="1_ylrub"]
 [ext_resource type="Texture2D" uid="uid://d2j0t404knc0u" path="res://scene/Levels/Level1/tileset/Tiles.png" id="2_28j2g"]
@@ -431,6 +432,9 @@ size = Vector2(32, 42)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_death1"]
 size = Vector2(3600, 60)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y1f2u"]
+size = Vector2(20.5, 412)
+
 [node name="Stage1" type="Node2D" unique_id=344051803]
 position = Vector2(-5, -2)
 script = ExtResource("1_ylrub")
@@ -611,6 +615,22 @@ grants_key = "stage1_key"
 
 [node name="Stage1Door" parent="." unique_id=1479382046 instance=ExtResource("itm_door")]
 position = Vector2(3271, 551)
+
+[node name="CheckPoint1" type="Area2D" parent="." unique_id=1874047689]
+script = ExtResource("cp_scr")
+position = Vector2(1208, 665)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint1" unique_id=55159544]
+position = Vector2(-101.25, -195)
+shape = SubResource("RectangleShape2D_y1f2u")
+
+[node name="CheckPoint2" type="Area2D" parent="." unique_id=502061558]
+script = ExtResource("cp_scr")
+position = Vector2(2379, 623)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint2" unique_id=1690573345]
+position = Vector2(-101.25, -195)
+shape = SubResource("RectangleShape2D_y1f2u")
 
 [connection signal="body_entered" from="Lobby Portal" to="." method="_on_lobby_portal_body_entered"]
 [connection signal="body_entered" from="Stage2Portal" to="." method="_on_stage_2_portal_body_entered"]

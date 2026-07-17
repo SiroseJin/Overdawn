@@ -1,4 +1,5 @@
 [gd_scene format=3 uid="uid://dbq5mi3q4rxcj"]
+[ext_resource type="Script" path="res://scene/gimmicks/checkpoint/checkpoint.gd" id="cp_scr"]
 
 [ext_resource type="Script" uid="uid://dbocxiivny60x" path="res://scene/Levels/Level3/stage3.gd" id="1_ofun6"]
 [ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/actors/player/player.tscn" id="2_5pl4s"]
@@ -22,6 +23,9 @@ size = Vector2(2200, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d1twj"]
 size = Vector2(40, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ha050"]
+size = Vector2(27, 179)
 
 [node name="Stage3" type="Node2D" unique_id=500126194]
 script = ExtResource("1_ofun6")
@@ -292,6 +296,30 @@ position = Vector2(720, 221)
 
 [node name="HealthPickup2" parent="." unique_id=1470939253 instance=ExtResource("14_8ol0d")]
 position = Vector2(770, -471)
+
+[node name="CheckPoint1" type="Area2D" parent="." unique_id=1221247694]
+script = ExtResource("cp_scr")
+position = Vector2(345, 342)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint1" unique_id=873512456]
+position = Vector2(-103, -76)
+shape = SubResource("RectangleShape2D_ha050")
+
+[node name="CheckPoint2" type="Area2D" parent="." unique_id=1941942229]
+script = ExtResource("cp_scr")
+position = Vector2(1232, 211)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint2" unique_id=1074121304]
+position = Vector2(-101.25, -325.5)
+shape = SubResource("RectangleShape2D_ha050")
+
+[node name="CheckPoint3" type="Area2D" parent="." unique_id=1988433014]
+script = ExtResource("cp_scr")
+position = Vector2(1293, -531)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint3" unique_id=2065505129]
+position = Vector2(-104.5, -339.5)
+shape = SubResource("RectangleShape2D_ha050")
 
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Stage4Portal" to="." method="_on_stage_4_portal_body_entered"]

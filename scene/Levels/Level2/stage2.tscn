@@ -1,4 +1,5 @@
 [gd_scene format=3 uid="uid://bpbpwbqni6upw"]
+[ext_resource type="Script" path="res://scene/gimmicks/checkpoint/checkpoint.gd" id="cp_scr"]
 
 [ext_resource type="Script" uid="uid://b00triagbl8v8" path="res://scene/Levels/Level2/stage2.gd" id="1_27d72"]
 [ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/actors/player/player.tscn" id="2_huen1"]
@@ -21,6 +22,9 @@ size = Vector2(5200, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8h1xg"]
 size = Vector2(40, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gfr2h"]
+size = Vector2(20.5, 412)
 
 [node name="Stage2" type="Node2D" unique_id=464765020]
 script = ExtResource("1_27d72")
@@ -184,6 +188,22 @@ position = Vector2(2339, 563)
 
 [node name="HealthPickup2" parent="." unique_id=389006760 instance=ExtResource("15_gfr2h")]
 position = Vector2(4622, 548)
+
+[node name="CheckPoint1" type="Area2D" parent="." unique_id=1498149195]
+script = ExtResource("cp_scr")
+position = Vector2(1356, 581)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint1" unique_id=1309684503]
+position = Vector2(-101.25, -195)
+shape = SubResource("RectangleShape2D_gfr2h")
+
+[node name="CheckPoint2" type="Area2D" parent="." unique_id=863329258]
+script = ExtResource("cp_scr")
+position = Vector2(3160, 515)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint2" unique_id=947301571]
+position = Vector2(-101.25, -195)
+shape = SubResource("RectangleShape2D_gfr2h")
 
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Stage3Portal" to="." method="_on_stage_3_portal_body_entered"]

@@ -46,6 +46,7 @@ func load_settings() -> void:
 	Global.show_captions       = config.get_value("game", "show_captions", true)
 	Global.show_damage_numbers = config.get_value("game", "show_damage_numbers", true)
 	Global.use_w_to_jump       = config.get_value("game", "use_w_to_jump", false)
+	Global.checkpoints_enabled = config.get_value("game", "checkpoints_enabled", true)
 
 func save_settings() -> void:
 	var config := ConfigFile.new()
@@ -79,5 +80,6 @@ func save_settings() -> void:
 	config.set_value("game", "show_captions", Global.show_captions)
 	config.set_value("game", "show_damage_numbers", Global.show_damage_numbers)
 	config.set_value("game", "use_w_to_jump", Global.use_w_to_jump)
+	config.set_value("game", "checkpoints_enabled", Global.checkpoints_enabled)
 
 	config.save(CONFIG_PATH)
