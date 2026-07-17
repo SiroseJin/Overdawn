@@ -111,13 +111,24 @@ func slot_label(slot: int) -> String:
 	var data := _read_json(slot)
 	if data.is_empty():
 		return "%s — Corrupted" % label_name
-	var ts         : String = data.get("timestamp", "??:??:??")
-	var lvl        : String = "Level %s" % str(data.get("player_level", "?"))
+	var pname      : String = str(data.get("player_name", "Player"))
+	var lvl        : int    = int(data.get("save_level", data.get("player_level", 1)))
+	var pt         : String = _format_playtime(float(data.get("play_time", 0.0)))
+	var badges     : int    = int(data.get("badge_count", 0))
 	var scene_path : String = data.get("current_scene", "")
 	var scene_name : String = scene_path.get_file().get_basename().capitalize()
 	if data.get("arcade_mode", false):
-		scene_name = "Arcade — Wave %d" % int(data.get("current_wave", 0))
-	return "%s — %s | %s | %s" % [label_name, lvl, ts, scene_name]
+		scene_name = "Arcade W%d" % int(data.get("current_wave", 0))
+	return "%s: %s  Lv%d · %s · %d badges · %s" % [label_name, pname, lvl, pt, badges, scene_name]
+
+# Seconds → compact "1h 23m" / "12m".
+func _format_playtime(seconds: float) -> String:
+	var total := int(seconds)
+	@warning_ignore("integer_division")
+	var h := total / 3600
+	@warning_ignore("integer_division")
+	var m := (total % 3600) / 60
+	return "%dh %dm" % [h, m] if h > 0 else "%dm" % m
 
 ## Returns an ImageTexture thumbnail for the slot, or null if none exists.
 func slot_thumbnail(slot: int) -> ImageTexture:
@@ -155,6 +166,7 @@ func _process(delta: float) -> void:
 	if not _in_gameplay():
 		_autosave_accum = 0.0
 		return
+	ProgressionManager.play_time += delta   # tick total playtime while in gameplay
 	_autosave_accum += delta
 	if _autosave_accum >= AUTOSAVE_INTERVAL:
 		autosave()
@@ -268,6 +280,11 @@ func collect_save_data() -> Dictionary:
 	data["player_alive"]  = Global.playerAlive
 	data["arcade_mode"]   = Global.arcade_mode
 	data["progression"]   = ProgressionManager.to_dict()
+	# Surfaced at top level for the load-menu rows (per-save name/level/time/badges).
+	data["player_name"]   = ProgressionManager.player_name
+	data["play_time"]     = ProgressionManager.play_time
+	data["badge_count"]   = ProgressionManager.badge_count()
+	data["save_level"]    = ProgressionManager.player_level
 
 	if is_instance_valid(Global.PlayerBody):
 		var p := Global.PlayerBody

@@ -50,6 +50,10 @@ var npcs_talked:     Dictionary = {}
 var coins:        int = 0
 var skill_points: int = 0
 
+# Player identity + playtime — make each save unique and informative (UC-15/17).
+var player_name: String = "Player"
+var play_time:   float  = 0.0        # total seconds of active gameplay
+
 # Gamification state (all persisted through to_dict/from_dict → SaveManager).
 var collectibles: Dictionary = {}   # collectible_id -> true  (UC-004 "Truth Shards")
 var badges:       Dictionary = {}   # badge_id -> true        (UC-009 achievements)
@@ -84,6 +88,8 @@ func reset() -> void:
 	quest_state  = {}
 	coins        = 0
 	skill_points = 0
+	player_name  = "Player"
+	play_time    = 0.0
 	player_initialized = false
 	player_level       = 1
 	player_exp         = 0
@@ -295,6 +301,8 @@ func to_dict() -> Dictionary:
 		"quest_state":     quest_state.duplicate(true),
 		"coins":           coins,
 		"skill_points":    skill_points,
+		"player_name":     player_name,
+		"play_time":       play_time,
 		"player_initialized": player_initialized,
 		"player_level":       player_level,
 		"player_exp":         player_exp,
@@ -319,6 +327,8 @@ func from_dict(data: Dictionary) -> void:
 	quest_state    = (data.get("quest_state", {}) as Dictionary).duplicate(true)
 	coins        = int(data.get("coins", 0))
 	skill_points = int(data.get("skill_points", 0))
+	player_name  = str(data.get("player_name", "Player"))
+	play_time    = float(data.get("play_time", 0.0))
 	player_initialized = bool(data.get("player_initialized", false))
 	player_level       = int(data.get("player_level", 1))
 	player_exp         = int(data.get("player_exp", 0))

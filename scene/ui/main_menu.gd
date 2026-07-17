@@ -27,14 +27,22 @@ func _handle_transition():
 # Button signals
 # ─────────────────────────────────────────────────────────────────────────────
 
+const NAME_ENTRY := preload("res://scene/ui/name_entry.tscn")
+
 func _on_start_pressed():
+	# New Game asks for a name first so each save is uniquely the player's (#15).
 	audio_click.play()
-	# Fresh STORY run: leave arcade mode (which hands out the full skill kit) and wipe
-	# carried-over progression (coins, skills, level/exp/health…) so a new game never
-	# inherits arcade buffs or stats from a previous playthrough this session.
-	Global.arcade_mode = false
-	ProgressionManager.reset()
-	get_tree().change_scene_to_file("res://scene/system/lobby_level.tscn")
+	var prompt := NAME_ENTRY.instantiate()
+	add_child(prompt)
+	prompt.submitted.connect(func(player_name: String):
+		# Fresh STORY run: leave arcade mode (which hands out the full skill kit) and wipe
+		# carried-over progression so a new game never inherits buffs/stats. Then stamp
+		# the chosen name (reset() defaults it to "Player").
+		Global.arcade_mode = false
+		ProgressionManager.reset()
+		ProgressionManager.player_name = player_name
+		audio_click.play()
+		get_tree().change_scene_to_file("res://scene/system/lobby_level.tscn"))
 
 func _on_continue_pressed():
 	# Jump straight back into the most recent save (auto-save included).
