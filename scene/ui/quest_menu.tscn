@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cquestmenu0001"]
+[gd_scene format=3 uid="uid://dotjgf3d0rm3y"]
 
 [ext_resource type="Script" path="res://scene/ui/quest_menu.gd" id="1_qm"]
 [ext_resource type="FontFile" uid="uid://b5knwkxrpuai6" path="res://art/Fonts/VT323/VT323-Regular.ttf" id="2_disp"]
