@@ -116,6 +116,42 @@ var settings_return_path: String = "res://scene/ui/main_menu.tscn"
 # fade-in on the next scene so the wipe/iris/fade continues seamlessly (#18).
 var transition_style: int = 0
 
+# ─── Robust scene loading (fixes portal crashes) ─────────────────────────────────
+# One shared, hardened routine every stage's _fade_then_load delegates to. It fixes
+# two intermittent portal crashes:
+#   1. Engine.time_scale could still be 0 from a quiz/pause when the portal fired, so
+#      the old time-scaled 0.5s wait never elapsed and the load stalled. We force
+#      time_scale back to 1 and wait in REAL time (ignore_time_scale = true).
+#   2. The old code raced a bare load() against a still-running threaded request,
+#      which can hand back a half-loaded resource and crash change_scene. We now poll
+#      the threaded load to completion and only ever swap in a fully-loaded scene.
+func load_scene_with_fade(anim: AnimationPlayer, scene_path: String) -> void:
+	# A transition must always run at normal speed — never inherit a leftover pause.
+	Engine.time_scale = 1.0
+	if is_instance_valid(Dialogic):
+		Dialogic.paused = false
+
+	ResourceLoader.load_threaded_request(scene_path)
+	if anim and anim.has_animation("fade_in"):
+		anim.play("fade_in")
+
+	# Real-time wait (immune to time_scale) so the fade always plays out.
+	await get_tree().create_timer(0.5, true, false, true).timeout
+
+	# Never call load() while the threaded request is still in flight — wait it out.
+	var status := ResourceLoader.load_threaded_get_status(scene_path)
+	while status == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		await get_tree().process_frame
+		status = ResourceLoader.load_threaded_get_status(scene_path)
+
+	var packed: PackedScene = null
+	if status == ResourceLoader.THREAD_LOAD_LOADED:
+		packed = ResourceLoader.load_threaded_get(scene_path)
+	if packed == null:   # request failed/was cleared — last-resort direct load
+		packed = load(scene_path)
+	if packed != null:
+		get_tree().change_scene_to_packed(packed)
+
 # ─── Object labels / captions ───────────────────────────────────────────────────
 # Floating name-tags over gameplay objects (see scene/ui/caption/caption.tscn). Every
 # Caption node adds itself to the "caption" group on load, so this one flag + toggle

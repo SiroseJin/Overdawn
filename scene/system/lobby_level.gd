@@ -80,14 +80,5 @@ func _on_arcade_portal_body_entered(body: Node2D) -> void:
 
 func _fade_then_load(scene_path: String) -> void:
 	audio_bgm.stop()
-	# Load the next scene (and its heavy audio) in the background during the fade
-	# so the actual switch is instant instead of a stall on disk/audio reads.
-	ResourceLoader.load_threaded_request(scene_path)
-	scene_transition_anim.play("fade_in")
-	await get_tree().create_timer(0.5).timeout
-	var packed: PackedScene
-	if ResourceLoader.load_threaded_get_status(scene_path) == ResourceLoader.THREAD_LOAD_LOADED:
-		packed = ResourceLoader.load_threaded_get(scene_path)
-	else:
-		packed = load(scene_path)
-	get_tree().change_scene_to_packed(packed)
+	# Delegate to the shared hardened loader (fixes the portal crash — see Global).
+	await Global.load_scene_with_fade(scene_transition_anim, scene_path)
