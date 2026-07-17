@@ -33,11 +33,13 @@ var _wave_spin: SpinBox
 
 func _ready() -> void:
 	_font = load("res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf")
-	# Give the panel more room for the extra tools
-	_margin.offset_left = 264.0
-	_margin.offset_right = 888.0
-	_margin.offset_top = 12.0
-	_margin.offset_bottom = 708.0
+	# Size the panel and keep it centred. The MarginContainer is centre-anchored
+	# (anchors at 0.5), so offsets must be symmetric — half the panel size on each
+	# side — or it drifts off-centre. Content taller than this scrolls (see below).
+	_margin.offset_left   = -312.0
+	_margin.offset_right  = 312.0
+	_margin.offset_top    = -300.0
+	_margin.offset_bottom = 300.0
 
 	_arcade_toggle.button_pressed = Global.arcade_mode
 
