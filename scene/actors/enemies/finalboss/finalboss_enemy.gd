@@ -48,11 +48,20 @@ const GAMBLE_PICKUPS := [PU_COIN, PU_HEALTH, PU_SPEED, PU_FAKE]   # may include 
 
 const VFX_BURST  := preload("res://scene/system/vfx/vfx_burst.tscn")
 const VFX_SHIELD := preload("res://scene/system/vfx/boss_shield.tscn")
+# The House throws the ultimate rigged jackpot — the same fake coin its dealers use.
+const FAKE_COIN_PROJECTILE := preload("res://scene/actors/enemies/fake_coin_projectile.tscn")
 
 @export var health_max: float = 400.0
 @export var shield_max: float = 75.0
 @export var activation_x: float = 145.0
 @export var down_time: float = 10.0
+## Grace period after the boss re-shields and heaves back up before it may fire again.
+## Stops it from instantly bursting a player who was meleeing it while it was down.
+@export var recover_attack_delay: float = 1.4
+## How long the slow "getting back up" rise takes (seconds). Higher = weightier.
+@export var rise_time: float = 1.2
+## Chance, per shielded attack, that the boss also hurls a rigged fake-coin projectile.
+@export var fake_coin_chance: float = 0.25
 @export var server_shield_damage: float = 25.0   # each destroyed server chips this off the shield
 @export var shield_chip_mult: float = 0.15   # direct attacks to the shield reduced
 @export var servers_per_cycle: int = 4        # how many of the spawn points are used each cycle
@@ -110,6 +119,7 @@ var _base_y := 0.0
 var _down_y := 0.0
 var _down_x := 0.0        # column the boss crashes straight down in (wherever it was)
 var _down_amount := 0.0   # 0 = hovering, 1 = crashed to the floor; tweened crash/rise
+var _shield_grace := 0.0  # post-recovery seconds during which the boss holds its fire
 var _path: Path2D = null
 var _path_offset := 0.0   # distance travelled along the path
 var _path_dir := 1.0      # +1 / -1 for back-and-forth patrol
@@ -233,6 +243,11 @@ func _activate() -> void:
 # ─── SHIELDED ────────────────────────────────────────────────────────────────────
 
 func _process_shielded(delta: float) -> void:
+	# Hold fire briefly after getting back up, so the boss can't instantly burst a
+	# player who was meleeing it while it was down.
+	if _shield_grace > 0.0:
+		_shield_grace -= delta
+		return
 	_attack_accum += delta
 	if _attack_accum >= _attack_interval():
 		_attack_accum = 0.0
@@ -297,7 +312,9 @@ func _process_down(delta: float) -> void:
 		_update_status()
 
 func _recover(new_phase: int) -> void:
-	_clear_adds()
+	# NOTE: adds spawned during the down phase are intentionally NOT cleared here —
+	# they stick around and keep pressuring the player after the boss rises. They're
+	# only cleared when the boss finally dies (_die).
 	if new_phase > phase:
 		phase = new_phase
 		phase_changed.emit(phase)  # Stage 6 layers this phase's gimmick
@@ -307,8 +324,17 @@ func _recover(new_phase: int) -> void:
 	_spawn_servers()
 	_show_shield()
 	state = "shielded"
+	# Hold fire for a moment and reset the attack cadence, so it doesn't fire the instant
+	# it's back up.
+	_shield_grace = recover_attack_delay
+	_attack_accum = 0.0
+	_spiral_accum = 0.0
+	# Slow, weighty "getting back up": a brief anticipation, then a long eased rise
+	# (instead of the old near-instant snap).
 	var t := create_tween()
-	t.tween_property(self, "_down_amount", 0.0, 0.4).set_ease(Tween.EASE_OUT)
+	t.tween_interval(0.15)
+	t.tween_property(self, "_down_amount", 0.0, rise_time) \
+		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 	_update_status()
 
 # ─── Servers / adds ──────────────────────────────────────────────────────────────
@@ -479,6 +505,9 @@ func _do_attack() -> void:
 		_:
 			_fire_ring(16, 110.0)
 			_fire_aimed(5, 38.0, 140.0)
+	# Sometimes the House also flings a rigged "jackpot" fake coin at the player.
+	if randf() < fake_coin_chance:
+		_fire_fake_coin()
 
 # ─── Bullet patterns ─────────────────────────────────────────────────────────────
 
@@ -500,6 +529,15 @@ func _spawn_bullet(dir: Vector2, speed: float) -> void:
 	b.direction = dir.normalized()
 	b.speed = speed
 	get_parent().add_child(b)
+
+# Hurl a rigged fake-coin projectile toward the player (the House's "free jackpot").
+func _fire_fake_coin() -> void:
+	if not is_instance_valid(Global.PlayerBody):
+		return
+	var fc := FAKE_COIN_PROJECTILE.instantiate()
+	fc.global_position = _muzzle.global_position
+	fc.direction = (Global.PlayerBody.global_position - _muzzle.global_position).normalized()
+	get_parent().add_child(fc)
 
 # ─── Damage / death ──────────────────────────────────────────────────────────────
 
