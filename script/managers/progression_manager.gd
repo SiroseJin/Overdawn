@@ -89,6 +89,8 @@ var play_time:   float  = 0.0        # total seconds of active gameplay
 # Gamification state (all persisted through to_dict/from_dict → SaveManager).
 var collectibles: Dictionary = {}   # collectible_id -> true  (UC-004 "Truth Shards")
 var badges:       Dictionary = {}   # badge_id -> true        (UC-009 achievements)
+var guides:       Dictionary = {}   # guide_id -> true        (Guide codex, CodexManager)
+var lore:         Dictionary = {}   # lore_id  -> true        (Lore codex,  CodexManager)
 var quest_state:  Dictionary = {}   # quest_id -> { "progress": {..}, "done": bool } (UC-008)
 
 # Player RPG stats that must survive scene changes (each stage rebuilds the Player
@@ -118,6 +120,8 @@ func reset() -> void:
 	npcs_talked     = {}
 	collectibles = {}
 	badges       = {}
+	guides       = {}
+	lore         = {}
 	quest_state  = {}
 	coins        = 0
 	skill_points = 0
@@ -370,6 +374,8 @@ func to_dict() -> Dictionary:
 		"npcs_talked":     npcs_talked.duplicate(true),
 		"collectibles":    collectibles.duplicate(true),
 		"badges":          badges.duplicate(true),
+		"guides":          guides.duplicate(true),
+		"lore":            lore.duplicate(true),
 		"quest_state":     quest_state.duplicate(true),
 		"stat_levels":     stat_levels.duplicate(true),
 		"coins":           coins,
@@ -398,6 +404,8 @@ func from_dict(data: Dictionary) -> void:
 	npcs_talked    = (data.get("npcs_talked", {}) as Dictionary).duplicate(true)
 	collectibles   = (data.get("collectibles", {}) as Dictionary).duplicate(true)
 	badges         = (data.get("badges", {}) as Dictionary).duplicate(true)
+	guides         = (data.get("guides", {}) as Dictionary).duplicate(true)
+	lore           = (data.get("lore", {}) as Dictionary).duplicate(true)
 	quest_state    = (data.get("quest_state", {}) as Dictionary).duplicate(true)
 	coins        = int(data.get("coins", 0))
 	skill_points = int(data.get("skill_points", 0))

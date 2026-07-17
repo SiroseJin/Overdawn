@@ -39,6 +39,8 @@ const BADGES := {
 		"en_d": "Complete every quest.",          "id_d": "Selesaikan semua misi."},
 	"maxed_out":     {"en": "Maxed Out",          "id": "Level Maksimal",
 		"en_d": "Fully max out every upgrade.",   "id_d": "Maksimalkan semua peningkatan."},
+	"well_read":     {"en": "Well Read",          "id": "Paham Betul",
+		"en_d": "Unlock every Guide entry.",      "id_d": "Buka semua entri Panduan."},
 }
 
 const QUIZ_IDS := ["stage1_quiz", "stage2_quiz", "stage3_quiz", "stage4_quiz", "stage5_quiz"]
@@ -98,6 +100,8 @@ func _on_event(event_name: String, data: Dictionary) -> void:
 				_award("completionist")
 		"all_upgrades_maxed":
 			_award("maxed_out")
+		"all_guides_unlocked":
+			_award("well_read")
 
 func _all_quizzes_passed() -> bool:
 	for q in QUIZ_IDS:

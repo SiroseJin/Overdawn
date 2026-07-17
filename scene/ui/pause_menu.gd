@@ -116,6 +116,19 @@ func _on_quests_pressed():
 			show()
 	)
 
+func _on_guide_pressed():
+	if audio_open: audio_open.play()
+	if get_parent().get_node_or_null("CodexOverlay"):
+		return
+	var cm: Node = (load("res://scene/ui/codex_menu.tscn") as PackedScene).instantiate()
+	cm.name = "CodexOverlay"
+	get_parent().add_child(cm)
+	hide()
+	cm.tree_exited.connect(func():
+		if is_instance_valid(self):
+			show()
+	)
+
 func _on_debug_pressed():
 	if audio_open: audio_open.play()
 	var debug: Node = (load("res://scene/ui/debug_settings.tscn") as PackedScene).instantiate()

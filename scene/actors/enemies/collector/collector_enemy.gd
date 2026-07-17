@@ -71,6 +71,7 @@ var health_bar: ProgressBar
 
 func _ready():
 	Global.apply_enemy_scaling(self)   # story-mode level scaling (#6)
+	ProgressionManager.notify("enemy_seen", {"type": "collector"})   # unlocks its Guide entry
 	is_dealing_damage = false
 	taking_damage     = false
 	charging          = false

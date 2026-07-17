@@ -40,6 +40,7 @@ var health_bar: ProgressBar
 
 func _ready():
 	Global.apply_enemy_scaling(self)   # story-mode level scaling (#6)
+	ProgressionManager.notify("enemy_seen", {"type": "adbot"})   # unlocks its Guide entry
 	health_bar           = $HealthBar
 	health_bar.max_value = health_max
 	health_bar.value     = health

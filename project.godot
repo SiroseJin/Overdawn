@@ -36,6 +36,7 @@ QuizManager="*res://script/managers/quiz_manager.gd"
 CollectibleManager="*res://script/managers/collectible_manager.gd"
 QuestManager="*res://script/managers/quest_manager.gd"
 BadgeManager="*res://script/managers/badge_manager.gd"
+CodexManager="*res://script/managers/codex_manager.gd"
 
 [dialogic]
 

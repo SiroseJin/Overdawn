@@ -61,6 +61,11 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_fgjmp")
 text = "Quests"
 
+[node name="Guide" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_fgjmp")
+text = "Guide"
+
 [node name="Debug" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1609047176]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_fgjmp")
@@ -278,6 +283,7 @@ bus = &"sfx"
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Progress" to="." method="_on_progress_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Quests" to="." method="_on_quests_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Guide" to="." method="_on_guide_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Debug" to="." method="_on_debug_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
