@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://b7dp1fygj5tuh" path="res://scene/system/mountain_dusk_parallax.tscn" id="bg_city"]
 [ext_resource type="Script" uid="uid://vf6ib1x5p5s0" path="res://scene/gimmicks/checkpoint/checkpoint.gd" id="cp_scr"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
+[ext_resource type="PackedScene" uid="uid://ctruthshard01" path="res://scene/pickups/collectible/collectible.tscn" id="shard_scn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_death"]
 size = Vector2(5800, 60)
@@ -273,6 +274,18 @@ script = ExtResource("cp_scr")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint3" unique_id=178146165]
 position = Vector2(-101.25, -325.5)
 shape = SubResource("RectangleShape2D_qyppa")
+
+[node name="Shard_s5_1" parent="." unique_id=1699580628 instance=ExtResource("shard_scn")]
+position = Vector2(1919, 445)
+collectible_id = "shard_s5_1"
+
+[node name="Shard_s5_2" parent="." unique_id=1898124694 instance=ExtResource("shard_scn")]
+position = Vector2(4288, 345)
+collectible_id = "shard_s5_2"
+
+[node name="Shard_s5_3" parent="." unique_id=2107326935 instance=ExtResource("shard_scn")]
+position = Vector2(4702, -90)
+collectible_id = "shard_s5_2"
 
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Stage6Portal" to="." method="_on_stage_6_portal_body_entered"]

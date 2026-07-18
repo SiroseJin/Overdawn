@@ -289,7 +289,7 @@ text_id = "Pemandu"
 
 [node name="NpcLore" parent="." instance=ExtResource("npc")]
 position = Vector2(4880, 554)
-dialogue_timeline = "tut_optional"
+dialogue_timeline = "tut_lore"
 npc_id = "tut_lore"
 marker_kind = 1
 
@@ -299,7 +299,7 @@ text_id = "Pencerita"
 
 [node name="NpcReward" parent="." instance=ExtResource("npc")]
 position = Vector2(4995, 554)
-dialogue_timeline = "tut_optional"
+dialogue_timeline = "tut_reward"
 npc_id = "tut_reward"
 marker_kind = 2
 

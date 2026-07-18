@@ -1,14 +1,17 @@
 extends Node
 
 # ─── Collectible Manager (Autoload) — "Truth Shards" (UC-004 + UC-006) ────────────
-# Scattered glowing fragments the player gathers across the stages. Each Shard is a
-# collectible reward (Deploy/Tools) AND carries a real anti-online-gambling truth it
-# reveals on pickup (Educational Content, delivered through play — not a wall of text).
+# Scattered glowing fragments the player gathers across the stages. Each Shard carries a
+# real anti-online-gambling truth revealed on pickup, and collecting shards unlocks Lore
+# entries by COUNT (see CodexManager.unlock_lore_by_count): the more you find, the more
+# of the story opens — order and placement don't matter.
 #
-# Fully data-driven: every shard is one entry in SHARDS { id -> {stage, pos, en, id} }.
-# Edit positions/lore here; stages call CollectibleManager.populate(self, "stageN")
-# in _ready to spawn the ones not yet collected. Collected state lives in
-# ProgressionManager (persisted), so a grabbed shard stays grabbed after reload.
+# Shards are now EDITOR-PLACED: drop res://scene/pickups/collectible/collectible.tscn
+# into a stage and drag it anywhere (no code needed). This SHARDS table is the catalog —
+# it drives the "X / total" progress readouts, per-stage "collect-all" badges, and the
+# fallback pickup text. Keep an entry here for each placed shard if you want it to count
+# in those totals; the `pos` values are just the original defaults (placement now lives
+# in the scene). Collected state persists in ProgressionManager.
 # ──────────────────────────────────────────────────────────────────────────────────
 
 const SHARD_SCENE := preload("res://scene/pickups/collectible/collectible.tscn")
@@ -66,7 +69,9 @@ const SHARDS := {
 		"id": "Fakta: Kamu menang bukan dengan menang, tapi dengan membantu orang lain pergi juga."},
 }
 
-# Spawn every uncollected shard for a stage. Call from the stage's _ready.
+# LEGACY code-spawner. Shards are now placed in the editor, so stages no longer call
+# this. Kept for anyone who still wants to spawn the catalog shards from code — do NOT
+# call it in a stage that also has hand-placed shards, or they'll double up.
 func populate(stage_node: Node, stage_id: String) -> void:
 	if stage_node == null:
 		return

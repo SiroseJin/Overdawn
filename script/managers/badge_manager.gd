@@ -88,8 +88,11 @@ func _on_event(event_name: String, data: Dictionary) -> void:
 			_award("first_shard")
 			if ProgressionManager.collectible_count() >= CollectibleManager.total():
 				_award("truth_seeker")
-			var st: String = CollectibleManager.SHARDS.get(data.get("id", ""), {}).get("stage", "")
-			if st != "" and CollectibleManager.collected_for_stage(st) >= CollectibleManager.total_for_stage(st):
+			var st: String = str(data.get("stage", ""))
+			if st == "":
+				st = CollectibleManager.SHARDS.get(data.get("id", ""), {}).get("stage", "")
+			if st != "" and CollectibleManager.total_for_stage(st) > 0 \
+					and CollectibleManager.collected_for_stage(st) >= CollectibleManager.total_for_stage(st):
 				_award("eye_opener")
 		"level_up":
 			if int(data.get("level", 0)) >= 5:  _award("seasoned")

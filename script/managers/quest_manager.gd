@@ -309,7 +309,10 @@ func _event_advances(obj: Dictionary, event_name: String, data: Dictionary) -> i
 				return 1
 		"collectible_stage":
 			if event_name == "collectible":
-				var st: String = CollectibleManager.SHARDS.get(data.get("id", ""), {}).get("stage", "")
+				# Shards report their stage in the event; fall back to the data table.
+				var st: String = str(data.get("stage", ""))
+				if st == "":
+					st = CollectibleManager.SHARDS.get(data.get("id", ""), {}).get("stage", "")
 				if st == obj.get("target", ""):
 					return 1
 		"key_collected":

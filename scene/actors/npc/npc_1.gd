@@ -113,12 +113,12 @@ func _setup_marker() -> void:
 	_marker = Label.new()
 	_marker.text = "!"
 	_marker.add_theme_font_override("font", load("res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf"))
-	_marker.add_theme_font_size_override("font_size", 30)
+	_marker.add_theme_font_size_override("font_size", 20)
 	_marker.add_theme_color_override("font_outline_color", Color.BLACK)
-	_marker.add_theme_constant_override("outline_size", 5)
+	_marker.add_theme_constant_override("outline_size", 4)
 	_marker.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_marker.custom_minimum_size = Vector2(20, 0)
-	_marker.position = Vector2(-10, -86)
+	_marker.custom_minimum_size = Vector2(14, 0)
+	_marker.position = Vector2(-7, -66)
 	_marker.z_index = 20
 	add_child(_marker)
 
@@ -257,6 +257,8 @@ func _dialogue_to_play() -> String:
 
 func _on_dialogue_finished():
 	ProgressionManager.mark_npc_talked(npc_id)
+	if npc_id != "":
+		ProgressionManager.notify("npc_talked", {"id": npc_id})   # can unlock lore
 	talked.emit(npc_id)
 	if quest_id != "":
 		# Record this NPC as the giver (shown in the quest-list menu). Uses the node

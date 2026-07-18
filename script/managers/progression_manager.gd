@@ -337,12 +337,16 @@ func notify(event_name: String, data: Dictionary = {}) -> void:
 	game_event.emit(event_name, data)
 
 # Collectibles (UC-004) — permanent, per-save. Returns true only the first time.
-func collect(collectible_id: String) -> bool:
+# `extra` is merged into the "collectible" event data (e.g. {"stage": "stage2"}) so
+# listeners can scope by stage without a lookup table.
+func collect(collectible_id: String, extra: Dictionary = {}) -> bool:
 	if collectibles.get(collectible_id, false):
 		return false
 	collectibles[collectible_id] = true
 	collectible_changed.emit(collectibles.size())
-	notify("collectible", {"id": collectible_id})
+	var data := {"id": collectible_id}
+	data.merge(extra)
+	notify("collectible", data)
 	return true
 
 func has_collectible(collectible_id: String) -> bool:

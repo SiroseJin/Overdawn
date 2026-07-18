@@ -1,5 +1,4 @@
 [gd_scene format=3 uid="uid://c8tpv5p1ku4gd"]
-[ext_resource type="Script" path="res://scene/gimmicks/checkpoint/checkpoint.gd" id="cp_scr"]
 
 [ext_resource type="Script" uid="uid://1bp0jh8saegr" path="res://scene/Levels/Level1/stage1.gd" id="1_ylrub"]
 [ext_resource type="Texture2D" uid="uid://d2j0t404knc0u" path="res://scene/Levels/Level1/tileset/Tiles.png" id="2_28j2g"]
@@ -12,10 +11,12 @@
 [ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/bandit/bandit_enemy.tscn" id="10_x525m"]
 [ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/actors/enemies/adbot/adbot_enemy.tscn" id="11_baten"]
 [ext_resource type="PackedScene" uid="uid://c5smarxtqoyvb" path="res://scene/system/futuristic_city_parallax.tscn" id="bg_city"]
+[ext_resource type="Script" uid="uid://vf6ib1x5p5s0" path="res://scene/gimmicks/checkpoint/checkpoint.gd" id="cp_scr"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="itm_door"]
 [ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="itm_hp"]
 [ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="itm_spd"]
+[ext_resource type="PackedScene" uid="uid://ctruthshard01" path="res://scene/pickups/collectible/collectible.tscn" id="shard_scn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r8u7b"]
 texture = ExtResource("2_28j2g")
@@ -515,7 +516,7 @@ position = Vector2(269, -1)
 polygon = PackedVector2Array(3000, 545, 3170, 545, 3170, 555, 3000, 555)
 
 [node name="SH4RightWall" type="CollisionPolygon2D" parent="Safehouses" unique_id=615746564]
-position = Vector2(269, 10)
+position = Vector2(317, -3)
 polygon = PackedVector2Array(3160, 545, 3170, 545, 3170, 672, 3160, 672, 3160, 632.0196)
 
 [node name="LeftBorder" type="CollisionPolygon2D" parent="Safehouses" unique_id=1015010933]
@@ -530,7 +531,7 @@ polygon = PackedVector2Array(1090, 545, 1089, -47, 1338, -47, 1340, 555, 1090, 5
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stage2Portal" unique_id=680171797]
-position = Vector2(3412, 610)
+position = Vector2(3461, 605)
 shape = SubResource("RectangleShape2D_v25fd")
 
 [node name="SceneTransitionAnimation" parent="." unique_id=818007785 instance=ExtResource("3_1pmp5")]
@@ -562,7 +563,7 @@ position = Vector2(2344, 622)
 dialogue_timeline = "npc3timeline"
 
 [node name="Bayu" parent="." unique_id=258507587 instance=ExtResource("9_26d74")]
-position = Vector2(3345, 630)
+position = Vector2(3332, 620)
 dialogue_timeline = "npc4timeline"
 
 [node name="Adbot2" parent="." unique_id=1689417740 instance=ExtResource("11_baten")]
@@ -589,16 +590,13 @@ position = Vector2(350, 654)
 position = Vector2(950, 654)
 
 [node name="Coin3" parent="." unique_id=281445501 instance=ExtResource("itm_coin")]
-position = Vector2(1561, 657)
+position = Vector2(1505, 659)
 
 [node name="Coin4" parent="." unique_id=1585317732 instance=ExtResource("itm_coin")]
 position = Vector2(2100, 614)
 
 [node name="Coin5" parent="." unique_id=470795021 instance=ExtResource("itm_coin")]
 position = Vector2(2658, 548)
-
-[node name="Coin6" parent="." unique_id=663838768 instance=ExtResource("itm_coin")]
-position = Vector2(3188, 605)
 
 [node name="SpeedPickup" parent="." unique_id=1157561859 instance=ExtResource("itm_spd")]
 position = Vector2(2410, 606)
@@ -617,20 +615,32 @@ grants_key = "stage1_key"
 position = Vector2(3271, 551)
 
 [node name="CheckPoint1" type="Area2D" parent="." unique_id=1874047689]
-script = ExtResource("cp_scr")
 position = Vector2(1208, 665)
+script = ExtResource("cp_scr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint1" unique_id=55159544]
 position = Vector2(-101.25, -195)
 shape = SubResource("RectangleShape2D_y1f2u")
 
 [node name="CheckPoint2" type="Area2D" parent="." unique_id=502061558]
-script = ExtResource("cp_scr")
 position = Vector2(2379, 623)
+script = ExtResource("cp_scr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint2" unique_id=1690573345]
 position = Vector2(-101.25, -195)
 shape = SubResource("RectangleShape2D_y1f2u")
+
+[node name="Shard_s1_1" parent="." unique_id=1722257447 instance=ExtResource("shard_scn")]
+position = Vector2(520, 632)
+collectible_id = "shard_s1_1"
+
+[node name="Shard_s1_2" parent="." unique_id=362235912 instance=ExtResource("shard_scn")]
+position = Vector2(1690, 600)
+collectible_id = "shard_s1_2"
+
+[node name="Shard_s1_3" parent="." unique_id=1913191163 instance=ExtResource("shard_scn")]
+position = Vector2(2739, 540)
+collectible_id = "shard_s1_3"
 
 [connection signal="body_entered" from="Lobby Portal" to="." method="_on_lobby_portal_body_entered"]
 [connection signal="body_entered" from="Stage2Portal" to="." method="_on_stage_2_portal_body_entered"]

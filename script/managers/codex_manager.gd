@@ -79,45 +79,54 @@ const GUIDE := {
 		"id_d": "Arus Stage 4 menyeretmu ke mesin — tarikan kembali begitu kau coba pergi. Naikkan Firewall dan tetap melangkah."},
 }
 
-# Each locked LORE entry carries a hint (en_h/id_h) telling the player HOW to reveal
-# it — which stage, what to do, or who to talk to (#9). Shown on the locked card.
+# Lore unlocks are MIXED. Each entry declares how it opens via `by`:
+#   "default" → known from the start (l_judol).
+#   "shard"   → opens by TOTAL Truth Shards collected, in listed order (1st shard-entry
+#               at 1 shard, 2nd at 2, …). Its hint is the generic "collect shards" line.
+#   "enemy"   → opens when you defeat an enemy of `etype` (adbot/bandit/collector/dealer).
+#   "npc"     → opens when you finish talking to the NPC whose id is `npc`.
+#   "boss"    → opens when the House is defeated.
+# Non-shard entries carry a specific hint (en_h/id_h); shard entries share a generic one.
+const SHARD_HINT_EN := "Unlock by collecting Truth Shards."
+const SHARD_HINT_ID := "Buka dengan mengumpulkan Pecahan Kebenaran."
+
 const LORE := {
-	"l_judol": {"en": "What Is Judol", "id": "Apa Itu Judol", "default": true,
+	"l_judol": {"en": "What Is Judol", "id": "Apa Itu Judol", "by": "default",
 		"en_d": "'Judi online' (judol) is betting real money on games of chance in apps and sites. It's dressed up like a game, but it's built to take your money.",
 		"id_d": "'Judi online' (judol) adalah bertaruh uang sungguhan pada permainan untung-untungan di aplikasi dan situs. Dikemas seperti game, tapi dibuat untuk mengambil uangmu."},
-	"l_house": {"en": "The House Always Wins", "id": "Bandar Selalu Menang", "ev": "stage_cleared", "key": "stage_id", "val": "stage1",
+	"l_house": {"en": "The House Always Wins", "id": "Bandar Selalu Menang", "by": "shard",
 		"en_d": "The odds are set so the operator — the house — profits over time. It is not a way to make money. Any win is bait to keep you playing.",
-		"id_d": "Peluangnya diatur agar operator — sang bandar — untung dalam jangka panjang. Ini bukan cara mencari uang. Kemenangan apa pun adalah umpan agar kau terus main.",
-		"en_h": "Clear Stage 1 to reveal this.", "id_h": "Selesaikan Stage 1 untuk membukanya."},
-	"l_bait": {"en": "Free Credit Is Bait", "id": "Kredit Gratis Itu Umpan", "ev": "stage_cleared", "key": "stage_id", "val": "stage2",
+		"id_d": "Peluangnya diatur agar operator — sang bandar — untung dalam jangka panjang. Ini bukan cara mencari uang. Kemenangan apa pun adalah umpan agar kau terus main."},
+	"l_bait": {"en": "Free Credit Is Bait", "id": "Kredit Gratis Itu Umpan", "by": "shard",
 		"en_d": "'Free credits' and 'guaranteed jackpots' cost the operator almost nothing. They get you playing — then take back far more.",
-		"id_d": "'Kredit gratis' dan 'jackpot dijamin' hampir tanpa biaya bagi operator. Membuatmu bermain — lalu mengambil jauh lebih banyak.",
-		"en_h": "Clear Stage 2 to reveal this.", "id_h": "Selesaikan Stage 2 untuk membukanya."},
-	"l_debt": {"en": "The Debt Trap", "id": "Jebakan Utang", "ev": "stage_cleared", "key": "stage_id", "val": "stage3",
-		"en_d": "Losses pile up and the apps offer loans to 'win it back'. Borrowing to chase a rigged game only digs the hole deeper. The debt is the goal.",
-		"id_d": "Kekalahan menumpuk dan aplikasi menawarkan pinjaman untuk 'menang kembali'. Berutang mengejar permainan curang hanya memperdalam lubang. Utang adalah tujuannya.",
-		"en_h": "Clear Stage 3 (the Debt Tower) to reveal this.", "id_h": "Selesaikan Stage 3 (Menara Utang) untuk membukanya."},
-	"l_nearmiss": {"en": "Engineered Near-Misses", "id": "Nyaris Menang yang Direkayasa", "ev": "stage_cleared", "key": "stage_id", "val": "stage4",
+		"id_d": "'Kredit gratis' dan 'jackpot dijamin' hampir tanpa biaya bagi operator. Membuatmu bermain — lalu mengambil jauh lebih banyak."},
+	"l_shard": {"en": "Voices of the Hurt", "id": "Suara yang Terluka", "by": "shard",
+		"en_d": "Truth Shards are the words of people the machine hurt — savings gone, families strained, time lost. Collecting them carries their stories forward.",
+		"id_d": "Pecahan Kebenaran adalah kata-kata orang yang dilukai mesin — tabungan lenyap, keluarga tegang, waktu hilang. Mengumpulkannya membawa kisah mereka."},
+	"l_nearmiss": {"en": "Engineered Near-Misses", "id": "Nyaris Menang yang Direkayasa", "by": "enemy", "etype": "bandit",
 		"en_d": "'Almost won' isn't luck — it's designed. Your brain treats a near-miss like a real win, and a bonus appears the moment you try to quit.",
 		"id_d": "'Nyaris menang' bukan keberuntungan — itu dirancang. Otakmu memperlakukan nyaris-menang seperti menang, dan bonus muncul begitu kau coba berhenti.",
-		"en_h": "Clear Stage 4 (Inside the Machine) to reveal this.", "id_h": "Selesaikan Stage 4 (Di Dalam Mesin) untuk membukanya."},
-	"l_signs": {"en": "Warning Signs", "id": "Tanda Bahaya", "ev": "quiz_passed", "key": "quiz_id", "val": "stage5_quiz",
+		"en_h": "Defeat a Bandit (the living slot machine) to reveal this.", "id_h": "Kalahkan seorang Bandit (mesin slot hidup) untuk membukanya."},
+	"l_debt": {"en": "The Debt Trap", "id": "Jebakan Utang", "by": "enemy", "etype": "collector",
+		"en_d": "Losses pile up and the apps offer loans to 'win it back'. Borrowing to chase a rigged game only digs the hole deeper. The debt is the goal.",
+		"id_d": "Kekalahan menumpuk dan aplikasi menawarkan pinjaman untuk 'menang kembali'. Berutang mengejar permainan curang hanya memperdalam lubang. Utang adalah tujuannya.",
+		"en_h": "Defeat the Collector (the debt enforcer, Stage 3) to reveal this.", "id_h": "Kalahkan Kolektor (penagih utang, Stage 3) untuk membukanya."},
+	"l_signs": {"en": "Warning Signs", "id": "Tanda Bahaya", "by": "npc", "npc": "stage4_guntur",
 		"en_d": "Chasing losses while insisting 'I can stop anytime' is a classic sign of harm. Recovery starts with honesty and asking for help.",
 		"id_d": "Mengejar kekalahan sambil bersikeras 'aku bisa berhenti kapan saja' adalah tanda klasik kecanduan. Pemulihan dimulai dari kejujuran dan meminta bantuan.",
-		"en_h": "Pass the Stage 5 quiz (talk to the NPC before the House) to reveal this.", "id_h": "Lewati kuis Stage 5 (bicara NPC sebelum Bandar) untuk membukanya."},
-	"l_shard": {"en": "Voices of the Hurt", "id": "Suara yang Terluka", "ev": "collectible",
-		"en_d": "Truth Shards are the words of people the machine hurt — savings gone, families strained, time lost. Collecting them carries their stories forward.",
-		"id_d": "Pecahan Kebenaran adalah kata-kata orang yang dilukai mesin — tabungan lenyap, keluarga tegang, waktu hilang. Mengumpulkannya membawa kisah mereka.",
-		"en_h": "Collect any Truth Shard (hidden off the path in the stages) to reveal this.", "id_h": "Ambil satu Pecahan Kebenaran (tersembunyi di luar jalur) untuk membukanya."},
-	"l_help": {"en": "Getting Help", "id": "Mencari Bantuan", "ev": "quiz_passed",
+		"en_h": "Talk to Guntur in Stage 4 to reveal this.", "id_h": "Bicara dengan Guntur di Stage 4 untuk membukanya."},
+	"l_help": {"en": "Getting Help", "id": "Mencari Bantuan", "by": "npc", "npc": "stage1_ana",
 		"en_d": "If gambling has a grip on you or someone you know, help is real. In Indonesia call 119 ext 8 (mental-health line). Talking to someone is the first step out.",
 		"id_d": "Jika judi mencengkerammu atau orang yang kau kenal, bantuan itu nyata. Di Indonesia hubungi 119 ext 8 (layanan kesehatan jiwa). Bicara pada seseorang adalah langkah pertama keluar.",
-		"en_h": "Pass any quiz (talk to a quiz NPC) to reveal this.", "id_h": "Lewati kuis mana pun (bicara NPC kuis) untuk membukanya."},
-	"l_overdawn": {"en": "Overdawn", "id": "Fajar Menyingsing", "ev": "boss_defeated",
+		"en_h": "Talk to Ana in Stage 1 to reveal this.", "id_h": "Bicara dengan Ana di Stage 1 untuk membukanya."},
+	"l_overdawn": {"en": "Overdawn", "id": "Fajar Menyingsing", "by": "boss",
 		"en_d": "No betting system beats a rigged game. The only real win is to walk away — and to help others see the trap too. You made it out. Now help others do the same.",
 		"id_d": "Tak ada sistem taruhan yang mengalahkan permainan curang. Kemenangan sejati adalah pergi — dan membantu orang lain melihat jebakannya. Kau berhasil keluar. Kini bantu orang lain melakukannya.",
-		"en_h": "Defeat the House (Stage 6 final boss) to reveal this.", "id_h": "Kalahkan Bandar (bos terakhir Stage 6) untuk membukanya."},
+		"en_h": "Defeat the House (final boss) to reveal this.", "id_h": "Kalahkan Bandar (bos terakhir) untuk membukanya."},
 }
+
+# Extra Truth Shards, once every shard-gated lore is already open, pay out big instead.
+const SHARD_OVERFLOW_EXP := 150
 
 func _ready() -> void:
 	ProgressionManager.game_event.connect(_on_event)
@@ -130,7 +139,7 @@ func is_guide_unlocked(id: String) -> bool:
 	return GUIDE.get(id, {}).get("default", false) or ProgressionManager.guides.has(id)
 
 func is_lore_unlocked(id: String) -> bool:
-	return LORE.get(id, {}).get("default", false) or ProgressionManager.lore.has(id)
+	return _is_default(LORE.get(id, {})) or ProgressionManager.lore.has(id)
 
 func guide_count() -> int:
 	return _count(ProgressionManager.guides, GUIDE)
@@ -141,9 +150,14 @@ func lore_count() -> int:
 func _count(store: Dictionary, table: Dictionary) -> int:
 	var n := 0
 	for id in table:
-		if store.has(id) or table[id].get("default", false):
+		if store.has(id) or _is_default(table[id]):
 			n += 1
 	return n
+
+# An entry is "starter knowledge" (always unlocked) if flagged default either way —
+# GUIDE uses `default: true`, LORE uses `by: "default"`.
+func _is_default(entry: Dictionary) -> bool:
+	return entry.get("default", false) or entry.get("by", "") == "default"
 
 func name_of(kind: String, id: String) -> String:
 	var e: Dictionary = (GUIDE if kind == "guide" else LORE).get(id, {})
@@ -160,8 +174,11 @@ func img_of(kind: String, id: String) -> String:
 	return str(e.get("img", ""))
 
 ## Hint telling the player how to unlock a still-locked entry (#9). "" if none.
+## Shard-gated lore shares one generic line; everything else uses its own en_h/id_h.
 func hint_of(kind: String, id: String) -> String:
 	var e: Dictionary = (GUIDE if kind == "guide" else LORE).get(id, {})
+	if kind == "lore" and e.get("by", "") == "shard":
+		return SHARD_HINT_ID if _is_id() else SHARD_HINT_EN
 	return e.get("id_h" if _is_id() else "en_h", "")
 
 # ─── Unlocking ────────────────────────────────────────────────────────────────────
@@ -186,9 +203,71 @@ func _on_event(event_name: String, data: Dictionary) -> void:
 	for id in GUIDE:
 		if _matches(GUIDE[id], event_name, data):
 			unlock_guide(id)
+	match event_name:
+		"collectible":
+			# Shard-gated lore opens by count. Once it's all open, extra shards pay out.
+			if _all_shard_lore_unlocked():
+				_shard_overflow_reward()
+			else:
+				unlock_shard_lore_by_count(ProgressionManager.collectible_count())
+		"enemy_defeated":
+			for id in LORE:
+				if LORE[id].get("by", "") == "enemy" \
+						and str(LORE[id].get("etype", "")) == str(data.get("type", "")):
+					unlock_lore(id)
+		"npc_talked":
+			for id in LORE:
+				if LORE[id].get("by", "") == "npc" \
+						and str(LORE[id].get("npc", "")) == str(data.get("id", "")):
+					unlock_lore(id)
+		"boss_defeated":
+			for id in LORE:
+				if LORE[id].get("by", "") == "boss":
+					unlock_lore(id)
+
+# The shard-gated lore ids, in the order they unlock (1 shard → 1st, 2 shards → 2nd, …).
+func _shard_lore_order() -> Array:
+	var out: Array = []
 	for id in LORE:
-		if _matches(LORE[id], event_name, data):
-			unlock_lore(id)
+		if LORE[id].get("by", "") == "shard":
+			out.append(id)
+	return out
+
+# Unlock the first `count` shard-gated lore entries (already-unlocked ones are skipped).
+func unlock_shard_lore_by_count(count: int) -> void:
+	var order := _shard_lore_order()
+	for i in mini(count, order.size()):
+		unlock_lore(order[i])
+
+func _all_shard_lore_unlocked() -> bool:
+	for id in _shard_lore_order():
+		if not is_lore_unlocked(id):
+			return false
+	return true
+
+# Once every shard-gated lore is already open, a further shard hands the player a big
+# EXP boost and heals them to full instead of unlocking anything.
+func _shard_overflow_reward() -> void:
+	var p = Global.PlayerBody
+	if not is_instance_valid(p):
+		return
+	if p.has_method("gain_exp"):
+		p.gain_exp(SHARD_OVERFLOW_EXP)
+	if p.has_method("max_hp"):
+		p.health = p.max_hp()
+		if p.has_method("update_health_bar"):
+			p.update_health_bar()
+	elif "health_max" in p:
+		p.health = p.health_max
+	_toast(tr("All shard lore found! +%d EXP and full heal") % SHARD_OVERFLOW_EXP)
+
+# How many shards the next still-locked SHARD lore entry needs (0 if all are unlocked).
+func shards_needed_for_next_lore() -> int:
+	var order := _shard_lore_order()
+	for i in order.size():
+		if not is_lore_unlocked(order[i]):
+			return i + 1
+	return 0
 
 func _matches(entry: Dictionary, event_name: String, data: Dictionary) -> bool:
 	if entry.get("ev", "") != event_name:

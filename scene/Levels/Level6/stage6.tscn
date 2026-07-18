@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cfallingplat0" path="res://scene/gimmicks/falling_platform/falling_platform.tscn" id="6_fp"]
 [ext_resource type="PackedScene" uid="uid://cfinalboss001" path="res://scene/actors/enemies/finalboss/finalboss_enemy.tscn" id="7_boss"]
 [ext_resource type="PackedScene" uid="uid://c0o24xbnx1jwl" path="res://scene/system/scifi_lab_parallax.tscn" id="bg_city"]
+[ext_resource type="PackedScene" uid="uid://ctruthshard01" path="res://scene/pickups/collectible/collectible.tscn" id="shard_scn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_zone"]
 size = Vector2(100, 520)
@@ -21,9 +22,9 @@ size = Vector2(40, 80)
 [sub_resource type="Curve2D" id="Curve2D_bosspath"]
 bake_interval = 347.99
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1200, 460, 0, 0, 0, 0, 1365.9999, 421.09274, 0, 0, 0, 0, 1445, 345, 0, 0, 0, 0, 1641.9999, 436.8212, 0, 0, 0, 0, 1897, 335, 0, 0, 0, 0, 1944.9999, 419.4371, 0, 0, 0, 0, 2050, 460)
+"points": PackedVector2Array(0, 0, 0, 0, 1208.0262, 462.84088, 0, 0, 0, 0, 1238.5267, 420.22723, 0, 0, 0, 0, 1144.6174, 310.14206, 0, 0, 0, 0, 1337.2521, 434.43182, 0, 0, 0, 0, 1330.0282, 271.7898, 0, 0, 0, 0, 1370.9631, 400.34088, 0, 0, 0, 0, 1453.6354, 445.0852, 0, 0, 0, 0, 1471.2936, 353.4659, 0, 0, 0, 0, 1547.5448, 384.71588, 0, 0, 0, 0, 1628.6118, 431.59088, 0, 0, 0, 0, 1590.8876, 351.33524, 0, 0, 0, 0, 1687.2048, 366.9602, 0, 0, 0, 0, 1622.1907, 244.09094, 0, 0, 0, 0, 1736.1661, 328.60797, 0, 0, 0, 0, 1817.2333, 359.1477, 0, 0, 0, 0, 1724.9292, 433.72156, 0, 0, 0, 0, 1915.9585, 422.3579, 0, 0, 0, 0, 1875.0237, 328.60797, 0, 0, 0, 0, 1977.7621, 254.03412, 0, 0, 0, 0, 1973.7489, 353.4659, 0, 0, 0, 0, 2064.4478, 462.84088, 0, 0, 0, 0, 1821.2465, 433.72156, 0, 0, 0, 0, 1679.1785, 319.375, 0, 0, 0, 0, 1462.4645, 339.26135, 0, 0, 0, 0, 1383.8054, 420.9375, 0, 0, 0, 0, 1144.6174, 353.4659)
 }
-point_count = 7
+point_count = 26
 
 [node name="Stage6" type="Node2D" unique_id=1039610357]
 position = Vector2(-69, -26)
@@ -150,8 +151,8 @@ use_path = true
 path_node = NodePath("../BossPath")
 
 [node name="BossPath" type="Path2D" parent="." unique_id=190435817]
-position = Vector2(0, -69.68002)
-scale = Vector2(1, 1.208)
+position = Vector2(-396.0582, -136.68015)
+scale = Vector2(1.2458819, 1.4080003)
 curve = SubResource("Curve2D_bosspath")
 
 [node name="ServerSpawns" type="Node2D" parent="." unique_id=1312267116]
@@ -194,6 +195,14 @@ downtime = 1.0
 
 [node name="End" type="Marker2D" parent="MovingPlatform2" unique_id=1717035608]
 position = Vector2(-1204, 0)
+
+[node name="Shard_s6_1" parent="." unique_id=1951357674 instance=ExtResource("shard_scn")]
+position = Vector2(395, 615)
+collectible_id = "shard_s6_1"
+
+[node name="Shard_s6_2" parent="." unique_id=283762490 instance=ExtResource("shard_scn")]
+position = Vector2(1450, 101)
+collectible_id = "shard_s6_2"
 
 [connection signal="body_entered" from="BossZone" to="." method="_on_boss_zone_entered"]
 [connection signal="body_entered" from="Stage5Portal" to="." method="_on_stage_5_portal_body_entered"]

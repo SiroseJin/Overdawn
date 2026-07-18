@@ -1,5 +1,4 @@
 [gd_scene format=3 uid="uid://ho387xu1ptvp"]
-[ext_resource type="Script" path="res://scene/gimmicks/checkpoint/checkpoint.gd" id="cp_scr"]
 
 [ext_resource type="Script" uid="uid://p5ry6jg7wiq6" path="res://scene/Levels/Level4/stage4.gd" id="1_stg4"]
 [ext_resource type="PackedScene" uid="uid://db2pu5tpfap8j" path="res://scene/actors/player/player.tscn" id="2_player"]
@@ -11,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://jr1opep0t5q3" path="res://scene/actors/enemies/dealer/dealer_enemy.tscn" id="9_necro"]
 [ext_resource type="PackedScene" uid="uid://cmovingplat01" path="res://scene/gimmicks/moving_platform/moving_platform.tscn" id="10_mp"]
 [ext_resource type="PackedScene" uid="uid://dumfvyytw8b8n" path="res://scene/system/casino_parallax.tscn" id="bg_city"]
+[ext_resource type="Script" uid="uid://vf6ib1x5p5s0" path="res://scene/gimmicks/checkpoint/checkpoint.gd" id="cp_scr"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="itm_door"]
 [ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="itm_hp"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://cpull0one0001" path="res://scene/Levels/Level4/gimmicks/pull_zone/pull_zone.tscn" id="itm_pull"]
 [ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="itm_spd"]
 [ext_resource type="PackedScene" uid="uid://bkpom03w265c7" path="res://scene/gimmicks/casino_props/slot_machine.tscn" id="prop_slot"]
+[ext_resource type="PackedScene" uid="uid://ctruthshard01" path="res://scene/pickups/collectible/collectible.tscn" id="shard_scn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_death"]
 size = Vector2(5200, 60)
@@ -208,20 +209,28 @@ frame = 0
 start_frame = 0
 
 [node name="CheckPoint3" type="Area2D" parent="." unique_id=1516272479]
-script = ExtResource("cp_scr")
 position = Vector2(3185, 762)
+script = ExtResource("cp_scr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint3" unique_id=1703992974]
 position = Vector2(-101.25, -325.5)
 shape = SubResource("RectangleShape2D_lya86")
 
 [node name="CheckPoint2" type="Area2D" parent="." unique_id=213961557]
-script = ExtResource("cp_scr")
 position = Vector2(2195, 887)
+script = ExtResource("cp_scr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint2" unique_id=1377414125]
 position = Vector2(-101.25, -325.5)
 shape = SubResource("RectangleShape2D_lya86")
+
+[node name="Shard_s4_1" parent="." unique_id=714381363 instance=ExtResource("shard_scn")]
+position = Vector2(1842, 573)
+collectible_id = "shard_s4_1"
+
+[node name="Shard_s4_2" parent="." unique_id=1131012962 instance=ExtResource("shard_scn")]
+position = Vector2(3781, 407)
+collectible_id = "shard_s4_2"
 
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Stage5Portal" to="." method="_on_stage_5_portal_body_entered"]

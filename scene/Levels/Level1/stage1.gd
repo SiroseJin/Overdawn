@@ -15,7 +15,7 @@ func _ready() -> void:
 	Global.gameStarted = true
 	SaveManager.autosave_on_enter()   # auto-save (after fade-in) on entering the stage
 	Global.decorate_stage_portals()
-	CollectibleManager.populate(self, "stage1")   # UC-004 Truth Shards   # colour-coded portal beacons
+	# Truth Shards are placed in the editor now (collectible.tscn instances you can drag).
 	scene_transition_anim.play("fade_out")
 	player_camera.enabled  = true
 	audio_bgm.play()

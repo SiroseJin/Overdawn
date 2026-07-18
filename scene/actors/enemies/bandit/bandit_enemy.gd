@@ -213,6 +213,7 @@ func handle_death():
 	if Global.PlayerBody:
 		Global.PlayerBody.gain_exp(exp_value)
 		Global.PlayerBody.gain_score(score_value)
+	ProgressionManager.notify("enemy_defeated", {"type": "bandit"})   # can unlock lore
 	queue_free()
 
 # ───────────────────────────────────────────────────────────────────────────────
