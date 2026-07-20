@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://1lslhw7o5p43"
+path="res://.godot/imported/dice-shake-3.ogg-6398d0ae107383e767d76747bf0c88ab.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Casino/Audio/dice-shake-3.ogg"
+dest_files=["res://.godot/imported/dice-shake-3.ogg-6398d0ae107383e767d76747bf0c88ab.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

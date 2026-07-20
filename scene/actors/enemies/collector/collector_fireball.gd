@@ -34,6 +34,9 @@ var _age: float = 0.0
 # Lifecycle
 # ───────────────────────────────────────────────────────────────────────────────
 
+func _ready() -> void:
+	AudioManager.play_sfx("collector_fireball")
+
 func _process(delta: float):
 	_age += delta
 
@@ -64,5 +67,6 @@ func _on_area_entered(area: Area2D):
 	if area.get_parent() is Player:
 		area.get_parent().take_damage(DAMAGE_AMOUNT)
 		animated_sprite_2d.play("hit")
+		AudioManager.play_sfx("fireball_impact")
 		Global.spawn_fx("splosion", global_position, 0.55)   # fiery impact
 		queue_free()

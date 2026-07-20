@@ -125,6 +125,7 @@ var _dash_cd_total: float = DASH_COOLDOWN
 
 var _dbjump_cd_remaining: float = 0.0
 var can_double_jump: bool    = true   # Resets on landing
+var _was_airborne: bool      = false  # true while off the ground; drives the landing sfx
 var double_jump_cooldown: bool = false # True while the cooldown is ticking
 const DOUBLE_JUMP_FORCE: float = -288.0  # Slightly weaker than the first jump (~10% lower)
 const DOUBLE_JUMP_COOLDOWN: float = 1.0  # Seconds before the skill is available again
@@ -227,6 +228,9 @@ func _ready():
 	_refresh_skill_huds()
 	_setup_skill_key_hints()
 	add_child(_KEY_GUIDE.instantiate())   # faint line to a needed key, if any (#5)
+	_setup_emergency_notice()
+	ProgressionManager.skill_points_changed.connect(func(_n): _refresh_skill_nag())
+	_refresh_skill_nag()
 
 func _physics_process(delta):
 	if is_game_paused:
@@ -254,11 +258,15 @@ func _physics_process(delta):
 			# Falling accelerates faster than rising, so the arc feels less floaty.
 			var g: float = GRAVITY * (FALL_GRAVITY_MULT if velocity.y > 0.0 else 1.0)
 			velocity.y = min(velocity.y + g * delta, MAX_FALL_SPEED)
+			_was_airborne = true
 		elif _knockback_time > 0.0:
 			# Let a hit's upward pop lift the player instead of snapping to the floor.
 			velocity.y = min(velocity.y + GRAVITY * delta, MAX_FALL_SPEED)
 		else:
 			velocity.y = 0
+			if _was_airborne:                       # just touched down
+				_was_airborne = false
+				AudioManager.play_sfx("land")
 			# Restore double jump when the player lands (only if not on cooldown)
 			if not double_jump_cooldown:
 				can_double_jump = true
@@ -292,12 +300,14 @@ func _physics_process(delta):
 		var eff_jump := JUMP_FORCE * (1.0 + 0.015 * _up("stat_jump"))
 		if is_on_floor():
 			velocity.y = eff_jump
+			AudioManager.play_sfx("jump")
 		elif can_double_jump and not double_jump_cooldown and ProgressionManager.is_skill_unlocked("double_jump"):
 			# Double-jump is normally 10% lower than a normal jump; the Double Jump
 			# Height upgrade recovers 1% of that penalty per level (down to 5% at max).
 			var dj_penalty := 0.10 - 0.01 * _up("dj_height")
 			velocity.y      = eff_jump * (1.0 - dj_penalty)
 			can_double_jump = false
+			AudioManager.play_sfx("double_jump")
 			# "Second chance" flourish — a puff of air kicked down beneath the feet.
 			Global.spawn_fx("poof", global_position + Vector2(0, 8), 0.22, Color(0.85, 0.92, 1.0))
 			start_double_jump_cooldown()
@@ -333,9 +343,6 @@ func _physics_process(delta):
 
 	if Input.is_action_just_pressed("shoot"):
 		shoot_arrow()
-
-	if Input.is_action_just_pressed("pause"):
-		pause_menu_screen()
 
 	if Input.is_action_just_pressed("stats"):
 		stats_menu_screen()
@@ -395,6 +402,7 @@ func _process(delta):
 			firewall_active = false
 			modulate = Color.WHITE
 			if _firewall_fx: _firewall_fx.visible = false   # shield down
+			AudioManager.play_sfx("firewall_down")
 			Global.spawn_fx("poof", global_position + Vector2(0, -8), 0.18, Color(0.6, 0.8, 1.0))  # shield-drop puff
 			show_toast(tr("Firewall down."))
 			firewall_cooldown = true
@@ -420,12 +428,22 @@ func _on_skip_pressed():
 	if Dialogic.current_timeline != null:
 		Dialogic.end_timeline()
 
+# Esc/pause OPENS the menu — event-based (not polled) and guarded by is_game_paused so
+# it can't fire on the same frame the pause menu's own Esc handler resumes the game
+# (which previously caused Esc to instantly re-open / flicker). Closing is handled by
+# the pause menu itself (see pause_menu.gd _unhandled_input).
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause") and not is_game_paused and not dead:
+		pause_menu_screen()
+		get_viewport().set_input_as_handled()
+
 func pause_menu_screen():
 	if Dialogic.current_timeline != null:
 		Dialogic.end_timeline()
 		if Dialogic.Styles.has_active_layout_node():
 			Dialogic.Styles.get_layout_node().hide()
 	is_game_paused = true
+	AudioManager.play_ui("pause")
 	pause_menu.show()
 	pause_game()
 
@@ -447,6 +465,7 @@ func shoot_arrow():
 	if not ProgressionManager.is_skill_unlocked("arrows"):
 		return
 	if not infinite_arrows and arrows_held <= 0:
+		AudioManager.play_sfx("no_arrows")
 		return
 
 	# Muzzle anchored to the player's OWN world position (+ a hand-height offset that
@@ -472,6 +491,7 @@ func shoot_arrow():
 	arrow_instance.damage = 3 + int(round(0.20 * _eff_strength())) \
 		+ arrow_lvl + int(round(0.01 * strength * arrow_lvl))
 
+	AudioManager.play_sfx("arrow_shoot")
 	if not infinite_arrows:
 		arrows_held -= 1
 	update_arrow_cd()
@@ -512,16 +532,28 @@ func check_hitbox():
 # Levelling & Score
 # ───────────────────────────────────────────────────────────────────────────────
 
+# The EXP needed for the next level, after the per-save difficulty multiplier.
+# exp_to_next_level stays the difficulty-agnostic base (grows x1.1 per level); the
+# multiplier is applied here so it also works correctly on a loaded save.
+func _exp_required() -> int:
+	return maxi(1, int(round(exp_to_next_level * Difficulty.exp_req_mult())))
+
 func gain_exp(amount):
 	exp += amount
-	if exp >= exp_to_next_level:
+	if exp >= _exp_required():
 		level_up()
+	update_exp_lvl_label()
+	ProgressionManager.capture_player(self)
+
+# Drain EXP (never below 0). Used by the rigged fake coin.
+func lose_exp(amount):
+	exp = maxi(0, int(exp) - amount)
 	update_exp_lvl_label()
 	ProgressionManager.capture_player(self)
 
 func level_up():
 	level             += 1
-	exp               -= exp_to_next_level
+	exp               -= _exp_required()
 	exp_to_next_level  = int(exp_to_next_level * 1.1)
 	# Grow strength / max-health from the new level (heals by the max-HP gained).
 	recompute_level_stats()
@@ -529,6 +561,7 @@ func level_up():
 	# RPG: each level grants a skill point to spend in the stat screen
 	ProgressionManager.add_skill_points(1)
 	ProgressionManager.notify("level_up", {"level": level})   # feeds level badges
+	AudioManager.play_sfx("level_up")
 	show_toast(tr("Level up! +1 Skill Point"))
 
 # Derive strength and max-health from the current level (level 1 = base). Any max-HP
@@ -545,9 +578,10 @@ func recompute_level_stats() -> void:
 
 func update_exp_lvl_label():
 	if exp_label:
+		var req := _exp_required()
 		exp_bar.value     = exp
-		exp_bar.max_value = exp_to_next_level
-		exp_label.text    = "EXP: " + str(round(exp)) + " / " + str(round(exp_to_next_level))
+		exp_bar.max_value = req
+		exp_label.text    = "EXP: " + str(round(exp)) + " / " + str(req)
 	level_label.text = "LVL: " + str(level)
 
 func gain_score(amount):
@@ -568,10 +602,14 @@ func take_damage(damage: int, source_pos: Vector2 = Vector2.INF):
 	if damage == 0 or health <= 0:
 		return
 	# Blocked by an active firewall, safe during a conversation/quiz, or god mode
-	if firewall_active or conversation_safe or god_mode:
+	if firewall_active:
+		AudioManager.play_sfx("firewall_block")
+		return
+	if conversation_safe or god_mode:
 		return
 
 	health -= damage
+	AudioManager.play_sfx("hurt")
 	update_health_bar()
 	ProgressionManager.notify("player_damaged", {"amount": damage})   # feeds no-hit challenges
 	Global.spawn_damage_number(global_position + Vector2(0, -24), damage, Color(1, 0.4, 0.4))
@@ -617,6 +655,7 @@ func _apply_hit_feedback(source_pos: Vector2) -> void:
 
 func heal_player(amount: int):
 	health = min(health + amount, max_hp())
+	AudioManager.play_sfx("heal")
 	update_health_bar()
 	ProgressionManager.capture_player(self)
 
@@ -624,6 +663,11 @@ func update_health_bar():
 	health_bar.value     = health
 	health_bar.max_value = max_hp()
 	health_label.text    = str(health) + "/" + str(max_hp())
+	# Sustained low-health alarm loop: on below 25% HP, off once recovered or dead.
+	if health > 0 and health <= int(max_hp() * 0.25):
+		AudioManager.start_loop("low_health")
+	else:
+		AudioManager.stop_loop("low_health")
 
 # Prevent damage for a short window after being hit (i-frames / grace period).
 func take_damage_cooldown(wait_time: float):
@@ -646,6 +690,8 @@ func die():
 	handle_death_animation()
 
 func handle_death_animation():
+	AudioManager.stop_loop("low_health")
+	AudioManager.play_sfx("death")
 	velocity = Vector2.ZERO
 	$CollisionShape2D.disabled = true
 	animated_sprite_2d.play("dead")
@@ -684,6 +730,7 @@ func update_player_sprite_orientation():
 
 func handle_attack_animation(type: String):
 	animated_sprite_2d.play(str(type, "_attack"))
+	AudioManager.play_sfx("melee")
 	toggle_damage_collision(type)
 
 func _on_animated_sprite_2d_animation_finished():
@@ -842,6 +889,7 @@ func activate_firewall():
 		_pillar.offset = Vector2(0, _pillar.texture.get_height() / 2.0)
 		_pillar.rotation_degrees = 180
 	if _firewall_fx: _firewall_fx.visible = true   # persistent shield while active
+	AudioManager.play_sfx("firewall_up")
 	show_toast(tr("Firewall up!"))
 	push_status("firewall", "Firewall", duration, Color(0.45, 0.75, 1.0))
 
@@ -1076,6 +1124,56 @@ func _setup_toast():
 	_toast_label.modulate.a = 0.0
 	_toast_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	$CanvasLayer.add_child(_toast_label)
+
+# ─── Emergency notice (blinking warning that floats above the player's head) ────────
+# A new, separate notification channel from the HUD toasts. It's world-space (follows
+# the player) and blinks to grab attention. Right now its only use is nagging the
+# player to spend skill points, but set_emergency_notice() is generic for future use.
+@export var skill_nag_threshold: int = 5      # nag once you hold MORE than this many points
+@export var emergency_offset: Vector2 = Vector2(0, -74)   # position above the head
+var _emergency_label: Label
+var _emergency_tween: Tween
+
+func _setup_emergency_notice() -> void:
+	_emergency_label = Label.new()
+	_emergency_label.add_theme_font_override("font", load("res://art/Fonts/VT323/VT323-Regular.ttf"))
+	_emergency_label.add_theme_font_size_override("font_size", 20)
+	_emergency_label.add_theme_color_override("font_color", Color(1, 0.85, 0.2))
+	_emergency_label.add_theme_color_override("font_outline_color", Color.BLACK)
+	_emergency_label.add_theme_constant_override("outline_size", 5)
+	_emergency_label.custom_minimum_size = Vector2(260, 0)
+	_emergency_label.size = Vector2(260, 0)
+	_emergency_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_emergency_label.position = emergency_offset - Vector2(130, 0)   # centre the 260px box over the head
+	_emergency_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_emergency_label.z_index = 100
+	_emergency_label.visible = false
+	add_child(_emergency_label)
+
+# Show a blinking emergency notice above the head; pass "" to clear it.
+func set_emergency_notice(text: String) -> void:
+	if _emergency_label == null:
+		return
+	if _emergency_tween and _emergency_tween.is_valid():
+		_emergency_tween.kill()
+	if text == "":
+		_emergency_label.visible = false
+		return
+	_emergency_label.text = text
+	_emergency_label.visible = true
+	_emergency_label.modulate.a = 1.0
+	_emergency_tween = create_tween().set_loops()
+	_emergency_tween.tween_property(_emergency_label, "modulate:a", 0.15, 0.5).set_trans(Tween.TRANS_SINE)
+	_emergency_tween.tween_property(_emergency_label, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_SINE)
+
+# Blink the "spend your skill points" nag when the player is sitting on too many.
+func _refresh_skill_nag() -> void:
+	var pts: int = ProgressionManager.skill_points
+	if pts > skill_nag_threshold:
+		var is_id := TranslationServer.get_locale().begins_with("id")
+		set_emergency_notice(("TAB: %d poin skill!" if is_id else "TAB: %d skill points!") % pts)
+	else:
+		set_emergency_notice("")
 
 func show_toast(text: String):
 	# Route to the stacked NotificationList HUD if present; else the fallback float label.

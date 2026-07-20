@@ -1356,7 +1356,7 @@ layer_2/tile_data = PackedInt32Array(458766, 262148, 2, 524302, 262148, 3, 58983
 polygon = PackedVector2Array(216, 208, 208, 208, 208, 176, -256, 176, -256, -144, 256, -144, 256, 208, 248, 208, 248, -136, -248, -136, -248, 112, 216, 112)
 
 [node name="LobbyNpc" parent="." unique_id=883163311 instance=ExtResource("6_lbnpc")]
-position = Vector2(-60, 95)
+position = Vector2(-60, 112)
 dialogue_timeline = "lobbytutorial"
 
 [node name="Player" parent="." unique_id=1107199925 instance=ExtResource("5_h7rtw")]

@@ -27,7 +27,7 @@ var _up_rows: Dictionary = {}      # upgrade id -> { "label": Label, "button": B
 func _ready():
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_font = load(FONT_PATH)
-	_vbox = $CenterContainer/Panel/MarginContainer/VBox
+	_vbox = $CenterContainer/Panel/MarginContainer/ScrollContainer/VBox
 	_build_ui()
 	visibility_changed.connect(_on_visibility_changed)
 
@@ -104,13 +104,18 @@ func _subs_for(skill_id: String) -> Array:
 
 func _make_row(id: String, is_skill: bool) -> Dictionary:
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 12)
+	row.add_theme_constant_override("separation", 18)
+	row.custom_minimum_size = Vector2(0, 40)   # roomier rows so it doesn't read cramped
 	var name_label := Label.new()
-	name_label.custom_minimum_size = Vector2(380, 0)
+	name_label.custom_minimum_size = Vector2(400, 0)
+	name_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_style(name_label, 13)
 	row.add_child(name_label)
 	var btn := Button.new()
-	btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	btn.custom_minimum_size = Vector2(150, 34)
+	btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	_style(btn, 13)
 	if is_skill:
 		btn.pressed.connect(_on_skill_pressed.bind(id))

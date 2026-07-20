@@ -107,8 +107,18 @@ func push_notification(text: String, color: Color = Color(1, 1, 1)) -> void:
 	if notif_list == null:
 		return
 	var lbl := _mk_label(notif_list, text, 12, color)
+	# Wrap long messages to the box width instead of letting a wide label stretch the
+	# VBox — that stretching is what pushed the other (centered) notifs off-centre when
+	# a long toast like a Truth Shard's flavour text appeared alongside a short one.
+	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	lbl.custom_minimum_size.x = 280.0
+	# Trim oldest past the cap. queue_free() is deferred (child stays this frame), so
+	# remove_child FIRST — otherwise get_child_count never drops and, when several
+	# notifications stack in one frame, this loops forever and hangs the game.
 	while notif_list.get_child_count() > MAX_NOTIFS:
-		notif_list.get_child(0).queue_free()
+		var oldest := notif_list.get_child(0)
+		notif_list.remove_child(oldest)
+		oldest.queue_free()
 	var t := create_tween()
 	t.tween_interval(2.6)
 	t.tween_property(lbl, "modulate:a", 0.0, 0.8)

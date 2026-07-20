@@ -65,6 +65,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if CheckpointManager.is_active_at(global_position):
 		return   # already the active checkpoint (e.g. respawned here)
 	_triggered = true
+	AudioManager.play_sfx("checkpoint")
 	var scene := get_tree().current_scene
 	CheckpointManager.set_checkpoint(global_position, scene.scene_file_path if scene else "")
 	SaveManager.autosave()

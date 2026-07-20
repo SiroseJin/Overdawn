@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://da56sdbbh8oli"
+path="res://.godot/imported/noise_02.ogg-2081fc5e26a0985c03283f6406937074.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/5. Boss – The House  Bandar (Stage 6)/100 CC0 SFX by rubberduck/noise_02.ogg"
+dest_files=["res://.godot/imported/noise_02.ogg-2081fc5e26a0985c03283f6406937074.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

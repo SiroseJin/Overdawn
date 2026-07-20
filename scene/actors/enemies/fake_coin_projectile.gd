@@ -28,6 +28,7 @@ var _spent := false
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
+	AudioManager.play_sfx("fake_coin_shot")   # tempting jackpot chime flung at the player
 
 func _process(delta: float) -> void:
 	if delta <= 0.0:

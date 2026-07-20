@@ -18,7 +18,8 @@ func _ready() -> void:
 	# Truth Shards are placed in the editor now (collectible.tscn instances you can drag).
 	scene_transition_anim.play("fade_out")
 	player_camera.enabled  = true
-	audio_bgm.play()
+	AudioManager.play_music("stage1")
+	AudioManager.play_ambience("city")
 	_apply_npc_skins()
 	_configure_npcs()
 

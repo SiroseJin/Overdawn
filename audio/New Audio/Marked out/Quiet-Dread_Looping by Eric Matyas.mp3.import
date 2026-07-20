@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d06636rtu8rex"
+path="res://.godot/imported/Quiet-Dread_Looping by Eric Matyas.mp3-dd32250389a2fd1d730ebcb9ea70859d.mp3str"
+
+[deps]
+
+source_file="res://audio/New Audio/Marked out/Quiet-Dread_Looping by Eric Matyas.mp3"
+dest_files=["res://.godot/imported/Quiet-Dread_Looping by Eric Matyas.mp3-dd32250389a2fd1d730ebcb9ea70859d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

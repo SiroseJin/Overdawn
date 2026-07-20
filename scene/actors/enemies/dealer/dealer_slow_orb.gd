@@ -21,6 +21,9 @@ const DAMAGE_AMOUNT: int = 5
 # Lifecycle
 # ───────────────────────────────────────────────────────────────────────────────
 
+func _ready() -> void:
+	AudioManager.play_sfx("dealer_slow_orb")
+
 func _process(delta: float):
 	position += direction * speed * delta
 

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://s72i42mwxljo"
+path="res://.godot/imported/chips-collide-1.ogg-e8e174ee9d323edca91c03aad6867f0e.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Casino/Audio/chips-collide-1.ogg"
+dest_files=["res://.godot/imported/chips-collide-1.ogg-e8e174ee9d323edca91c03aad6867f0e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

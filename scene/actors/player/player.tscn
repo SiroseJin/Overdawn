@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://db2pu5tpfap8j"]
 
 [ext_resource type="Script" uid="uid://cdgfe1r263fqs" path="res://scene/actors/player/player.gd" id="1_aicbr"]
-[ext_resource type="Script" path="res://scene/actors/player/hud_feedback.gd" id="hud_fb"]
 [ext_resource type="FontFile" uid="uid://ckwcdsnaosuys" path="res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf" id="2_5yx0s"]
 [ext_resource type="Texture2D" uid="uid://dpc0fhg50xqvf" path="res://art/2D Pixel Dungeon Asset Pack/items and trap_animation/arrow/Just_arrow.png" id="2_8a1l4"]
 [ext_resource type="PackedScene" uid="uid://dnsbssrr88l8n" path="res://scene/ui/pause_menu.tscn" id="2_rg4d1"]
@@ -58,6 +57,7 @@
 [ext_resource type="Texture2D" uid="uid://din78g8sn1euq" path="res://art/Adventurer/adventurer-smrslt-01.png" id="adv_smrslt01"]
 [ext_resource type="Texture2D" uid="uid://bupg70fy7a23x" path="res://art/Adventurer/adventurer-smrslt-02.png" id="adv_smrslt02"]
 [ext_resource type="Texture2D" uid="uid://bwk3sh3rh3rf" path="res://art/Adventurer/adventurer-smrslt-03.png" id="adv_smrslt03"]
+[ext_resource type="Script" uid="uid://blyx8v7snfqs0" path="res://scene/actors/player/hud_feedback.gd" id="hud_fb"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_m7y2c"]
 animations = [{
@@ -262,13 +262,13 @@ layer = 100
 scale = Vector2(6.0785, 4.38601)
 
 [node name="Control" type="Control" parent="CanvasLayer" unique_id=1174859178]
-script = ExtResource("hud_fb")
 layout_mode = 3
 anchors_preset = 0
 offset_left = -144.0
 offset_top = 24.0
 offset_right = -144.0
 offset_bottom = 28.0
+script = ExtResource("hud_fb")
 
 [node name="HealthBar" type="ProgressBar" parent="CanvasLayer/Control" unique_id=1832993857]
 self_modulate = Color(0.933333, 0, 0, 1)
@@ -456,11 +456,15 @@ offset_bottom = -14.0
 theme_override_constants/separation = 2
 
 [node name="NotificationList" type="VBoxContainer" parent="CanvasLayer/Control" unique_id=1875145954]
-layout_mode = 0
-offset_left = 662.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -140.0
 offset_top = 6.0
-offset_right = 942.0
+offset_right = 140.0
 offset_bottom = 6.0
+grow_horizontal = 2
 theme_override_constants/separation = 2
 
 [node name="StatusEffects" type="VBoxContainer" parent="CanvasLayer/Control" unique_id=182695149]
@@ -512,13 +516,11 @@ theme_override_font_sizes/font_size = 16
 text = "Skip"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=962377273]
-position = Vector2(-1.1920929e-07, -13.000001)
+position = Vector2(-1.6940659e-21, -12)
 scale = Vector2(0.755, 0.69797295)
 sprite_frames = SubResource("SpriteFrames_m7y2c")
-animation = &"dash"
+animation = &"idle"
 autoplay = "idle"
-frame = 3
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1481886888]
 position = Vector2(0, -9)

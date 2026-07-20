@@ -17,16 +17,21 @@
 [ext_resource type="PackedScene" uid="uid://htdn64tverd8" path="res://scene/Levels/Level3/gimmicks/rising_debt/rising_debt.tscn" id="itm_debt"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="itm_door"]
 [ext_resource type="PackedScene" uid="uid://cqkeypickup00" path="res://scene/pickups/key_pickup/key_pickup.tscn" id="itm_key"]
+[ext_resource type="Texture2D" uid="uid://cfg2kauplqr1l" path="res://art/Stage1Terrain/props/grating.png" id="px_grate"]
+[ext_resource type="Texture2D" uid="uid://cuvowxvfto101" path="res://art/Stage1Terrain/props/ad_screen.png" id="px_screen"]
+[ext_resource type="Texture2D" uid="uid://5xebynutc4y1" path="res://art/Stage1Terrain/props/vent_hub.png" id="px_vent"]
 [ext_resource type="PackedScene" uid="uid://ctruthshard01" path="res://scene/pickups/collectible/collectible.tscn" id="shard_scn"]
+[ext_resource type="Texture2D" uid="uid://dy14c6dtdmx3m" path="res://art/Stage1Terrain/body.png" id="tex_body"]
+[ext_resource type="Texture2D" uid="uid://dph2g5hsn6rqn" path="res://art/Stage1Terrain/platform.png" id="tex_plat"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_death"]
-size = Vector2(2200, 60)
+[sub_resource type="RectangleShape2D" id="RS_death"]
+size = Vector2(2560, 80)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_d1twj"]
+[sub_resource type="RectangleShape2D" id="RS_portal"]
 size = Vector2(40, 80)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ha050"]
-size = Vector2(27, 179)
+[sub_resource type="RectangleShape2D" id="RS_cp"]
+size = Vector2(150, 200)
 
 [node name="Stage3" type="Node2D" unique_id=500126194]
 script = ExtResource("1_ofun6")
@@ -36,94 +41,389 @@ layer = -1
 
 [node name="Terrain" type="StaticBody2D" parent="." unique_id=667954419]
 
-[node name="BottomFloor" type="CollisionPolygon2D" parent="Terrain" unique_id=901644686]
-polygon = PackedVector2Array(31, 701, 1717, 692, 1723, 821, 3, 812)
+[node name="BottomFloor" type="CollisionPolygon2D" parent="Terrain" unique_id=840000001]
+polygon = PackedVector2Array(0, 700, 2570, 700, 2570, 760, 0, 760)
 
-[node name="L1" type="CollisionPolygon2D" parent="Terrain" unique_id=1791586619]
-position = Vector2(-28, 0.3999939)
-polygon = PackedVector2Array(300, 630, 420, 630, 420, 638, 300, 638)
+[node name="LeftWall" type="CollisionPolygon2D" parent="Terrain" unique_id=840000004]
+polygon = PackedVector2Array(0, -2160, 40, -2160, 40, 760, 0, 760)
 
-[node name="L2" type="CollisionPolygon2D" parent="Terrain" unique_id=1034374765]
-position = Vector2(-23, 0)
-polygon = PackedVector2Array(160, 560, 280, 560, 280, 568, 160, 568)
+[node name="RightWall" type="CollisionPolygon2D" parent="Terrain" unique_id=840000007]
+polygon = PackedVector2Array(2530, -2160, 2570, -2160, 2570, 760, 2530, 760)
 
-[node name="L3" type="CollisionPolygon2D" parent="Terrain" unique_id=164182286]
-position = Vector2(-28, 0.3999939)
-polygon = PackedVector2Array(300, 490, 420, 490, 420, 498, 300, 498)
+[node name="Ceiling" type="CollisionPolygon2D" parent="Terrain" unique_id=840000010]
+polygon = PackedVector2Array(0, -2200, 2570, -2200, 2570, -2160, 0, -2160)
 
-[node name="L4" type="CollisionPolygon2D" parent="Terrain" unique_id=1057795238]
-position = Vector2(-23, 2)
-polygon = PackedVector2Array(160, 420, 280, 420, 280, 428, 160, 428)
+[node name="S1shardA" type="CollisionPolygon2D" parent="Terrain" unique_id=840000013]
+polygon = PackedVector2Array(180, 600, 320, 600, 320, 614, 180, 614)
 
-[node name="RestA" type="CollisionPolygon2D" parent="Terrain" unique_id=537251387]
-position = Vector2(166, -2)
-scale = Vector2(0.41663346, 1)
-polygon = PackedVector2Array(150, 350, 233.79031, 350.00006, 344.45453, 350, 386.2727, 350, 430, 350, 430, 360, 150, 360)
+[node name="S1shardB" type="CollisionPolygon2D" parent="Terrain" unique_id=840000015]
+polygon = PackedVector2Array(110, 500, 250, 500, 250, 514, 110, 514)
 
-[node name="RestB" type="CollisionPolygon2D" parent="Terrain" unique_id=73005683]
-position = Vector2(235, 2)
-polygon = PackedVector2Array(650, -40, 930, -40, 930, -30, 650, -30)
+[node name="S1shardTop" type="CollisionPolygon2D" parent="Terrain" unique_id=840000017]
+polygon = PackedVector2Array(80, 410, 260, 410, 260, 424, 80, 424)
 
-[node name="L5" type="CollisionPolygon2D" parent="Terrain" unique_id=1711166118]
-position = Vector2(706, 110)
-scale = Vector2(0.7135417, 1.0000002)
-polygon = PackedVector2Array(1080, -180, 1145.8975, -180, 1200, -180, 1200, -172, 1164.559, -172.00006, 1080, -172)
+[node name="E1" type="CollisionPolygon2D" parent="Terrain" unique_id=840000019]
+polygon = PackedVector2Array(450, 624, 590, 624, 590, 638, 450, 638)
 
-[node name="L6" type="CollisionPolygon2D" parent="Terrain" unique_id=445046228]
-position = Vector2(105, 141)
-polygon = PackedVector2Array(1230, -250, 1350, -250, 1350, -242, 1230, -242)
+[node name="E2" type="CollisionPolygon2D" parent="Terrain" unique_id=840000021]
+polygon = PackedVector2Array(730, 588, 870, 588, 870, 602, 730, 602)
 
-[node name="L6b" type="CollisionPolygon2D" parent="Terrain" unique_id=1436272972]
-position = Vector2(-28, 96)
-polygon = PackedVector2Array(1230, -250, 1259.5703, -250, 1350, -250, 1350, -242, 1230, -242)
+[node name="E3" type="CollisionPolygon2D" parent="Terrain" unique_id=840000025]
+polygon = PackedVector2Array(1450, 560, 1590, 560, 1590, 574, 1450, 574)
 
-[node name="RestC" type="CollisionPolygon2D" parent="Terrain" unique_id=1469779822]
-position = Vector2(-165, 114)
-polygon = PackedVector2Array(1080, -320, 1360, -320, 1360, -310, 1080, -310)
+[node name="E4" type="CollisionPolygon2D" parent="Terrain" unique_id=840000027]
+polygon = PackedVector2Array(1730, 520, 1870, 520, 1870, 534, 1730, 534)
 
-[node name="L7" type="CollisionPolygon2D" parent="Terrain" unique_id=1773618834]
-position = Vector2(-573, 146)
-polygon = PackedVector2Array(1280, -600, 1368, -600, 1400, -600, 1400, -592, 1280, -592)
+[node name="E5" type="CollisionPolygon2D" parent="Terrain" unique_id=840000029]
+polygon = PackedVector2Array(2010, 486, 2150, 486, 2150, 500, 2010, 500)
 
-[node name="Summit" type="CollisionPolygon2D" parent="Terrain" unique_id=570038095]
-position = Vector2(800, 87)
-scale = Vector2(0.3270302, 1)
-polygon = PackedVector2Array(1104, -870, 1700, -870, 1700, -790, 1104, -790)
+[node name="R2a" type="CollisionPolygon2D" parent="Terrain" unique_id=840000035]
+polygon = PackedVector2Array(2090, 220, 2230, 220, 2230, 234, 2090, 234)
 
-[node name="LeftWall" type="CollisionPolygon2D" parent="Terrain" unique_id=435316894]
-polygon = PackedVector2Array(-40, -1100, 40, -1100, 40, 900, -40, 900)
+[node name="R2c" type="CollisionPolygon2D" parent="Terrain" unique_id=840000043]
+polygon = PackedVector2Array(1730, -120, 1910, -120, 1910, -106, 1730, -106)
 
-[node name="RightWall" type="CollisionPolygon2D" parent="Terrain" unique_id=1513046287]
-polygon = PackedVector2Array(1720, -1100, 1820, -1100, 1820, 900, 1720, 900)
+[node name="P1" type="CollisionPolygon2D" parent="Terrain" unique_id=840000058]
+polygon = PackedVector2Array(140, -480, 280, -480, 280, -466, 140, -466)
 
-[node name="SkyBarrier" type="CollisionPolygon2D" parent="Terrain" unique_id=423857293]
-position = Vector2(0, 74)
-polygon = PackedVector2Array(-40, -1090, 1820, -1090, 1820, -1030, -40, -1030)
+[node name="P2" type="CollisionPolygon2D" parent="Terrain" unique_id=840000060]
+polygon = PackedVector2Array(260, -560, 400, -560, 400, -546, 260, -546)
 
-[node name="KeyPlatform" type="CollisionPolygon2D" parent="Terrain" unique_id=1743815290]
-position = Vector2(909, -173)
-scale = Vector2(0.390625, 1.0000002)
-polygon = PackedVector2Array(1230, -250, 1259.5703, -250, 1273.5101, -250, 1290.896, -250, 1350, -250, 1350, -242, 1230, -242)
+[node name="P3" type="CollisionPolygon2D" parent="Terrain" unique_id=840000062]
+polygon = PackedVector2Array(130, -640, 270, -640, 270, -626, 130, -626)
 
-[node name="Summit2" type="CollisionPolygon2D" parent="Terrain" unique_id=119616661]
-position = Vector2(987.00006, 86)
-scale = Vector2(0.43247324, 1)
-polygon = PackedVector2Array(1104, -870, 1700, -870, 1700, -790, 1104, -790)
+[node name="P4" type="CollisionPolygon2D" parent="Terrain" unique_id=840000064]
+polygon = PackedVector2Array(260, -720, 400, -720, 400, -706, 260, -706)
+
+[node name="P5" type="CollisionPolygon2D" parent="Terrain" unique_id=840000066]
+polygon = PackedVector2Array(130, -800, 270, -800, 270, -786, 130, -786)
+
+[node name="P6" type="CollisionPolygon2D" parent="Terrain" unique_id=840000068]
+position = Vector2(-186, -5)
+polygon = PackedVector2Array(250, -880, 390, -880, 390, -866, 250, -866)
+
+[node name="R4hub" type="CollisionPolygon2D" parent="Terrain" unique_id=840000070]
+position = Vector2(-316.00568, 0.001953126)
+scale = Vector2(1.7982953, 1.0000021)
+polygon = PackedVector2Array(180, -950, 400, -950, 400, -936, 180, -936)
+
+[node name="R4keyLedge" type="CollisionPolygon2D" parent="Terrain" unique_id=840000074]
+position = Vector2(78, 2)
+polygon = PackedVector2Array(820, -720, 980, -720, 980, -706, 820, -706)
+
+[node name="D1" type="CollisionPolygon2D" parent="Terrain" unique_id=840000076]
+polygon = PackedVector2Array(450, -1020, 590, -1020, 590, -1006, 450, -1006)
+
+[node name="D2" type="CollisionPolygon2D" parent="Terrain" unique_id=840000078]
+polygon = PackedVector2Array(690, -1084, 830, -1084, 830, -1070, 690, -1070)
+
+[node name="D3" type="CollisionPolygon2D" parent="Terrain" unique_id=840000082]
+polygon = PackedVector2Array(1450, -1150, 1590, -1150, 1590, -1136, 1450, -1136)
+
+[node name="D4" type="CollisionPolygon2D" parent="Terrain" unique_id=840000084]
+polygon = PackedVector2Array(1730, -1214, 1870, -1214, 1870, -1200, 1730, -1200)
+
+[node name="D5" type="CollisionPolygon2D" parent="Terrain" unique_id=840000086]
+polygon = PackedVector2Array(2010, -1288, 2150, -1288, 2150, -1274, 2010, -1274)
+
+[node name="D6" type="CollisionPolygon2D" parent="Terrain" unique_id=840000088]
+polygon = PackedVector2Array(2270, -1370, 2410, -1370, 2410, -1356, 2270, -1356)
+
+[node name="A1" type="CollisionPolygon2D" parent="Terrain" unique_id=840000090]
+polygon = PackedVector2Array(2090, -1450, 2230, -1450, 2230, -1436, 2090, -1436)
+
+[node name="A2" type="CollisionPolygon2D" parent="Terrain" unique_id=840000092]
+polygon = PackedVector2Array(1870, -1522, 2010, -1522, 2010, -1508, 1870, -1508)
+
+[node name="A3" type="CollisionPolygon2D" parent="Terrain" unique_id=840000096]
+polygon = PackedVector2Array(1430, -1850, 1570, -1850, 1570, -1836, 1430, -1836)
+
+[node name="A4" type="CollisionPolygon2D" parent="Terrain" unique_id=840000098]
+polygon = PackedVector2Array(1170, -1922, 1310, -1922, 1310, -1908, 1170, -1908)
+
+[node name="A5" type="CollisionPolygon2D" parent="Terrain" unique_id=840000100]
+polygon = PackedVector2Array(910, -1994, 1050, -1994, 1050, -1980, 910, -1980)
+
+[node name="SummitFloor" type="CollisionPolygon2D" parent="Terrain" unique_id=840000102]
+polygon = PackedVector2Array(300, -2080, 1000, -2080, 1000, -2060, 300, -2060)
+
+[node name="TerrainVisual" type="Node2D" parent="." unique_id=840000105]
+z_index = -1
+
+[node name="BottomFloorF" type="Polygon2D" parent="TerrainVisual" unique_id=840000002]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(0, 700, 2570, 700, 2570, 760, 0, 760)
+uv = PackedVector2Array(0, 700, 2570, 700, 2570, 760, 0, 760)
+
+[node name="BottomFloorT" type="Polygon2D" parent="TerrainVisual" unique_id=840000003]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(0, 700, 2570, 700, 2570, 704, 0, 704)
+
+[node name="LeftWallF" type="Polygon2D" parent="TerrainVisual" unique_id=840000005]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(0, -2160, 40, -2160, 40, 760, 0, 760)
+uv = PackedVector2Array(0, -2160, 40, -2160, 40, 760, 0, 760)
+
+[node name="LeftWallT" type="Polygon2D" parent="TerrainVisual" unique_id=840000006]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(0, -2160, 40, -2160, 40, -2156, 0, -2156)
+
+[node name="RightWallF" type="Polygon2D" parent="TerrainVisual" unique_id=840000008]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(2530, -2160, 2570, -2160, 2570, 760, 2530, 760)
+uv = PackedVector2Array(2530, -2160, 2570, -2160, 2570, 760, 2530, 760)
+
+[node name="RightWallT" type="Polygon2D" parent="TerrainVisual" unique_id=840000009]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(2530, -2160, 2570, -2160, 2570, -2156, 2530, -2156)
+
+[node name="CeilingF" type="Polygon2D" parent="TerrainVisual" unique_id=840000011]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(0, -2200, 2570, -2200, 2570, -2160, 0, -2160)
+uv = PackedVector2Array(0, -2200, 2570, -2200, 2570, -2160, 0, -2160)
+
+[node name="CeilingT" type="Polygon2D" parent="TerrainVisual" unique_id=840000012]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(0, -2200, 2570, -2200, 2570, -2196, 0, -2196)
+
+[node name="S1shardAF" type="Polygon2D" parent="TerrainVisual" unique_id=840000014]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(180, 600, 320, 600, 320, 614, 180, 614)
+uv = PackedVector2Array(180, 0, 320, 0, 320, 16, 180, 16)
+
+[node name="S1shardBF" type="Polygon2D" parent="TerrainVisual" unique_id=840000016]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(110, 500, 250, 500, 250, 514, 110, 514)
+uv = PackedVector2Array(110, 0, 250, 0, 250, 16, 110, 16)
+
+[node name="S1shardTopF" type="Polygon2D" parent="TerrainVisual" unique_id=840000018]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(80, 410, 260, 410, 260, 424, 80, 424)
+uv = PackedVector2Array(80, 0, 260, 0, 260, 16, 80, 16)
+
+[node name="E1F" type="Polygon2D" parent="TerrainVisual" unique_id=840000020]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(450, 624, 590, 624, 590, 638, 450, 638)
+uv = PackedVector2Array(450, 0, 590, 0, 590, 16, 450, 16)
+
+[node name="E2F" type="Polygon2D" parent="TerrainVisual" unique_id=840000022]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(730, 588, 870, 588, 870, 602, 730, 602)
+uv = PackedVector2Array(730, 0, 870, 0, 870, 16, 730, 16)
+
+[node name="E3F" type="Polygon2D" parent="TerrainVisual" unique_id=840000026]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(1450, 560, 1590, 560, 1590, 574, 1450, 574)
+uv = PackedVector2Array(1450, 0, 1590, 0, 1590, 16, 1450, 16)
+
+[node name="E4F" type="Polygon2D" parent="TerrainVisual" unique_id=840000028]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(1730, 520, 1870, 520, 1870, 534, 1730, 534)
+uv = PackedVector2Array(1730, 0, 1870, 0, 1870, 16, 1730, 16)
+
+[node name="E5F" type="Polygon2D" parent="TerrainVisual" unique_id=840000030]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(2010, 486, 2150, 486, 2150, 500, 2010, 500)
+uv = PackedVector2Array(2010, 0, 2150, 0, 2150, 16, 2010, 16)
+
+[node name="R2aF" type="Polygon2D" parent="TerrainVisual" unique_id=840000036]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(2090, 220, 2230, 220, 2230, 234, 2090, 234)
+uv = PackedVector2Array(2090, 0, 2230, 0, 2230, 16, 2090, 16)
+
+[node name="R2cF" type="Polygon2D" parent="TerrainVisual" unique_id=840000044]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(1730, -120, 1910, -120, 1910, -106, 1730, -106)
+uv = PackedVector2Array(1730, 0, 1910, 0, 1910, 16, 1730, 16)
+
+[node name="P1F" type="Polygon2D" parent="TerrainVisual" unique_id=840000059]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(140, -480, 280, -480, 280, -466, 140, -466)
+uv = PackedVector2Array(140, 0, 280, 0, 280, 16, 140, 16)
+
+[node name="P2F" type="Polygon2D" parent="TerrainVisual" unique_id=840000061]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(260, -560, 400, -560, 400, -546, 260, -546)
+uv = PackedVector2Array(260, 0, 400, 0, 400, 16, 260, 16)
+
+[node name="P3F" type="Polygon2D" parent="TerrainVisual" unique_id=840000063]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(130, -640, 270, -640, 270, -626, 130, -626)
+uv = PackedVector2Array(130, 0, 270, 0, 270, 16, 130, 16)
+
+[node name="P4F" type="Polygon2D" parent="TerrainVisual" unique_id=840000065]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(260, -720, 400, -720, 400, -706, 260, -706)
+uv = PackedVector2Array(260, 0, 400, 0, 400, 16, 260, 16)
+
+[node name="P5F" type="Polygon2D" parent="TerrainVisual" unique_id=840000067]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(130, -800, 270, -800, 270, -786, 130, -786)
+uv = PackedVector2Array(130, 0, 270, 0, 270, 16, 130, 16)
+
+[node name="P6F" type="Polygon2D" parent="TerrainVisual" unique_id=840000069]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(-186, -5)
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(250, -880, 359.32, -880, 390, -880, 390, -866, 250, -866)
+uv = PackedVector2Array(250, 0, 359.32, 0, 390, 0, 390, 16, 250, 16)
+
+[node name="R4hubF" type="Polygon2D" parent="TerrainVisual" unique_id=382918833]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(7.68747, -950, 403.312, -950, 403.312, -936, 7.68747, -936)
+uv = PackedVector2Array(7.68747, 0, 403.312, 0, 403.312, 16, 7.68747, 16)
+
+[node name="R4keyLedgeF" type="Polygon2D" parent="TerrainVisual" unique_id=840000075]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(79, 1)
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(820, -720, 980, -720, 980, -706, 820, -706)
+uv = PackedVector2Array(820, 0, 980, 0, 980, 16, 820, 16)
+
+[node name="D1F" type="Polygon2D" parent="TerrainVisual" unique_id=840000077]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(450, -1020, 590, -1020, 590, -1006, 450, -1006)
+uv = PackedVector2Array(450, 0, 590, 0, 590, 16, 450, 16)
+
+[node name="D2F" type="Polygon2D" parent="TerrainVisual" unique_id=840000079]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(690, -1084, 830, -1084, 830, -1070, 690, -1070)
+uv = PackedVector2Array(690, 0, 830, 0, 830, 16, 690, 16)
+
+[node name="D3F" type="Polygon2D" parent="TerrainVisual" unique_id=840000083]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(1450, -1150, 1590, -1150, 1590, -1136, 1450, -1136)
+uv = PackedVector2Array(1450, 0, 1590, 0, 1590, 16, 1450, 16)
+
+[node name="D4F" type="Polygon2D" parent="TerrainVisual" unique_id=840000085]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(1730, -1214, 1870, -1214, 1870, -1200, 1730, -1200)
+uv = PackedVector2Array(1730, 0, 1870, 0, 1870, 16, 1730, 16)
+
+[node name="D5F" type="Polygon2D" parent="TerrainVisual" unique_id=840000087]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(2010, -1288, 2150, -1288, 2150, -1274, 2010, -1274)
+uv = PackedVector2Array(2010, 0, 2150, 0, 2150, 16, 2010, 16)
+
+[node name="D6F" type="Polygon2D" parent="TerrainVisual" unique_id=840000089]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(2270, -1370, 2410, -1370, 2410, -1356, 2270, -1356)
+uv = PackedVector2Array(2270, 0, 2410, 0, 2410, 16, 2270, 16)
+
+[node name="A1F" type="Polygon2D" parent="TerrainVisual" unique_id=840000091]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(2090, -1450, 2230, -1450, 2230, -1436, 2090, -1436)
+uv = PackedVector2Array(2090, 0, 2230, 0, 2230, 16, 2090, 16)
+
+[node name="A2F" type="Polygon2D" parent="TerrainVisual" unique_id=840000093]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(1870, -1522, 2010, -1522, 2010, -1508, 1870, -1508)
+uv = PackedVector2Array(1870, 0, 2010, 0, 2010, 16, 1870, 16)
+
+[node name="A3F" type="Polygon2D" parent="TerrainVisual" unique_id=840000097]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(1430, -1850, 1570, -1850, 1570, -1836, 1430, -1836)
+uv = PackedVector2Array(1430, 0, 1570, 0, 1570, 16, 1430, 16)
+
+[node name="A4F" type="Polygon2D" parent="TerrainVisual" unique_id=840000099]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(1170, -1922, 1310, -1922, 1310, -1908, 1170, -1908)
+uv = PackedVector2Array(1170, 0, 1310, 0, 1310, 16, 1170, 16)
+
+[node name="A5F" type="Polygon2D" parent="TerrainVisual" unique_id=840000101]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(910, -1994, 1050, -1994, 1050, -1980, 910, -1980)
+uv = PackedVector2Array(910, 0, 1050, 0, 1050, 16, 910, 16)
+
+[node name="SummitFloorF" type="Polygon2D" parent="TerrainVisual" unique_id=840000103]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(300, -2080, 1000, -2080, 1000, -2060, 300, -2060)
+uv = PackedVector2Array(300, 0, 1000, 0, 1000, 16, 300, 16)
+
+[node name="SummitFloorT" type="Polygon2D" parent="TerrainVisual" unique_id=840000104]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(300, -2080, 1000, -2080, 1000, -2076, 300, -2076)
 
 [node name="DeathZone" type="Area2D" parent="." unique_id=1119012481]
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone" unique_id=1849754858]
-position = Vector2(875, 1000)
-shape = SubResource("RectangleShape2D_death")
+position = Vector2(1277, 1110)
+shape = SubResource("RS_death")
 
 [node name="Stage4Portal" type="Area2D" parent="." unique_id=1595316827]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stage4Portal" unique_id=875974165]
-position = Vector2(1699, -823)
-shape = SubResource("RectangleShape2D_d1twj")
+position = Vector2(398, -2121)
+shape = SubResource("RS_portal")
 
 [node name="SceneTransitionAnimation" parent="." unique_id=1249600406 instance=ExtResource("2_ctrbp")]
 visible = false
@@ -136,200 +436,287 @@ stream = ExtResource("3_s4f8y")
 volume_db = -4.0
 bus = &"bgm"
 
-[node name="Stage2Portal" type="Area2D" parent="." unique_id=333818176]
-collision_mask = 2
-
-[node name="FallB1" parent="." unique_id=394427537 instance=ExtResource("9_fp")]
-position = Vector2(720, 248)
-
-[node name="FallB6" parent="." unique_id=2045160225 instance=ExtResource("9_fp")]
-position = Vector2(967, -725)
-
-[node name="FallB2" parent="." unique_id=58540719 instance=ExtResource("9_fp")]
-position = Vector2(820, 178)
-
-[node name="FallB3" parent="." unique_id=594116529 instance=ExtResource("9_fp")]
-position = Vector2(720, 108)
-
-[node name="FallB4" parent="." unique_id=845429718 instance=ExtResource("9_fp")]
-position = Vector2(820, 38)
-
-[node name="FallB9" parent="." unique_id=962945668 instance=ExtResource("9_fp")]
-position = Vector2(1273, -395)
-
-[node name="MoveA" parent="." unique_id=1970138580 instance=ExtResource("8_mp")]
-position = Vector2(387, 356)
-travel = Vector2(400, 0)
-speed = 100.0
-downtime = 0.5
-start_on_touch = true
-
-[node name="End" type="Marker2D" parent="MoveA" unique_id=744604384]
-position = Vector2(249, -108)
-
-[node name="MoveB" parent="." unique_id=1508753761 instance=ExtResource("8_mp")]
-position = Vector2(1211, -30)
-travel = Vector2(400, 0)
-speed = 100.0
-start_on_touch = true
-
-[node name="End" type="Marker2D" parent="MoveB" unique_id=1562057400]
-position = Vector2(400, 0)
-
-[node name="Lift1" parent="." unique_id=1900787792 instance=ExtResource("8_mp")]
-position = Vector2(872, -198)
-travel = Vector2(0, -210)
-speed = 100.0
-start_on_touch = true
-
-[node name="End" type="Marker2D" parent="Lift1" unique_id=916172910]
-position = Vector2(-3, -247)
-
-[node name="Lift2" parent="." unique_id=54686763 instance=ExtResource("8_mp")]
-position = Vector2(665, -446)
-travel = Vector2(0, -200)
-speed = 100.0
-start_on_touch = true
-
-[node name="End" type="Marker2D" parent="Lift2" unique_id=362757503]
-position = Vector2(2, -200)
-
-[node name="Damar" parent="." unique_id=1757803171 instance=ExtResource("5_npc1")]
-position = Vector2(150, 695)
-dialogue_timeline = "s3npc1timeline"
-
-[node name="Rina" parent="." unique_id=2126062215 instance=ExtResource("5_npc1")]
-position = Vector2(280, 345)
-dialogue_timeline = "s3npc2timeline"
-
-[node name="Toni" parent="." unique_id=162617019 instance=ExtResource("5_npc1")]
-position = Vector2(914, -35)
-dialogue_timeline = "s3npc3timeline"
-
-[node name="Sinta" parent="." unique_id=276021425 instance=ExtResource("5_npc1")]
-position = Vector2(1258, -784)
-dialogue_timeline = "s3npc4timeline"
-
-[node name="Adbot1" parent="." unique_id=1750918350 instance=ExtResource("7_bat")]
-position = Vector2(507, 209)
-
-[node name="Adbot2" parent="." unique_id=723628676 instance=ExtResource("7_bat")]
-position = Vector2(1603, -99)
-
 [node name="Player" parent="." unique_id=597947263 instance=ExtResource("2_5pl4s")]
-position = Vector2(86, 678)
-
-[node name="FallB5" parent="." unique_id=1748205726 instance=ExtResource("9_fp")]
-position = Vector2(1084, -773)
-
-[node name="FallB7" parent="." unique_id=661331903 instance=ExtResource("9_fp")]
-position = Vector2(750, -647)
-
-[node name="FallB8" parent="." unique_id=1014279745 instance=ExtResource("9_fp")]
-position = Vector2(855, -682)
-
-[node name="Coin1" parent="." unique_id=907785909 instance=ExtResource("itm_coin")]
-position = Vector2(200, 675)
-
-[node name="Coin2" parent="." unique_id=1350531565 instance=ExtResource("itm_coin")]
-position = Vector2(330, 612)
-
-[node name="Coin3" parent="." unique_id=986673729 instance=ExtResource("itm_coin")]
-position = Vector2(200, 542)
-
-[node name="Coin4" parent="." unique_id=406449869 instance=ExtResource("itm_coin")]
-position = Vector2(330, 472)
-
-[node name="Coin5" parent="." unique_id=45346926 instance=ExtResource("itm_coin")]
-position = Vector2(370, 329)
-
-[node name="Coin7" parent="." unique_id=101284783 instance=ExtResource("itm_coin")]
-position = Vector2(820, 152)
-
-[node name="Coin8" parent="." unique_id=1138134921 instance=ExtResource("itm_coin")]
-position = Vector2(720, 82)
-
-[node name="Coin9" parent="." unique_id=1509482936 instance=ExtResource("itm_coin")]
-position = Vector2(1020, -56)
-
-[node name="Coin10" parent="." unique_id=1532710514 instance=ExtResource("itm_coin")]
-position = Vector2(1554, -56)
-
-[node name="Coin11" parent="." unique_id=1308948858 instance=ExtResource("itm_coin")]
-position = Vector2(1050, -224)
-
-[node name="Coin12" parent="." unique_id=736751840 instance=ExtResource("itm_coin")]
-position = Vector2(757, -411)
-
-[node name="Coin13" parent="." unique_id=653472728 instance=ExtResource("itm_coin")]
-position = Vector2(857, -709)
-
-[node name="Coin14" parent="." unique_id=1099123483 instance=ExtResource("itm_coin")]
-position = Vector2(1322, -790)
-
-[node name="Key" parent="." unique_id=2111838427 instance=ExtResource("itm_key")]
-position = Vector2(1412, -446)
-key_id = "stage3_key"
-
-[node name="Door" parent="." unique_id=959219398 instance=ExtResource("itm_door")]
-position = Vector2(1610, -870)
-required_key = "stage3_key"
-locked_hint = "Locked. The key is at the top of the climb."
+position = Vector2(235, 696)
 
 [node name="RisingDebt" parent="." unique_id=822828934 instance=ExtResource("itm_debt")]
-position = Vector2(875, 900)
-popcorn_interval = 0.2
+position = Vector2(1277, 1103)
+flood_width = 2560.0
+flood_height = 3600.0
+rise_speed = 16.5
+popcorn_interval = 0.4
 popcorn_per_pop = 4
-popcorn_launch = 220.0
-popcorn_spread_x = 620.0
+popcorn_launch = 240.0
+popcorn_spread_x = 2200.0
 
-[node name="Adbot4" parent="." unique_id=925523153 instance=ExtResource("7_bat")]
-position = Vector2(829, -726)
+[node name="Ferry1" parent="." unique_id=840000023 instance=ExtResource("8_mp")]
+position = Vector2(980, 584)
+speed = 95.0
+downtime = 0.4
+start_on_touch = true
 
-[node name="frog_enemy" parent="." unique_id=1556349936 instance=ExtResource("13_6pt3j")]
-position = Vector2(1072, -213.00005)
+[node name="End" type="Marker2D" parent="Ferry1" unique_id=840000024]
+position = Vector2(320, 0)
 
-[node name="HealthPickup" parent="." unique_id=1244312233 instance=ExtResource("14_8ol0d")]
-position = Vector2(1261, -172)
+[node name="Lift1" parent="." unique_id=840000033 instance=ExtResource("8_mp")]
+position = Vector2(2247, 472)
+speed = 95.0
+start_on_touch = true
 
-[node name="SpeedPickup" parent="." unique_id=1288012059 instance=ExtResource("15_ha050")]
-position = Vector2(720, 221)
+[node name="End" type="Marker2D" parent="Lift1" unique_id=840000034]
+position = Vector2(34, -247)
 
-[node name="HealthPickup2" parent="." unique_id=1470939253 instance=ExtResource("14_8ol0d")]
-position = Vector2(770, -471)
+[node name="Ferry2" parent="." unique_id=840000037 instance=ExtResource("8_mp")]
+position = Vector2(2040, 196)
+speed = 95.0
+downtime = 0.4
 
-[node name="CheckPoint1" type="Area2D" parent="." unique_id=1221247694]
-position = Vector2(345, 342)
+[node name="End" type="Marker2D" parent="Ferry2" unique_id=840000038]
+position = Vector2(-226, -51)
+
+[node name="Lift2" parent="." unique_id=840000041 instance=ExtResource("8_mp")]
+position = Vector2(1684, 146)
+speed = 95.0
+start_on_touch = true
+
+[node name="End" type="Marker2D" parent="Lift2" unique_id=840000042]
+position = Vector2(0, -258)
+
+[node name="F1" parent="." unique_id=840000045 instance=ExtResource("9_fp")]
+position = Vector2(1570, -150)
+
+[node name="F2" parent="." unique_id=840000046 instance=ExtResource("9_fp")]
+position = Vector2(1422, -175)
+
+[node name="F3" parent="." unique_id=840000047 instance=ExtResource("9_fp")]
+position = Vector2(1120, -224)
+
+[node name="Ferry3" parent="." unique_id=840000048 instance=ExtResource("8_mp")]
+position = Vector2(978, -250)
+speed = 95.0
+downtime = 0.4
+start_on_touch = true
+
+[node name="End" type="Marker2D" parent="Ferry3" unique_id=840000049]
+position = Vector2(-328, -31)
+
+[node name="F4" parent="." unique_id=840000050 instance=ExtResource("9_fp")]
+position = Vector2(539, -309)
+
+[node name="Lift3" parent="." unique_id=840000054 instance=ExtResource("8_mp")]
+position = Vector2(444, -365)
+speed = 95.0
+start_on_touch = true
+
+[node name="End" type="Marker2D" parent="Lift3" unique_id=840000055]
+position = Vector2(0, -577)
+
+[node name="Ferry4" parent="." unique_id=840000072 instance=ExtResource("8_mp")]
+position = Vector2(586, -711)
+speed = 95.0
+downtime = 0.4
+
+[node name="End" type="Marker2D" parent="Ferry4" unique_id=840000073]
+position = Vector2(271, 0)
+
+[node name="Ferry5" parent="." unique_id=840000080 instance=ExtResource("8_mp")]
+position = Vector2(940, -1116)
+speed = 95.0
+downtime = 0.4
+
+[node name="End" type="Marker2D" parent="Ferry5" unique_id=840000081]
+position = Vector2(418, -31)
+
+[node name="Lift4" parent="." unique_id=840000094 instance=ExtResource("8_mp")]
+position = Vector2(1720, -1560)
+speed = 95.0
+start_on_touch = true
+
+[node name="End" type="Marker2D" parent="Lift4" unique_id=840000095]
+position = Vector2(0, -250)
+
+[node name="Damar" parent="." unique_id=1757803171 instance=ExtResource("5_npc1")]
+position = Vector2(298, 697)
+
+[node name="Rina" parent="." unique_id=2126062215 instance=ExtResource("5_npc1")]
+position = Vector2(1820, -122)
+
+[node name="Toni" parent="." unique_id=162617019 instance=ExtResource("5_npc1")]
+position = Vector2(293, -950)
+
+[node name="Sinta" parent="." unique_id=276021425 instance=ExtResource("5_npc1")]
+position = Vector2(700, -2094)
+
+[node name="Adbot1" parent="." unique_id=840000107 instance=ExtResource("7_bat")]
+position = Vector2(1182, 554)
+
+[node name="Adbot2" parent="." unique_id=840000108 instance=ExtResource("7_bat")]
+position = Vector2(1520, -1175)
+
+[node name="Adbot3" parent="." unique_id=840000109 instance=ExtResource("7_bat")]
+position = Vector2(1898, -1302)
+
+[node name="frog_enemy" parent="." unique_id=840000110 instance=ExtResource("13_6pt3j")]
+position = Vector2(1009, -741)
+
+[node name="CheckPoint1" type="Area2D" parent="." unique_id=840000111]
+position = Vector2(1820, -120)
 script = ExtResource("cp_scr")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint1" unique_id=873512456]
-position = Vector2(-103, -76)
-shape = SubResource("RectangleShape2D_ha050")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint1" unique_id=840000112]
+position = Vector2(0, -100)
+shape = SubResource("RS_cp")
 
-[node name="CheckPoint2" type="Area2D" parent="." unique_id=1941942229]
-position = Vector2(1232, 211)
+[node name="CheckPoint2" type="Area2D" parent="." unique_id=840000113]
+position = Vector2(230, -420)
 script = ExtResource("cp_scr")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint2" unique_id=1074121304]
-position = Vector2(-101.25, -325.5)
-shape = SubResource("RectangleShape2D_ha050")
-
-[node name="CheckPoint3" type="Area2D" parent="." unique_id=1988433014]
-position = Vector2(1293, -531)
+[node name="CheckPoint3" type="Area2D" parent="." unique_id=840000115]
+position = Vector2(290, -970)
 script = ExtResource("cp_scr")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint3" unique_id=2065505129]
-position = Vector2(-104.5, -339.5)
-shape = SubResource("RectangleShape2D_ha050")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint3" unique_id=840000116]
+position = Vector2(3, -80)
+shape = SubResource("RS_cp")
 
-[node name="Shard_s3_1" parent="." unique_id=1966271585 instance=ExtResource("shard_scn")]
-position = Vector2(921, 676)
+[node name="CheckPoint4" type="Area2D" parent="." unique_id=840000117]
+position = Vector2(2340, -1394)
+script = ExtResource("cp_scr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint4" unique_id=840000118]
+position = Vector2(-1, -75)
+shape = SubResource("RS_cp")
+
+[node name="SpeedPickup" parent="." unique_id=840000119 instance=ExtResource("15_ha050")]
+position = Vector2(361, 681)
+
+[node name="HealthPickup" parent="." unique_id=840000120 instance=ExtResource("14_8ol0d")]
+position = Vector2(201, -816)
+
+[node name="HealthPickup2" parent="." unique_id=840000121 instance=ExtResource("14_8ol0d")]
+position = Vector2(463, -2093)
+
+[node name="Shard_s3_1" parent="." unique_id=840000122 instance=ExtResource("shard_scn")]
+position = Vector2(170, 386)
 collectible_id = "shard_s3_1"
 
-[node name="Shard_s3_2" parent="." unique_id=931536572 instance=ExtResource("shard_scn")]
-position = Vector2(1172, -445)
+[node name="Shard_s3_2" parent="." unique_id=840000123 instance=ExtResource("shard_scn")]
+position = Vector2(1120, -272)
 collectible_id = "shard_s3_2"
+
+[node name="Shard_s3_3" parent="." unique_id=840000124 instance=ExtResource("shard_scn")]
+position = Vector2(129, -904)
+collectible_id = "shard_s3_3"
+
+[node name="Key" parent="." unique_id=840000125 instance=ExtResource("itm_key")]
+position = Vector2(979, -745)
+key_id = "stage3_key"
+
+[node name="Door" parent="." unique_id=840000126 instance=ExtResource("itm_door")]
+position = Vector2(560, -2124)
+required_key = "stage3_key"
+locked_hint = "Locked. The key is in the fork below."
+
+[node name="Coin1" parent="." unique_id=840000127 instance=ExtResource("itm_coin")]
+position = Vector2(520, 600)
+
+[node name="Coin2" parent="." unique_id=840000128 instance=ExtResource("itm_coin")]
+position = Vector2(800, 564)
+
+[node name="Coin3" parent="." unique_id=840000129 instance=ExtResource("itm_coin")]
+position = Vector2(1140, 560)
+
+[node name="Coin4" parent="." unique_id=840000130 instance=ExtResource("itm_coin")]
+position = Vector2(1520, 536)
+
+[node name="Coin5" parent="." unique_id=840000131 instance=ExtResource("itm_coin")]
+position = Vector2(1800, 496)
+
+[node name="Coin6" parent="." unique_id=840000132 instance=ExtResource("itm_coin")]
+position = Vector2(2080, 462)
+
+[node name="Coin7" parent="." unique_id=840000133 instance=ExtResource("itm_coin")]
+position = Vector2(2252, 441)
+
+[node name="Coin8" parent="." unique_id=840000134 instance=ExtResource("itm_coin")]
+position = Vector2(2160, 196)
+
+[node name="Coin9" parent="." unique_id=840000135 instance=ExtResource("itm_coin")]
+position = Vector2(1600, 128)
+
+[node name="Coin10" parent="." unique_id=840000136 instance=ExtResource("itm_coin")]
+position = Vector2(1882, -152)
+
+[node name="Coin11" parent="." unique_id=840000137 instance=ExtResource("itm_coin")]
+position = Vector2(1420, -205)
+
+[node name="Coin12" parent="." unique_id=840000138 instance=ExtResource("itm_coin")]
+position = Vector2(999, -282)
+
+[node name="Coin13" parent="." unique_id=840000139 instance=ExtResource("itm_coin")]
+position = Vector2(538, -337)
+
+[node name="F6" parent="." unique_id=116783348 instance=ExtResource("9_fp")]
+position = Vector2(1276, -199)
+
+[node name="Props" type="Node2D" parent="." unique_id=811951624]
+z_index = -1
+
+[node name="DecoL0" type="Sprite2D" parent="Props" unique_id=252336585]
+position = Vector2(58, -2000)
+texture = ExtResource("px_vent")
+
+[node name="DecoR0" type="Sprite2D" parent="Props" unique_id=1137000964]
+position = Vector2(2512, -2000)
+texture = ExtResource("px_grate")
+
+[node name="DecoR1" type="Sprite2D" parent="Props" unique_id=1291963341]
+position = Vector2(2512, -1650)
+texture = ExtResource("px_vent")
+
+[node name="DecoR2" type="Sprite2D" parent="Props" unique_id=1646899121]
+position = Vector2(2512, -1300)
+texture = ExtResource("px_grate")
+
+[node name="DecoR3" type="Sprite2D" parent="Props" unique_id=196320885]
+position = Vector2(2512, -950)
+texture = ExtResource("px_vent")
+
+[node name="DecoL4" type="Sprite2D" parent="Props" unique_id=356876747]
+position = Vector2(58, -600)
+texture = ExtResource("px_vent")
+
+[node name="DecoR4" type="Sprite2D" parent="Props" unique_id=1854305625]
+position = Vector2(2512, -600)
+texture = ExtResource("px_grate")
+
+[node name="DecoR5" type="Sprite2D" parent="Props" unique_id=1675666480]
+position = Vector2(2512, -250)
+texture = ExtResource("px_vent")
+
+[node name="DecoL6" type="Sprite2D" parent="Props" unique_id=115977209]
+position = Vector2(58, 100)
+texture = ExtResource("px_vent")
+
+[node name="DecoR6" type="Sprite2D" parent="Props" unique_id=1807229114]
+position = Vector2(2512, 100)
+texture = ExtResource("px_grate")
+
+[node name="DecoL7" type="Sprite2D" parent="Props" unique_id=568246135]
+position = Vector2(58, 450)
+texture = ExtResource("px_grate")
+
+[node name="DecoR7" type="Sprite2D" parent="Props" unique_id=1330792823]
+position = Vector2(2512, 450)
+texture = ExtResource("px_vent")
+
+[node name="DecoScreenA" type="Sprite2D" parent="Props" unique_id=1005516242]
+position = Vector2(300, 300)
+texture = ExtResource("px_screen")
+
+[node name="DecoScreenB" type="Sprite2D" parent="Props" unique_id=915345132]
+position = Vector2(2270, 150)
+texture = ExtResource("px_screen")
 
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Stage4Portal" to="." method="_on_stage_4_portal_body_entered"]
-[connection signal="body_entered" from="Stage2Portal" to="." method="_on_stage_2_portal_body_entered"]

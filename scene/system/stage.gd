@@ -81,7 +81,7 @@ func _ready():
 
 	player_camera.enabled = true
 	current_wave          = Global.current_wave  # 0 for fresh start, saved-1 when loading
-	audio_bgm.play()
+	AudioManager.play_music("arcade")
 
 	# Verify all enemy scenes loaded correctly
 	for enemy_scene in enemy_scenes:

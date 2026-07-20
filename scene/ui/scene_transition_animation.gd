@@ -36,6 +36,7 @@ func _on_anim_started(anim_name: StringName) -> void:
 		# it so the next scene's fade_in-reveal uses the same shape.
 		Global.transition_style = randi() % _STYLE_COUNT
 		mat.set_shader_parameter("style", Global.transition_style)
+		AudioManager.play_ui("transition")   # swoosh as the screen wipes out
 	elif anim_name == "fade_out":
 		mat.set_shader_parameter("style", Global.transition_style)
 	elif anim_name == "between_wave":

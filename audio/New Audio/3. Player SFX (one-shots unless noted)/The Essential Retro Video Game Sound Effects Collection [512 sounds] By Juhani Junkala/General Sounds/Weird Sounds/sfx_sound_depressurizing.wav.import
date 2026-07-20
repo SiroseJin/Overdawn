@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bkobqn4kdmsrw"
+path="res://.godot/imported/sfx_sound_depressurizing.wav-6a58046b70914d5015428ffc24b66b8b.sample"
+
+[deps]
+
+source_file="res://audio/New Audio/3. Player SFX (one-shots unless noted)/The Essential Retro Video Game Sound Effects Collection [512 sounds] By Juhani Junkala/General Sounds/Weird Sounds/sfx_sound_depressurizing.wav"
+dest_files=["res://.godot/imported/sfx_sound_depressurizing.wav-6a58046b70914d5015428ffc24b66b8b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

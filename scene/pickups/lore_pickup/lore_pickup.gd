@@ -47,7 +47,8 @@ func _on_body_entered(body: Node2D) -> void:
 	if lore_id == "" or CodexManager.is_lore_unlocked(lore_id):
 		return
 	_taken = true
-	CodexManager.unlock_lore(lore_id)   # fires the "Lore Unlocked" toast itself
+	AudioManager.play_sfx("lore")            # physical pickup chime
+	CodexManager.unlock_lore(lore_id)        # also fires the codex "lore unlocked" jingle + toast
 
 	# Juice: a warm gold burst + rising orb + chime.
 	Global.spawn_burst(global_position, Color(1.0, 0.85, 0.4), 20)

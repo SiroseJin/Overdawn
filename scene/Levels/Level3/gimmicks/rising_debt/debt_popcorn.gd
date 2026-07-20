@@ -64,6 +64,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if "conversation_safe" in body and body.conversation_safe:
 		return
 	_collected = true
+	AudioManager.play_sfx("debt_pop")
 	_roll_effect(body)
 	_poof(true)
 

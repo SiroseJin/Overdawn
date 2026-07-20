@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cdoao6htkc4b4"
+path="res://.godot/imported/zap2.ogg-32bca1976b38a3efc70232d2ca6ff35d.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Digital/Audio/zap2.ogg"
+dest_files=["res://.godot/imported/zap2.ogg-32bca1976b38a3efc70232d2ca6ff35d.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

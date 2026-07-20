@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://djpqb8m0i6any"
+path="res://.godot/imported/phaseJump5.ogg-41c2819ef5f9a01511592018f2b133f2.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Digital/Audio/phaseJump5.ogg"
+dest_files=["res://.godot/imported/phaseJump5.ogg-41c2819ef5f9a01511592018f2b133f2.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

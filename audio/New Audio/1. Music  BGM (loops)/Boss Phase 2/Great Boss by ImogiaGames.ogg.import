@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dkhrnl2h6efc7"
+path="res://.godot/imported/Great Boss by ImogiaGames.ogg-a760832157cdcaefd054cc4178f83b94.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/1. Music  BGM (loops)/Boss Phase 2/Great Boss by ImogiaGames.ogg"
+dest_files=["res://.godot/imported/Great Boss by ImogiaGames.ogg-a760832157cdcaefd054cc4178f83b94.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

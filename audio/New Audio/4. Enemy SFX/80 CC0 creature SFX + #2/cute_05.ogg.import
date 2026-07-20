@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bei1vlscjr6t1"
+path="res://.godot/imported/cute_05.ogg-e674ae4664f6c7410d5bb5a115cf6ecc.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/80 CC0 creature SFX + #2/cute_05.ogg"
+dest_files=["res://.godot/imported/cute_05.ogg-e674ae4664f6c7410d5bb5a115cf6ecc.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

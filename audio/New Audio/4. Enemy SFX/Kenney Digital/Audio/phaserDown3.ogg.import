@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dfm14sawva8wv"
+path="res://.godot/imported/phaserDown3.ogg-170441459a670f860d5483ab76b9182a.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Digital/Audio/phaserDown3.ogg"
+dest_files=["res://.godot/imported/phaserDown3.ogg-170441459a670f860d5483ab76b9182a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

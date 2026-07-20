@@ -36,6 +36,7 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 
 	ProgressionManager.add_key(key_id)
+	AudioManager.play_sfx("key")
 	if body.has_method("show_toast"):
 		body.show_toast(tr(obtained_message))
 	_collect()

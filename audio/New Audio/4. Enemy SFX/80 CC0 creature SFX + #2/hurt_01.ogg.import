@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dl4ayaj04xog7"
+path="res://.godot/imported/hurt_01.ogg-3a4b95d6b705fea48d21d1731dc2914f.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/80 CC0 creature SFX + #2/hurt_01.ogg"
+dest_files=["res://.godot/imported/hurt_01.ogg-3a4b95d6b705fea48d21d1731dc2914f.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

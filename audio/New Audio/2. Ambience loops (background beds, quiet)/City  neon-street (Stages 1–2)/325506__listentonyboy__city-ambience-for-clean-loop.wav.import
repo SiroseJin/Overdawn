@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dypvun7jcnp5b"
+path="res://.godot/imported/325506__listentonyboy__city-ambience-for-clean-loop.wav-87b6619dfc7fe06549a4487b2dc7a567.sample"
+
+[deps]
+
+source_file="res://audio/New Audio/2. Ambience loops (background beds, quiet)/City  neon-street (Stages 1–2)/325506__listentonyboy__city-ambience-for-clean-loop.wav"
+dest_files=["res://.godot/imported/325506__listentonyboy__city-ambience-for-clean-loop.wav-87b6619dfc7fe06549a4487b2dc7a567.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

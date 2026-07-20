@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b8ntr7oa6dypn"
+path="res://.godot/imported/cards-pack-take-out-2.ogg-07a6ba14581a9e5784c82296a177d03c.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Casino/Audio/cards-pack-take-out-2.ogg"
+dest_files=["res://.godot/imported/cards-pack-take-out-2.ogg-07a6ba14581a9e5784c82296a177d03c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

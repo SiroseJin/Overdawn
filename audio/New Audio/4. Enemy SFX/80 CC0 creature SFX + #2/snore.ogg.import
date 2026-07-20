@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b2ayvyi55pekt"
+path="res://.godot/imported/snore.ogg-a5fa77447fc9f818eb29ac30e1b1592e.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/80 CC0 creature SFX + #2/snore.ogg"
+dest_files=["res://.godot/imported/snore.ogg-a5fa77447fc9f818eb29ac30e1b1592e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

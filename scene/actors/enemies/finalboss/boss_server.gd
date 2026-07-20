@@ -22,6 +22,7 @@ func setup(boss: Node) -> void:
 	_boss = boss
 
 func _ready() -> void:
+	add_to_group("boss_server")   # so the stage can guide the player to a live server
 	_hitbox.area_entered.connect(_on_hitbox_area_entered)
 	_bar.max_value = health
 	_bar.value = health
@@ -45,6 +46,7 @@ func _destroy() -> void:
 	if _destroyed:
 		return
 	_destroyed = true
+	AudioManager.play_sfx("boss_server_destroyed")
 	if is_instance_valid(_boss) and _boss.has_method("on_server_destroyed"):
 		_boss.on_server_destroyed(global_position)
 	_hitbox.set_deferred("monitoring", false)

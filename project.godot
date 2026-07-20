@@ -38,6 +38,8 @@ QuestManager="*res://script/managers/quest_manager.gd"
 BadgeManager="*res://script/managers/badge_manager.gd"
 CodexManager="*res://script/managers/codex_manager.gd"
 CheckpointManager="*res://script/managers/checkpoint_manager.gd"
+AudioManager="*res://script/managers/audio_manager.gd"
+Difficulty="*res://script/managers/difficulty_manager.gd"
 
 [dialogic]
 
@@ -62,7 +64,8 @@ directories/dch_directory={
 "npc/vino": "res://scene/Levels/Level4/npc/vino.dch",
 "npc/wira": "res://scene/Levels/Level5/npc/wira.dch",
 "npc/yani": "res://scene/Levels/Level2/npc/yani.dch",
-"npc1": "res://scene/npc1.dch"
+"npc1": "res://scene/npc1.dch",
+"warden": "res://scene/Levels/Level5/npc/warden.dch"
 }
 directories/dtl_directory={
 "ana_rep": "res://scene/Levels/Level1/npc/ana_rep.dtl",
@@ -133,6 +136,10 @@ directories/dtl_directory={
 "s5bossgate_id": "res://scene/Levels/Level5/npc/s5bossgate_id.dtl",
 "s5bossgatepost": "res://scene/Levels/Level5/npc/s5bossgatepost.dtl",
 "s5bossgatepost_id": "res://scene/Levels/Level5/npc/s5bossgatepost_id.dtl",
+"s5gate4timeline": "res://scene/Levels/Level5/npc/s5gate4timeline.dtl",
+"s5gate4timeline_id": "res://scene/Levels/Level5/npc/s5gate4timeline_id.dtl",
+"s5keya_timeline": "res://scene/Levels/Level5/npc/s5keya_timeline.dtl",
+"s5keya_timeline_id": "res://scene/Levels/Level5/npc/s5keya_timeline_id.dtl",
 "s5npc1timeline": "res://scene/Levels/Level5/npc/s5npc1timeline.dtl",
 "s5npc1timeline_id": "res://scene/Levels/Level5/npc/s5npc1timeline_id.dtl",
 "sari_rep": "res://scene/Levels/Level1/npc/sari_rep.dtl",

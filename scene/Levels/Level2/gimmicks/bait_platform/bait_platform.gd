@@ -39,6 +39,7 @@ func _on_trigger(body: Node2D) -> void:
 	await get_tree().create_timer(betray_delay).timeout
 
 	# Betray: no shake, no warning beyond the glow — just gone
+	AudioManager.play_sfx("bait_platform")   # the snap when the lure drops out
 	_col.set_deferred("disabled", true)
 	_visual.visible = false
 

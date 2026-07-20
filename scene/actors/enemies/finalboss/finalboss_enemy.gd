@@ -124,6 +124,7 @@ var _path: Path2D = null
 var _path_offset := 0.0   # distance travelled along the path
 var _path_dir := 1.0      # +1 / -1 for back-and-forth patrol
 var _wob_phase := 0.0     # accumulated wobble phase (speed varies, so integrate it)
+var _bullet_snd_ms: int = 0   # throttles the bullet-fire sound so dense spirals don't flood the mix
 var _jitter := Vector2.ZERO        # current erratic offset
 var _jitter_target := Vector2.ZERO # where the jitter is easing toward
 var _jitter_timer := 0.0
@@ -236,6 +237,7 @@ func _activate() -> void:
 	_body_collision.set_deferred("disabled", false)
 	_hud.visible = true
 	phase = 1
+	AudioManager.play_sfx("boss_intro")
 	phase_changed.emit(1)
 	_spawn_servers()
 	_show_shield()
@@ -277,6 +279,7 @@ func _reduce_shield(amount: float) -> void:
 	shield = max(0.0, shield - amount)
 	_shield_bar.value = shield
 	shield_changed.emit(shield, shield_max)
+	AudioManager.play_sfx("boss_hurt")
 	if shield <= 0.0:
 		_enter_down()
 
@@ -285,6 +288,7 @@ func _reduce_shield(amount: float) -> void:
 func _enter_down() -> void:
 	state = "down"
 	_hide_shield()
+	AudioManager.play_sfx("boss_telegraph")   # shield down — the vulnerable window opens
 	_spawn_burst(global_position, 1.6)   # shield shatters as it crashes
 	_clear_servers()
 	_spawn_adds()
@@ -341,6 +345,7 @@ func _recover(new_phase: int) -> void:
 # ─── Servers / adds ──────────────────────────────────────────────────────────────
 
 func _spawn_servers() -> void:
+	AudioManager.play_sfx("boss_server_spawn")
 	var spots := _pick_spots(servers_per_cycle)
 	for pos in spots:
 		var s := SERVER.instantiate()
@@ -525,10 +530,20 @@ func _fire_aimed(count: int, spread_deg: float, speed: float) -> void:
 		_spawn_bullet(Vector2.RIGHT.rotated(base + deg_to_rad(spread_deg) * t), speed)
 
 func _spawn_bullet(dir: Vector2, speed: float) -> void:
+	# Throttle the fire sound, and throttle it HARDER the higher the phase: later phases
+	# fire far more bullets, so without this the sound turns into a grating machine-gun.
+	# phase 1 ≈ every 200ms, phase 2 ≈ 340ms, phase 3 ≈ 480ms, phase 4 ≈ 620ms.
+	var now := Time.get_ticks_msec()
+	var interval := 200 + 140 * maxi(0, phase - 1)
+	if now - _bullet_snd_ms > interval:
+		_bullet_snd_ms = now
+		AudioManager.play_sfx("boss_bullet")
 	var b := BULLET.instantiate()
 	b.global_position = _muzzle.global_position
 	b.direction = dir.normalized()
 	b.speed = speed
+	if not Global.arcade_mode:
+		b.damage = int(round(b.damage * Difficulty.enemy_mult()))   # boss attack scales with difficulty
 	get_parent().add_child(b)
 
 # Hurl a rigged fake-coin projectile toward the player (the House's "free jackpot").
@@ -586,6 +601,7 @@ func _hide_shield() -> void:
 
 func _die() -> void:
 	dead = true
+	AudioManager.play_sfx("boss_death")
 	ProgressionManager.notify("boss_defeated", {})   # UC-009/008: the House is beaten
 	_hide_shield()
 	_spawn_burst(global_position, 2.2)   # the House goes down

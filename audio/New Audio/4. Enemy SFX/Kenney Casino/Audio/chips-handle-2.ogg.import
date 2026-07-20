@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://kv1b5cjobyot"
+path="res://.godot/imported/chips-handle-2.ogg-6cc5ec99720c5af4d64583a8ac46dcea.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Casino/Audio/chips-handle-2.ogg"
+dest_files=["res://.godot/imported/chips-handle-2.ogg-6cc5ec99720c5af4d64583a8ac46dcea.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

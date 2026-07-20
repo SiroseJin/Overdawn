@@ -1,0 +1,15 @@
+The 13, mapped:
+
+Main menu → Junkala Title Screen (in 5-Action) · CC0. Melancholy substitute: Starlight City (verify license on page).
+Lobby/hub → cynicmusic Bouncy Hamster Dancing "Menu Music?" · CC0 (credit appreciated, not required).
+Tutorial → Junkala Level 1 (in 5-Action) · CC0.
+Stage 1 – Pengenalan → Junkala Level 2 (in 5-Action) · CC0. Urban-cheerful substitute: Starlight City.
+Stage 2 – Janji Palsu → Junkala Stage 1 (in 4-Adventure) · CC0. (Detune a layer yourself for the "too-sweet fake" edge.)
+Stage 3 – Dampak Finansial → Junkala Level 3 (in 5-Action) · CC0.
+Stage 4 – Dampak Psikologis → Use the old stage 6 music
+Stage 5 – Solusi & Pencegahan → Junkala Ending (in 5-Action) · CC0.
+Boss – The House/Bandar → Junkala Boss Fight (in 4-Adventure) · CC0. Grander substitute: cynicmusic Battle Theme A (epic strings/horns) · CC0.
+Boss phase-2 → from Audio – CC0 – 8Bit – Chiptune, grab "Great Boss" · CC0. (Or just reuse #9 at +20% tempo.)
+Arcade mode → cynicmusic Hyperflight Racing · CC0. Substitute: 8-bit Epic Space Shooter · CC0.
+Victory / stage-clear → from NES Style collection, grab "Victory" · CC0.
+Game over → from NES Style collection, grab "End Credits Theme" (somber) · CC0.

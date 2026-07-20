@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c75eps8iule8s"
+path="res://.godot/imported/zapTwoTone.ogg-162557d3c647176503ec1ccd02e3d17d.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Digital/Audio/zapTwoTone.ogg"
+dest_files=["res://.godot/imported/zapTwoTone.ogg-162557d3c647176503ec1ccd02e3d17d.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

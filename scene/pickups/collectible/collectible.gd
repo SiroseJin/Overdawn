@@ -72,6 +72,7 @@ func _on_body_entered(body: Node2D) -> void:
 	_taken = true
 
 	# Juice: burst + rising orb + a chime, and reveal the truth this shard carries.
+	AudioManager.play_sfx("shard")
 	Global.spawn_burst(global_position, Color(0.4, 1.0, 0.9), 22)
 	Global.spawn_fx("orb", global_position, 0.5, Color(0.5, 1.0, 0.85))
 	var sfx := get_node_or_null("Sound")

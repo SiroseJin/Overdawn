@@ -28,6 +28,7 @@ func _on_trigger(body: Node2D) -> void:
 	if _triggered or not body.is_in_group("player"):
 		return
 	_triggered = true
+	AudioManager.play_sfx("falling_platform")
 	_run()
 
 func _run() -> void:

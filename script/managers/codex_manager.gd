@@ -44,22 +44,37 @@ const GUIDE := {
 	"g_markers": {"en": "NPC Markers", "id": "Tanda NPC", "default": true,
 		"en_d": "The ! over an NPC: white = lore, green = quiz/reward, yellow = gimmick/enemy info, red = must talk to progress.",
 		"id_d": "Tanda ! di atas NPC: putih = cerita, hijau = kuis/hadiah, kuning = info gimmick/musuh, merah = wajib bicara."},
-	# ── Enemies (unlock on first sighting) ──
+	# ── Enemies (unlock on first sighting). `img`/`img_frames` = a sheet + how many
+	#    horizontal frames it has; the Codex shows the first frame as the portrait. ──
 	"g_adbot": {"en": "Adbot", "id": "Adbot", "ev": "enemy_seen", "key": "type", "val": "adbot",
+		"img": "res://art/free-drones-pack-pixel-art/1 Drones/1/Idle.png", "img_frames": 4,
 		"en_d": "A flashy gambling-ad drone. It flies straight at you when you're in range. Fragile — an arrow or two ends it.",
-		"id_d": "Drone iklan judi yang mencolok. Terbang lurus ke arahmu saat dekat. Rapuh — satu-dua panah menamatkannya."},
+		"id_d": "Drone iklan judi yang mencolok. Terbang lurus ke arahmu saat dekat. Rapuh — satu-dua panah menamatkannya.",
+		"en_dd": "Behaviour: hovers until you enter its range, then charges in a straight line and detonates on contact.\nCounter: it's fragile — shoot it with arrows before it reaches you, or side-step the charge and swing.\nMeaning: the gambling ad itself — loud, everywhere, promising the world. Harmless only if you never let it reach you.",
+		"id_dd": "Perilaku: melayang sampai kau masuk jangkauan, lalu menerjang lurus dan meledak saat kena.\nLawan: ia rapuh — panah dari jauh, atau elak terjangannya lalu pukul.\nMakna: iklan judi itu sendiri — berisik, di mana-mana, menjanjikan segalanya. Tak berbahaya jika tak pernah kaubiarkan mendekat."},
 	"g_bandit": {"en": "Bandit", "id": "Bandit", "ev": "enemy_seen", "key": "type", "val": "bandit",
+		"img": "res://art/craftpix-net-913026-free-gangster-pixel-character-sprite-sheets-pack/Gangsters_2/Idle.png", "img_frames": 7,
 		"en_d": "A grounded chaser that rushes in to hit you. Keep moving, punish it between lunges.",
-		"id_d": "Pengejar darat yang menyerbu untuk memukulmu. Terus bergerak, serang di antara terjangannya."},
+		"id_d": "Pengejar darat yang menyerbu untuk memukulmu. Terus bergerak, serang di antara terjangannya.",
+		"en_dd": "Behaviour: runs you down and swings, then waits out a short cooldown before it can hit again.\nCounter: keep moving and strike in the gap after a lunge; a dash attack cuts clean through.\nMeaning: the 'you almost won' rush made flesh — it only keeps coming while you stand and engage.",
+		"id_dd": "Perilaku: mengejarmu dan memukul, lalu jeda sebentar sebelum bisa memukul lagi.\nLawan: terus bergerak dan serang di celah setelah terjangan; serangan dash menembusnya.\nMakna: sensasi 'nyaris menang' yang menjelma — ia hanya terus datang selama kau diam melayaninya."},
 	"g_collector": {"en": "Collector", "id": "Penagih", "ev": "enemy_seen", "key": "type", "val": "collector",
+		"img": "res://art/craftpix-net-516149-city-man-pixel-art-character-sprite-sheets/City_men_2/Idle.png", "img_frames": 6,
 		"en_d": "From afar she winds up a ranged shot and hurls a rigged fake coin. Get close and she drops it to rush you — control the distance.",
-		"id_d": "Dari jauh ia menyiapkan tembakan dan melempar koin palsu curang. Dekati dan ia beralih menyerbu — atur jarak."},
+		"id_d": "Dari jauh ia menyiapkan tembakan dan melempar koin palsu curang. Dekati dan ia beralih menyerbu — atur jarak.",
+		"en_dd": "Behaviour: at range she charges a rigged fake coin and throws it; up close she stops throwing and rushes you.\nCounter: don't sit in mid-range — close in during her wind-up, or back off and punish the throw. Never grab the coin.\nMeaning: the debt enforcer. She profits whether you run or fight, so make her fight on your terms.",
+		"id_dd": "Perilaku: dari jauh ia menyiapkan koin palsu curang dan melemparnya; dari dekat ia berhenti melempar dan menyerbu.\nLawan: jangan diam di jarak sedang — dekati saat ia bersiap, atau mundur lalu hukum lemparannya. Jangan ambil koinnya.\nMakna: penagih utang. Ia untung entah kau lari atau melawan, jadi paksa ia bertarung dengan caramu."},
 	"g_dealer": {"en": "Dealer", "id": "Dealer", "ev": "enemy_seen", "key": "type", "val": "dealer",
+		"img": "res://art/EVil Wizard 2/Sprites/Idle.png", "img_frames": 8,
 		"en_d": "The House's tough salesman. Fires from range and throws fake coins. The Stage 5 gatekeeper before the House.",
-		"id_d": "Penjual tangguh milik Bandar. Menembak dari jarak dan melempar koin palsu. Penjaga Stage 5 sebelum Bandar."},
+		"id_d": "Penjual tangguh milik Bandar. Menembak dari jarak dan melempar koin palsu. Penjaga Stage 5 sebelum Bandar.",
+		"en_dd": "Behaviour: tanky ranged attacker — fires and lobs fake coins from a distance, and slows you with a cursed orb. Guards Stage 5 before the House.\nCounter: use cover, dodge the orbs (never touch the coins), and whittle him down with arrows and dash attacks.\nMeaning: the smooth pitch that sells the whole rigged system — polished, patient, and always closing.",
+		"id_dd": "Perilaku: penyerang jarak jauh yang tangguh — menembak dan melempar koin palsu, serta memperlambatmu dengan bola terkutuk. Menjaga Stage 5 sebelum Bandar.\nLawan: pakai perlindungan, elak bolanya (jangan sentuh koinnya), dan kikis dengan panah serta serangan dash.\nMakna: rayuan mulus yang menjual seluruh sistem curang — rapi, sabar, dan selalu menutup penjualan."},
 	"g_house": {"en": "The House", "id": "Bandar", "ev": "boss_defeated",
 		"en_d": "Shielded and firing. Destroy its Servers to break the shield, then strike while it's down — but it gets back up. Break the machine for good.",
-		"id_d": "Berperisai dan menembak. Hancurkan Server-nya untuk memecah perisai, lalu serang saat tumbang — tapi ia bangkit lagi. Hancurkan mesinnya untuk selamanya."},
+		"id_d": "Berperisai dan menembak. Hancurkan Server-nya untuk memecah perisai, lalu serang saat tumbang — tapi ia bangkit lagi. Hancurkan mesinnya untuk selamanya.",
+		"en_dd": "Behaviour: hovers behind a shield spraying bullet spirals. Servers power the shield — smash them to knock it down, then hit the core while it's exposed. It recovers and enters a harder phase each time.\nCounter: prioritise Servers, keep moving through the spirals, raise your Firewall to cross bad patches, and burst the core in every down window.\nMeaning: the operator behind it all. Any single win is bait; the only real victory is breaking the machine and walking away.",
+		"id_dd": "Perilaku: melayang di balik perisai sambil menyemprot spiral peluru. Server menyalakan perisai — hancurkan untuk menjatuhkannya, lalu pukul inti saat terbuka. Ia pulih dan masuk fase lebih sulit tiap kali.\nLawan: utamakan Server, terus bergerak menembus spiral, naikkan Firewall untuk melewati bagian berbahaya, dan hantam inti di tiap jeda tumbang.\nMakna: operator di balik semuanya. Kemenangan tunggal apa pun adalah umpan; kemenangan sejati adalah menghancurkan mesin dan pergi."},
 	# ── Gimmicks (unlock as you reach them) ──
 	"g_fakecoin": {"en": "Fake Coin", "id": "Koin Palsu", "ev": "stage_entered", "key": "stage_id", "val": "stage2",
 		"en_d": "A shiny 'free jackpot' — bait. Touching it slows you, reverses your controls, or robs your coins. Nothing free is really free.",
@@ -76,7 +91,38 @@ const GUIDE := {
 		"id_d": "Di Stage 3 utang naik makin lama kau berdiam — seperti bunga judi asli, ia tumbuh entah kau menang atau tidak. Terus bergerak."},
 	"g_pullzone": {"en": "Pull Zones", "id": "Zona Tarik", "ev": "stage_entered", "key": "stage_id", "val": "stage4",
 		"en_d": "Stage 4's currents drag you toward the machine — the tug back the instant you try to leave. Raise your Firewall and walk anyway.",
-		"id_d": "Arus Stage 4 menyeretmu ke mesin — tarikan kembali begitu kau coba pergi. Naikkan Firewall dan tetap melangkah."},
+		"id_d": "Arus Stage 4 menyeretmu ke mesin — tarikan kembali begitu kau coba pergi. Naikkan Firewall dan tetap melangkah.",
+		"en_dd": "The gust pulses on and off — the scrolling arrows telegraph the rhythm. Move or platform across during the lull, or punch straight through with a Dash (dashing ignores the pull entirely).\nMeaning: the machine's grip. Fighting it head-on is the slow, losing play; timing and a clean exit win.",
+		"id_dd": "Embusan menyala-padam — panah bergerak menandai iramanya. Menyeberang saat reda, atau tembus lurus dengan Dash (dash mengabaikan tarikan sepenuhnya).\nMakna: cengkeraman mesin. Melawan langsung itu lambat dan kalah; ketepatan waktu dan jalan keluar yang bersih menang."},
+	# ── More systems (known from the start) ──
+	"g_arrows": {"en": "Arrows", "id": "Panah", "default": true,
+		"en_d": "Press E to fire an arrow — your ranged option. Arrows auto-refill over time; the stack size and damage grow with upgrades.",
+		"id_d": "Tekan E untuk menembak panah — opsi jarak jauhmu. Panah terisi ulang seiring waktu; jumlah dan kerusakannya naik lewat peningkatan.",
+		"en_dd": "Ranged pressure lets you kill fragile foes (Adbots) before they reach you and chip tanky ones (Dealer, House) safely. Watch the ammo bar — you can run dry, so don't spam.",
+		"id_dd": "Tekanan jarak jauh membunuh musuh rapuh (Adbot) sebelum mendekat dan mengikis yang tangguh (Dealer, Bandar) dengan aman. Perhatikan bilah amunisi — bisa habis, jadi jangan boros."},
+	"g_coins": {"en": "Coins", "id": "Koin", "default": true,
+		"img": "res://art/v1.1 dungeon crawler 16X16 pixel pack/props_itens/bag_coins.png",
+		"en_d": "Real coins dropped by enemies and chests. They're your currency — but the shiny FAKE coins are traps. Learn the difference.",
+		"id_d": "Koin asli dijatuhkan musuh dan peti. Itu mata uangmu — tapi koin PALSU yang berkilau adalah jebakan. Kenali bedanya.",
+		"en_dd": "Genuine coins add to your total quietly. Fake coins scream 'free jackpot!' and then slow you, scramble your controls, or rob what you have.\nMeaning: the whole con in one object — if a reward is loud and free, ask who profits.",
+		"id_dd": "Koin asli menambah totalmu diam-diam. Koin palsu berteriak 'jackpot gratis!' lalu memperlambatmu, mengacau kontrol, atau mencuri milikmu.\nMakna: seluruh tipuan dalam satu benda — jika hadiah berisik dan gratis, tanyakan siapa yang untung."},
+	"g_shards": {"en": "Truth Shards", "id": "Pecahan Kebenaran", "default": true,
+		"img": "res://art/pickups/shard.png",
+		"en_d": "Teal crystals hidden across the stages. Each one you collect unlocks a piece of Lore — the real stories behind online gambling.",
+		"id_d": "Kristal biru-hijau tersembunyi di seluruh stage. Tiap yang kaukumpulkan membuka satu Lore — kisah nyata di balik judi online.",
+		"en_dd": "Collect them by exploring — off the main path, on hidden ledges. Every shard opens the next shard-gated Lore entry. Once all of those are open, extra shards pay out big EXP and a full heal instead.",
+		"id_dd": "Kumpulkan dengan menjelajah — di luar jalur utama, di tepian tersembunyi. Tiap pecahan membuka Lore berikutnya. Setelah semuanya terbuka, pecahan tambahan memberi EXP besar dan penyembuhan penuh."},
+	"g_pickups": {"en": "Pickups", "id": "Item", "default": true,
+		"img": "res://art/pickups/health.png",
+		"en_d": "Red flasks restore health. Blue flasks give a temporary speed boost. Walk into them to use them.",
+		"id_d": "Botol merah memulihkan nyawa. Botol biru memberi dorongan kecepatan sementara. Jalan ke arahnya untuk memakainya.",
+		"en_dd": "Grab a health flask before a tough fight, not after you're already low. A speed boost helps cross Pull Zones and outrun a Debt Wall. They don't respawn, so spend them wisely.",
+		"id_dd": "Ambil botol nyawa sebelum pertarungan berat, bukan setelah sekarat. Dorongan kecepatan membantu melewati Zona Tarik dan mendahului Tembok Utang. Tak muncul lagi, jadi pakai dengan bijak."},
+	"g_checkpoints": {"en": "Checkpoints", "id": "Titik Simpan", "default": true,
+		"en_d": "A soft glowing beam with a little flag. Pass through it once to set your respawn point and auto-save. It fades after it's set.",
+		"id_d": "Sinar lembut bercahaya dengan bendera kecil. Lewati sekali untuk menandai titik respawn dan menyimpan otomatis. Ia memudar setelah aktif.",
+		"en_dd": "If you die, the death screen offers 'From Checkpoint' to return to the last one you touched. You can turn checkpoints off in Settings for a harder run.",
+		"id_dd": "Jika mati, layar kematian menawarkan 'Dari Titik Simpan' untuk kembali ke yang terakhir kausentuh. Kau bisa mematikan titik simpan di Pengaturan untuk tantangan lebih berat."},
 }
 
 # Lore unlocks are MIXED. Each entry declares how it opens via `by`:
@@ -119,6 +165,23 @@ const LORE := {
 		"en_d": "If gambling has a grip on you or someone you know, help is real. In Indonesia call 119 ext 8 (mental-health line). Talking to someone is the first step out.",
 		"id_d": "Jika judi mencengkerammu atau orang yang kau kenal, bantuan itu nyata. Di Indonesia hubungi 119 ext 8 (layanan kesehatan jiwa). Bicara pada seseorang adalah langkah pertama keluar.",
 		"en_h": "Talk to Ana in Stage 1 to reveal this.", "id_h": "Bicara dengan Ana di Stage 1 untuk membukanya."},
+	"l_odds": {"en": "The Odds Are Fixed", "id": "Peluang Sudah Dicurangi", "by": "shard",
+		"en_d": "Every game publishes a 'return' below 100% — and the operator can tune it. Play long enough and the math guarantees you lose. There is no 'due for a win'.",
+		"id_d": "Setiap permainan punya 'pengembalian' di bawah 100% — dan operator bisa mengaturnya. Main cukup lama dan matematika menjamin kau kalah. Tak ada istilah 'sudah waktunya menang'."},
+	"l_time": {"en": "Time Is the Real Cost", "id": "Waktu Adalah Biaya Nyata", "by": "shard",
+		"en_d": "Even 'free' play spends something: your hours and your attention. The app is engineered to keep you scrolling and coming back — that's the product being sold.",
+		"id_d": "Bahkan main 'gratis' tetap menghabiskan sesuatu: jam-jammu dan perhatianmu. Aplikasi dirancang agar kau terus menggulir dan kembali — itulah produk yang dijual."},
+	"l_family": {"en": "It Hits Families", "id": "Menghantam Keluarga", "by": "shard",
+		"en_d": "The damage rarely stops at one person. Borrowed money, hidden losses, and broken trust spread to family and friends. The harm is shared even when the 'game' feels private.",
+		"id_d": "Kerusakannya jarang berhenti pada satu orang. Uang pinjaman, kerugian tersembunyi, dan kepercayaan yang retak menyebar ke keluarga dan teman. Dampaknya dibagi walau 'permainan' terasa pribadi."},
+	"l_ads": {"en": "Ads That Follow You", "id": "Iklan yang Menguntitmu", "by": "enemy", "etype": "adbot",
+		"en_d": "Gambling ads chase you across apps, streams, influencers, and even games. Repetition makes a scam feel normal. Seeing it everywhere is the trick, not a sign it's safe.",
+		"id_d": "Iklan judi mengejarmu lintas aplikasi, siaran, influencer, bahkan game. Pengulangan membuat penipuan terasa wajar. Terlihat di mana-mana itu triknya, bukan tanda ia aman.",
+		"en_h": "Defeat an Adbot (the ad drone) to reveal this.", "id_h": "Kalahkan Adbot (drone iklan) untuk membukanya."},
+	"l_salesman": {"en": "The Friendly Salesman", "id": "Penjual yang Ramah", "by": "enemy", "etype": "dealer",
+		"en_d": "The pitch is warm on purpose: bonuses, 'VIP' treatment, a helpful voice. Friendliness is the bait that lowers your guard. Trust is exactly what they're selling.",
+		"id_d": "Rayuannya hangat dengan sengaja: bonus, perlakuan 'VIP', suara yang ramah. Keramahan adalah umpan yang melonggarkan kewaspadaanmu. Kepercayaan justru itulah yang mereka jual.",
+		"en_h": "Defeat a Dealer (Stage 5 gatekeeper) to reveal this.", "id_h": "Kalahkan Dealer (penjaga Stage 5) untuk membukanya."},
 	"l_overdawn": {"en": "Overdawn", "id": "Fajar Menyingsing", "by": "boss",
 		"en_d": "No betting system beats a rigged game. The only real win is to walk away — and to help others see the trap too. You made it out. Now help others do the same.",
 		"id_d": "Tak ada sistem taruhan yang mengalahkan permainan curang. Kemenangan sejati adalah pergi — dan membantu orang lain melihat jebakannya. Kau berhasil keluar. Kini bantu orang lain melakukannya.",
@@ -173,6 +236,17 @@ func img_of(kind: String, id: String) -> String:
 	var e: Dictionary = (GUIDE if kind == "guide" else LORE).get(id, {})
 	return str(e.get("img", ""))
 
+## How many horizontal frames the entry's `img` sheet has (1 = a plain image). The
+## Codex shows the FIRST frame, so a whole spritesheet reads as a clean portrait.
+func img_frames_of(kind: String, id: String) -> int:
+	var e: Dictionary = (GUIDE if kind == "guide" else LORE).get(id, {})
+	return int(e.get("img_frames", 1))
+
+## Extra "great detail" shown when a card is expanded (#6). "" if the entry has none.
+func detail_of(kind: String, id: String) -> String:
+	var e: Dictionary = (GUIDE if kind == "guide" else LORE).get(id, {})
+	return str(e.get("id_dd" if _is_id() else "en_dd", ""))
+
 ## Hint telling the player how to unlock a still-locked entry (#9). "" if none.
 ## Shard-gated lore shares one generic line; everything else uses its own en_h/id_h.
 func hint_of(kind: String, id: String) -> String:
@@ -197,6 +271,7 @@ func unlock_lore(id: String) -> void:
 		return
 	ProgressionManager.lore[id] = true
 	codex_unlocked.emit("lore", id)
+	AudioManager.play_ui("lore_unlock")   # one canonical sound for every unlock path
 	_toast(tr("Lore Unlocked") + ": " + name_of("lore", id))
 
 func _on_event(event_name: String, data: Dictionary) -> void:
@@ -251,6 +326,7 @@ func _shard_overflow_reward() -> void:
 	var p = Global.PlayerBody
 	if not is_instance_valid(p):
 		return
+	AudioManager.play_sfx("shard_overflow")   # big, distinct jackpot — only ever plays here
 	if p.has_method("gain_exp"):
 		p.gain_exp(SHARD_OVERFLOW_EXP)
 	if p.has_method("max_hp"):

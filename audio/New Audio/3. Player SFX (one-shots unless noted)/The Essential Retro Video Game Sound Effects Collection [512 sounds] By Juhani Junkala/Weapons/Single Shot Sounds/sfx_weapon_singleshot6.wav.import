@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c4ffxwr8r5kf"
+path="res://.godot/imported/sfx_weapon_singleshot6.wav-8d0443ec6c88a890c8eada2469d890d3.sample"
+
+[deps]
+
+source_file="res://audio/New Audio/3. Player SFX (one-shots unless noted)/The Essential Retro Video Game Sound Effects Collection [512 sounds] By Juhani Junkala/Weapons/Single Shot Sounds/sfx_weapon_singleshot6.wav"
+dest_files=["res://.godot/imported/sfx_weapon_singleshot6.wav-8d0443ec6c88a890c8eada2469d890d3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

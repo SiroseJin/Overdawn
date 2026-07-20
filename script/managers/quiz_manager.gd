@@ -511,6 +511,9 @@ func _on_answer_pressed(chosen: int) -> void:
 
 	if chosen == correct:
 		_correct_count += 1
+		AudioManager.play_ui("quiz_correct")
+	else:
+		AudioManager.play_ui("quiz_wrong")
 
 	_explain_label.text    = qd["explain"]
 	_explain_label.visible = true
@@ -529,6 +532,8 @@ func _show_summary() -> void:
 		child.queue_free()
 
 	var passed: bool = _correct_count == _questions.size()
+	if passed:
+		AudioManager.play_ui("quiz_pass")
 	_title_label.text = tr("Quiz Complete")
 	_q_label.text = "%s: %d / %d" % [tr("Correct answers"), _correct_count, _questions.size()]
 	_explain_label.text    = tr("Passed!") if passed else tr("Not quite — talk to me to try again.")

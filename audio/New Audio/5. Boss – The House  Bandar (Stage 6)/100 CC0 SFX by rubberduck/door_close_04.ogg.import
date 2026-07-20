@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://drojl2082nc3a"
+path="res://.godot/imported/door_close_04.ogg-2a5b8a54d8e01eff99b0e16a0c78bb40.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/5. Boss – The House  Bandar (Stage 6)/100 CC0 SFX by rubberduck/door_close_04.ogg"
+dest_files=["res://.godot/imported/door_close_04.ogg-2a5b8a54d8e01eff99b0e16a0c78bb40.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

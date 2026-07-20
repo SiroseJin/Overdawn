@@ -116,6 +116,7 @@ func _all_quizzes_passed() -> bool:
 func _award(badge_id: String) -> void:
 	if not ProgressionManager.award_badge(badge_id):
 		return
+	AudioManager.play_ui("badge")
 	var p = Global.PlayerBody
 	if is_instance_valid(p):
 		if p.has_method("show_toast"):

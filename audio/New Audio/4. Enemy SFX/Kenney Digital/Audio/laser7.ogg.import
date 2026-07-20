@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cd7xm02xp2ibp"
+path="res://.godot/imported/laser7.ogg-30bd0291cb135864d7179f0ff94771cd.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Digital/Audio/laser7.ogg"
+dest_files=["res://.godot/imported/laser7.ogg-30bd0291cb135864d7179f0ff94771cd.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

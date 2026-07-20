@@ -36,6 +36,7 @@ var _move_dir := 1.0
 
 func _ready() -> void:
 	_home = position
+	AudioManager.attach_loop(self, "pull_zone", -6.0)   # casino-themed churn of the current
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	var cs := get_node_or_null("CollisionShape2D")

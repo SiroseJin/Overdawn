@@ -18,7 +18,11 @@
 [ext_resource type="PackedScene" uid="uid://cpull0one0001" path="res://scene/Levels/Level4/gimmicks/pull_zone/pull_zone.tscn" id="itm_pull"]
 [ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="itm_spd"]
 [ext_resource type="PackedScene" uid="uid://bkpom03w265c7" path="res://scene/gimmicks/casino_props/slot_machine.tscn" id="prop_slot"]
+[ext_resource type="Texture2D" uid="uid://cfg2kauplqr1l" path="res://art/Stage1Terrain/props/grating.png" id="px_grate"]
+[ext_resource type="Texture2D" uid="uid://cuvowxvfto101" path="res://art/Stage1Terrain/props/ad_screen.png" id="px_screen"]
+[ext_resource type="Texture2D" uid="uid://5xebynutc4y1" path="res://art/Stage1Terrain/props/vent_hub.png" id="px_vent"]
 [ext_resource type="PackedScene" uid="uid://ctruthshard01" path="res://scene/pickups/collectible/collectible.tscn" id="shard_scn"]
+[ext_resource type="Texture2D" uid="uid://dy14c6dtdmx3m" path="res://art/Stage1Terrain/body.png" id="tex_body"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_death"]
 size = Vector2(5200, 60)
@@ -231,6 +235,95 @@ collectible_id = "shard_s4_1"
 [node name="Shard_s4_2" parent="." unique_id=1131012962 instance=ExtResource("shard_scn")]
 position = Vector2(3781, 407)
 collectible_id = "shard_s4_2"
+
+[node name="ThemedTerrain" type="Node2D" parent="." unique_id=66787498]
+z_index = -1
+
+[node name="Ground1GF" type="Polygon2D" parent="ThemedTerrain" unique_id=1981611830]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(0, 560, 800, 560, 1100, 650, 1600, 650, 1600, 720, 0, 720)
+uv = PackedVector2Array(0, 560, 800, 560, 1100, 650, 1600, 650, 1600, 720, 0, 720)
+
+[node name="Ground1T0" type="Polygon2D" parent="ThemedTerrain" unique_id=1554537118]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(0, 560, 800, 560, 800, 564, 0, 564)
+
+[node name="Ground1T1" type="Polygon2D" parent="ThemedTerrain" unique_id=1414183075]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(800, 560, 1100, 650, 1100, 654, 800, 564)
+
+[node name="Ground2GF" type="Polygon2D" parent="ThemedTerrain" unique_id=283852312]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(2298.26, 650, 2798.26, 650, 3098.26, 520, 3498.26, 520, 3498.26, 720, 2298.26, 720, 2298.26, 680.455)
+uv = PackedVector2Array(2298.26, 650, 2798.26, 650, 3098.26, 520, 3498.26, 520, 3498.26, 720, 2298.26, 720, 2298.26, 680.455)
+
+[node name="Ground2T0" type="Polygon2D" parent="ThemedTerrain" unique_id=1420769937]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(2798.26, 650, 3098.26, 520, 3098.26, 524, 2798.26, 654)
+
+[node name="Ground2T1" type="Polygon2D" parent="ThemedTerrain" unique_id=1337070940]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(3098.26, 520, 3498.26, 520, 3498.26, 524, 3098.26, 524)
+
+[node name="Ground3GF" type="Polygon2D" parent="ThemedTerrain" unique_id=798841504]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(3803.77, 520, 4303.77, 520, 4703.77, 620, 5103.77, 620, 5103.77, 720, 3803.77, 720)
+uv = PackedVector2Array(3803.77, 520, 4303.77, 520, 4703.77, 620, 5103.77, 620, 5103.77, 720, 3803.77, 720)
+
+[node name="Ground3T0" type="Polygon2D" parent="ThemedTerrain" unique_id=520364883]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(3803.77, 520, 4303.77, 520, 4303.77, 524, 3803.77, 524)
+
+[node name="Ground3T1" type="Polygon2D" parent="ThemedTerrain" unique_id=86283478]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(4303.77, 520, 4703.77, 620, 4703.77, 624, 4303.77, 524)
+
+[node name="LeftWallGF" type="Polygon2D" parent="ThemedTerrain" unique_id=1498932190]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(-100, -300, 0, -300, 0, 800, -100, 800)
+uv = PackedVector2Array(-100, -300, 0, -300, 0, 800, -100, 800)
+
+[node name="RightWallGF" type="Polygon2D" parent="ThemedTerrain" unique_id=847083009]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(4700, -300, 4800, -300, 4800, 800, 4700, 800)
+uv = PackedVector2Array(4700, -300, 4800, -300, 4800, 800, 4700, 800)
+
+[node name="Props" type="Node2D" parent="." unique_id=980052487]
+z_index = -1
+
+[node name="VentU0" type="Sprite2D" parent="Props" unique_id=1664043447]
+position = Vector2(800, 640)
+texture = ExtResource("px_vent")
+
+[node name="GratingU0" type="Sprite2D" parent="Props" unique_id=386480752]
+position = Vector2(730, 672)
+texture = ExtResource("px_grate")
+
+[node name="AdScreen0" type="Sprite2D" parent="Props" unique_id=1960960473]
+position = Vector2(800, 482)
+texture = ExtResource("px_screen")
+
+[node name="VentU1" type="Sprite2D" parent="Props" unique_id=1684017498]
+position = Vector2(2898.26, 610)
+texture = ExtResource("px_vent")
+
+[node name="VentU2" type="Sprite2D" parent="Props" unique_id=489603445]
+position = Vector2(4453.77, 610)
+texture = ExtResource("px_vent")
+
+[node name="GratingU1" type="Sprite2D" parent="Props" unique_id=1151191381]
+position = Vector2(4383.77, 660)
+texture = ExtResource("px_grate")
 
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Stage5Portal" to="." method="_on_stage_5_portal_body_entered"]

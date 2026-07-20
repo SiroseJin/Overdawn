@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bvh82vrfpw8hk"
+path="res://.godot/imported/spaceTrash3.ogg-85d0f1de682b4eebcf2ea356f7cf570a.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Digital/Audio/spaceTrash3.ogg"
+dest_files=["res://.godot/imported/spaceTrash3.ogg-85d0f1de682b4eebcf2ea356f7cf570a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -130,6 +130,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0, 0, 0, 0.5)
 
 [node name="MarginContainer" type="MarginContainer" parent="ColorRect" unique_id=1064332329]
@@ -206,17 +208,17 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 text = "Object labels"
 
-[node name="DamageNumbersToggle" type="CheckButton" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="DamageNumbersToggle" type="CheckButton" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=1413501508]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 text = "Damage numbers"
 
-[node name="WToJumpToggle" type="CheckButton" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="WToJumpToggle" type="CheckButton" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=1920158166]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 text = "Use W to jump"
 
-[node name="CheckpointsToggle" type="CheckButton" parent="ColorRect/MarginContainer/VBoxContainer"]
+[node name="CheckpointsToggle" type="CheckButton" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=363096930]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_el4av")
 text = "Checkpoints"

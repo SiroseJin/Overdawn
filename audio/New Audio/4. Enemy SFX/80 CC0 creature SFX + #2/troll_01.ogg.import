@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dtq4licslb7qq"
+path="res://.godot/imported/troll_01.ogg-482ce71892056183806af79280393793.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/80 CC0 creature SFX + #2/troll_01.ogg"
+dest_files=["res://.godot/imported/troll_01.ogg-482ce71892056183806af79280393793.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -8,6 +8,7 @@ extends Area2D
 #   1 DAMAGE  — a straight hit to your health
 #   2 REVERSE — left/right controls get flipped ("rigged")
 #   3 ROBBED  — some of your real coins are skimmed off
+#   4 EXP_DRAIN — chips 1 EXP off your progress toward the next level
 # ────────────────────────────────────────────────────────────────────────────────
 
 const SLOW_FACTOR    := 0.7    # 30% slow
@@ -15,8 +16,9 @@ const SLOW_DURATION  := 3.0
 const DAMAGE         := 12
 const REVERSE_DURATION := 4.0
 const ROB_AMOUNT     := 15      # coins skimmed (clamped to what you have)
+const EXP_DRAIN_AMOUNT := 1     # EXP chipped off
 
-enum { SLOW, DAMAGE_HIT, REVERSE, ROBBED }
+enum { SLOW, DAMAGE_HIT, REVERSE, ROBBED, EXP_DRAIN }
 
 var _collected := false
 
@@ -30,6 +32,7 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 
 	_collected = true
+	AudioManager.play_sfx("fake_coin")   # sweet chime that curdles — the false jackpot
 	Global.spawn_burst(global_position, Color(1, 0.25, 0.2), 16)   # rigged — angry red pop
 	$AnimationPlayer.play("pickup")
 
@@ -38,7 +41,7 @@ func _on_body_entered(body: Node2D) -> void:
 
 # Pick one rigged outcome at random and apply it.
 func _roll_effect(body: Node2D) -> void:
-	match randi() % 4:
+	match randi() % 5:
 		SLOW:
 			if body.has_method("apply_slow"):
 				body.apply_slow(SLOW_FACTOR, SLOW_DURATION)
@@ -60,6 +63,10 @@ func _roll_effect(body: Node2D) -> void:
 				_toast(body, "Rigged coin! The house skimmed %d coins." % take)
 			else:
 				_toast(body, "Rigged coin! Nothing left to skim.")
+		EXP_DRAIN:
+			if body.has_method("lose_exp"):
+				body.lose_exp(EXP_DRAIN_AMOUNT)
+			_toast(body, "Rigged coin! It drained %d EXP." % EXP_DRAIN_AMOUNT)
 
 
 func _toast(body: Node2D, text: String) -> void:

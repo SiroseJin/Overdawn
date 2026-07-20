@@ -1,3 +1,4 @@
+@tool
 extends Area2D
 
 class_name RisingDebt
@@ -9,6 +10,17 @@ class_name RisingDebt
 # safe. Place it so its top edge sits just below the floor and it rises from there.
 # Scale the node horizontally to make the flood wider/narrower.
 # ───────────────────────────────────────────────────────────────────────────────
+
+## Flood size — drag these in the inspector to resize the debt to fit the stage. The
+## body, bright edge, and damage collision all resize together (updates live in-editor).
+@export var flood_width: float = 1720.0:
+	set(v):
+		flood_width = maxf(1.0, v)
+		_apply_size()
+@export var flood_height: float = 2600.0:
+	set(v):
+		flood_height = maxf(1.0, v)
+		_apply_size()
 
 @export var rise_speed: float = 6.0   # px/s — how fast the debt floods upward
 @export var damage: int      = 12     # chip damage per hit
@@ -37,11 +49,35 @@ var _half_w: float = 860.0   # half the flood width (read from the collision sha
 var _pop_timer: float = 0.0
 
 func _ready() -> void:
-	var cs := get_node_or_null("CollisionShape2D")
+	_apply_size()
+	if Engine.is_editor_hint():
+		return
+	AudioManager.attach_loop(self, "rising_debt", -6.0)   # slow dread bed while the debt floods
+
+# Resize the flood's body, bright edge, and damage collision to flood_width/height.
+func _apply_size() -> void:
+	if not is_inside_tree():
+		return
+	var hw := flood_width * 0.5
+	_half_w = hw
+	var body := get_node_or_null("Body") as Polygon2D
+	if body:
+		body.polygon = PackedVector2Array([Vector2(-hw, 0), Vector2(hw, 0), Vector2(hw, flood_height), Vector2(-hw, flood_height)])
+	var edge := get_node_or_null("Edge") as Polygon2D
+	if edge:
+		edge.polygon = PackedVector2Array([Vector2(-hw, 0), Vector2(hw, 0), Vector2(hw, 8), Vector2(-hw, 8)])
+	var cs := get_node_or_null("CollisionShape2D") as CollisionShape2D
 	if cs and cs.shape is RectangleShape2D:
-		_half_w = (cs.shape as RectangleShape2D).size.x * 0.5
+		var shp := cs.shape as RectangleShape2D
+		if not shp.resource_local_to_scene:      # don't resize a shape shared by other instances
+			shp = shp.duplicate()
+			cs.shape = shp
+		shp.size = Vector2(flood_width, flood_height)
+		cs.position = Vector2(0, flood_height * 0.5)
 
 func _process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
 	var p = Global.PlayerBody
 	# Freeze the debt while the player is talking so conversations are safe.
 	var talking: bool = is_instance_valid(p) and p.conversation_safe

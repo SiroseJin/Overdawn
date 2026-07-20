@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dmgmberwww7yf"
+path="res://.godot/imported/alien_05.ogg-afc1e8bc629c72607c98ce24abff9729.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/80 CC0 creature SFX + #2/alien_05.ogg"
+dest_files=["res://.godot/imported/alien_05.ogg-afc1e8bc629c72607c98ce24abff9729.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

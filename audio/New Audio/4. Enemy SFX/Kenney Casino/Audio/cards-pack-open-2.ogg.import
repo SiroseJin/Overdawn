@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b5f58fe8w6osh"
+path="res://.godot/imported/cards-pack-open-2.ogg-08a92ef7cf313d743bef3c03518371a7.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Casino/Audio/cards-pack-open-2.ogg"
+dest_files=["res://.godot/imported/cards-pack-open-2.ogg-08a92ef7cf313d743bef3c03518371a7.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

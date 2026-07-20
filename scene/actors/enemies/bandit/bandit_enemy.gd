@@ -170,6 +170,7 @@ func take_damage(amount: float):
 		dead   = true
 	health_bar.value = health
 	if not dead:
+		AudioManager.play_sfx("enemy_hurt")
 		_hit_knockback()
 
 # ─── Hit reaction (knockback + red flash) ────────────────────────────────────────
@@ -214,6 +215,7 @@ func handle_death():
 		Global.PlayerBody.gain_exp(exp_value)
 		Global.PlayerBody.gain_score(score_value)
 	ProgressionManager.notify("enemy_defeated", {"type": "bandit"})   # can unlock lore
+	AudioManager.play_sfx("bandit_death")
 	queue_free()
 
 # ───────────────────────────────────────────────────────────────────────────────
@@ -237,6 +239,7 @@ func _tick_attack(delta: float) -> void:
 		return
 	if is_instance_valid(Global.playerHitbox) and $FrogDealDamageArea.overlaps_area(Global.playerHitbox):
 		_atk_cd_remaining = attack_cooldown
+		AudioManager.play_sfx("bandit_attack")
 		if is_instance_valid(col):
 			col.set_deferred("disabled", true)
 
@@ -246,6 +249,7 @@ func _on_direction_timer_timeout():
 func _on_detection_zone_body_entered(body: Node2D):
 	if body == Global.PlayerBody:
 		player_in_range = true
+		AudioManager.play_alert()
 
 func _on_detection_zone_body_exited(body: Node2D):
 	if body == Global.PlayerBody:

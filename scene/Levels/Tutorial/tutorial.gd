@@ -21,7 +21,7 @@ func _ready() -> void:
 	Global.tutorial_mode = true    # hand out every skill for teaching (save untouched)
 	Global.arcade_mode   = false
 	scene_transition_anim.play("fade_out")
-	audio_bgm.play()
+	AudioManager.play_music("tutorial")
 	_localize_signs()
 	_place_exit_portal_fx()
 	# The Player's _ready builds its skill HUD BEFORE tutorial_mode is set (child readies
@@ -51,7 +51,7 @@ func _localize_signs() -> void:
 		"L_move":  "GERAK:  A / D",
 		"L_jump":  "LOMPAT:  SPACE",
 		"L_2jump": "tekan space dua kali di udara = LOMPAT GANDA",
-		"L_dash":  "DASH:  SHIFT   -   dash melewati jurang  >>",
+		"L_dash":  "DASH:  SHIFT",
 		"L_fire":  "Klik-Kiri serang, E untuk panah",
 		"L_tab":   "Tekan TAB untuk upgrade skill",
 		"L_plat":  "PLATFORM:\n1. padat\n2. bergerak\n3. jatuh (jangan berlama-lama)",

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c1bj6m4hnvi6r"
+path="res://.godot/imported/card-slide-4.ogg-60bb9de54260cd7fad89e7fbf21876d0.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Casino/Audio/card-slide-4.ogg"
+dest_files=["res://.godot/imported/card-slide-4.ogg-60bb9de54260cd7fad89e7fbf21876d0.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

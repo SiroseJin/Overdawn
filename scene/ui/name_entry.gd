@@ -48,6 +48,7 @@ func _ready() -> void:
 	_line.add_theme_font_override("font", BODY)
 	_line.add_theme_font_size_override("font_size", 18)
 	_line.text_submitted.connect(func(_t): _submit())
+	_line.text_changed.connect(func(_t): AudioManager.play_ui("name_key"))
 	box.add_child(_line)
 
 	var row := HBoxContainer.new()

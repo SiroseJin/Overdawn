@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ds3smpjmw3ofn"
+path="res://.godot/imported/scream_02.ogg-d1c502ff32718ee4f5d1bbf8c4ebd55e.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/80 CC0 creature SFX + #2/scream_02.ogg"
+dest_files=["res://.godot/imported/scream_02.ogg-d1c502ff32718ee4f5d1bbf8c4ebd55e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

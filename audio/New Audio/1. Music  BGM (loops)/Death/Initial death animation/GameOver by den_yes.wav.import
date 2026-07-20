@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bbmvyptromrng"
+path="res://.godot/imported/GameOver by den_yes.wav-a53dac431818f4a3f7530cfc6f238dfc.sample"
+
+[deps]
+
+source_file="res://audio/New Audio/1. Music  BGM (loops)/Death/Initial death animation/GameOver by den_yes.wav"
+dest_files=["res://.godot/imported/GameOver by den_yes.wav-a53dac431818f4a3f7530cfc6f238dfc.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

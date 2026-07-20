@@ -11,8 +11,12 @@ extends Node2D
 @onready var audio_bgm:             AudioStreamPlayer = $AudioBGM
 
 const TRADER       := "res://art/Free-City-Trader-Character-Sprite-Sheets-Pixel-Art/"
+const YESNO_PROMPT := preload("res://scene/actors/npc/yes_no_prompt.tscn")
+const NPC_GUIDE    := preload("res://scene/system/vfx/npc_guide.gd")
+const HELP_GROUP   := "guide_to"
 
 var _transitioning := false
+var _help_accepted := false
 
 func _ready() -> void:
 	Global.gameStarted = true
@@ -20,9 +24,11 @@ func _ready() -> void:
 	Global.decorate_stage_portals()
 	# Truth Shards are placed in the editor now (collectible.tscn instances you can drag).
 	scene_transition_anim.play("fade_out")
-	audio_bgm.play()
+	AudioManager.play_music("stage5")
+	AudioManager.play_ambience("hopeful")
 	_apply_npc_skins()
 	_configure_npcs()
+	_spawn_help_guide()
 
 func _apply_npc_skins() -> void:
 	_skin("Arif", "Trader_1")
@@ -40,6 +46,14 @@ func _configure_npcs() -> void:
 	if n1:
 		n1.npc_id = "stage5_intro"
 		n1.repeat_timeline = "arif_rep"
+		# After Arif's maze warning, offer help (a Yes/No prompt shown on `talked`).
+		if not n1.talked.is_connected(_on_arif_talked):
+			n1.talked.connect(_on_arif_talked)
+
+	# Reaching / talking to the Warden clears the green guide-line to her.
+	var warden := get_node_or_null("Warden")
+	if warden and not warden.talked.is_connected(_on_warden_talked):
+		warden.talked.connect(_on_warden_talked)
 
 	# The must-do final quiz at the end (Wira). Passing grants the key that opens
 	# the gate to Stage 6 (the boss). Non-consuming so retries don't force a redo.
@@ -64,6 +78,51 @@ func _reveal_hidden_lifts(_npc_id: String) -> void:
 		var lift := get_node_or_null(lift_name)
 		if lift and lift.has_method("activate"):
 			lift.activate()
+
+# ─── Arif's help offer ─────────────────────────────────────────────────────────────
+# A world-space guide line that lights up green toward the Warden once the player
+# accepts Arif's offer of help.
+func _spawn_help_guide() -> void:
+	if has_node("WardenGuide"):
+		return
+	var g := Node2D.new()
+	g.set_script(NPC_GUIDE)
+	g.name = "WardenGuide"
+	add_child(g)
+
+# After Arif's dialogue, offer help. Re-offered each talk until the player accepts.
+func _on_arif_talked(_npc_id: String) -> void:
+	if _help_accepted or _transitioning:
+		return
+	var layer := CanvasLayer.new()
+	layer.layer = 60
+	add_child(layer)
+	var prompt := YESNO_PROMPT.instantiate()
+	layer.add_child(prompt)
+	prompt.answered.connect(func(yes: bool):
+		layer.queue_free()
+		if yes:
+			_help_accepted = true
+			var warden := get_node_or_null("Warden")
+			if warden and not warden.is_in_group(HELP_GROUP):
+				warden.add_to_group(HELP_GROUP)
+			_arif_toast("Follow the glow — the Warden holds the key you'll need.",
+						"Ikuti cahayanya — Warden menyimpan kunci yang kamu butuhkan.")
+		else:
+			_arif_toast("Then trust your own footing. Good luck out there.",
+						"Kalau begitu percayai pijakanmu sendiri. Semoga berhasil di luar sana."))
+
+# Reaching the Warden clears the guide line.
+func _on_warden_talked(_npc_id: String) -> void:
+	var warden := get_node_or_null("Warden")
+	if warden and warden.is_in_group(HELP_GROUP):
+		warden.remove_from_group(HELP_GROUP)
+
+func _arif_toast(en: String, id_txt: String) -> void:
+	var p = Global.PlayerBody
+	if is_instance_valid(p) and p.has_method("show_toast"):
+		var id := TranslationServer.get_locale().begins_with("id")
+		p.show_toast("Arif: " + (id_txt if id else en))
 
 # ─── Transitions ─────────────────────────────────────────────────────────────────
 

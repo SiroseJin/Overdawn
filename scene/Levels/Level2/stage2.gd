@@ -15,7 +15,8 @@ func _ready() -> void:
 	Global.decorate_stage_portals()
 	# Truth Shards are placed in the editor now (collectible.tscn instances you can drag).
 	scene_transition_anim.play("fade_out")
-	audio_bgm.play()
+	AudioManager.play_music("stage2")
+	AudioManager.play_ambience("city")
 	_apply_npc_skins()
 	_configure_npcs()
 
@@ -30,15 +31,17 @@ func _configure_npcs() -> void:
 			n.npc_id = pair[1]
 			if repeats.has(pair[0]):
 				n.repeat_timeline = repeats[pair[0]]
-	# Yani is the must-talk gate NPC: speaking to her unlocks Double Jump AND hands
-	# over the key that opens the exit door — no key to hunt for.
+	# Yani is the must-talk gate NPC: speaking to her hands over the key that opens the
+	# exit door — no key to hunt for. (Double Jump moved to Nadia at the start so the
+	# whole stage can be built around it — vertical climb, richer platforming.)
 	var yani := get_node_or_null("Yani")
 	if yani:
-		yani.unlocks_skill = "double_jump"
 		yani.grants_key    = "stage2_key"
-	# Nadia (first NPC) hands out a minor, easy OPTIONAL side quest — pass Rafi's quiz (#13).
+	# Nadia (first NPC) now teaches DOUBLE JUMP right away, and hands out a minor,
+	# easy OPTIONAL side quest — pass Rafi's quiz (#13).
 	var nadia := get_node_or_null("Nadia")
 	if nadia:
+		nadia.unlocks_skill    = "double_jump"
 		nadia.quest_id         = "q_s2_quiz_whiz"
 		nadia.quest_giver_name = "Nadia"
 	# Rafi hosts the OPTIONAL end-of-stage quiz — themed on this layer's bait platforms.

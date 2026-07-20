@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://djhl55b8uexyx"
+path="res://.godot/imported/switch17.ogg-b14c78ceff012775e10a9cfa75b1bbde.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/8. UI  menus (one-shots)/Kenney UI/Audio/switch17.ogg"
+dest_files=["res://.godot/imported/switch17.ogg-b14c78ceff012775e10a9cfa75b1bbde.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

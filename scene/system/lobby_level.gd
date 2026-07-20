@@ -16,7 +16,7 @@ func _ready() -> void:
 	Global.tutorial_mode = false   # returning from the tutorial re-locks the skills
 	lobby_camera.enabled = true
 	scene_transition_anim.play("fade_out")
-	audio_bgm.play()
+	AudioManager.play_music("lobby")
 	Global.warm_dialogic()   # build the dialogue layout now, so the first NPC talk is instant
 	# The lobby NPC's dialogue offers a Yes/No; picking Yes emits this Dialogic signal
 	# (kept for compatibility; the choice is now a real prompt shown on `talked`).

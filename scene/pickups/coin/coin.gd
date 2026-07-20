@@ -11,6 +11,7 @@ class_name CoinItem
 
 const SCORE_VALUE: int = 10
 const COIN_VALUE:  int = 1
+const EXP_VALUE:   int = 1
 
 # ───────────────────────────────────────────────────────────────────────────────
 # Signals
@@ -21,6 +22,9 @@ func _on_body_entered(body):
 	if Global.PlayerBody:
 		Global.PlayerBody.gain_score(SCORE_VALUE)
 		ProgressionManager.add_coins(COIN_VALUE)   # currency for the main game
+		if Global.PlayerBody.has_method("gain_exp"):
+			Global.PlayerBody.gain_exp(EXP_VALUE)  # a real coin also nudges you toward level-up
+		AudioManager.play_sfx("coin")
 		Global.spawn_burst(global_position, Color(1, 0.85, 0.2), 14)   # gold pop
 		animation_player.play("pickup")
 		await get_tree().create_timer(0.4).timeout

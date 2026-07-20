@@ -34,6 +34,7 @@ func _on_detect_entered(body: Node2D) -> void:
 
 	if not ProgressionManager.has_key(required_key):
 		hint.show()
+		AudioManager.play_sfx("door_locked")
 		return
 	if consume_key:
 		ProgressionManager.consume_key(required_key)
@@ -46,6 +47,7 @@ func _on_detect_exited(body: Node2D) -> void:
 func _open(body: Node2D) -> void:
 	_opened = true
 	hint.hide()
+	AudioManager.play_sfx("door_open")
 	collision.set_deferred("disabled", true)
 	if body.has_method("show_toast"):
 		body.show_toast(tr("The way out opens"))

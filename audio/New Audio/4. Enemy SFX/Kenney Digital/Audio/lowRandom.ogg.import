@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c41wqvp4vpsuw"
+path="res://.godot/imported/lowRandom.ogg-8073983fc24360272948b1f61ea99974.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Digital/Audio/lowRandom.ogg"
+dest_files=["res://.godot/imported/lowRandom.ogg-8073983fc24360272948b1f61ea99974.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -77,6 +77,7 @@ func _hit(target: Node) -> void:
 		return
 	_spent = true
 	target.take_damage(damage)
+	AudioManager.play_sfx("arrow_hit")
 	queue_free()
 
 # ───────────────────────────────────────────────────────────────────────────────

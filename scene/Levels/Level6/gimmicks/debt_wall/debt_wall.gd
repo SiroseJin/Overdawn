@@ -24,6 +24,7 @@ var _advancing := false
 
 func _ready() -> void:
 	_advancing = auto_start
+	AudioManager.attach_loop(self, "debt_wall", -6.0)   # grinding advance of the wall
 
 func _process(delta: float) -> void:
 	var p = Global.PlayerBody

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://diumnsenw8y51"
+path="res://.godot/imported/game-over.mp3-8485a5247373e2953de2399fb3e33a91.mp3str"
+
+[deps]
+
+source_file="res://audio/New Audio/1. Music  BGM (loops)/Death/death screen/game-over.mp3"
+dest_files=["res://.godot/imported/game-over.mp3-8485a5247373e2953de2399fb3e33a91.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

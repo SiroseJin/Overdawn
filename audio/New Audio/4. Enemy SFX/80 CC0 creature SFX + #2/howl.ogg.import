@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c77m26j1ntlhn"
+path="res://.godot/imported/howl.ogg-8a67b11af51a32c33815080758aa0275.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/80 CC0 creature SFX + #2/howl.ogg"
+dest_files=["res://.godot/imported/howl.ogg-8a67b11af51a32c33815080758aa0275.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bvl0rtegpnttp"
+path="res://.godot/imported/impactMining_001.ogg-146405699c19759ca64f1ef49b371800.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/5. Boss – The House  Bandar (Stage 6)/Kenney Impact/Audio/impactMining_001.ogg"
+dest_files=["res://.godot/imported/impactMining_001.ogg-146405699c19759ca64f1ef49b371800.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

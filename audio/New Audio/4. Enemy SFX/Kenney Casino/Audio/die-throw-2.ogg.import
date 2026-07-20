@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bh2cs64lc4afr"
+path="res://.godot/imported/die-throw-2.ogg-9a1ca2b72590b848e0e6de9c640d4e05.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Casino/Audio/die-throw-2.ogg"
+dest_files=["res://.godot/imported/die-throw-2.ogg-9a1ca2b72590b848e0e6de9c640d4e05.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

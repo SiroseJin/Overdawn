@@ -135,6 +135,7 @@ func reset() -> void:
 	player_health_max  = 100
 	player_strength    = 11
 	player_score       = 0
+	Difficulty.set_difficulty(Difficulty.Level.NORMAL)
 
 # ─── Skills: unlock / level ──────────────────────────────────────────────────────
 
@@ -397,6 +398,7 @@ func to_dict() -> Dictionary:
 		"player_health_max":  player_health_max,
 		"player_strength":    player_strength,
 		"player_score":       player_score,
+		"difficulty":         Difficulty.current,
 	}
 
 func from_dict(data: Dictionary) -> void:
@@ -426,5 +428,6 @@ func from_dict(data: Dictionary) -> void:
 	player_health_max  = int(data.get("player_health_max", 100))
 	player_strength    = int(data.get("player_strength", 11))
 	player_score       = int(data.get("player_score", 0))
+	Difficulty.set_difficulty(int(data.get("difficulty", Difficulty.Level.NORMAL)))
 	coins_changed.emit(coins)
 	skill_points_changed.emit(skill_points)

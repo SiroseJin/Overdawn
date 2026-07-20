@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dauj8i2cqe6lt"
+path="res://.godot/imported/sfx_movement_dooropen1.wav-ca0ded12a0540878d6da0bf07b07a006.sample"
+
+[deps]
+
+source_file="res://audio/New Audio/3. Player SFX (one-shots unless noted)/The Essential Retro Video Game Sound Effects Collection [512 sounds] By Juhani Junkala/Movement/Opening Doors/sfx_movement_dooropen1.wav"
+dest_files=["res://.godot/imported/sfx_movement_dooropen1.wav-ca0ded12a0540878d6da0bf07b07a006.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

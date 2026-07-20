@@ -119,7 +119,9 @@ func slot_label(slot: int) -> String:
 	var scene_name : String = scene_path.get_file().get_basename().capitalize()
 	if data.get("arcade_mode", false):
 		scene_name = "Arcade W%d" % int(data.get("current_wave", 0))
-	return "%s: %s  Lv%d · %s · %d badges · %s" % [label_name, pname, lvl, pt, badges, scene_name]
+	var diff : String = Difficulty.name_of(int(data.get("difficulty", Difficulty.Level.NORMAL)))
+	var score : int = int(data.get("player_score", data.get("progression", {}).get("player_score", 0)))
+	return "%s: %s  Lv%d · %s · %s · Score %d · %d badges · %s" % [label_name, pname, lvl, diff, pt, score, badges, scene_name]
 
 # Seconds → compact "1h 23m" / "12m".
 func _format_playtime(seconds: float) -> String:
@@ -285,6 +287,7 @@ func collect_save_data() -> Dictionary:
 	data["play_time"]     = ProgressionManager.play_time
 	data["badge_count"]   = ProgressionManager.badge_count()
 	data["save_level"]    = ProgressionManager.player_level
+	data["difficulty"]    = Difficulty.current
 
 	if is_instance_valid(Global.PlayerBody):
 		var p := Global.PlayerBody

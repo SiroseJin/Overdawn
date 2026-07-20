@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://diwokvgskyivp"
+path="res://.godot/imported/sfx_wpn_missilelaunch.wav-b38a37a80de3858d67c9b1c7f7724994.sample"
+
+[deps]
+
+source_file="res://audio/New Audio/3. Player SFX (one-shots unless noted)/The Essential Retro Video Game Sound Effects Collection [512 sounds] By Juhani Junkala/Weapons/Grenade Whistles/sfx_wpn_missilelaunch.wav"
+dest_files=["res://.godot/imported/sfx_wpn_missilelaunch.wav-b38a37a80de3858d67c9b1c7f7724994.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

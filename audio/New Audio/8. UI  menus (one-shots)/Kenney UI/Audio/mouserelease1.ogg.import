@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://jb88vuqmdprk"
+path="res://.godot/imported/mouserelease1.ogg-656889722e78b4e930a8c57851e387cc.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/8. UI  menus (one-shots)/Kenney UI/Audio/mouserelease1.ogg"
+dest_files=["res://.godot/imported/mouserelease1.ogg-656889722e78b4e930a8c57851e387cc.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

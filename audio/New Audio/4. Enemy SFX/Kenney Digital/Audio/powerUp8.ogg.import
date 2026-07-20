@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dk1btsj53i5iw"
+path="res://.godot/imported/powerUp8.ogg-2ebfc3eea18a54102c83e320b9b52ba3.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Digital/Audio/powerUp8.ogg"
+dest_files=["res://.godot/imported/powerUp8.ogg-2ebfc3eea18a54102c83e320b9b52ba3.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://o22c7gwlxqd4"
+path="res://.godot/imported/chips-stack-2.ogg-d7d0b9dcea08ca29de59524bca08f549.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Casino/Audio/chips-stack-2.ogg"
+dest_files=["res://.godot/imported/chips-stack-2.ogg-d7d0b9dcea08ca29de59524bca08f549.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

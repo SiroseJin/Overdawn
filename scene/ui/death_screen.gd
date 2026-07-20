@@ -11,6 +11,8 @@ extends Control
 var _pending_scene := ""
 
 func show_screen() -> void:
+	AudioManager.stop_ambience()
+	AudioManager.play_music("game_over")
 	_refresh_load_slots()
 	# Only offer "From Checkpoint" when there's a checkpoint to return to in this stage.
 	checkpoint_button.visible = CheckpointManager.can_respawn()

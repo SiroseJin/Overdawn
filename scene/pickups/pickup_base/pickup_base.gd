@@ -14,8 +14,13 @@ enum Kind { HEALTH, SPEED }
 @export var speed_multiplier: float = 1.6  # SPEED: walk-speed factor while active
 @export var speed_duration: float = 5.0    # SPEED: seconds the boost lasts
 
-@onready var visual: Polygon2D = $Visual
-@onready var tag:    Label     = $Tag
+# Sprites per kind — swap these in the inspector to re-skin the pickup. The correct
+# one is applied automatically based on `kind`.
+@export var health_texture: Texture2D = preload("res://art/pickups/health.png")
+@export var speed_texture:  Texture2D = preload("res://art/pickups/speed.png")
+
+@onready var visual: Sprite2D = $Visual
+@onready var tag:    Label    = $Tag
 
 var _float_tween: Tween
 
@@ -31,11 +36,15 @@ func _apply_appearance() -> void:
 	var is_id := TranslationServer.get_locale().begins_with("id")
 	match kind:
 		Kind.HEALTH:
-			visual.color = Color(0.3, 0.9, 0.45)
+			visual.texture = health_texture
 			tag.text = "Nyawa" if is_id else tr("Health")
 		Kind.SPEED:
-			visual.color = Color(0.35, 0.8, 1.0)
+			visual.texture = speed_texture
 			tag.text = "Kecepatan" if is_id else tr("Speed Boost")
+
+# Colour used for the collect burst (the sprites carry their own art now).
+func _kind_color() -> Color:
+	return Color(0.3, 0.9, 0.45) if kind == Kind.HEALTH else Color(0.35, 0.8, 1.0)
 
 func _start_float() -> void:
 	var base_y := position.y
@@ -64,7 +73,7 @@ func _on_body_entered(body: Node2D) -> void:
 	_collect()
 
 func _collect() -> void:
-	Global.spawn_burst(global_position, visual.color, 16)
+	Global.spawn_burst(global_position, _kind_color(), 16)
 	set_deferred("monitoring", false)
 	if _float_tween:
 		_float_tween.kill()

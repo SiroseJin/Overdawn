@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c0gido6yrps0g"
+path="res://.godot/imported/Preview.ogg-22a6d0aa32f49bb3ec672fce15e5563b.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Digital/Preview.ogg"
+dest_files=["res://.godot/imported/Preview.ogg-22a6d0aa32f49bb3ec672fce15e5563b.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

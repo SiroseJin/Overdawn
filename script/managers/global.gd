@@ -187,32 +187,68 @@ var use_w_to_jump: bool = false
 var checkpoints_enabled: bool = true
 
 # ─── Story-mode enemy scaling ────────────────────────────────────────────────────
-# In STORY mode only, enemies get a mild stat buff that grows with the player's level
-# so the world doesn't feel trivial once you out-level it: +1% per 5 player levels
-# (Lv5 = +1%, Lv10 = +2%, …). Speed gets only a quarter of that, capped at +10%, so
-# it never becomes an unfair chase. Arcade mode is unaffected (it has its own scaling).
-func story_enemy_buff() -> float:
-	if arcade_mode or not is_instance_valid(PlayerBody) or not ("level" in PlayerBody):
-		return 0.0
-	return floor(int(PlayerBody.level) / 5.0) * 0.01
+# ─── Story-mode enemy scaling (proportional to the player) ───────────────────────
+# STORY mode only. Instead of a flat % (which the player's own +2 STR / +8 HP per level
+# quickly outgrows), enemies scale off the PLAYER'S stats so the *effort per enemy*
+# stays roughly flat as you level:
+#   • HP        += your basic attack damage × HP_PER_DMG   → kills take ~the same #hits
+#   • Contact dmg += your max HP           × DMG_PER_HP    → a hit stays a real % of your bar
+# It's ADDITIVE off your stats (not a multiplier), so it lifts a weak enemy and a beefy
+# one by the same absolute amount and never turns the tanky ones into HP sponges.
+#
+# HP_PER_DMG is tuned so the weakest enemy (Adbot, 20 base HP) first becomes a one-shot
+# around Lv40: one-shot when STR ≥ 20 + STR×0.78  →  STR ≥ ~91  →  Lv41. Below that it
+# takes 2 hits; tougher enemies (Bandit/Collector/Dealer) take proportionally more.
+# Speed only creeps up a little (capped +10%) so it never becomes an unfair chase.
+# Arcade mode is unaffected (it has its own wave scaling).
+const HP_PER_DMG  := 0.78   # enemy bonus HP per point of player attack damage
+const DMG_PER_HP  := 0.08   # enemy bonus contact damage per point of player max HP
 
-## Apply the story-mode buff to an enemy's stats. Call once from the enemy's _ready.
-## Safe on any enemy — only touches the stats it actually has.
 func apply_enemy_scaling(e: Object) -> void:
-	var buff := story_enemy_buff()
-	if buff <= 0.0:
+	if arcade_mode or not is_instance_valid(PlayerBody):
 		return
-	var spd_buff := minf(buff * 0.25, 0.10)
+	# Per-save DIFFICULTY multiplier on enemy attack + HP (story mode only). Applied
+	# first so it scales the base stats regardless of the level-scaling below.
+	_apply_difficulty_scaling(e)
+	var p = PlayerBody
+	# Player's basic melee damage (= effective strength) and effective max HP.
+	var pdmg: float = float(p.strength) if ("strength" in p) else 0.0
+	var php: float
+	if p.has_method("max_hp"):
+		php = float(p.max_hp())
+	elif "health_max" in p:
+		php = float(p.health_max)
+	if pdmg <= 0.0 and php <= 0.0:
+		return
+
+	var hp_bonus: float = pdmg * HP_PER_DMG
 	if "health_max" in e:
-		e.health_max *= (1.0 + buff)
+		e.health_max += hp_bonus
 		if "health" in e:
 			e.health = e.health_max
 	elif "health" in e:
-		e.health *= (1.0 + buff)
+		e.health += hp_bonus
+
 	if "damage_to_deal" in e:
-		e.damage_to_deal = int(round(e.damage_to_deal * (1.0 + buff)))
-	if "speed" in e:
-		e.speed *= (1.0 + spd_buff)
+		e.damage_to_deal = int(round(e.damage_to_deal + php * DMG_PER_HP))
+
+	if "speed" in e and ("level" in p):
+		e.speed *= 1.0 + minf((int(p.level) - 1) * 0.003, 0.10)   # up to +10%, ~Lv34
+
+# Scale ONLY enemy attack + HP by the chosen difficulty. Runs before the level
+# scaling so it multiplies the enemy's base stats.
+func _apply_difficulty_scaling(e: Object) -> void:
+	var m: float = Difficulty.enemy_mult()
+	if is_equal_approx(m, 1.0):
+		return
+	if "health_max" in e:
+		e.health_max *= m
+		if "health" in e:
+			e.health = e.health_max
+	elif "health" in e:
+		e.health *= m
+	if "damage_to_deal" in e:
+		e.damage_to_deal = int(round(e.damage_to_deal * m))
 
 # ─── Enemy line-of-sight (slope-aware) ─────────────────────────────────────────────
 ## Can `from` see `target` (defaults to the player)? A steep wall blocks sight, but a

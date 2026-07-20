@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://devomrt7fj34j"
+path="res://.godot/imported/396457__patricklieberkind__dark-ambient-drone.wav-fe8f50b52405463d9547c72471be5253.sample"
+
+[deps]
+
+source_file="res://audio/New Audio/2. Ambience loops (background beds, quiet)/Debt  dread (Stages 3–4)/396457__patricklieberkind__dark-ambient-drone.wav"
+dest_files=["res://.godot/imported/396457__patricklieberkind__dark-ambient-drone.wav-fe8f50b52405463d9547c72471be5253.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

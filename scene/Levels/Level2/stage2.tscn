@@ -16,16 +16,21 @@
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="itm_door"]
 [ext_resource type="PackedScene" uid="uid://bwiyib8fihf07" path="res://scene/pickups/fake_coin/fake_coin.tscn" id="itm_fakecoin"]
+[ext_resource type="Texture2D" uid="uid://cfg2kauplqr1l" path="res://art/Stage1Terrain/props/grating.png" id="px_grate"]
+[ext_resource type="Texture2D" uid="uid://cuvowxvfto101" path="res://art/Stage1Terrain/props/ad_screen.png" id="px_screen"]
+[ext_resource type="Texture2D" uid="uid://5xebynutc4y1" path="res://art/Stage1Terrain/props/vent_hub.png" id="px_vent"]
 [ext_resource type="PackedScene" uid="uid://ctruthshard01" path="res://scene/pickups/collectible/collectible.tscn" id="shard_scn"]
+[ext_resource type="Texture2D" uid="uid://dy14c6dtdmx3m" path="res://art/Stage1Terrain/body.png" id="tex_body"]
+[ext_resource type="Texture2D" uid="uid://dph2g5hsn6rqn" path="res://art/Stage1Terrain/platform.png" id="tex_plat"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_death"]
-size = Vector2(5200, 60)
+[sub_resource type="RectangleShape2D" id="RS_death"]
+size = Vector2(6200, 120)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8h1xg"]
+[sub_resource type="RectangleShape2D" id="RS_portal"]
 size = Vector2(40, 80)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gfr2h"]
-size = Vector2(20.5, 412)
+[sub_resource type="RectangleShape2D" id="RS_cp"]
+size = Vector2(110, 200)
 
 [node name="Stage2" type="Node2D" unique_id=464765020]
 script = ExtResource("1_27d72")
@@ -35,42 +40,352 @@ layer = -1
 
 [node name="Terrain" type="StaticBody2D" parent="." unique_id=1244107896]
 
-[node name="Ground1" type="CollisionPolygon2D" parent="Terrain" unique_id=1324634089]
-polygon = PackedVector2Array(0, 650, 700, 650, 1000, 580, 1600, 580, 1600, 720, 0, 720)
+[node name="G1a" type="CollisionPolygon2D" parent="Terrain" unique_id=820000006]
+position = Vector2(-20.984375, 0)
+scale = Vector2(0.92285156, 1)
+polygon = PackedVector2Array(-80, 672, 560, 672, 560, 860, -80, 860)
 
-[node name="Ground2" type="CollisionPolygon2D" parent="Terrain" unique_id=974537257]
-polygon = PackedVector2Array(1686, 579, 2400, 580, 2700, 520, 3100, 520, 3100, 720, 1686, 721)
+[node name="G1b" type="CollisionPolygon2D" parent="Terrain" unique_id=820000008]
+position = Vector2(172.69095, 0)
+scale = Vector2(0.9271653, 1)
+polygon = PackedVector2Array(720, 672, 1990, 672, 1990, 860, 720, 860)
 
-[node name="Ground3" type="CollisionPolygon2D" parent="Terrain" unique_id=723858415]
-position = Vector2(530, 1)
-scale = Vector2(0.88744915, 1)
-polygon = PackedVector2Array(3400, 520, 4000, 520, 4300, 570, 4700, 570, 4700, 720, 3399.6313, 717.99994)
+[node name="Gtop" type="CollisionPolygon2D" parent="Terrain" unique_id=820000009]
+position = Vector2(0, -60.63234)
+scale = Vector2(1, 1.0569853)
+polygon = PackedVector2Array(1990, 180, 2160, 180, 2160, 860, 1990, 860)
 
-[node name="LeftWall" type="CollisionPolygon2D" parent="Terrain" unique_id=743282392]
-polygon = PackedVector2Array(-100, -300, 0, -300, 0, 800, -100, 800)
+[node name="G3a" type="CollisionPolygon2D" parent="Terrain" unique_id=820000010]
+polygon = PackedVector2Array(2160, 672, 2600, 672, 2600, 860, 2160, 860)
 
-[node name="RightWall" type="CollisionPolygon2D" parent="Terrain" unique_id=1748262195]
-polygon = PackedVector2Array(4700, -300, 4800, -300, 4800, 800, 4700, 800)
+[node name="G3b" type="CollisionPolygon2D" parent="Terrain" unique_id=820000011]
+polygon = PackedVector2Array(2600, 624, 3140, 624, 3140, 860, 2600, 860)
 
-[node name="RightWall2" type="CollisionPolygon2D" parent="Terrain" unique_id=1388719708]
-position = Vector2(-9134.02, 121)
-scale = Vector2(2.900004, 0.3471591)
-polygon = PackedVector2Array(4700, -300, 4800, -300, 4800, 800, 4700, 800)
+[node name="G4a" type="CollisionPolygon2D" parent="Terrain" unique_id=820000012]
+polygon = PackedVector2Array(3200, 672, 3560, 672, 3560, 860, 3200, 860)
+
+[node name="G4b" type="CollisionPolygon2D" parent="Terrain" unique_id=820000013]
+polygon = PackedVector2Array(4240, 672, 4400, 672, 4400, 860, 4240, 860)
+
+[node name="G5a" type="CollisionPolygon2D" parent="Terrain" unique_id=820000014]
+polygon = PackedVector2Array(4460, 672, 4960, 672, 4960, 860, 4460, 860)
+
+[node name="E5L" type="CollisionPolygon2D" parent="Terrain" unique_id=820000015]
+polygon = PackedVector2Array(4960, 624, 5180, 624, 5180, 860, 4960, 860)
+
+[node name="CaveRoof" type="CollisionPolygon2D" parent="Terrain" unique_id=820000016]
+polygon = PackedVector2Array(5240, 624, 5420, 624, 5420, 664, 5240, 664)
+
+[node name="CaveFloor" type="CollisionPolygon2D" parent="Terrain" unique_id=820000017]
+polygon = PackedVector2Array(5180, 720, 5420, 720, 5420, 860, 5180, 860)
+
+[node name="Gend" type="CollisionPolygon2D" parent="Terrain" unique_id=820000018]
+polygon = PackedVector2Array(5420, 624, 5900, 624, 5900, 860, 5420, 860)
+
+[node name="Gtop2" type="CollisionPolygon2D" parent="Terrain" unique_id=288651159]
+position = Vector2(-790.00006, 24)
+scale = Vector2(1.5477941, 0.71691173)
+polygon = PackedVector2Array(2001.6294, 151.81726, 2171.6294, 151.81726, 2171.6294, 831.81726, 2001.6294, 831.81726)
+
+[node name="Gtop3" type="CollisionPolygon2D" parent="Terrain" unique_id=1775215071]
+position = Vector2(-488, 138)
+scale = Vector2(1.5282962, 0.3387657)
+polygon = PackedVector2Array(2001.6294, 151.81726, 2171.6294, 151.81726, 2171.6294, 831.81726, 2001.6294, 831.81726)
+
+[node name="Gtop4" type="CollisionPolygon2D" parent="Terrain" unique_id=1089844863]
+position = Vector2(-1915.0001, 218)
+scale = Vector2(2.3654878, 0.24286512)
+polygon = PackedVector2Array(2001.6294, 151.81726, 2171.6294, 151.81726, 2171.6294, 831.81726, 2001.6294, 831.81726)
+
+[node name="ClimbC2" type="CollisionPolygon2D" parent="Terrain" unique_id=820000019]
+polygon = PackedVector2Array(1360, 472, 1500, 472, 1500, 488, 1360, 488)
+
+[node name="ClimbC3" type="CollisionPolygon2D" parent="Terrain" unique_id=820000020]
+polygon = PackedVector2Array(1620, 276, 1860, 276, 1860, 292, 1620, 292)
+
+[node name="S3Ledge" type="CollisionPolygon2D" parent="Terrain" unique_id=820000022]
+polygon = PackedVector2Array(2820, 520, 2980, 520, 2980, 536, 2820, 536)
+
+[node name="CaveStep" type="CollisionPolygon2D" parent="Terrain" unique_id=820000023]
+polygon = PackedVector2Array(5190, 672, 5240, 672, 5240, 688, 5190, 688)
+
+[node name="LeftWall" type="CollisionPolygon2D" parent="Terrain" unique_id=820000024]
+polygon = PackedVector2Array(-120, -400, -80, -400, -80, 860, -120, 860)
+
+[node name="Ceiling" type="CollisionPolygon2D" parent="Terrain" unique_id=820000025]
+polygon = PackedVector2Array(-120, 40, 5900, 40, 5900, 80, -120, 80)
+
+[node name="Ledge3a" type="CollisionPolygon2D" parent="Terrain" unique_id=830000001]
+polygon = PackedVector2Array(2180, 600, 2300, 600, 2300, 616, 2180, 616)
+
+[node name="TerrainVisual" type="Node2D" parent="." unique_id=820000026]
+z_index = -1
+
+[node name="CaveBack" type="Polygon2D" parent="TerrainVisual" unique_id=820000027]
+color = Color(0.05, 0.06, 0.09, 1)
+polygon = PackedVector2Array(5180, 664, 5420, 664, 5420, 720, 5180, 720)
+
+[node name="G1aFill" type="Polygon2D" parent="TerrainVisual" unique_id=820000028]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(-15.234375, 0)
+scale = Vector2(0.9111328, 1)
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(-80, 672, 560, 672, 560, 761.4486, 560, 860, -80, 860)
+uv = PackedVector2Array(-80, 672, 560, 672, 560, 761.4486, 560, 860, -80, 860)
+
+[node name="G1aTop" type="Polygon2D" parent="TerrainVisual" unique_id=820000029]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(-80, 672, 560, 672, 560, 676, -80, 676)
+
+[node name="R1Top" type="Polygon2D" parent="TerrainVisual" unique_id=820000031]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(560, 740, 720, 740, 720, 744, 560, 744)
+
+[node name="G1bFill" type="Polygon2D" parent="TerrainVisual" unique_id=820000032]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(188.0315, 0)
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(720, 672, 1990, 672, 1990, 860, 720, 860, 720, 765.17413)
+uv = PackedVector2Array(720, 672, 1990, 672, 1990, 860, 720, 860, 720, 765.17413)
+
+[node name="G1bTop" type="Polygon2D" parent="TerrainVisual" unique_id=820000033]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(720, 672, 1990, 672, 1990, 676, 720, 676)
+
+[node name="GtopFill" type="Polygon2D" parent="TerrainVisual" unique_id=820000034]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(0, -49)
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(1990, 180, 2160, 180, 2160.0002, 703.06805, 2160, 860, 1990, 860, 1990, 553.73047)
+uv = PackedVector2Array(1990, 180, 2160, 180, 2160.0002, 703.06805, 2160, 860, 1990, 860, 1990, 553.73047)
+
+[node name="GtopTop" type="Polygon2D" parent="TerrainVisual" unique_id=820000035]
+position = Vector2(0, -52)
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(1990, 180, 2160, 180, 2160, 184, 1990, 184)
+
+[node name="G3aFill" type="Polygon2D" parent="TerrainVisual" unique_id=820000036]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(2160, 672, 2600, 672, 2600, 860, 2160, 860)
+uv = PackedVector2Array(2160, 672, 2600, 672, 2600, 860, 2160, 860)
+
+[node name="G3aTop" type="Polygon2D" parent="TerrainVisual" unique_id=820000037]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(2160, 672, 2600, 672, 2600, 676, 2160, 676)
+
+[node name="G3bFill" type="Polygon2D" parent="TerrainVisual" unique_id=820000038]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(2600, 624, 3140, 624, 3140, 860, 2600, 860)
+uv = PackedVector2Array(2600, 624, 3140, 624, 3140, 860, 2600, 860)
+
+[node name="G3bTop" type="Polygon2D" parent="TerrainVisual" unique_id=820000039]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(2600, 624, 3140, 624, 3140, 628, 2600, 628)
+
+[node name="G4aFill" type="Polygon2D" parent="TerrainVisual" unique_id=820000040]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(3200, 672, 3560, 672, 3560, 860, 3200, 860)
+uv = PackedVector2Array(3200, 672, 3560, 672, 3560, 860, 3200, 860)
+
+[node name="G4aTop" type="Polygon2D" parent="TerrainVisual" unique_id=820000041]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(3200, 672, 3560, 672, 3560, 676, 3200, 676)
+
+[node name="G4bFill" type="Polygon2D" parent="TerrainVisual" unique_id=820000042]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(4240, 672, 4400, 672, 4400, 860, 4240, 860)
+uv = PackedVector2Array(4240, 672, 4400, 672, 4400, 860, 4240, 860)
+
+[node name="G4bTop" type="Polygon2D" parent="TerrainVisual" unique_id=820000043]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(4240, 672, 4400, 672, 4400, 676, 4240, 676)
+
+[node name="G5aFill" type="Polygon2D" parent="TerrainVisual" unique_id=820000044]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(4460, 672, 4960, 672, 4960, 860, 4460, 860)
+uv = PackedVector2Array(4460, 672, 4960, 672, 4960, 860, 4460, 860)
+
+[node name="G5aTop" type="Polygon2D" parent="TerrainVisual" unique_id=820000045]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(4460, 672, 4960, 672, 4960, 676, 4460, 676)
+
+[node name="E5LFill" type="Polygon2D" parent="TerrainVisual" unique_id=820000046]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(4960, 624, 5180, 624, 5180, 860, 4960, 860)
+uv = PackedVector2Array(4960, 624, 5180, 624, 5180, 860, 4960, 860)
+
+[node name="E5LTop" type="Polygon2D" parent="TerrainVisual" unique_id=820000047]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(4960, 624, 5180, 624, 5180, 628, 4960, 628)
+
+[node name="CaveRoofFill" type="Polygon2D" parent="TerrainVisual" unique_id=820000048]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(5240, 624, 5420, 624, 5420, 664, 5240, 664)
+uv = PackedVector2Array(5240, 624, 5420, 624, 5420, 664, 5240, 664)
+
+[node name="CaveRoofTop" type="Polygon2D" parent="TerrainVisual" unique_id=820000049]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(5240, 624, 5420, 624, 5420, 628, 5240, 628)
+
+[node name="CaveFloorFill" type="Polygon2D" parent="TerrainVisual" unique_id=820000050]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(5180, 720, 5420, 720, 5420, 860, 5180, 860)
+uv = PackedVector2Array(5180, 720, 5420, 720, 5420, 860, 5180, 860)
+
+[node name="CaveFloorTop" type="Polygon2D" parent="TerrainVisual" unique_id=820000051]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(5180, 720, 5420, 720, 5420, 724, 5180, 724)
+
+[node name="GendFill" type="Polygon2D" parent="TerrainVisual" unique_id=820000052]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(5420, 624, 5900, 624, 5900, 860, 5420, 860)
+uv = PackedVector2Array(5420, 624, 5900, 624, 5900, 860, 5420, 860)
+
+[node name="GendTop" type="Polygon2D" parent="TerrainVisual" unique_id=820000053]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(5420, 624, 5900, 624, 5900, 628, 5420, 628)
+
+[node name="ClimbC2Fill" type="Polygon2D" parent="TerrainVisual" unique_id=820000054]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(1360, 472, 1500, 472, 1500, 488, 1360, 488)
+uv = PackedVector2Array(1360, 0, 1500, 0, 1500, 16, 1360, 16)
+
+[node name="ClimbC2Top" type="Polygon2D" parent="TerrainVisual" unique_id=820000055]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(1360, 472, 1500, 472, 1500, 476, 1360, 476)
+
+[node name="ClimbC3Fill" type="Polygon2D" parent="TerrainVisual" unique_id=820000056]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(1620, 276, 1860, 276, 1860, 292, 1620, 292)
+uv = PackedVector2Array(1620, 0, 1860, 0, 1860, 16, 1620, 16)
+
+[node name="ClimbC3Top" type="Polygon2D" parent="TerrainVisual" unique_id=820000057]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(1620, 276, 1860, 276, 1860, 280, 1620, 280)
+
+[node name="ClimbShardTop" type="Polygon2D" parent="TerrainVisual" unique_id=820000059]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(1520, 196, 1660, 196, 1660, 200, 1520, 200)
+
+[node name="S3LedgeFill" type="Polygon2D" parent="TerrainVisual" unique_id=820000060]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(2820, 520, 2980, 520, 2980, 536, 2820, 536)
+uv = PackedVector2Array(2820, 0, 2980, 0, 2980, 16, 2820, 16)
+
+[node name="S3LedgeTop" type="Polygon2D" parent="TerrainVisual" unique_id=820000061]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(2820, 520, 2980, 520, 2980, 524, 2820, 524)
+
+[node name="CaveStepFill" type="Polygon2D" parent="TerrainVisual" unique_id=820000062]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(5190, 672, 5240, 672, 5240, 688, 5190, 688)
+uv = PackedVector2Array(5190, 0, 5240, 0, 5240, 16, 5190, 16)
+
+[node name="CaveStepTop" type="Polygon2D" parent="TerrainVisual" unique_id=820000063]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(5190, 672, 5240, 672, 5240, 676, 5224.375, 676.00006, 5190, 676)
+
+[node name="Ledge3aFill" type="Polygon2D" parent="TerrainVisual" unique_id=830000008]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(2180, 600, 2300, 600, 2300, 616, 2180, 616)
+uv = PackedVector2Array(2180, 0, 2300, 0, 2300, 16, 2180, 16)
+
+[node name="Ledge3aTop" type="Polygon2D" parent="TerrainVisual" unique_id=830000009]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(2180, 600, 2300, 600, 2300, 604, 2180, 604)
+
+[node name="Ledge5aFill" type="Polygon2D" parent="TerrainVisual" unique_id=830000020]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_plat")
+polygon = PackedVector2Array(4820, 584, 4960, 584, 4960, 600, 4820, 600)
+uv = PackedVector2Array(4820, 0, 4960, 0, 4960, 16, 4820, 16)
+
+[node name="Ledge5aTop" type="Polygon2D" parent="TerrainVisual" unique_id=830000021]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(4820, 584, 4960, 584, 4960, 588, 4820, 588)
+
+[node name="Gtop2Fill" type="Polygon2D" parent="TerrainVisual" unique_id=830000030]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(2308.11, 132.84, 2571.23, 132.84, 2571.23, 620.35, 2308.11, 620.35)
+uv = PackedVector2Array(2308.11, 132.84, 2571.23, 132.84, 2571.23, 620.35, 2308.11, 620.35)
+
+[node name="Gtop2Top" type="Polygon2D" parent="TerrainVisual" unique_id=830000031]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(2308.11, 132.84, 2571.23, 132.84, 2571.23, 136.84, 2308.11, 136.84)
+
+[node name="Gtop3Fill" type="Polygon2D" parent="TerrainVisual" unique_id=830000032]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(2571.08, 189.43, 2830.89, 189.43, 2830.89, 419.81, 2571.08, 419.81)
+uv = PackedVector2Array(2571.08, 189.43, 2830.89, 189.43, 2830.89, 419.81, 2571.08, 419.81)
+
+[node name="Gtop3Top" type="Polygon2D" parent="TerrainVisual" unique_id=830000033]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(2571.08, 189.43, 2830.89, 189.43, 2830.89, 193.43, 2571.08, 193.43)
+
+[node name="Gtop4Fill" type="Polygon2D" parent="TerrainVisual" unique_id=830000034]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(2819.83, 254.87, 3221.95, 254.87, 3221.95, 420.03, 2819.83, 420.03)
+uv = PackedVector2Array(2819.83, 254.87, 3221.95, 254.87, 3221.95, 420.03, 2819.83, 420.03)
+
+[node name="Gtop4Top" type="Polygon2D" parent="TerrainVisual" unique_id=830000035]
+color = Color(0.737, 0.29, 0.608, 1)
+polygon = PackedVector2Array(2819.83, 254.87, 3221.95, 254.87, 3221.95, 258.87, 2819.83, 258.87)
 
 [node name="DeathZone" type="Area2D" parent="." unique_id=2065818650]
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone" unique_id=1163503505]
-position = Vector2(2350, 760)
-shape = SubResource("RectangleShape2D_death")
+position = Vector2(2900, 950)
+shape = SubResource("RS_death")
 
 [node name="Stage3Portal" type="Area2D" parent="." unique_id=2079940058]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stage3Portal" unique_id=399562520]
-position = Vector2(4678, 530)
-shape = SubResource("RectangleShape2D_8h1xg")
+position = Vector2(5820, 588)
+shape = SubResource("RS_portal")
+
+[node name="Stage1Portal" type="Area2D" parent="." unique_id=1595317445]
+collision_mask = 2
 
 [node name="SceneTransitionAnimation" parent="." unique_id=395392518 instance=ExtResource("3_a28qr")]
 visible = false
@@ -83,139 +398,264 @@ stream = ExtResource("4_hi0q6")
 volume_db = -4.0
 bus = &"bgm"
 
-[node name="Stage1Portal" type="Area2D" parent="." unique_id=1595317445]
-collision_mask = 2
+[node name="MP1" parent="." unique_id=820000001 instance=ExtResource("8_mp")]
+position = Vector2(536, 680)
+travel = Vector2(150, 0)
+speed = 90.0
+downtime = 0.4
 
-[node name="MovingPlatform2" parent="." unique_id=101010102 instance=ExtResource("8_mp")]
-position = Vector2(3141, 528)
-travel = Vector2(300, 0)
-speed = 100.0
-downtime = 0.5
-start_on_touch = true
+[node name="End" type="Marker2D" parent="MP1" unique_id=820000065]
+position = Vector2(262, 0)
 
-[node name="End" type="Marker2D" parent="MovingPlatform2" unique_id=101010202]
-position = Vector2(365, 2)
+[node name="MP_v1" parent="." unique_id=101010102 instance=ExtResource("8_mp")]
+position = Vector2(1290, 648)
+travel = Vector2(0, -176)
+speed = 70.0
+
+[node name="End" type="Marker2D" parent="MP_v1" unique_id=820000066]
+position = Vector2(0, -176)
+
+[node name="MP_v2" parent="." unique_id=1898862321 instance=ExtResource("8_mp")]
+position = Vector2(1543, 480)
+travel = Vector2(0, -176)
+speed = 70.0
+
+[node name="End" type="Marker2D" parent="MP_v2" unique_id=820000067]
+position = Vector2(35, -196)
+
+[node name="MP_v3" parent="." unique_id=820000002 instance=ExtResource("8_mp")]
+position = Vector2(1902, 284)
+travel = Vector2(0, -70)
+speed = 60.0
+
+[node name="End" type="Marker2D" parent="MP_v3" unique_id=820000068]
+position = Vector2(46, -145)
+
+[node name="MP_h1" parent="." unique_id=820000003 instance=ExtResource("8_mp")]
+position = Vector2(3620, 660)
+speed = 90.0
+downtime = 0.4
+
+[node name="End" type="Marker2D" parent="MP_h1" unique_id=820000069]
+position = Vector2(200, 0)
+
+[node name="MP_h2" parent="." unique_id=820000004 instance=ExtResource("8_mp")]
+position = Vector2(4000, 660)
+travel = Vector2(180, 0)
+speed = 90.0
+downtime = 0.4
+
+[node name="End" type="Marker2D" parent="MP_h2" unique_id=820000070]
+position = Vector2(180, 0)
+
+[node name="Bait1" parent="." unique_id=2039890420 instance=ExtResource("itm_bait")]
+position = Vector2(1590, 204)
+
+[node name="Bait3" parent="." unique_id=820000005 instance=ExtResource("itm_bait")]
+position = Vector2(2236, 154)
+
+[node name="Bait2" parent="." unique_id=2109161155 instance=ExtResource("itm_bait")]
+position = Vector2(3909, 688)
+
+[node name="Player" parent="." unique_id=1687436434 instance=ExtResource("2_huen1")]
+position = Vector2(60, 656)
 
 [node name="Nadia" parent="." unique_id=1793970328 instance=ExtResource("5_npc1")]
-position = Vector2(120, 645)
+position = Vector2(180, 672)
 dialogue_timeline = "s2npc1timeline"
 
 [node name="Eko" parent="." unique_id=1100485039 instance=ExtResource("5_npc1")]
-position = Vector2(1300, 575)
+position = Vector2(1740, 276)
 dialogue_timeline = "s2npc2timeline"
 
 [node name="Rafi" parent="." unique_id=1052206216 instance=ExtResource("5_npc1")]
-position = Vector2(2400, 575)
+position = Vector2(4359, 670)
 dialogue_timeline = "s2npc3timeline"
 
 [node name="Yani" parent="." unique_id=222555804 instance=ExtResource("5_npc1")]
-position = Vector2(4382, 558)
+position = Vector2(5620, 624)
 dialogue_timeline = "s2npc4timeline"
 
-[node name="Adbot1" parent="." unique_id=1002311709 instance=ExtResource("7_bat")]
-position = Vector2(464, 587)
-
 [node name="Bandit1" parent="." unique_id=1184430268 instance=ExtResource("6_frog")]
-position = Vector2(834, 597)
-
-[node name="Adbot2" parent="." unique_id=2060105248 instance=ExtResource("7_bat")]
-position = Vector2(1936, 498)
-
-[node name="Adbot3" parent="." unique_id=1568614679 instance=ExtResource("7_bat")]
-position = Vector2(2803, 483)
+position = Vector2(962, 661.00006)
 
 [node name="Bandit2" parent="." unique_id=1418470296 instance=ExtResource("6_frog")]
-position = Vector2(3883, 306)
+position = Vector2(2900, 616)
+
+[node name="Adbot1" parent="." unique_id=1002311709 instance=ExtResource("7_bat")]
+position = Vector2(2490, 650)
+
+[node name="Adbot2" parent="." unique_id=2060105248 instance=ExtResource("7_bat")]
+position = Vector2(3917, 615)
+
+[node name="Adbot3" parent="." unique_id=1568614679 instance=ExtResource("7_bat")]
+position = Vector2(4549, 418)
 
 [node name="Adbot4" parent="." unique_id=1523698705 instance=ExtResource("7_bat")]
-position = Vector2(3973, 484)
-
-[node name="Player" parent="." unique_id=1687436434 instance=ExtResource("2_huen1")]
-position = Vector2(100, 630)
+position = Vector2(5060, 540)
 
 [node name="Coin1" parent="." unique_id=596486221 instance=ExtResource("itm_coin")]
-position = Vector2(350, 630)
+position = Vector2(661, 655)
 
 [node name="Coin2" parent="." unique_id=859765874 instance=ExtResource("itm_coin")]
-position = Vector2(1061, 570)
+position = Vector2(1400, 452)
 
 [node name="Coin4" parent="." unique_id=805419589 instance=ExtResource("itm_coin")]
-position = Vector2(2747, 509)
+position = Vector2(2900, 501)
 
 [node name="Coin5" parent="." unique_id=190700179 instance=ExtResource("itm_coin")]
-position = Vector2(3776, 512)
+position = Vector2(4600, 652)
 
 [node name="Coin6" parent="." unique_id=1286487085 instance=ExtResource("itm_coin")]
-position = Vector2(4306, 554)
-
-[node name="Bait1" parent="." unique_id=2039890420 instance=ExtResource("itm_bait")]
-position = Vector2(1643, 588)
-
-[node name="Bait2" parent="." unique_id=2109161155 instance=ExtResource("itm_bait")]
-position = Vector2(2179, 495)
+position = Vector2(5550, 612)
 
 [node name="FakeCoin1" parent="." unique_id=492666077 instance=ExtResource("itm_fakecoin")]
-position = Vector2(584, 635)
+position = Vector2(295, 655)
 
 [node name="FakeCoin3" parent="." unique_id=874326484 instance=ExtResource("itm_fakecoin")]
-position = Vector2(2505, 547)
+position = Vector2(2384, 647)
 
 [node name="FakeCoin4" parent="." unique_id=392353357 instance=ExtResource("itm_fakecoin")]
-position = Vector2(2991, 508)
+position = Vector2(4301, 649)
 
 [node name="FakeCoin5" parent="." unique_id=553800498 instance=ExtResource("itm_fakecoin")]
-position = Vector2(4155, 524)
-
-[node name="Door" parent="." unique_id=1352600287 instance=ExtResource("itm_door")]
-position = Vector2(4541, 484)
-required_key = "stage2_key"
-locked_hint = "Locked. Talk to Yani — she'll open the way."
+position = Vector2(5277, 698)
 
 [node name="SpeedPickup" parent="." unique_id=1148672304 instance=ExtResource("14_nbhar")]
-position = Vector2(415, 634)
+position = Vector2(898, 654)
 
 [node name="SpeedPickup2" parent="." unique_id=394242383 instance=ExtResource("14_nbhar")]
-position = Vector2(1546, 560)
+position = Vector2(4520, 656)
 
 [node name="HealthPickup" parent="." unique_id=1866581782 instance=ExtResource("15_gfr2h")]
-position = Vector2(2339, 563)
+position = Vector2(2632, 601)
 
 [node name="HealthPickup2" parent="." unique_id=389006760 instance=ExtResource("15_gfr2h")]
-position = Vector2(4622, 548)
+position = Vector2(3912, 656)
+
+[node name="HealthPickup3" parent="." unique_id=564248535 instance=ExtResource("15_gfr2h")]
+position = Vector2(4888, 553)
 
 [node name="CheckPoint1" type="Area2D" parent="." unique_id=1498149195]
-position = Vector2(1356, 581)
+position = Vector2(1080, 672)
 script = ExtResource("cp_scr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint1" unique_id=1309684503]
-position = Vector2(-101.25, -195)
-shape = SubResource("RectangleShape2D_gfr2h")
+position = Vector2(0, -100)
+shape = SubResource("RS_cp")
 
 [node name="CheckPoint2" type="Area2D" parent="." unique_id=863329258]
-position = Vector2(3160, 515)
+position = Vector2(3520, 672)
 script = ExtResource("cp_scr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint2" unique_id=947301571]
-position = Vector2(-101.25, -195)
-shape = SubResource("RectangleShape2D_gfr2h")
+position = Vector2(-14, -101)
+shape = SubResource("RS_cp")
+
+[node name="Door" parent="." unique_id=1352600287 instance=ExtResource("itm_door")]
+position = Vector2(5720, 552)
+required_key = "stage2_key"
+locked_hint = "Locked. Talk to Yani — she'll open the way."
 
 [node name="Shard_s2_1" parent="." unique_id=2017670009 instance=ExtResource("shard_scn")]
-position = Vector2(2180, 463)
+position = Vector2(1590, 176)
 collectible_id = "shard_s2_1"
 
 [node name="Shard_s2_2" parent="." unique_id=1721947298 instance=ExtResource("shard_scn")]
-position = Vector2(3506, 692)
+position = Vector2(5320, 700)
 collectible_id = "shard_s2_2"
 
-[node name="MovingPlatform3" parent="." unique_id=1898862321 instance=ExtResource("8_mp")]
-position = Vector2(3506, 723)
-travel = Vector2(300, 0)
-speed = 100.0
-downtime = 0.5
+[node name="MP_h3" parent="." unique_id=488786733 instance=ExtResource("8_mp")]
+position = Vector2(3266, 263)
+speed = 90.0
+downtime = 0.4
 start_on_touch = true
 
-[node name="End" type="Marker2D" parent="MovingPlatform3" unique_id=1066869478]
-position = Vector2(0, -193)
+[node name="End" type="Marker2D" parent="MP_h3" unique_id=370996120]
+position = Vector2(0, 404)
+
+[node name="CoinR3a" parent="." unique_id=830000022 instance=ExtResource("itm_coin")]
+position = Vector2(2240, 576)
+
+[node name="CoinR3b" parent="." unique_id=830000023 instance=ExtResource("itm_coin")]
+position = Vector2(2660, 168)
+
+[node name="HighCoin1" parent="." unique_id=830000024 instance=ExtResource("itm_coin")]
+position = Vector2(2430, 114)
+
+[node name="HighCoin2" parent="." unique_id=830000025 instance=ExtResource("itm_coin")]
+position = Vector2(2500, 114)
+
+[node name="HighFake1" parent="." unique_id=830000026 instance=ExtResource("itm_fakecoin")]
+position = Vector2(2750, 168)
+
+[node name="HighFake2" parent="." unique_id=830000027 instance=ExtResource("itm_fakecoin")]
+position = Vector2(2980, 234)
+
+[node name="HighAdbot" parent="." unique_id=830000028 instance=ExtResource("7_bat")]
+position = Vector2(2900, 180)
+
+[node name="BaitS5" parent="." unique_id=830000029 instance=ExtResource("itm_bait")]
+position = Vector2(4886, 583)
+
+[node name="Props" type="Node2D" parent="." unique_id=991684762]
+z_index = -1
+
+[node name="VentU0" type="Sprite2D" parent="Props" unique_id=1716163267]
+position = Vector2(219.016, 762)
+texture = ExtResource("px_vent")
+
+[node name="GratingU0" type="Sprite2D" parent="Props" unique_id=793348819]
+position = Vector2(149.016, 803.6)
+texture = ExtResource("px_grate")
+
+[node name="AdScreen0" type="Sprite2D" parent="Props" unique_id=229363193]
+position = Vector2(219.016, 594)
+texture = ExtResource("px_screen")
+
+[node name="VentU1" type="Sprite2D" parent="Props" unique_id=258669084]
+position = Vector2(1527.69, 762)
+texture = ExtResource("px_vent")
+
+[node name="VentU2" type="Sprite2D" parent="Props" unique_id=301264928]
+position = Vector2(2380, 762)
+texture = ExtResource("px_vent")
+
+[node name="GratingU1" type="Sprite2D" parent="Props" unique_id=1224476812]
+position = Vector2(2310, 803.6)
+texture = ExtResource("px_grate")
+
+[node name="VentU3" type="Sprite2D" parent="Props" unique_id=1758208436]
+position = Vector2(2870, 714)
+texture = ExtResource("px_vent")
+
+[node name="AdScreen1" type="Sprite2D" parent="Props" unique_id=1208921569]
+position = Vector2(2870, 546)
+texture = ExtResource("px_screen")
+
+[node name="VentU4" type="Sprite2D" parent="Props" unique_id=2128215094]
+position = Vector2(3380, 762)
+texture = ExtResource("px_vent")
+
+[node name="GratingU2" type="Sprite2D" parent="Props" unique_id=2132898025]
+position = Vector2(3310, 803.6)
+texture = ExtResource("px_grate")
+
+[node name="VentU5" type="Sprite2D" parent="Props" unique_id=2001838711]
+position = Vector2(4710, 762)
+texture = ExtResource("px_vent")
+
+[node name="VentU6" type="Sprite2D" parent="Props" unique_id=1774655593]
+position = Vector2(5660, 714)
+texture = ExtResource("px_vent")
+
+[node name="GratingU3" type="Sprite2D" parent="Props" unique_id=5309315]
+position = Vector2(5590, 764)
+texture = ExtResource("px_grate")
+
+[node name="AdScreen2" type="Sprite2D" parent="Props" unique_id=2109959161]
+position = Vector2(5660, 546)
+texture = ExtResource("px_screen")
 
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Stage3Portal" to="." method="_on_stage_3_portal_body_entered"]

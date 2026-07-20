@@ -57,6 +57,22 @@ const QUESTS := {
 		"id_hint": "Ikuti garis pemandu bercahaya menaiki menara menuju kunci, lalu lewati gerbang.",
 		"objectives": [{"type": "key_collected", "target": "stage3_key"}],
 		"reward": {"coins": 30, "exp": 20}},
+	"q_s5_side_key": {
+		"en": "The Warded Gate", "id": "Gerbang Terjaga",
+		"en_d": "A locked side gate bars the way. Find its key.",
+		"id_d": "Gerbang samping terkunci menghalangi jalan. Temukan kuncinya.",
+		"en_hint": "Follow the glowing guide-line to the key, then open the gate.",
+		"id_hint": "Ikuti garis pemandu bercahaya menuju kunci, lalu buka gerbangnya.",
+		"objectives": [{"type": "key_collected", "target": "stage5_keyA"}],
+		"reward": {"coins": 20, "exp": 12}},
+	"q_s5_gate_key": {
+		"en": "The Gatekeeper's Key", "id": "Kunci Penjaga Gerbang", "mandatory": true,
+		"en_d": "The gatekeeper won't open the final gate without its key. Go find it.",
+		"id_d": "Penjaga gerbang tak akan membuka gerbang terakhir tanpa kuncinya. Temukan.",
+		"en_hint": "Follow the glowing guide-line to the key, then return to the gate.",
+		"id_hint": "Ikuti garis pemandu bercahaya menuju kunci, lalu kembali ke gerbang.",
+		"objectives": [{"type": "key_collected", "target": "stage5_key4"}],
+		"reward": {"coins": 30, "exp": 20}},
 	"q_inside_machine": {
 		"en": "Inside the Machine", "id": "Di Dalam Mesin", "mandatory": true,
 		"en_d": "Ride the machine's current and reach the core.",
@@ -179,6 +195,7 @@ func offer_quest(qid: String, giver: String = "") -> void:
 	if st.get("offered", false) or st.get("done", false):
 		return
 	st["offered"] = true
+	AudioManager.play_ui("quest_accept")
 	if giver != "":
 		st["giver"] = giver          # remembered for the quest-list menu ("Given by …")
 	quests_changed.emit()
@@ -337,6 +354,7 @@ func _all_objectives_met(qid: String) -> bool:
 	return true
 
 func _complete(qid: String) -> void:
+	AudioManager.play_ui("quest_complete")
 	var st := _state(qid)
 	var q: Dictionary = QUESTS[qid]
 	# Grant rewards.

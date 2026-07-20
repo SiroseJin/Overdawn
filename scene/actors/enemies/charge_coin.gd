@@ -12,6 +12,9 @@ class_name ChargeCoin
 
 var _t: float = 0.0
 
+func _ready() -> void:
+	AudioManager.play_sfx("charge_coin")
+
 func _process(delta: float) -> void:
 	_t += delta
 	var period: float = 1.0 / max(0.1, blink_hz)

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bqonsia64wlgd"
+path="res://.godot/imported/phaserUp2.ogg-4c6bf599654ea7328f709168d04bd038.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Digital/Audio/phaserUp2.ogg"
+dest_files=["res://.godot/imported/phaserUp2.ogg-4c6bf599654ea7328f709168d04bd038.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

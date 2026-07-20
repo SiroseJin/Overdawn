@@ -21,7 +21,8 @@ func _ready() -> void:
 	Global.decorate_stage_portals()
 	# Truth Shards are placed in the editor now (collectible.tscn instances you can drag).
 	scene_transition_anim.play("fade_out")
-	audio_bgm.play()
+	AudioManager.play_music("stage3")
+	AudioManager.play_ambience("dread")
 	_apply_npc_skins()
 	_configure_npcs()
 

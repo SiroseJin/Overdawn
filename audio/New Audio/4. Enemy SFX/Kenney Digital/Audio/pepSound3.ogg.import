@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dihlnuq111lf8"
+path="res://.godot/imported/pepSound3.ogg-d8d3e562205b2852ee08e7f1a40ca7bb.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/New Audio/4. Enemy SFX/Kenney Digital/Audio/pepSound3.ogg"
+dest_files=["res://.godot/imported/pepSound3.ogg-d8d3e562205b2852ee08e7f1a40ca7bb.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
