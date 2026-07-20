@@ -106,13 +106,13 @@ dialogue_timeline = "s4npc4timeline"
 position = Vector2(571, 549)
 
 [node name="Bandit2" parent="." unique_id=1426389987 instance=ExtResource("6_frog")]
-position = Vector2(2540, 628)
+position = Vector2(2508, 637)
 
 [node name="Collector1" parent="." unique_id=875828768 instance=ExtResource("8_witch")]
-position = Vector2(2864, 506)
+position = Vector2(2803, 481)
 
 [node name="Dealer1" parent="." unique_id=706318264 instance=ExtResource("9_necro")]
-position = Vector2(4004, 508)
+position = Vector2(3878, 497)
 
 [node name="MovingPlatform1" parent="." unique_id=1204431063 instance=ExtResource("10_mp")]
 position = Vector2(1642, 658)
@@ -213,11 +213,11 @@ frame = 0
 start_frame = 0
 
 [node name="CheckPoint3" type="Area2D" parent="." unique_id=1516272479]
-position = Vector2(3185, 762)
+position = Vector2(3118, 506)
 script = ExtResource("cp_scr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint3" unique_id=1703992974]
-position = Vector2(-101.25, -325.5)
+position = Vector2(0, -77)
 shape = SubResource("RectangleShape2D_lya86")
 
 [node name="CheckPoint2" type="Area2D" parent="." unique_id=213961557]
@@ -257,32 +257,42 @@ polygon = PackedVector2Array(800, 560, 1100, 650, 1100, 654, 800, 564)
 [node name="Ground2GF" type="Polygon2D" parent="ThemedTerrain" unique_id=283852312]
 texture_filter = 1
 texture_repeat = 2
+position = Vector2(682.31506, 0)
+scale = Vector2(0.70311666, 1)
 texture = ExtResource("tex_body")
-polygon = PackedVector2Array(2298.26, 650, 2798.26, 650, 3098.26, 520, 3498.26, 520, 3498.26, 720, 2298.26, 720, 2298.26, 680.455)
+polygon = PackedVector2Array(2298.26, 650, 2627.8496, 649, 2981.9873, 523, 3098.26, 520, 3498.26, 520, 3498.26, 619.3154, 3498.26, 720, 1989.2643, 723, 1989.2643, 652)
 uv = PackedVector2Array(2298.26, 650, 2798.26, 650, 3098.26, 520, 3498.26, 520, 3498.26, 720, 2298.26, 720, 2298.26, 680.455)
 
 [node name="Ground2T0" type="Polygon2D" parent="ThemedTerrain" unique_id=1420769937]
+position = Vector2(-302, -7)
 color = Color(0.737, 0.29, 0.608, 1)
-polygon = PackedVector2Array(2798.26, 650, 3098.26, 520, 3098.26, 524, 2798.26, 654)
+polygon = PackedVector2Array(2820, 655, 3091, 524, 3091, 529, 2823, 657)
 
 [node name="Ground2T1" type="Polygon2D" parent="ThemedTerrain" unique_id=1337070940]
+position = Vector2(44, -2)
+scale = Vector2(0.88565004, 1)
 color = Color(0.737, 0.29, 0.608, 1)
-polygon = PackedVector2Array(3098.26, 520, 3498.26, 520, 3498.26, 524, 3098.26, 524)
+polygon = PackedVector2Array(3098.26, 520, 3304.5007, 520, 3498.26, 520, 3498.26, 524, 3098.26, 524)
 
 [node name="Ground3GF" type="Polygon2D" parent="ThemedTerrain" unique_id=798841504]
 texture_filter = 1
 texture_repeat = 2
+position = Vector2(-1043.4058, 0)
+scale = Vector2(1.2044382, 1)
 texture = ExtResource("tex_body")
-polygon = PackedVector2Array(3803.77, 520, 4303.77, 520, 4703.77, 620, 5103.77, 620, 5103.77, 720, 3803.77, 720)
+polygon = PackedVector2Array(3803.77, 520, 4186.521, 524, 4504.5117, 622, 5103.77, 620, 5103.77, 720, 3803.77, 720, 3803.7698, 619.83844)
 uv = PackedVector2Array(3803.77, 520, 4303.77, 520, 4703.77, 620, 5103.77, 620, 5103.77, 720, 3803.77, 720)
 
 [node name="Ground3T0" type="Polygon2D" parent="ThemedTerrain" unique_id=520364883]
+position = Vector2(2364.1924, 0)
+scale = Vector2(0.37846074, 1)
 color = Color(0.737, 0.29, 0.608, 1)
 polygon = PackedVector2Array(3803.77, 520, 4303.77, 520, 4303.77, 524, 3803.77, 524)
 
 [node name="Ground3T1" type="Polygon2D" parent="ThemedTerrain" unique_id=86283478]
+position = Vector2(-311, 0)
 color = Color(0.737, 0.29, 0.608, 1)
-polygon = PackedVector2Array(4303.77, 520, 4703.77, 620, 4703.77, 624, 4303.77, 524)
+polygon = PackedVector2Array(4303.77, 520, 4347.7827, 531.0032, 4682, 620, 4672, 620, 4303.77, 524)
 
 [node name="LeftWallGF" type="Polygon2D" parent="ThemedTerrain" unique_id=1498932190]
 texture_filter = 1

@@ -149,6 +149,7 @@ animations = [{
 }]
 
 [node name="MainMenu" type="Control" unique_id=1471901109]
+auto_translate_mode = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -156,7 +157,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_c5cew")
-auto_translate_mode = 1
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1457476133]
 layout_mode = 0
@@ -192,7 +192,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_xbuaw")
 text = "Start"
 
-[node name="Continue" type="Button" parent="MenuUI/MenuSelect"]
+[node name="Continue" type="Button" parent="MenuUI/MenuSelect" unique_id=669671592]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_xbuaw")
 text = "Continue"
@@ -207,7 +207,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_xbuaw")
 text = "Arcade"
 
-[node name="Progress" type="Button" parent="MenuUI/MenuSelect"]
+[node name="Progress" type="Button" parent="MenuUI/MenuSelect" unique_id=1601003431]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_xbuaw")
 text = "Progress"
@@ -217,7 +217,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_xbuaw")
 text = "Setting"
 
-[node name="Debug" type="Button" parent="MenuUI/MenuSelect"]
+[node name="Debug" type="Button" parent="MenuUI/MenuSelect" unique_id=52411808]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_xbuaw")
 text = "Debug"

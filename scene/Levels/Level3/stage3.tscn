@@ -568,7 +568,7 @@ position = Vector2(0, -100)
 shape = SubResource("RS_cp")
 
 [node name="CheckPoint2" type="Area2D" parent="." unique_id=840000113]
-position = Vector2(230, -420)
+position = Vector2(294, -971)
 script = ExtResource("cp_scr")
 
 [node name="CheckPoint3" type="Area2D" parent="." unique_id=840000115]
