@@ -26,6 +26,7 @@ buses/default_bus_layout="uid://deolkwypii4ig"
 [autoload]
 
 Global="*res://script/managers/global.gd"
+PreviousSceneManager="*res://script/previous_scene_manager.gd"
 SaveManager="*res://script/managers/save_manager.gd"
 Dialogic="*uid://ds2q0uclmolvu"
 TranslationManager="*res://script/managers/translation_manager.gd"
