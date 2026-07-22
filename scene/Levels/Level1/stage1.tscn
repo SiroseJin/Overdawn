@@ -467,7 +467,6 @@ dialogue_timeline = "npc4timeline"
 position = Vector2(3330, 624)
 dialogue_timeline = "s1gatekeepertimeline"
 npc_id = "stage1_gatekeeper"
-unlocks_skill = "dash"
 grants_key = "stage1_key"
 
 [node name="BuzzerEnemy" parent="." unique_id=309038319 instance=ExtResource("10_x525m")]

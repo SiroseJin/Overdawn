@@ -51,9 +51,16 @@ func _configure_npcs() -> void:
 			n1.talked.connect(_on_arif_talked)
 
 	# Reaching / talking to the Warden clears the green guide-line to her.
+	# Both key-holders need an npc_id so their red "!" can clear once you've spoken
+	# to them — without one the marker has nothing to remember and never goes away.
 	var warden := get_node_or_null("Warden")
-	if warden and not warden.talked.is_connected(_on_warden_talked):
-		warden.talked.connect(_on_warden_talked)
+	if warden:
+		warden.npc_id = "stage5_warden"
+		if not warden.talked.is_connected(_on_warden_talked):
+			warden.talked.connect(_on_warden_talked)
+	var gatekeeper := get_node_or_null("Gatekeeper")
+	if gatekeeper:
+		gatekeeper.npc_id = "stage5_gatekeeper"
 
 	# The must-do final quiz at the end (Wira). Passing grants the key that opens
 	# the gate to Stage 6 (the boss). Non-consuming so retries don't force a redo.

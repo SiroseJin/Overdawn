@@ -20,6 +20,43 @@ var scene_path: String = ""
 var _snapshot: Dictionary = {}
 var _pending_respawn: bool = false
 
+# ─── Stage-entry snapshot ─────────────────────────────────────────────────────────
+# The same rollback idea as a checkpoint, but for the START of the stage. "Retry from
+# the beginning" used to reload the scene while KEEPING everything the run had earned,
+# which left the stage in a state it can't reach honestly: NPCs you'd already talked to
+# came back with no "!" over them, and skills their dialogue unlocked stayed unlocked
+# even though — in this run — you hadn't met them yet. Restarting the stage now also
+# rewinds progression to how it stood when you walked in.
+var _entry_snapshot: Dictionary = {}
+var _entry_scene: String = ""
+
+## Called from the Player's _ready. Snapshots progression the first time we enter a
+## given scene; a reload of the SAME scene (a retry or a checkpoint respawn) keeps the
+## original entry state rather than re-capturing the post-death one.
+func note_stage_entered(scene: String) -> void:
+	if scene == "" or scene == _entry_scene:
+		return
+	_entry_scene = scene
+	_entry_snapshot = ProgressionManager.to_dict()
+
+## Restart the current stage from its beginning, rolling progression back to how it
+## was on entry. Falls back to a plain reload if we have no snapshot for this scene.
+func restart_stage() -> void:
+	var cs := get_tree().current_scene
+	var path: String = cs.scene_file_path if cs != null else ""
+	if path != "" and path == _entry_scene and not _entry_snapshot.is_empty():
+		ProgressionManager.from_dict(_entry_snapshot)
+		ProgressionManager.player_health = ProgressionManager.player_health_max
+	# The stage is starting over, so any mid-stage checkpoint is void too.
+	active = false
+	position = Vector2.ZERO
+	scene_path = ""
+	_snapshot = {}
+	_pending_respawn = false
+	Global.playerAlive = true
+	Engine.time_scale = 1.0
+	get_tree().call_deferred("reload_current_scene")
+
 # Record a new active checkpoint at `pos` in scene `scene`. Snapshots progression as the
 # roll-back point (capturing the player's live stats first so it's accurate).
 func set_checkpoint(pos: Vector2, scene: String) -> void:
@@ -70,3 +107,5 @@ func clear() -> void:
 	position = Vector2.ZERO
 	_snapshot = {}
 	_pending_respawn = false
+	_entry_snapshot = {}
+	_entry_scene = ""

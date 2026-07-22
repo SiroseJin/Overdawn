@@ -253,6 +253,10 @@ func _capture_screenshot(hide_ui: bool = true) -> String:
 		node.show()
 	Engine.time_scale = prev_scale
 
+	# No viewport image to grab (headless, or the frame wasn't drawn yet) — save without
+	# a thumbnail rather than throwing and losing the whole save.
+	if image == null:
+		return ""
 	image.resize(THUMB_WIDTH, THUMB_HEIGHT, Image.INTERPOLATE_BILINEAR)
 	var bytes := image.save_png_to_buffer()
 	return Marshalls.raw_to_base64(bytes)

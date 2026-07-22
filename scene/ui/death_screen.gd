@@ -30,9 +30,11 @@ func _refresh_load_slots() -> void:
 # ─── Main panel ───────────────────────────────────────────────────────────────
 
 func _on_retry_pressed() -> void:
-	# From the beginning: restart the whole stage (progression as it stands is kept).
+	# From the beginning: restart the whole stage AND roll progression back to how it
+	# stood when the stage was entered, so the run really does start over — NPCs you
+	# met are un-met (their "!" is back) and the skills they taught are re-locked.
 	Engine.time_scale = 1
-	get_tree().reload_current_scene()
+	CheckpointManager.restart_stage()
 
 func _on_checkpoint_pressed() -> void:
 	# From the last checkpoint: roll progression back to the checkpoint snapshot and

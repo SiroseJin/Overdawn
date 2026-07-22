@@ -38,12 +38,30 @@ var health_bar: ProgressBar
 @export var attack_cooldown: float = 0.9
 var _atk_cd_remaining: float = 0.0
 
+# ─── Animation timers (see handle_animation) ─────────────────────────────────────
+# These used to be `await` calls inside handle_animation(), which _process runs EVERY
+# frame — so a hurt or dying enemy spawned a fresh coroutine 60x a second. The sprite
+# restarted its animation constantly (the visible "spazzing") and handle_death() fired
+# dozens of times. Driving them as plain countdowns means each one starts exactly once.
+var _hurt_left: float  = 0.0
+var _death_left: float = -1.0   # <0 = the death animation hasn't started yet
+## Minimum seconds between patrol turn-arounds. Without it, an enemy on a narrow perch
+## (ledge detected in BOTH directions) flipped every frame and vibrated in place.
+@export var turn_cooldown: float = 0.35
+var _turn_cd: float = 0.0
+## Chase direction only flips once the player is more than this far away horizontally.
+## Standing exactly on top of the enemy used to flip `sign()` every frame.
+const _FACE_DEADZONE: float = 8.0
+
 # ───────────────────────────────────────────────────────────────────────────────
 # Lifecycle
 # ───────────────────────────────────────────────────────────────────────────────
 
 func _ready():
 	Global.apply_enemy_scaling(self)   # story-mode level scaling (#6)
+	# Stage hazards (e.g. Stage 3's rising debt) find their victims through this
+	# group — the debt drowns enemies just like it drowns the player.
+	add_to_group("enemies")
 	ProgressionManager.notify("enemy_seen", {"type": "adbot"})   # unlocks its Guide entry
 	health_bar           = $HealthBar
 	health_bar.max_value = health_max
@@ -54,6 +72,7 @@ func _ready():
 	$Timer.wait_time = 2.5
 
 func _process(_delta):
+	_tick_anim_timers(_delta)
 	move(_delta)
 	handle_animation()
 	_tick_attack(_delta)
@@ -88,11 +107,11 @@ func move(_delta):
 	if not taking_damage and is_bat_chase and Global.playerAlive and is_instance_valid(Global.PlayerBody):
 		Player    = Global.PlayerBody
 		# Fly directly toward the player on both axes
-		velocity  = position.direction_to(Player.position) * speed
-		dir.x     = sign(velocity.x)
+		velocity  = global_position.direction_to(Player.global_position) * speed
+		dir.x     = _chase_dir(Player)
 
 	elif taking_damage and is_bat_chase and is_instance_valid(Global.PlayerBody):
-		velocity = position.direction_to(Global.PlayerBody.position) * -80
+		velocity = global_position.direction_to(Global.PlayerBody.global_position) * -80
 
 	elif not taking_damage and is_bat_roaming:
 		# Drift toward the current roam target at 40% speed
@@ -125,17 +144,44 @@ func handle_animation():
 		sprite.play("attack")
 
 	elif not dead and taking_damage:
-		sprite.play("hurt")
-		await get_tree().create_timer(0.6).timeout
-		taking_damage = false
+		# Start the hurt animation ONCE; _tick_anim_timers clears taking_damage.
+		if _hurt_left <= 0.0:
+			_hurt_left = 0.6
+			sprite.play("hurt")
 
 	elif dead:
 		$CollisionShape2D.disabled                   = true
 		$BatDealDamageArea/CollisionShape2D.disabled = true
 		$HitBox/CollisionShape2D.disabled            = true
-		sprite.play("death")
-		await get_tree().create_timer(0.8).timeout
-		handle_death()
+		if _death_left < 0.0:
+			_death_left = 0.8
+			sprite.play("death")
+
+
+# ─── Shared AI helpers ───────────────────────────────────────────────────────────
+
+# Countdowns that replace the old per-frame `await`s (see _hurt_left / _death_left).
+func _tick_anim_timers(delta: float) -> void:
+	if _turn_cd > 0.0:
+		_turn_cd -= delta
+	if _hurt_left > 0.0:
+		_hurt_left -= delta
+		if _hurt_left <= 0.0:
+			taking_damage = false
+	if _death_left > 0.0:
+		_death_left -= delta
+		if _death_left <= 0.0:
+			handle_death()
+
+# Which way to face/move to reach the player. Uses global positions (an enemy and the
+# player can sit under differently-offset parents) and holds its current facing inside
+# a small deadzone, so a player standing on top of the enemy no longer makes `sign()`
+# alternate every frame.
+func _chase_dir(target: Node2D) -> float:
+	var dx: float = target.global_position.x - global_position.x
+	if absf(dx) <= _FACE_DEADZONE:
+		return dir.x if dir.x != 0.0 else 1.0
+	return signf(dx)
 
 # ───────────────────────────────────────────────────────────────────────────────
 # Combat

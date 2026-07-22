@@ -182,6 +182,20 @@ func is_done(qid: String) -> bool:
 func is_mandatory(qid: String) -> bool:
 	return QUESTS.get(qid, {}).get("mandatory", false)
 
+## True when a quest stands between the player and the way forward: it's flagged
+## mandatory, or its objective is fetching a key (which some locked gate wants).
+## NPC markers use this to colour themselves red — an NPC holding the next gate's
+## key is a must-talk-to even when the quest itself is technically optional.
+func gates_progress(qid: String) -> bool:
+	if qid == "":
+		return false
+	if is_mandatory(qid):
+		return true
+	for o in QUESTS.get(qid, {}).get("objectives", []):
+		if str(o.get("type", "")) == "key_collected":
+			return true
+	return false
+
 func is_offered(qid: String) -> bool:
 	return _state(qid).get("offered", false)
 

@@ -50,6 +50,11 @@ func _configure_npcs() -> void:
 			n.npc_id = pair[1]
 			if repeats.has(pair[0]):
 				n.repeat_timeline = repeats[pair[0]]
+	# Damar (first NPC) teaches DOUBLE JUMP right away, so the whole tower climb above
+	# him can be built around the second jump.
+	var damar := get_node_or_null("Damar")
+	if damar:
+		damar.unlocks_skill = "double_jump"
 	# Toni now hosts the OPTIONAL end-of-stage quiz (moved off Sinta) — themed on the
 	# rising debt, so the stage keeps its anti-gambling teaching beat.
 	var toni := get_node_or_null("Toni")

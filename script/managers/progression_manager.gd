@@ -34,9 +34,10 @@ signal badge_unlocked(badge_id: String)
 # unlocked through gameplay (e.g. beating a stage and talking to its NPC).
 const DEFAULT_SKILLS := {
 	"arrows": true,        # basic ranged attack — available from the start
-	"dash": false,         # unlocked by Stage 1's Gatekeeper ("break away fast")
-	"double_jump": false,  # unlocked by Yani at the Stage 2 gate ("second chance")
-	"firewall": false,     # unlocked by Damar in Stage 3 (network firewall)
+	# Each skill is taught by the FIRST NPC of the stage that's built around it.
+	"dash": false,         # Nadia, first NPC of Stage 2 ("break away fast")
+	"double_jump": false,  # Damar, first NPC of Stage 3 ("second chance")
+	"firewall": false,     # first NPC of Stage 4 (network firewall)
 }
 
 # Highest upgrade level each of the 4 core skills can reach.

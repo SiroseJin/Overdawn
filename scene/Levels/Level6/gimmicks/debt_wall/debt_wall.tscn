@@ -11,6 +11,7 @@ size = Vector2(44, 400)
 size = Vector2(44, 100)
 
 [node name="DebtWall" type="Node2D"]
+z_index = -2
 script = ExtResource("1_dw")
 
 [node name="UpperVisual" type="Polygon2D" parent="."]

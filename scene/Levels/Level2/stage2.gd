@@ -32,16 +32,17 @@ func _configure_npcs() -> void:
 			if repeats.has(pair[0]):
 				n.repeat_timeline = repeats[pair[0]]
 	# Yani is the must-talk gate NPC: speaking to her hands over the key that opens the
-	# exit door — no key to hunt for. (Double Jump moved to Nadia at the start so the
-	# whole stage can be built around it — vertical climb, richer platforming.)
+	# exit door — no key to hunt for.
 	var yani := get_node_or_null("Yani")
 	if yani:
 		yani.grants_key    = "stage2_key"
-	# Nadia (first NPC) now teaches DOUBLE JUMP right away, and hands out a minor,
-	# easy OPTIONAL side quest — pass Rafi's quiz (#13).
+	# Nadia (first NPC) teaches DASH right away — Stage 1 is now a pure walk-and-talk
+	# tutorial and every skill is earned from the FIRST NPC of the stage built around it
+	# (dash here, double jump from Damar in Stage 3, firewall in Stage 4). She also hands
+	# out a minor, easy OPTIONAL side quest — pass Rafi's quiz (#13).
 	var nadia := get_node_or_null("Nadia")
 	if nadia:
-		nadia.unlocks_skill    = "double_jump"
+		nadia.unlocks_skill    = "dash"
 		nadia.quest_id         = "q_s2_quiz_whiz"
 		nadia.quest_giver_name = "Nadia"
 	# Rafi hosts the OPTIONAL end-of-stage quiz — themed on this layer's bait platforms.

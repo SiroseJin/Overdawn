@@ -48,6 +48,18 @@ class_name RisingDebt
 ## Calm beat between taking the key and the debt resuming its climb.
 @export var release_delay: float = 2.0
 
+# ─── Enemy damage ────────────────────────────────────────────────────────────────
+# The debt doesn't pick sides: anything caught under the waterline drowns, enemies
+# included. Thematically the House's own foot soldiers go under with everyone else;
+# practically it means retreating upward is rewarded instead of just running away.
+# Enemies have no i-frames, so this is paced on its own interval rather than every
+# frame (which would delete them instantly).
+@export_group("Enemy damage")
+@export var damages_enemies: bool = true
+@export var enemy_damage: int = 12
+@export var enemy_damage_interval: float = 1.0
+var _enemy_tick: float = 0.0
+
 # ─── Fake-coin popcorn ───────────────────────────────────────────────────────────
 # The debt keeps spitting fake "jackpot" coins into the air like popcorn — a shiny
 # promise that you can win your way out of what you owe. They're the same rigged
@@ -133,6 +145,13 @@ func _process(delta: float) -> void:
 	if is_instance_valid(p) and p.can_take_damage and overlaps_body(p):
 		p.take_damage(damage)
 
+	# The debt drowns enemies too (paced — they have no i-frames of their own).
+	if damages_enemies and not talking:
+		_enemy_tick -= delta
+		if _enemy_tick <= 0.0:
+			_enemy_tick = maxf(0.1, enemy_damage_interval)
+			_drown_enemies()
+
 	# Popcorn spray (paused during conversations, same as the flood itself).
 	if spew_popcorn and not talking and popcorn_scene:
 		_pop_timer += delta
@@ -155,6 +174,26 @@ func _update_release(delta: float) -> void:
 			_released = true
 	elif ProgressionManager.has_key(release_on_key):
 		_release_timer = release_delay
+
+# Chip every enemy whose origin is under the waterline. Tested geometrically against
+# the flood rect rather than through the Area2D: the damage collision only masks the
+# player's layer, and widening that mask would make every enemy body push the flood
+# around. Enemies register themselves in the "enemies" group in their _ready.
+func _drown_enemies() -> void:
+	var half_w: float  = _half_w * absf(global_scale.x)
+	var depth: float   = flood_height * absf(global_scale.y)
+	var top: float     = global_position.y
+	var left: float    = global_position.x - half_w
+	var right: float   = global_position.x + half_w
+	for e in get_tree().get_nodes_in_group("enemies"):
+		if not is_instance_valid(e) or not (e is Node2D) or not e.has_method("take_damage"):
+			continue
+		if "dead" in e and e.dead:
+			continue
+		var at: Vector2 = (e as Node2D).global_position
+		if at.y < top or at.y > top + depth or at.x < left or at.x > right:
+			continue
+		e.take_damage(float(enemy_damage))
 
 func _spew_popcorn() -> void:
 	var host := get_parent()

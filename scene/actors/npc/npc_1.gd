@@ -188,7 +188,12 @@ func refresh_marker() -> void:
 		return
 	var kind := _resolved_marker_kind()
 	_marker.add_theme_color_override("font_color", _MARKER_COLORS[kind])
-	if kind == MarkerKind.REQUIRED:
+	# A red marker clears when its requirement is satisfied — but only NPCs that
+	# actually hold a skill/key have such a requirement. A quest-gating NPC reads red
+	# too, and for those the marker simply clears once you've spoken to them. (Without
+	# this fallback is_requirement_met() returned true immediately and their "!" never
+	# appeared at all, which is why Stage 5's Gatekeeper showed no marker.)
+	if kind == MarkerKind.REQUIRED and is_required():
 		_marker.visible = not is_requirement_met()
 	else:
 		_marker.visible = npc_id == "" or not ProgressionManager.has_talked_to(npc_id)
@@ -199,8 +204,9 @@ func _resolved_marker_kind() -> MarkerKind:
 		return marker_kind
 	if is_required():
 		return MarkerKind.REQUIRED
-	# A giver of a MANDATORY (story) quest is a must-talk-to, so it reads red too (#4).
-	if quest_id != "" and QuestManager.is_mandatory(quest_id):
+	# A giver of a quest that stands in the way — a story quest, or a hunt for the key
+	# some locked gate wants — is a must-talk-to, so it reads red too (#4).
+	if QuestManager.gates_progress(quest_id):
 		return MarkerKind.REQUIRED
 	if quiz_id != "":
 		return MarkerKind.REWARD

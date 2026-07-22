@@ -36,10 +36,9 @@ const WEAK_ADDS := [
 	preload("res://scene/actors/enemies/adbot/adbot_enemy.tscn"),
 	preload("res://scene/actors/enemies/buzzer/buzzer_enemy.tscn"),
 ]
-const TOUGH_ADDS := [
-	preload("res://scene/actors/enemies/collector/collector_enemy.tscn"),
-	preload("res://scene/actors/enemies/dealer/dealer_enemy.tscn"),
-]
+const COLLECTOR_ADD := preload("res://scene/actors/enemies/collector/collector_enemy.tscn")
+## The Dealer IS the Bandar — the House's closer. Reserved for the final phase.
+const DEALER_ADD := preload("res://scene/actors/enemies/dealer/dealer_enemy.tscn")
 
 # Pickup drops. GOOD are rewards; the shield-break gamble can also roll a fake_coin.
 const PU_COIN   := preload("res://scene/pickups/coin/coin.tscn")
@@ -141,6 +140,11 @@ var _jitter_target := Vector2.ZERO # where the jitter is easing toward
 var _jitter_timer := 0.0
 
 var _servers: Array = []
+## How many servers this cycle actually spawned. The HUD counts against THIS, not
+## servers_per_cycle: if the stage has fewer spawn points than the boss asks for, the
+## old denominator promised servers that were never placed ("2/4" with only 2 in the
+## arena). Set by _spawn_servers.
+var _servers_spawned: int = 0
 var _adds: Array = []
 var _shield_fx: Node2D = null   # electric-shield VFX, follows the boss while shielded
 
@@ -222,6 +226,10 @@ func _process(delta: float) -> void:
 	if avoid_platforms and _down_amount < 0.4:
 		target = _steer_around_platforms(target)
 	position = target
+
+	# Refresh the HUD every frame: the server count and the down-timer both change
+	# continuously, and event-driven updates left them showing stale numbers.
+	_update_status()
 
 	match state:
 		"shielded": _process_shielded(delta)
@@ -358,6 +366,7 @@ func _recover(new_phase: int) -> void:
 func _spawn_servers() -> void:
 	AudioManager.play_sfx("boss_server_spawn")
 	var spots := _pick_spots(servers_per_cycle)
+	_servers_spawned = spots.size()
 	for pos in spots:
 		var s := SERVER.instantiate()
 		if s.has_method("setup"):
@@ -486,18 +495,44 @@ func _gather_spots() -> Array:
 		Vector2(bx + 500, _down_y),
 	]
 
+# Servers that are still standing. A destroyed server lingers for ~0.16s while its
+# pop tween plays, and is_instance_valid() is still true for that whole window — so
+# counting on validity alone left the HUD showing a server the player had just killed.
+func _live_servers() -> int:
+	var n := 0
+	for s in _servers:
+		if is_instance_valid(s) and not s.is_queued_for_deletion() and not s._destroyed:
+			n += 1
+	return n
+
 func _clear_servers() -> void:
 	for s in _servers:
 		if is_instance_valid(s):
 			s.queue_free()
 	_servers.clear()
+	_servers_spawned = 0
+
+## Adds spawned when the shield breaks: this many at full HP, rising to
+## `max_adds` as the boss weakens. Kept low on purpose — the down window is meant to
+## be the player's opening to attack, not a crowd-control emergency.
+@export var min_adds: int = 1
+@export var max_adds: int = 3
+
+# What the boss is willing to call in at each phase. The Dealer — the Bandar itself —
+# is held back until the final phase, so meeting one means the fight is nearly over.
+func _add_pool() -> Array:
+	var pool: Array = WEAK_ADDS.duplicate()
+	if phase >= 2:
+		pool.append(COLLECTOR_ADD)
+	if phase >= 4:
+		pool.append(DEALER_ADD)   # the Bandar, last phase only
+	return pool
 
 func _spawn_adds() -> void:
 	var intensity := _intensity()
-	var count := 2 + int(round(intensity * 4.0))   # 2 (full HP) → 6 (near death)
+	var count := min_adds + int(round(intensity * float(max_adds - min_adds)))
+	var pool := _add_pool()
 	for i in count:
-		# Tougher foes become more likely as the boss weakens.
-		var pool: Array = TOUGH_ADDS if randf() < intensity * 0.8 else WEAK_ADDS
 		var e = pool.pick_random().instantiate()
 		get_parent().add_child(e)
 		e.global_position = global_position + Vector2(randf_range(-360, 360), randf_range(-40, 20))
@@ -519,15 +554,27 @@ func _phase_for_health() -> int:
 	elif frac <= 0.75: return 2
 	return 1
 
+# Per-phase attack-speed trim, indexed by phase (slot 0 unused). 1.0 = the original
+# cadence; 0.95 fires 5% slower, and so on. Slowing the later phases the most keeps
+# the escalation readable instead of turning into an unreactable wall of bullets.
+const ATTACK_SPEED_MULT := [1.0, 0.95, 0.85, 0.85, 0.80]
+
+# A slower attack SPEED is a longer interval, hence the division.
+func _speed_mult() -> float:
+	return ATTACK_SPEED_MULT[clampi(phase, 1, ATTACK_SPEED_MULT.size() - 1)]
+
 func _attack_interval() -> float:
+	var base: float
 	match phase:
-		1:  return 2.2
-		2:  return 1.8
-		3:  return 1.5
-		_:  return 1.2
+		1:  base = 2.2
+		2:  base = 1.8
+		3:  base = 1.5
+		_:  base = 1.2
+	return base / _speed_mult()
 
 func _spiral_interval() -> float:
-	return 0.18 if phase == 2 else (0.15 if phase == 3 else 0.13)
+	var base: float = 0.18 if phase == 2 else (0.15 if phase == 3 else 0.13)
+	return base / _speed_mult()
 
 func _spiral_step() -> float:
 	return 32.0 if phase == 2 else (28.0 if phase == 3 else 25.0)
@@ -663,5 +710,5 @@ func _update_status() -> void:
 			_status_label.text = "%s  %s: %d" % [tr("VULNERABLE"), tr("Recovers in"), ceil(_down_left)]
 			_status_label.add_theme_color_override("font_color", Color(1, 0.5, 0.5))
 		_:
-			_status_label.text = "%s  —  %s: %d/%d" % [tr("SHIELDED"), tr("Servers"), _servers.size(), servers_per_cycle]
+			_status_label.text = "%s  —  %s: %d/%d" % [tr("SHIELDED"), tr("Servers"), _live_servers(), _servers_spawned]
 			_status_label.add_theme_color_override("font_color", Color(0.5, 0.85, 1))

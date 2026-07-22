@@ -212,6 +212,10 @@ func _ready():
 	skip_button.hide()
 	is_game_paused = false
 	add_to_group("player")
+	# Remember progression as it stands on entering this stage, so "retry from the
+	# beginning" can rewind to it. No-ops on a reload of the same scene.
+	var _cs := get_tree().current_scene
+	CheckpointManager.note_stage_entered(_cs.scene_file_path if _cs else "")
 	# If we're coming back from a death at a checkpoint, drop the player there.
 	CheckpointManager.apply_respawn(self)
 
@@ -372,6 +376,8 @@ func _process(delta):
 			and Dialogic.Styles.get_layout_node().visible
 		)
 
+	_tick_regen(delta)
+
 	if arrows_held < max_arrows:
 		current_arrow_refill_time += delta
 		if current_arrow_refill_time >= arrow_refill_time:
@@ -467,6 +473,7 @@ func shoot_arrow():
 	if not infinite_arrows and arrows_held <= 0:
 		AudioManager.play_sfx("no_arrows")
 		return
+	note_combat()   # firing counts as fighting — no regen mid-shootout
 
 	# Muzzle anchored to the player's OWN world position (+ a hand-height offset that
 	# flips with facing). Using global_position directly means the arrow always spawns
@@ -609,6 +616,7 @@ func take_damage(damage: int, source_pos: Vector2 = Vector2.INF):
 		return
 
 	health -= damage
+	note_combat()
 	AudioManager.play_sfx("hurt")
 	update_health_bar()
 	ProgressionManager.notify("player_damaged", {"amount": damage})   # feeds no-hit challenges
@@ -652,6 +660,58 @@ func _apply_hit_feedback(source_pos: Vector2) -> void:
 		_hit_tween.tween_property(spr, "modulate", Color(1.0, 1.0, 1.0, 0.2), 0.08)
 		_hit_tween.tween_property(spr, "modulate", Color(1.0, 0.4, 0.4, 1.0), 0.08)
 	_hit_tween.tween_property(spr, "modulate", Color.WHITE, 0.1)
+
+# ─── Passive regeneration ────────────────────────────────────────────────────────
+# Out of combat, the player slowly knits back up — but only to `regen_cap_pct` of max.
+# The top slice of the bar has to be earned from pickups, so regen removes the tedium
+# of a chip-damaged walk between fights without removing the pressure inside one.
+## Health restored per tick.
+@export var regen_amount: int = 1
+## Seconds between ticks (1 HP / 2 s by default).
+@export var regen_interval: float = 2.0
+## Regen stops at this fraction of max health.
+@export var regen_cap_pct: float = 0.7
+## Seconds after the last hit taken / attack thrown before regen may start.
+@export var regen_combat_delay: float = 4.0
+## An enemy this close counts as "still fighting", even if nobody has landed a hit.
+@export var regen_enemy_range: float = 260.0
+
+var _regen_timer: float = 0.0
+var _last_combat_msec: int = -100000
+
+## Mark the player as in combat — called when they take a hit or throw an attack.
+func note_combat() -> void:
+	_last_combat_msec = Time.get_ticks_msec()
+	_regen_timer = 0.0
+
+func _in_combat() -> bool:
+	if Time.get_ticks_msec() - _last_combat_msec < int(regen_combat_delay * 1000.0):
+		return true
+	# Also block regen while an enemy is still breathing down your neck.
+	var r2 := regen_enemy_range * regen_enemy_range
+	for e in get_tree().get_nodes_in_group("enemies"):
+		if not is_instance_valid(e) or not (e is Node2D):
+			continue
+		if "dead" in e and e.dead:
+			continue
+		if global_position.distance_squared_to((e as Node2D).global_position) <= r2:
+			return true
+	return false
+
+func _tick_regen(delta: float) -> void:
+	if dead or health <= 0 or regen_amount <= 0:
+		return
+	var cap := int(floor(max_hp() * regen_cap_pct))
+	if health >= cap or _in_combat():
+		_regen_timer = 0.0
+		return
+	_regen_timer += delta
+	if _regen_timer < maxf(0.1, regen_interval):
+		return
+	_regen_timer = 0.0
+	health = min(health + regen_amount, cap)
+	update_health_bar()
+	ProgressionManager.capture_player(self)
 
 func heal_player(amount: int):
 	health = min(health + amount, max_hp())
@@ -729,6 +789,7 @@ func update_player_sprite_orientation():
 	$ProjectileOutput.position.x = -5 if dir.x < 0 else 5
 
 func handle_attack_animation(type: String):
+	note_combat()
 	animated_sprite_2d.play(str(type, "_attack"))
 	AudioManager.play_sfx("melee")
 	toggle_damage_collision(type)
