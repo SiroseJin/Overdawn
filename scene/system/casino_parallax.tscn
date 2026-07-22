@@ -1,57 +1,40 @@
 [gd_scene format=3 uid="uid://dumfvyytw8b8n"]
 
-[ext_resource type="Texture2D" path="res://art/Casino/casino_wall.png" id="1_wall"]
-[ext_resource type="Texture2D" path="res://art/Casino/slot_machines_8x5_32x48.png" id="2_slot"]
-[ext_resource type="Script" path="res://scene/system/vfx/sheet_anim.gd" id="3_anim"]
-[ext_resource type="Texture2D" path="res://art/Casino/ad_screen_12x1_16x16.png" id="4_ad"]
+[ext_resource type="Texture2D" uid="uid://dggxshx1djpjd" path="res://art/LevelTilesets/Level 4/Parralax/cyberpunk-street-files/Assets/Version 1/PNG/layers/far-buildings.png" id="1_far"]
+[ext_resource type="Texture2D" uid="uid://c2vkhowe20tr7" path="res://art/LevelTilesets/Level 4/Parralax/cyberpunk-street-files/Assets/Version 1/PNG/layers/back-buildings.png" id="2_back"]
+[ext_resource type="Texture2D" uid="uid://dm2nqcbbsneap" path="res://art/LevelTilesets/Level 4/Parralax/cyberpunk-street-files/Assets/Version 1/PNG/layers/foreground.png" id="3_fore"]
 
 [node name="CasinoParallax" type="ParallaxBackground"]
 
-[node name="Wall" type="ParallaxLayer" parent="."]
-motion_scale = Vector2(0.1, 0.1)
-motion_mirroring = Vector2(160, 160)
+[node name="FarBuildings" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.15, 0)
+motion_mirroring = Vector2(960, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="Wall"]
+[node name="Sprite2D" type="Sprite2D" parent="FarBuildings"]
 texture_filter = 1
 position = Vector2(0, 0)
-scale = Vector2(5, 5)
+scale = Vector2(3.75, 3.75)
 centered = false
-texture = ExtResource("1_wall")
+texture = ExtResource("1_far")
 
-[node name="Machines" type="ParallaxLayer" parent="."]
-motion_scale = Vector2(0.4, 0.3)
-motion_mirroring = Vector2(58, 0)
+[node name="BackBuildings" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.3, 0)
+motion_mirroring = Vector2(960, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="Machines"]
+[node name="Sprite2D" type="Sprite2D" parent="BackBuildings"]
 texture_filter = 1
-position = Vector2(0, 300)
-scale = Vector2(1.8, 1.8)
+position = Vector2(0, 0)
+scale = Vector2(3.75, 3.75)
 centered = false
-modulate = Color(0.8, 0.8, 0.9, 1)
-texture = ExtResource("2_slot")
-hframes = 8
-vframes = 5
-frame = 8
-script = ExtResource("3_anim")
-fps = 6.0
-loop = true
-start_frame = 8
-frame_count = 8
+texture = ExtResource("2_back")
 
-[node name="Neon" type="ParallaxLayer" parent="."]
-motion_scale = Vector2(0.6, 0.5)
-motion_mirroring = Vector2(96, 0)
+[node name="Street" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.5, 0)
+motion_mirroring = Vector2(1320, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="Neon"]
+[node name="Sprite2D" type="Sprite2D" parent="Street"]
 texture_filter = 1
-position = Vector2(0, 70)
-scale = Vector2(6, 6)
+position = Vector2(0, 0)
+scale = Vector2(3.75, 3.75)
 centered = false
-texture = ExtResource("4_ad")
-hframes = 12
-vframes = 1
-frame = 0
-script = ExtResource("3_anim")
-fps = 8.0
-loop = true
-frame_count = 12
+texture = ExtResource("3_fore")

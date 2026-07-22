@@ -44,6 +44,30 @@ class_name MovingPlatform
 ## activate() is called — e.g. a hidden lift revealed after talking to an NPC.
 @export var start_active: bool = true
 
+# ─── Skin ────────────────────────────────────────────────────────────────────────
+# Set per stage so the platform matches that level's terrain tileset. Left empty it
+# keeps the flat cyan look. The bright top Edge keeps its colour either way, so a
+# moving platform still reads as a moving platform at a glance.
+@export_group("Skin")
+## Tileset texture painted onto the platform body. Empty = flat colour.
+@export var skin: Texture2D:
+	set(v):
+		skin = v
+		_apply_skin()
+## Tint multiplied over the skin (white = the texture's own colours).
+@export var skin_tint: Color = Color.WHITE:
+	set(v):
+		skin_tint = v
+		_apply_skin()
+
+const PlatformSkin = preload("res://scene/gimmicks/platform_skin.gd")
+const _BASE_COLOR := Color(0.3, 0.8, 0.82, 1)   # the unskinned cyan body
+
+func _apply_skin() -> void:
+	if not is_inside_tree():
+		return
+	PlatformSkin.apply(get_node_or_null("Visual") as Polygon2D, skin, skin_tint, _BASE_COLOR)
+
 var _active := false
 var _awaiting_trigger := false   # start_on_touch: placed but waiting for first touch
 var _start: Vector2
@@ -60,6 +84,7 @@ func _travel_offset() -> Vector2:
 	return e.position if e else travel
 
 func _ready() -> void:
+	_apply_skin()
 	if Engine.is_editor_hint():
 		queue_redraw()
 		return

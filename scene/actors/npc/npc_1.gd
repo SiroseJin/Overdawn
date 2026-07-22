@@ -28,8 +28,18 @@ func _dbg_mark_action() -> void:
 ## Name shown as the quest-giver in the quest-list menu. Leave empty to use this
 ## NPC's node name (which matches the character name, e.g. "Hendra").
 @export var quest_giver_name: String = ""
+## Dialogue shown when this NPC's `quest_id` is already satisfied the moment you talk
+## (e.g. you grabbed the key BEFORE taking the key-hunt quest). Instead of sending you
+## to fetch something you already hold, they acknowledge it and the quest completes on
+## the spot (#6). Leave empty to just play the normal intro.
+@export var quest_done_timeline: String = ""
 ## Passing the quiz grants this key (use a matching LockedDoor to gate the exit).
 @export var quiz_grants_key: String = ""
+## After PASSING this NPC's quiz, light the golden key-guide line toward the key the
+## stage's locked gate still needs — but only when the player hasn't found it yet.
+## Use it on the NPC standing between the player and a locked door: pass the quiz and
+## they're shown the way, having already got the key changes nothing.
+@export var quiz_reveals_key: bool = false
 ## Passing the quiz grants these bonus coins (first pass only).
 @export var quiz_bonus_coins: int = 0
 ## Passing the quiz grants a bonus skill point (first pass only).
@@ -49,6 +59,10 @@ func _dbg_mark_action() -> void:
 ## to make this NPC visually different from the others.
 @export var idle_texture: Texture2D
 @export var dialogue_texture: Texture2D
+## When true, this NPC's floating "Caption" name-tag is auto-set to the name of the
+## character who speaks its dialogue (so the tag always matches the name in the
+## dialogue box, #3). Turn OFF to keep a hand-typed caption from the editor.
+@export var caption_follows_speaker: bool = true
 
 const FRAME_SIZE := 128
 
@@ -65,14 +79,60 @@ var player_nearby  := false
 func _ready():
 	add_to_group("npc")
 	_setup_marker()
-	# The stage's _ready configures npc_id / unlocks_skill / grants_key AFTER this
-	# node's _ready, so colour/show the marker one frame later.
-	call_deferred("refresh_marker")
+	# The stage's _ready configures npc_id / unlocks_skill / grants_key / dialogue_timeline
+	# AFTER this node's _ready, so finish setup one frame later.
+	call_deferred("_deferred_setup")
 	if sprite == null:
 		print("ERROR: AnimatedSprite2D not found")
 		return
 	if idle_texture and dialogue_texture:
 		_build_frames()
+
+# Runs one frame after _ready, once the stage has applied its per-NPC exports.
+func _deferred_setup() -> void:
+	refresh_marker()
+	if caption_follows_speaker:
+		_apply_caption_name()
+
+# ─── Caption = dialogue name (#3) ─────────────────────────────────────────────────
+# Set the floating "Caption" name-tag to the display name of the character who speaks
+# this NPC's dialogue, so the tag always matches the name shown in the dialogue box.
+# Reads it from the timeline's first speaker → the character's .dch, so renaming a
+# character in the Dialogic editor updates both the dialogue and the tag at once.
+func _apply_caption_name() -> void:
+	var cap := get_node_or_null("Caption")
+	if cap == null or not ("text_en" in cap):
+		return
+	var nm := _speaker_display_name()
+	if nm == "":
+		return
+	cap.text_en = nm
+	cap.text_id = nm
+	if cap.has_method("on_locale_changed"):
+		cap.on_locale_changed()
+	else:
+		cap.text = nm
+
+# Resolve the display name of the first character that speaks in `dialogue_timeline`.
+func _speaker_display_name() -> String:
+	var dtl_dir: Dictionary = ProjectSettings.get_setting("dialogic/directories/dtl_directory", {})
+	var path: String = str(dtl_dir.get(dialogue_timeline, ""))
+	if path == "" or not FileAccess.file_exists(path):
+		return ""
+	var f := FileAccess.open(path, FileAccess.READ)
+	if f == null:
+		return ""
+	while not f.eof_reached():
+		var line := f.get_line().strip_edges()
+		if line == "" or line.begins_with("#") or line.begins_with("["):
+			continue
+		var colon := line.find(":")
+		if colon <= 0:
+			continue
+		var cref := line.substr(0, colon).strip_edges()
+		var ch = DialogicResourceUtil.get_character_resource(cref)
+		return ch.display_name if ch else ""
+	return ""
 
 # ─── Required / optional ─────────────────────────────────────────────────────────
 # A "must" NPC either unlocks a skill or hands over a key that opens the way forward.
@@ -231,6 +291,7 @@ func start_dialogue():
 		Dialogic.Inputs.dialogic_action.connect(_dbg_mark_action)
 
 	Dialogic.start(timeline)
+	Global.fix_dialogue_name_labels()   # ensure the speaker's name renders (#1)
 	Dialogic.timeline_ended.connect(func():
 		print("[DBG] timeline_ended @%d  (+%dms since last advance press)" % [Time.get_ticks_msec(), Time.get_ticks_msec() - _dbg_last_action_ms])
 		is_chatting = false
@@ -241,6 +302,11 @@ func start_dialogue():
 
 # Which dialogue (if any) to play before the quiz offer/gate, based on progress.
 func _dialogue_to_play() -> String:
+	# Quest-giver whose objective is already met (e.g. you already picked up the key):
+	# play the "you already have it" line instead of the fetch-quest intro (#6).
+	if quest_id != "" and quest_done_timeline != "" \
+			and QuestManager.objectives_satisfied_externally(quest_id):
+		return quest_done_timeline
 	if quiz_id == "":
 		# Non-quiz NPC: after the first chat, switch to the shorter repeat line if one
 		# is set, so returning to them isn't a re-read of the whole intro.
@@ -315,4 +381,26 @@ func _on_quiz_finished(correct: int, total: int) -> void:
 			p.show_toast(tr("Quiz passed! Bonus earned"))
 	elif has_toast:
 		p.show_toast(tr("Quiz passed"))
+	if quiz_reveals_key:
+		_reveal_needed_key()
 	refresh_marker()   # a passed quiz may clear a "must" requirement
+
+# Flag the key(s) still blocking a locked gate so the golden key-guide line points at
+# them. Keys the player already holds are skipped (a collected key isn't even in the
+# scene), so passing the quiz after finding the key changes nothing.
+func _reveal_needed_key() -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+	var wanted := {}
+	for door in tree.get_nodes_in_group("locked_door"):
+		if not is_instance_valid(door) or door.get("_opened") == true:
+			continue
+		var kid: String = str(door.get("required_key"))
+		if kid != "" and not ProgressionManager.has_key(kid):
+			wanted[kid] = true
+	if wanted.is_empty():
+		return
+	for key in tree.get_nodes_in_group("key"):
+		if is_instance_valid(key) and wanted.has(str(key.get("key_id"))):
+			key.add_to_group(&"guide_key")

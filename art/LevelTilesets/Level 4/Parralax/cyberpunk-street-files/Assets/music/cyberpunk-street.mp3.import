@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dlvouwuti5n1f"
+path="res://.godot/imported/cyberpunk-street.mp3-58c01bebeff4ecf61a1de7f47a72a142.mp3str"
+
+[deps]
+
+source_file="res://art/LevelTilesets/Level 4/Parralax/cyberpunk-street-files/Assets/music/cyberpunk-street.mp3"
+dest_files=["res://.godot/imported/cyberpunk-street.mp3-58c01bebeff4ecf61a1de7f47a72a142.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

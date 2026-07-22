@@ -19,7 +19,7 @@ extends Control
 
 const ENEMY_SCENES := {
 	"Bat":   preload("res://scene/actors/enemies/adbot/adbot_enemy.tscn"),
-	"Frog":  preload("res://scene/actors/enemies/bandit/bandit_enemy.tscn"),
+	"Frog":  preload("res://scene/actors/enemies/buzzer/buzzer_enemy.tscn"),
 	"Witch": preload("res://scene/actors/enemies/collector/collector_enemy.tscn"),
 	"Necro": preload("res://scene/actors/enemies/dealer/dealer_enemy.tscn"),
 	"Boss":  preload("res://scene/actors/enemies/finalboss/finalboss_enemy.tscn"),
@@ -230,7 +230,7 @@ func _find_enemies(node: Node) -> Array:
 	if node == null:
 		return out
 	for c in node.get_children():
-		if c is AdbotEnemy or c is BanditEnemy or c is CollectorEnemy or c is DealerEnemy or c is FinalBossEnemy:
+		if c is AdbotEnemy or c is BuzzerEnemy or c is CollectorEnemy or c is DealerEnemy or c is FinalBossEnemy:
 			out.append(c)
 		out.append_array(_find_enemies(c))
 	return out

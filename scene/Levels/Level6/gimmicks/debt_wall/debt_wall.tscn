@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cdebtwall0001"]
+[gd_scene load_steps=6 format=3 uid="uid://cdebtwall0001"]
 [ext_resource type="PackedScene" uid="uid://ccaptionmod01" path="res://scene/ui/caption/caption.tscn" id="cap_lbl_9"]
 
 [ext_resource type="Script" path="res://scene/Levels/Level6/gimmicks/debt_wall/debt_wall.gd" id="1_dw"]
+[ext_resource type="Texture2D" uid="uid://l40182ddukw1" path="res://art/terrain/stage6/debt_wall.png" id="2_tex"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_upper"]
 size = Vector2(44, 400)
@@ -13,12 +14,20 @@ size = Vector2(44, 100)
 script = ExtResource("1_dw")
 
 [node name="UpperVisual" type="Polygon2D" parent="."]
-color = Color(0.55, 0.08, 0.12, 0.85)
+color = Color(1, 1, 1, 0.85)
 polygon = PackedVector2Array(-22, -300, 22, -300, 22, 100, -22, 100)
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("2_tex")
+uv = PackedVector2Array(0, 0, 48, 0, 48, 400, 0, 400)
 
 [node name="LowerVisual" type="Polygon2D" parent="."]
-color = Color(0.55, 0.08, 0.12, 0.85)
+color = Color(1, 1, 1, 0.85)
 polygon = PackedVector2Array(-22, 200, 22, 200, 22, 300, -22, 300)
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("2_tex")
+uv = PackedVector2Array(0, 0, 48, 0, 48, 96, 0, 96)
 
 [node name="Edge" type="Polygon2D" parent="."]
 color = Color(1, 0.3, 0.3, 0.9)

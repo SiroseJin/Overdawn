@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/ui/scene_transition_animation.tscn" id="3_1pmp5"]
 [ext_resource type="AudioStream" uid="uid://028va8maeqdm" path="res://audio/Music/Caketown 1 by matthewpablo.mp3" id="4_5qi1a"]
 [ext_resource type="PackedScene" uid="uid://d0ib3gkf0fyen" path="res://scene/actors/npc/npc1.tscn" id="9_26d74"]
-[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/bandit/bandit_enemy.tscn" id="10_x525m"]
+[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/buzzer/buzzer_enemy.tscn" id="10_x525m"]
 [ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/actors/enemies/adbot/adbot_enemy.tscn" id="11_baten"]
 [ext_resource type="PackedScene" uid="uid://c5smarxtqoyvb" path="res://scene/system/futuristic_city_parallax.tscn" id="bg_city"]
 [ext_resource type="Script" uid="uid://vf6ib1x5p5s0" path="res://scene/gimmicks/checkpoint/checkpoint.gd" id="cp_scr"]
@@ -13,19 +13,21 @@
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="itm_door"]
 [ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="itm_hp"]
 [ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="itm_spd"]
-[ext_resource type="Texture2D" uid="uid://h1i5u5uh6gn5" path="res://art/Stage1Terrain/props/city/barrier.png" id="px_barrier"]
+[ext_resource type="Texture2D" uid="uid://h1i5u5uh6gn5" path="res://art/terrain/stage1/props/city/barrier.png" id="px_barrier"]
 [ext_resource type="Texture2D" uid="uid://bmh3waxvein1n" path="res://art/ChamberBG/cavern-bg.png" id="px_cavebg"]
-[ext_resource type="Texture2D" uid="uid://dqg3axveswedy" path="res://art/Stage1Terrain/props/cave_wall.png" id="px_cavewall"]
-[ext_resource type="Texture2D" uid="uid://ctta4yiwsur0m" path="res://art/Stage1Terrain/props/fan.png" id="px_fan"]
-[ext_resource type="Texture2D" uid="uid://cfg2kauplqr1l" path="res://art/Stage1Terrain/props/grating.png" id="px_grate"]
-[ext_resource type="Texture2D" uid="uid://cuvowxvfto101" path="res://art/Stage1Terrain/props/ad_screen.png" id="px_screen"]
-[ext_resource type="Texture2D" uid="uid://du403xdukjdlj" path="res://art/Stage1Terrain/props/city/trash.png" id="px_trash"]
-[ext_resource type="Texture2D" uid="uid://23f8ucutphix" path="res://art/Stage1Terrain/props/city/vending.png" id="px_vend"]
-[ext_resource type="Texture2D" uid="uid://5xebynutc4y1" path="res://art/Stage1Terrain/props/vent_hub.png" id="px_vent"]
-[ext_resource type="Texture2D" uid="uid://cdhafacsyvb66" path="res://art/Stage1Terrain/props/warning.png" id="px_warn"]
+[ext_resource type="Texture2D" uid="uid://dqg3axveswedy" path="res://art/terrain/stage1/props/cave_wall.png" id="px_cavewall"]
+[ext_resource type="Texture2D" uid="uid://ctta4yiwsur0m" path="res://art/terrain/stage1/props/fan.png" id="px_fan"]
+[ext_resource type="Texture2D" uid="uid://cfg2kauplqr1l" path="res://art/terrain/stage1/props/grating.png" id="px_grate"]
+[ext_resource type="Texture2D" uid="uid://dg0i8pq4lvyus" path="res://art/terrain/stage1/city/street_lamp.png" id="px_lamp"]
+[ext_resource type="Texture2D" uid="uid://cjqa12ow46tnd" path="res://art/terrain/stage1/city/red_bin.png" id="px_redbin"]
+[ext_resource type="Texture2D" uid="uid://btexnijt62go7" path="res://art/terrain/stage1/city/traffic_light.png" id="px_traffic"]
+[ext_resource type="Texture2D" uid="uid://du403xdukjdlj" path="res://art/terrain/stage1/props/city/trash.png" id="px_trash"]
+[ext_resource type="Texture2D" uid="uid://durr7gtugxjk6" path="res://art/terrain/stage1/city/trash_bags.png" id="px_trashbag"]
+[ext_resource type="Texture2D" uid="uid://23f8ucutphix" path="res://art/terrain/stage1/props/city/vending.png" id="px_vend"]
+[ext_resource type="Texture2D" uid="uid://cdhafacsyvb66" path="res://art/terrain/stage1/props/warning.png" id="px_warn"]
 [ext_resource type="PackedScene" uid="uid://ctruthshard01" path="res://scene/pickups/collectible/collectible.tscn" id="shard_scn"]
-[ext_resource type="Texture2D" uid="uid://dy14c6dtdmx3m" path="res://art/Stage1Terrain/body.png" id="tex_body"]
-[ext_resource type="Texture2D" uid="uid://dph2g5hsn6rqn" path="res://art/Stage1Terrain/platform.png" id="tex_plat"]
+[ext_resource type="Texture2D" uid="uid://1i62b7wigfgn" path="res://art/terrain/stage1/city/brick_red.png" id="tex_body"]
+[ext_resource type="Texture2D" uid="uid://d1746e47c0ynt" path="res://art/terrain/stage1/city/brick_tan.png" id="tex_plat"]
 
 [sub_resource type="RectangleShape2D" id="RS_portal"]
 size = Vector2(32, 42)
@@ -83,9 +85,6 @@ polygon = PackedVector2Array(2820, 672, 3120, 672, 3120, 860, 2820, 860)
 
 [node name="GroundF2" type="CollisionPolygon2D" parent="StageSprite" unique_id=810000014]
 polygon = PackedVector2Array(3120, 624, 3560, 624, 3560, 860, 3120, 860)
-
-[node name="PlatLore" type="CollisionPolygon2D" parent="StageSprite" unique_id=810000015]
-polygon = PackedVector2Array(1050, 528, 1180, 528, 1180, 544, 1050, 544)
 
 [node name="PlatMid" type="CollisionPolygon2D" parent="StageSprite" unique_id=810000016]
 polygon = PackedVector2Array(1760, 600, 1870, 600, 1870, 616, 1760, 616)
@@ -148,7 +147,9 @@ polygon = PackedVector2Array(-80, 672, 430, 672, 430, 860, -80, 860)
 uv = PackedVector2Array(-80, 672, 430, 672, 430, 860, -80, 860)
 
 [node name="GroundATop" type="Polygon2D" parent="TerrainVisual" unique_id=810000022]
-color = Color(0.737, 0.29, 0.608, 1)
+position = Vector2(68.29412, 0)
+scale = Vector2(0.84117645, 1)
+color = Color(0.68, 0.67, 0.7, 1)
 polygon = PackedVector2Array(-80, 672, 430, 672, 430, 676, -80, 676)
 
 [node name="GroundBFill" type="Polygon2D" parent="TerrainVisual" unique_id=810000023]
@@ -159,7 +160,7 @@ polygon = PackedVector2Array(482, 672, 780, 672, 780, 860, 482, 860)
 uv = PackedVector2Array(482, 672, 780, 672, 780, 860, 482, 860)
 
 [node name="GroundBTop" type="Polygon2D" parent="TerrainVisual" unique_id=810000024]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.68, 0.67, 0.7, 1)
 polygon = PackedVector2Array(482, 672, 780, 672, 780, 676, 482, 676)
 
 [node name="GroundB2Fill" type="Polygon2D" parent="TerrainVisual" unique_id=810000025]
@@ -170,7 +171,7 @@ polygon = PackedVector2Array(780, 624, 900, 624, 900, 860, 780, 860)
 uv = PackedVector2Array(780, 624, 900, 624, 900, 860, 780, 860)
 
 [node name="GroundB2Top" type="Polygon2D" parent="TerrainVisual" unique_id=810000026]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.68, 0.67, 0.7, 1)
 polygon = PackedVector2Array(780, 624, 900, 624, 900, 628, 780, 628)
 
 [node name="GroundCFill" type="Polygon2D" parent="TerrainVisual" unique_id=810000027]
@@ -181,7 +182,7 @@ polygon = PackedVector2Array(900, 624, 1180, 624, 1180, 860, 900, 860)
 uv = PackedVector2Array(900, 624, 1180, 624, 1180, 860, 900, 860)
 
 [node name="GroundCTop" type="Polygon2D" parent="TerrainVisual" unique_id=810000028]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.68, 0.67, 0.7, 1)
 polygon = PackedVector2Array(900, 624, 1180, 624, 1180, 628, 900, 628)
 
 [node name="GroundC2Fill" type="Polygon2D" parent="TerrainVisual" unique_id=810000029]
@@ -192,7 +193,7 @@ polygon = PackedVector2Array(1180, 576, 1400, 576, 1400, 860, 1180, 860)
 uv = PackedVector2Array(1180, 576, 1400, 576, 1400, 860, 1180, 860)
 
 [node name="GroundC2Top" type="Polygon2D" parent="TerrainVisual" unique_id=810000030]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.68, 0.67, 0.7, 1)
 polygon = PackedVector2Array(1180, 576, 1400, 576, 1400, 580, 1180, 580)
 
 [node name="GroundDFill" type="Polygon2D" parent="TerrainVisual" unique_id=810000031]
@@ -203,7 +204,7 @@ polygon = PackedVector2Array(1456, 576, 1700, 576, 1700, 860, 1456, 860)
 uv = PackedVector2Array(1456, 576, 1700, 576, 1700, 860, 1456, 860)
 
 [node name="GroundDTop" type="Polygon2D" parent="TerrainVisual" unique_id=810000032]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.68, 0.67, 0.7, 1)
 polygon = PackedVector2Array(1456, 576, 1700, 576, 1700, 580, 1456, 580)
 
 [node name="GroundD2Fill" type="Polygon2D" parent="TerrainVisual" unique_id=810000033]
@@ -214,7 +215,7 @@ polygon = PackedVector2Array(1700, 648, 2080, 648, 2080, 860, 1700, 860)
 uv = PackedVector2Array(1700, 648, 2080, 648, 2080, 860, 1700, 860)
 
 [node name="GroundD2Top" type="Polygon2D" parent="TerrainVisual" unique_id=810000034]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.68, 0.67, 0.7, 1)
 polygon = PackedVector2Array(1700, 648, 2080, 648, 2080, 652, 1700, 652)
 
 [node name="E_leftFill" type="Polygon2D" parent="TerrainVisual" unique_id=810000035]
@@ -225,7 +226,7 @@ polygon = PackedVector2Array(2140, 672, 2480, 672, 2480, 860, 2140, 860)
 uv = PackedVector2Array(2140, 672, 2480, 672, 2480, 860, 2140, 860)
 
 [node name="E_leftTop" type="Polygon2D" parent="TerrainVisual" unique_id=810000036]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.68, 0.67, 0.7, 1)
 polygon = PackedVector2Array(2140, 672, 2480, 672, 2480, 676, 2140, 676)
 
 [node name="CaveFloorFill" type="Polygon2D" parent="TerrainVisual" unique_id=810000037]
@@ -236,7 +237,7 @@ polygon = PackedVector2Array(2480, 766, 2660, 766, 2660, 860, 2480, 860)
 uv = PackedVector2Array(2480, 766, 2660, 766, 2660, 860, 2480, 860)
 
 [node name="CaveFloorTop" type="Polygon2D" parent="TerrainVisual" unique_id=810000038]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.68, 0.67, 0.7, 1)
 polygon = PackedVector2Array(2480, 766, 2660, 766, 2660, 770, 2480, 770)
 
 [node name="CaveRoofFill" type="Polygon2D" parent="TerrainVisual" unique_id=810000039]
@@ -247,7 +248,7 @@ polygon = PackedVector2Array(2540, 672, 2660, 672, 2660, 712, 2540, 712)
 uv = PackedVector2Array(2540, 672, 2660, 672, 2660, 712, 2540, 712)
 
 [node name="CaveRoofTop" type="Polygon2D" parent="TerrainVisual" unique_id=810000040]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.68, 0.67, 0.7, 1)
 polygon = PackedVector2Array(2540, 672, 2660, 672, 2660, 676, 2540, 676)
 
 [node name="E_rightFill" type="Polygon2D" parent="TerrainVisual" unique_id=810000041]
@@ -258,7 +259,7 @@ polygon = PackedVector2Array(2660, 672, 2760, 672, 2760, 860, 2660, 860)
 uv = PackedVector2Array(2660, 672, 2760, 672, 2760, 860, 2660, 860)
 
 [node name="E_rightTop" type="Polygon2D" parent="TerrainVisual" unique_id=810000042]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.68, 0.67, 0.7, 1)
 polygon = PackedVector2Array(2660, 672, 2760, 672, 2760, 676, 2660, 676)
 
 [node name="GroundFFill" type="Polygon2D" parent="TerrainVisual" unique_id=810000043]
@@ -269,7 +270,7 @@ polygon = PackedVector2Array(2820, 672, 3120, 672, 3120, 860, 2820, 860)
 uv = PackedVector2Array(2820, 672, 3120, 672, 3120, 860, 2820, 860)
 
 [node name="GroundFTop" type="Polygon2D" parent="TerrainVisual" unique_id=810000044]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.68, 0.67, 0.7, 1)
 polygon = PackedVector2Array(2820, 672, 3120, 672, 3120, 676, 2820, 676)
 
 [node name="GroundF2Fill" type="Polygon2D" parent="TerrainVisual" unique_id=810000045]
@@ -280,15 +281,8 @@ polygon = PackedVector2Array(3120, 624, 3560, 624, 3560, 860, 3120, 860)
 uv = PackedVector2Array(3120, 624, 3560, 624, 3560, 860, 3120, 860)
 
 [node name="GroundF2Top" type="Polygon2D" parent="TerrainVisual" unique_id=810000046]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.68, 0.67, 0.7, 1)
 polygon = PackedVector2Array(3120, 624, 3560, 624, 3560, 628, 3120, 628)
-
-[node name="PlatLoreFill" type="Polygon2D" parent="TerrainVisual" unique_id=810000047]
-texture_filter = 1
-texture_repeat = 2
-texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(1050, 528, 1180, 528, 1180, 544, 1050, 544)
-uv = PackedVector2Array(1050, 0, 1180, 0, 1180, 16, 1050, 16)
 
 [node name="PlatLoreTop" type="Polygon2D" parent="TerrainVisual" unique_id=810000048]
 visible = false
@@ -353,26 +347,6 @@ uv = PackedVector2Array(-80, 672, 430, 672, 430, 860, -80, 860)
 z_index = -1
 texture_filter = 1
 
-[node name="AdScreen1" type="Sprite2D" parent="Props" unique_id=1438138420]
-position = Vector2(250, 556)
-texture = ExtResource("px_screen")
-
-[node name="AdScreen2" type="Sprite2D" parent="Props" unique_id=1713876592]
-position = Vector2(1000, 496)
-texture = ExtResource("px_screen")
-
-[node name="AdScreen3" type="Sprite2D" parent="Props" unique_id=1085603794]
-position = Vector2(2950, 556)
-texture = ExtResource("px_screen")
-
-[node name="VentHub1" type="Sprite2D" parent="Props" unique_id=1077548898]
-position = Vector2(620, 656)
-texture = ExtResource("px_vent")
-
-[node name="VentHub2" type="Sprite2D" parent="Props" unique_id=256886249]
-position = Vector2(2000, 632)
-texture = ExtResource("px_vent")
-
 [node name="Fan1" type="Sprite2D" parent="Props" unique_id=352840238]
 position = Vector2(150, 760)
 texture = ExtResource("px_fan")
@@ -382,7 +356,7 @@ position = Vector2(3320, 720)
 texture = ExtResource("px_fan")
 
 [node name="CaveWarning" type="Sprite2D" parent="Props" unique_id=1678041686]
-position = Vector2(2500, 704)
+position = Vector2(2495, 711)
 texture = ExtResource("px_warn")
 
 [node name="Grating1" type="Sprite2D" parent="Props" unique_id=524635615]
@@ -409,27 +383,7 @@ texture = ExtResource("px_grate")
 position = Vector2(3350, 805)
 texture = ExtResource("px_grate")
 
-[node name="VentU1" type="Sprite2D" parent="Props" unique_id=604422440]
-position = Vector2(120, 795)
-texture = ExtResource("px_vent")
-
-[node name="VentU2" type="Sprite2D" parent="Props" unique_id=1667810183]
-position = Vector2(1050, 785)
-texture = ExtResource("px_vent")
-
-[node name="VentU3" type="Sprite2D" parent="Props" unique_id=1951822000]
-position = Vector2(1350, 725)
-texture = ExtResource("px_vent")
-
-[node name="VentU4" type="Sprite2D" parent="Props" unique_id=838673613]
-position = Vector2(2300, 800)
-texture = ExtResource("px_vent")
-
-[node name="VentU5" type="Sprite2D" parent="Props" unique_id=964715742]
-position = Vector2(3060, 785)
-texture = ExtResource("px_vent")
-
-[node name="Vending1" type="Sprite2D" parent="Props" unique_id=1687292539]
+[node name="Mail1" type="Sprite2D" parent="Props" unique_id=1687292539]
 modulate = Color(0.74, 0.77, 0.86, 1)
 position = Vector2(560, 650)
 texture = ExtResource("px_vend")
@@ -448,6 +402,30 @@ texture = ExtResource("px_trash")
 modulate = Color(0.74, 0.77, 0.86, 1)
 position = Vector2(2458, 661)
 texture = ExtResource("px_barrier")
+
+[node name="TrafficLight1" type="Sprite2D" parent="Props" unique_id=1180268097]
+position = Vector2(750, 608)
+texture = ExtResource("px_traffic")
+
+[node name="StreetLamp1" type="Sprite2D" parent="Props" unique_id=1143207579]
+position = Vector2(1240, 528)
+texture = ExtResource("px_lamp")
+
+[node name="TrafficLight2" type="Sprite2D" parent="Props" unique_id=538345703]
+position = Vector2(1580, 512)
+texture = ExtResource("px_traffic")
+
+[node name="TrafficLight3" type="Sprite2D" parent="Props" unique_id=1603740079]
+position = Vector2(2380, 608)
+texture = ExtResource("px_traffic")
+
+[node name="TrashBags1" type="Sprite2D" parent="Props" unique_id=2007427519]
+position = Vector2(1150, 608)
+texture = ExtResource("px_trashbag")
+
+[node name="RedBin1" type="Sprite2D" parent="Props" unique_id=2068988418]
+position = Vector2(3200, 608)
+texture = ExtResource("px_redbin")
 
 [node name="Stage2Portal" type="Area2D" parent="." unique_id=987220002]
 collision_mask = 2
@@ -492,17 +470,17 @@ npc_id = "stage1_gatekeeper"
 unlocks_skill = "dash"
 grants_key = "stage1_key"
 
-[node name="BanditEnemy" parent="." unique_id=309038319 instance=ExtResource("10_x525m")]
-position = Vector2(1817.9999, 589)
+[node name="BuzzerEnemy" parent="." unique_id=309038319 instance=ExtResource("10_x525m")]
+position = Vector2(1815, 590.00006)
 
-[node name="Bandit2" parent="." unique_id=1565383430 instance=ExtResource("10_x525m")]
-position = Vector2(2522, 712.00006)
+[node name="Buzzer2" parent="." unique_id=1565383430 instance=ExtResource("10_x525m")]
+position = Vector2(2527, 708.00006)
 
 [node name="Adbot2" parent="." unique_id=1689417740 instance=ExtResource("11_baten")]
 position = Vector2(693, 632)
 
 [node name="Adbot3" parent="." unique_id=2038592968 instance=ExtResource("11_baten")]
-position = Vector2(2855, 625)
+position = Vector2(2930, 635)
 
 [node name="Coin2" parent="." unique_id=1091690492 instance=ExtResource("itm_coin")]
 position = Vector2(500, 658)
@@ -540,10 +518,6 @@ shape = SubResource("RS_cp")
 
 [node name="Stage1Door" parent="." unique_id=1479382046 instance=ExtResource("itm_door")]
 position = Vector2(3428, 549)
-
-[node name="Shard_s1_1" parent="." unique_id=1722257447 instance=ExtResource("shard_scn")]
-position = Vector2(1115, 512)
-collectible_id = "shard_s1_1"
 
 [node name="Shard_s1_3" parent="." unique_id=1913191163 instance=ExtResource("shard_scn")]
 position = Vector2(2600, 742)

@@ -5,12 +5,29 @@
 [ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/ui/scene_transition_animation.tscn" id="3_trans"]
 [ext_resource type="AudioStream" uid="uid://028va8maeqdm" path="res://audio/Music/Caketown 1 by matthewpablo.mp3" id="4_bgm"]
 [ext_resource type="PackedScene" uid="uid://d0ib3gkf0fyen" path="res://scene/actors/npc/npc1.tscn" id="5_npc"]
-[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/bandit/bandit_enemy.tscn" id="6_frog"]
+[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/buzzer/buzzer_enemy.tscn" id="6_frog"]
 [ext_resource type="PackedScene" uid="uid://chn8rr31oxv0x" path="res://scene/actors/enemies/collector/collector_enemy.tscn" id="8_witch"]
 [ext_resource type="PackedScene" uid="uid://jr1opep0t5q3" path="res://scene/actors/enemies/dealer/dealer_enemy.tscn" id="9_necro"]
 [ext_resource type="PackedScene" uid="uid://cmovingplat01" path="res://scene/gimmicks/moving_platform/moving_platform.tscn" id="10_mp"]
 [ext_resource type="PackedScene" uid="uid://dumfvyytw8b8n" path="res://scene/system/casino_parallax.tscn" id="bg_city"]
 [ext_resource type="Script" uid="uid://vf6ib1x5p5s0" path="res://scene/gimmicks/checkpoint/checkpoint.gd" id="cp_scr"]
+[ext_resource type="Texture2D" uid="uid://bik7882tsl5e5" path="res://art/terrain/stage4/decor/chips_black2.png" id="dec_chips_black2"]
+[ext_resource type="Texture2D" uid="uid://ckexv0arm6qje" path="res://art/terrain/stage4/decor/chips_blue.png" id="dec_chips_blue"]
+[ext_resource type="Texture2D" uid="uid://ddurf32rlpu4m" path="res://art/terrain/stage4/decor/chips_green.png" id="dec_chips_green"]
+[ext_resource type="Texture2D" uid="uid://byjlcfdo21sty" path="res://art/terrain/stage4/decor/chips_red.png" id="dec_chips_red"]
+[ext_resource type="Texture2D" uid="uid://bm25x0fed2rnd" path="res://art/terrain/stage4/decor/chips_violet.png" id="dec_chips_violet"]
+[ext_resource type="Texture2D" uid="uid://wgjxcssee176" path="res://art/terrain/stage4/decor/chip_green.png" id="dec_chip_green"]
+[ext_resource type="Texture2D" uid="uid://duoywx7wccc25" path="res://art/terrain/stage4/decor/chip_red.png" id="dec_chip_red"]
+[ext_resource type="Texture2D" uid="uid://bojyvt26afnpu" path="res://art/terrain/stage4/decor/dice_pair.png" id="dec_dice_pair"]
+[ext_resource type="Texture2D" uid="uid://chf6x6vn06co3" path="res://art/terrain/stage4/decor/die_1.png" id="dec_die_1"]
+[ext_resource type="Texture2D" uid="uid://cqbfd57sywlcb" path="res://art/terrain/stage4/decor/die_5.png" id="dec_die_5"]
+[ext_resource type="Texture2D" uid="uid://c7udco48twrnu" path="res://art/terrain/stage4/decor/die_6.png" id="dec_die_6"]
+[ext_resource type="Texture2D" uid="uid://dmme26bfhjm2c" path="res://art/terrain/stage4/decor/sign_casino.png" id="dec_sign_casino"]
+[ext_resource type="Texture2D" uid="uid://dhw872dmoenmy" path="res://art/terrain/stage4/decor/sym_777.png" id="dec_sym_777"]
+[ext_resource type="Texture2D" uid="uid://d2j4d0mt6r8vm" path="res://art/terrain/stage4/decor/sym_bar.png" id="dec_sym_bar"]
+[ext_resource type="Texture2D" uid="uid://cs25axjvr30m3" path="res://art/terrain/stage4/decor/sym_cherry.png" id="dec_sym_cherry"]
+[ext_resource type="Texture2D" uid="uid://2kfmne67mhjn" path="res://art/terrain/stage4/decor/sym_grape.png" id="dec_sym_grape"]
+[ext_resource type="Texture2D" uid="uid://dql8uqssdbhlm" path="res://art/terrain/stage4/decor/sym_lemon.png" id="dec_sym_lemon"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="itm_door"]
 [ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="itm_hp"]
@@ -18,11 +35,12 @@
 [ext_resource type="PackedScene" uid="uid://cpull0one0001" path="res://scene/Levels/Level4/gimmicks/pull_zone/pull_zone.tscn" id="itm_pull"]
 [ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="itm_spd"]
 [ext_resource type="PackedScene" uid="uid://bkpom03w265c7" path="res://scene/gimmicks/casino_props/slot_machine.tscn" id="prop_slot"]
-[ext_resource type="Texture2D" uid="uid://cfg2kauplqr1l" path="res://art/Stage1Terrain/props/grating.png" id="px_grate"]
-[ext_resource type="Texture2D" uid="uid://cuvowxvfto101" path="res://art/Stage1Terrain/props/ad_screen.png" id="px_screen"]
-[ext_resource type="Texture2D" uid="uid://5xebynutc4y1" path="res://art/Stage1Terrain/props/vent_hub.png" id="px_vent"]
+[ext_resource type="Texture2D" uid="uid://cfg2kauplqr1l" path="res://art/terrain/stage1/props/grating.png" id="px_grate"]
+[ext_resource type="Texture2D" uid="uid://cuvowxvfto101" path="res://art/terrain/stage1/props/ad_screen.png" id="px_screen"]
+[ext_resource type="Texture2D" uid="uid://5xebynutc4y1" path="res://art/terrain/stage1/props/vent_hub.png" id="px_vent"]
 [ext_resource type="PackedScene" uid="uid://ctruthshard01" path="res://scene/pickups/collectible/collectible.tscn" id="shard_scn"]
-[ext_resource type="Texture2D" uid="uid://dy14c6dtdmx3m" path="res://art/Stage1Terrain/body.png" id="tex_body"]
+[ext_resource type="Texture2D" uid="uid://b3kw86uje1dmg" path="res://art/terrain/stage4/body.png" id="tex_body"]
+[ext_resource type="Texture2D" uid="uid://basj8khxi4077" path="res://art/terrain/stage4/platform.png" id="tex_plat"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_death"]
 size = Vector2(5200, 60)
@@ -87,11 +105,11 @@ volume_db = -4.0
 bus = &"bgm"
 
 [node name="Vino" parent="." unique_id=1007207758 instance=ExtResource("5_npc")]
-position = Vector2(150, 555)
+position = Vector2(151, 559)
 dialogue_timeline = "s4npc1timeline"
 
 [node name="Mega" parent="." unique_id=1068738709 instance=ExtResource("5_npc")]
-position = Vector2(1529, 645)
+position = Vector2(1531, 650)
 dialogue_timeline = "s4npc2timeline"
 
 [node name="Guntur" parent="." unique_id=395688038 instance=ExtResource("5_npc")]
@@ -102,10 +120,10 @@ dialogue_timeline = "s4npc3timeline"
 position = Vector2(4499, 613)
 dialogue_timeline = "s4npc4timeline"
 
-[node name="Bandit1" parent="." unique_id=1623953216 instance=ExtResource("6_frog")]
+[node name="Buzzer1" parent="." unique_id=1623953216 instance=ExtResource("6_frog")]
 position = Vector2(571, 549)
 
-[node name="Bandit2" parent="." unique_id=1426389987 instance=ExtResource("6_frog")]
+[node name="Buzzer2" parent="." unique_id=1426389987 instance=ExtResource("6_frog")]
 position = Vector2(2508, 637)
 
 [node name="Collector1" parent="." unique_id=875828768 instance=ExtResource("8_witch")]
@@ -122,6 +140,7 @@ downtime = 0.5
 start_on_touch = true
 auto_return = false
 start_active = false
+skin = ExtResource("tex_plat")
 
 [node name="End" type="Marker2D" parent="MovingPlatform1" unique_id=2006539095]
 position = Vector2(397, 0)
@@ -131,6 +150,7 @@ position = Vector2(3185, 528)
 travel = Vector2(300, 0)
 speed = 100.0
 downtime = 0.5
+skin = ExtResource("tex_plat")
 
 [node name="End" type="Marker2D" parent="MovingPlatform2" unique_id=263735788]
 position = Vector2(312, 0)
@@ -148,7 +168,7 @@ position = Vector2(400, 545)
 position = Vector2(1350, 635)
 
 [node name="Coin3" parent="." unique_id=1490794719 instance=ExtResource("itm_coin")]
-position = Vector2(2150, 635)
+position = Vector2(2213, 635)
 
 [node name="Coin4" parent="." unique_id=1750140335 instance=ExtResource("itm_coin")]
 position = Vector2(2900, 505)
@@ -221,20 +241,16 @@ position = Vector2(0, -77)
 shape = SubResource("RectangleShape2D_lya86")
 
 [node name="CheckPoint2" type="Area2D" parent="." unique_id=213961557]
-position = Vector2(2195, 887)
+position = Vector2(2099, 639)
 script = ExtResource("cp_scr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint2" unique_id=1377414125]
-position = Vector2(-101.25, -325.5)
+position = Vector2(0, -81)
 shape = SubResource("RectangleShape2D_lya86")
 
 [node name="Shard_s4_1" parent="." unique_id=714381363 instance=ExtResource("shard_scn")]
 position = Vector2(1842, 573)
 collectible_id = "shard_s4_1"
-
-[node name="Shard_s4_2" parent="." unique_id=1131012962 instance=ExtResource("shard_scn")]
-position = Vector2(3781, 407)
-collectible_id = "shard_s4_2"
 
 [node name="ThemedTerrain" type="Node2D" parent="." unique_id=66787498]
 z_index = -1
@@ -246,53 +262,19 @@ texture = ExtResource("tex_body")
 polygon = PackedVector2Array(0, 560, 800, 560, 1100, 650, 1600, 650, 1600, 720, 0, 720)
 uv = PackedVector2Array(0, 560, 800, 560, 1100, 650, 1600, 650, 1600, 720, 0, 720)
 
-[node name="Ground1T0" type="Polygon2D" parent="ThemedTerrain" unique_id=1554537118]
-color = Color(0.737, 0.29, 0.608, 1)
-polygon = PackedVector2Array(0, 560, 800, 560, 800, 564, 0, 564)
-
-[node name="Ground1T1" type="Polygon2D" parent="ThemedTerrain" unique_id=1414183075]
-color = Color(0.737, 0.29, 0.608, 1)
-polygon = PackedVector2Array(800, 560, 1100, 650, 1100, 654, 800, 564)
-
 [node name="Ground2GF" type="Polygon2D" parent="ThemedTerrain" unique_id=283852312]
 texture_filter = 1
 texture_repeat = 2
-position = Vector2(682.31506, 0)
-scale = Vector2(0.70311666, 1)
 texture = ExtResource("tex_body")
-polygon = PackedVector2Array(2298.26, 650, 2627.8496, 649, 2981.9873, 523, 3098.26, 520, 3498.26, 520, 3498.26, 619.3154, 3498.26, 720, 1989.2643, 723, 1989.2643, 652)
-uv = PackedVector2Array(2298.26, 650, 2798.26, 650, 3098.26, 520, 3498.26, 520, 3498.26, 720, 2298.26, 720, 2298.26, 680.455)
-
-[node name="Ground2T0" type="Polygon2D" parent="ThemedTerrain" unique_id=1420769937]
-position = Vector2(-302, -7)
-color = Color(0.737, 0.29, 0.608, 1)
-polygon = PackedVector2Array(2820, 655, 3091, 524, 3091, 529, 2823, 657)
-
-[node name="Ground2T1" type="Polygon2D" parent="ThemedTerrain" unique_id=1337070940]
-position = Vector2(44, -2)
-scale = Vector2(0.88565004, 1)
-color = Color(0.737, 0.29, 0.608, 1)
-polygon = PackedVector2Array(3098.26, 520, 3304.5007, 520, 3498.26, 520, 3498.26, 524, 3098.26, 524)
+polygon = PackedVector2Array(2079.5626, 650, 2522.0106, 650, 2787.4793, 520, 3141.4377, 520, 3141.4377, 720, 2079.5626, 720, 2079.5626, 680.4545)
+uv = PackedVector2Array(2079.5626, 650, 2522.0106, 650, 2787.4793, 520, 3141.4377, 520, 3141.4377, 720, 2079.5626, 720, 2079.5626, 680.4545)
 
 [node name="Ground3GF" type="Polygon2D" parent="ThemedTerrain" unique_id=798841504]
 texture_filter = 1
 texture_repeat = 2
-position = Vector2(-1043.4058, 0)
-scale = Vector2(1.2044382, 1)
 texture = ExtResource("tex_body")
-polygon = PackedVector2Array(3803.77, 520, 4186.521, 524, 4504.5117, 622, 5103.77, 620, 5103.77, 720, 3803.77, 720, 3803.7698, 619.83844)
-uv = PackedVector2Array(3803.77, 520, 4303.77, 520, 4703.77, 620, 5103.77, 620, 5103.77, 720, 3803.77, 720)
-
-[node name="Ground3T0" type="Polygon2D" parent="ThemedTerrain" unique_id=520364883]
-position = Vector2(2364.1924, 0)
-scale = Vector2(0.37846074, 1)
-color = Color(0.737, 0.29, 0.608, 1)
-polygon = PackedVector2Array(3803.77, 520, 4303.77, 520, 4303.77, 524, 3803.77, 524)
-
-[node name="Ground3T1" type="Polygon2D" parent="ThemedTerrain" unique_id=86283478]
-position = Vector2(-311, 0)
-color = Color(0.737, 0.29, 0.608, 1)
-polygon = PackedVector2Array(4303.77, 520, 4347.7827, 531.0032, 4682, 620, 4672, 620, 4303.77, 524)
+polygon = PackedVector2Array(3534.0625, 520, 3994.399, 520, 4362.6683, 620, 4730.9375, 620, 4730.9375, 720, 3534.0625, 720)
+uv = PackedVector2Array(3534.0625, 520, 3994.399, 520, 4362.6683, 620, 4730.9375, 620, 4730.9375, 720, 3534.0625, 720)
 
 [node name="LeftWallGF" type="Polygon2D" parent="ThemedTerrain" unique_id=1498932190]
 texture_filter = 1
@@ -307,6 +289,42 @@ texture_repeat = 2
 texture = ExtResource("tex_body")
 polygon = PackedVector2Array(4700, -300, 4800, -300, 4800, 800, 4700, 800)
 uv = PackedVector2Array(4700, -300, 4800, -300, 4800, 800, 4700, 800)
+
+[node name="Ground1Edge0" type="Polygon2D" parent="ThemedTerrain" unique_id=355542726]
+color = Color(1, 0.72, 0.25, 1)
+polygon = PackedVector2Array(0, 560, 800, 560, 800, 564, 0, 564)
+
+[node name="Ground1Edge1" type="Polygon2D" parent="ThemedTerrain" unique_id=34351660]
+color = Color(1, 0.72, 0.25, 1)
+polygon = PackedVector2Array(800, 560, 1100, 650, 1100, 654, 800, 564)
+
+[node name="Ground1Edge2" type="Polygon2D" parent="ThemedTerrain" unique_id=336314942]
+color = Color(1, 0.72, 0.25, 1)
+polygon = PackedVector2Array(1100, 650, 1600, 650, 1600, 654, 1100, 654)
+
+[node name="Ground2Edge0" type="Polygon2D" parent="ThemedTerrain" unique_id=493047722]
+color = Color(1, 0.72, 0.25, 1)
+polygon = PackedVector2Array(2079.5625, 650, 2522.0105, 650, 2522.0105, 654, 2079.5625, 654)
+
+[node name="Ground2Edge1" type="Polygon2D" parent="ThemedTerrain" unique_id=1476811082]
+color = Color(1, 0.72, 0.25, 1)
+polygon = PackedVector2Array(2522.0105, 650, 2787.4792, 520, 2787.4792, 524, 2522.0105, 654)
+
+[node name="Ground2Edge2" type="Polygon2D" parent="ThemedTerrain" unique_id=114881293]
+color = Color(1, 0.72, 0.25, 1)
+polygon = PackedVector2Array(2787.4792, 520, 3141.4377, 520, 3141.4377, 524, 2787.4792, 524)
+
+[node name="Ground3Edge0" type="Polygon2D" parent="ThemedTerrain" unique_id=922459850]
+color = Color(1, 0.72, 0.25, 1)
+polygon = PackedVector2Array(3534.0625, 520, 3994.399, 520, 3994.399, 524, 3534.0625, 524)
+
+[node name="Ground3Edge1" type="Polygon2D" parent="ThemedTerrain" unique_id=1592991849]
+color = Color(1, 0.72, 0.25, 1)
+polygon = PackedVector2Array(3994.399, 520, 4362.6685, 620, 4362.6685, 624, 3994.399, 524)
+
+[node name="Ground3Edge2" type="Polygon2D" parent="ThemedTerrain" unique_id=1366974559]
+color = Color(1, 0.72, 0.25, 1)
+polygon = PackedVector2Array(4362.6685, 620, 4730.9375, 620, 4730.9375, 624, 4362.6685, 624)
 
 [node name="Props" type="Node2D" parent="." unique_id=980052487]
 z_index = -1
@@ -334,6 +352,74 @@ texture = ExtResource("px_vent")
 [node name="GratingU1" type="Sprite2D" parent="Props" unique_id=1151191381]
 position = Vector2(4383.77, 660)
 texture = ExtResource("px_grate")
+
+[node name="ChipsRed1" type="Sprite2D" parent="Props" unique_id=1617341603]
+position = Vector2(240, 532)
+texture = ExtResource("dec_chips_red")
+
+[node name="Die5a" type="Sprite2D" parent="Props" unique_id=685208843]
+position = Vector2(205, 549)
+texture = ExtResource("dec_die_5")
+
+[node name="SymCherry" type="Sprite2D" parent="Props" unique_id=1225881830]
+position = Vector2(490, 547)
+texture = ExtResource("dec_sym_cherry")
+
+[node name="SignCasino" type="Sprite2D" parent="Props" unique_id=864720637]
+position = Vector2(460, 430)
+texture = ExtResource("dec_sign_casino")
+
+[node name="ChipsBlack" type="Sprite2D" parent="Props" unique_id=915854651]
+position = Vector2(1180, 620)
+texture = ExtResource("dec_chips_black2")
+
+[node name="DicePair" type="Sprite2D" parent="Props" unique_id=516454485]
+position = Vector2(1230, 637)
+texture = ExtResource("dec_dice_pair")
+
+[node name="Sym777" type="Sprite2D" parent="Props" unique_id=1750237218]
+position = Vector2(1450, 560)
+texture = ExtResource("dec_sym_777")
+
+[node name="ChipsGreen" type="Sprite2D" parent="Props" unique_id=1129401079]
+position = Vector2(2340, 633)
+texture = ExtResource("dec_chips_green")
+
+[node name="ChipRed1" type="Sprite2D" parent="Props" unique_id=1315932135]
+position = Vector2(2375, 640)
+texture = ExtResource("dec_chip_red")
+
+[node name="SymLemon" type="Sprite2D" parent="Props" unique_id=1497562169]
+position = Vector2(2305, 639)
+texture = ExtResource("dec_sym_lemon")
+
+[node name="ChipsViolet" type="Sprite2D" parent="Props" unique_id=209647716]
+position = Vector2(2990, 498)
+texture = ExtResource("dec_chips_violet")
+
+[node name="Die6a" type="Sprite2D" parent="Props" unique_id=1518252540]
+position = Vector2(3025, 509)
+texture = ExtResource("dec_die_6")
+
+[node name="SymBar" type="Sprite2D" parent="Props" unique_id=1556995943]
+position = Vector2(3055, 511)
+texture = ExtResource("dec_sym_bar")
+
+[node name="ChipsBlue" type="Sprite2D" parent="Props" unique_id=1253869287]
+position = Vector2(3680, 507)
+texture = ExtResource("dec_chips_blue")
+
+[node name="ChipGreen1" type="Sprite2D" parent="Props" unique_id=844991720]
+position = Vector2(3700, 510)
+texture = ExtResource("dec_chip_green")
+
+[node name="SymGrape" type="Sprite2D" parent="Props" unique_id=698342699]
+position = Vector2(3950, 507)
+texture = ExtResource("dec_sym_grape")
+
+[node name="Die1a" type="Sprite2D" parent="Props" unique_id=1522287523]
+position = Vector2(4672, 609)
+texture = ExtResource("dec_die_1")
 
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Stage5Portal" to="." method="_on_stage_5_portal_body_entered"]

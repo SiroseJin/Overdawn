@@ -63,9 +63,12 @@ func _configure_npcs() -> void:
 	# that unlocks the gate to Stage 4.
 	var sinta := get_node_or_null("Sinta")
 	if sinta:
-		sinta.quest_id          = "q_find_key"
-		sinta.quest_giver_name  = "Sinta"
-		sinta.repeat_timeline   = "s3sintapost"
+		sinta.quest_id            = "q_find_key"
+		sinta.quest_giver_name    = "Sinta"
+		sinta.repeat_timeline     = "s3sintapost"
+		# If you grabbed the summit key BEFORE taking her quest, she acknowledges it and
+		# the quest completes on the spot instead of pointing you back up the tower (#6).
+		sinta.quest_done_timeline = "s3sintadone"
 
 # ─── Transitions ─────────────────────────────────────────────────────────────────
 

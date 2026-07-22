@@ -18,7 +18,7 @@ extends Node2D
 
 var enemy_scenes: Array = [
 	preload("res://scene/actors/enemies/adbot/adbot_enemy.tscn"),
-	preload("res://scene/actors/enemies/bandit/bandit_enemy.tscn"),
+	preload("res://scene/actors/enemies/buzzer/buzzer_enemy.tscn"),
 	preload("res://scene/actors/enemies/collector/collector_enemy.tscn"),
 	preload("res://scene/actors/enemies/dealer/dealer_enemy.tscn"),
 ]
@@ -377,6 +377,7 @@ func _spawn_wave_gimmicks() -> void:
 		r.damage     = 12
 		r.min_top_y  = 235.0                    # stops after covering the lower arena
 		r.scale      = Vector2(0.55, 1.0)       # narrow it toward the arena width
+		r.speed_scales_with_difficulty = false  # arcade is exempt from difficulty scaling
 		add_child(r)
 		_wave_platforms.append(r)
 

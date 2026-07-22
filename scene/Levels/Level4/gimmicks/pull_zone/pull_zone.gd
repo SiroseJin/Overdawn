@@ -23,6 +23,20 @@ class_name PullZone
 @export var travel: Vector2 = Vector2.ZERO
 @export var move_speed: float = 90.0          # patrol speed, px/s
 
+# ─── Churn audio ────────────────────────────────────────────────────────────────
+# attach_loop uses a plain (non-positional) AudioStreamPlayer, so left alone every
+# zone in the stage churns at full volume everywhere, forever — with three of them
+# in Stage 4 that stacked into constant noise. So the bed is faded by distance and
+# ducked during the lull: you hear the shuffle when you're near a gust that's
+# actually blowing, and it doubles as an audio telegraph for the rhythm.
+@export_group("Churn audio")
+## Loudness right at the zone while a gust blows.
+@export var audio_volume_db: float = -14.0
+## Distance past the zone's edge over which it fades to silence.
+@export var audio_falloff: float = 620.0
+## How far the bed ducks during the rest phase (1 = no duck, 0 = silent).
+@export_range(0.0, 1.0) var audio_rest_duck: float = 0.35
+
 var _bodies: Array = []          # players currently inside
 var _on := true                  # is a gust currently blowing?
 var _phase := 0.0                # time in the current on/off phase
@@ -32,11 +46,13 @@ var _home := Vector2.ZERO         # placed position; patrol swings around it
 var _move_dist := 0.0
 var _move_dir := 1.0
 
+var _loop: AudioStreamPlayer = null
+
 @onready var _visual: Polygon2D = get_node_or_null("Visual")
 
 func _ready() -> void:
 	_home = position
-	AudioManager.attach_loop(self, "pull_zone", -6.0)   # casino-themed churn of the current
+	_loop = AudioManager.attach_loop(self, "pull_zone", audio_volume_db)   # casino churn of the current
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	var cs := get_node_or_null("CollisionShape2D")
@@ -89,7 +105,26 @@ func _process(delta: float) -> void:
 		var m := _visual.self_modulate
 		m.a = lerpf(m.a, (1.0 if _on else 0.35), delta * 8.0)
 		_visual.self_modulate = m
+	_update_churn(delta)
 	queue_redraw()
+
+# Fade the churn bed by how far the player is from the zone's edge, and duck it
+# while the gust is resting, so several zones never stack into a flat drone.
+func _update_churn(delta: float) -> void:
+	if _loop == null:
+		return
+	var p = Global.PlayerBody
+	var target := -80.0
+	if is_instance_valid(p):
+		var half := _region * 0.5
+		var d: Vector2 = (p.global_position - global_position).abs() - half
+		var dist: float = maxf(0.0, maxf(d.x, d.y))          # 0 while inside the field
+		var near: float = clampf(1.0 - dist / maxf(1.0, audio_falloff), 0.0, 1.0)
+		var gust: float = 1.0 if _on else audio_rest_duck
+		var lin: float = near * gust
+		if lin > 0.001:
+			target = audio_volume_db + linear_to_db(lin)
+	_loop.volume_db = lerpf(_loop.volume_db, target, clampf(delta * 6.0, 0.0, 1.0))
 
 # Scrolling chevrons pointing along the pull direction — bright while blowing.
 func _draw() -> void:

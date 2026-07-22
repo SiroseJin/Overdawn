@@ -8,11 +8,16 @@
 [ext_resource type="PackedScene" uid="uid://cfallingplat0" path="res://scene/gimmicks/falling_platform/falling_platform.tscn" id="6_fp"]
 [ext_resource type="PackedScene" uid="uid://cfinalboss001" path="res://scene/actors/enemies/finalboss/finalboss_enemy.tscn" id="7_boss"]
 [ext_resource type="PackedScene" uid="uid://c0o24xbnx1jwl" path="res://scene/system/scifi_lab_parallax.tscn" id="bg_city"]
-[ext_resource type="Texture2D" uid="uid://cuvowxvfto101" path="res://art/Stage1Terrain/props/ad_screen.png" id="px_screen"]
-[ext_resource type="Texture2D" uid="uid://5xebynutc4y1" path="res://art/Stage1Terrain/props/vent_hub.png" id="px_vent"]
+[ext_resource type="Texture2D" uid="uid://cuvowxvfto101" path="res://art/terrain/stage1/props/ad_screen.png" id="px_screen"]
+[ext_resource type="Texture2D" uid="uid://5xebynutc4y1" path="res://art/terrain/stage1/props/vent_hub.png" id="px_vent"]
 [ext_resource type="PackedScene" uid="uid://ctruthshard01" path="res://scene/pickups/collectible/collectible.tscn" id="shard_scn"]
-[ext_resource type="Texture2D" uid="uid://dy14c6dtdmx3m" path="res://art/Stage1Terrain/body.png" id="tex_body"]
-[ext_resource type="Texture2D" uid="uid://dph2g5hsn6rqn" path="res://art/Stage1Terrain/platform.png" id="tex_plat"]
+[ext_resource type="Texture2D" uid="uid://c25ew57fm6p7" path="res://art/terrain/stage6/body.png" id="tex_body"]
+[ext_resource type="Texture2D" uid="uid://dywnrcwfet7mn" path="res://art/terrain/stage6/ceiling.png" id="tex_ceiling"]
+[ext_resource type="Texture2D" uid="uid://bpcr546ggifme" path="res://art/terrain/stage6/pillar.png" id="tex_pillar"]
+[ext_resource type="Texture2D" uid="uid://cdq2opadp1n1w" path="res://art/terrain/stage6/platform.png" id="tex_plat"]
+[ext_resource type="Texture2D" uid="uid://bdka8t3vg8dw5" path="res://art/terrain/stage6/wall.png" id="tex_wall"]
+[ext_resource type="Texture2D" uid="uid://cc25b8gwvht3g" path="res://art/terrain/stage6/wall_edge_l.png" id="tex_wall_edge_l"]
+[ext_resource type="Texture2D" uid="uid://bn0cqekpxmbp4" path="res://art/terrain/stage6/wall_edge_r.png" id="tex_wall_edge_r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_zone"]
 size = Vector2(100, 520)
@@ -53,71 +58,75 @@ polygon = PackedVector2Array(-100, -300, 0, -300, 0, 800, -100, 800)
 polygon = PackedVector2Array(2400, -300, 2500, -300, 2500, 800, 2400, 800)
 
 [node name="SP1" type="CollisionPolygon2D" parent="Terrain" unique_id=495319102]
-position = Vector2(375, -47)
-polygon = PackedVector2Array(550, 560, 700, 560, 700, 568, 550, 568)
+polygon = PackedVector2Array(920, 513, 1080, 513, 1080, 521, 920, 521)
 
 [node name="SP2" type="CollisionPolygon2D" parent="Terrain" unique_id=71473486]
-position = Vector2(2, -42.599976)
-polygon = PackedVector2Array(1750, 560, 1900, 560, 1900, 568, 1750, 568)
+polygon = PackedVector2Array(1747, 517.4, 1907, 517.4, 1907, 525.4, 1747, 525.4)
 
 [node name="PerchCenter" type="CollisionPolygon2D" parent="Terrain" unique_id=1791024646]
-position = Vector2(665.6874, -42.9989)
-scale = Vector2(0.4609376, 0.9999981)
-polygon = PackedVector2Array(1320, 560, 1480, 560, 1480, 568, 1320, 568)
+polygon = PackedVector2Array(1271.005, 517, 1351.005, 517, 1351.005, 525, 1271.005, 525)
 
 [node name="PerchCenter2" type="CollisionPolygon2D" parent="Terrain" unique_id=1845537550]
-position = Vector2(59, -264)
-polygon = PackedVector2Array(1320, 560, 1480, 560, 1480, 568, 1320, 568)
+polygon = PackedVector2Array(1379, 296, 1539, 296, 1539, 304, 1379, 304)
 
 [node name="PerchCenter3" type="CollisionPolygon2D" parent="Terrain" unique_id=2013213154]
-position = Vector2(1235, -304)
-scale = Vector2(0.4609376, 0.9999981)
-polygon = PackedVector2Array(1320, 560, 1413.4625, 560, 1480, 560, 1480, 568, 1320, 568)
+polygon = PackedVector2Array(1840.315, 255.999, 1920.315, 255.999, 1920.315, 263.999, 1840.315, 263.999)
 
 [node name="PerchCenter4" type="CollisionPolygon2D" parent="Terrain" unique_id=1574572884]
-position = Vector2(1717.9998, -263.99997)
-scale = Vector2(0.4609376, 0.9999981)
-polygon = PackedVector2Array(1320, 560, 1413.4625, 560, 1480, 560, 1480, 568, 1320, 568)
+polygon = PackedVector2Array(2323.315, 295.999, 2403.315, 295.999, 2403.315, 303.999, 2323.315, 303.999)
 
 [node name="PerchCenter5" type="CollisionPolygon2D" parent="Terrain" unique_id=501526309]
-position = Vector2(517, -220.99997)
-scale = Vector2(0.4609376, 0.9999981)
-polygon = PackedVector2Array(1320, 560, 1413.4625, 560, 1480, 560, 1480, 568, 1320, 568)
+polygon = PackedVector2Array(1122.315, 338.999, 1202.315, 338.999, 1202.315, 346.999, 1122.315, 346.999)
 
 [node name="PerchCenter6" type="CollisionPolygon2D" parent="Terrain" unique_id=156226141]
-position = Vector2(1718.9999, -39)
-scale = Vector2(0.4609376, 0.9999981)
-polygon = PackedVector2Array(1320, 560, 1413.4625, 560, 1480, 560, 1480, 568, 1320, 568)
+polygon = PackedVector2Array(2324.315, 520.999, 2404.315, 520.999, 2404.315, 528.999, 2324.315, 528.999)
 
 [node name="PerchCenter7" type="CollisionPolygon2D" parent="Terrain" unique_id=1798498298]
-position = Vector2(166, 5)
-scale = Vector2(0.4609376, 0.9999981)
-polygon = PackedVector2Array(1320, 560, 1413.4625, 560, 1480, 560, 1480, 568, 1320, 568)
+polygon = PackedVector2Array(771.313, 564.999, 851.313, 564.999, 851.313, 572.999, 771.313, 572.999)
 
 [node name="PerchCenter8" type="CollisionPolygon2D" parent="Terrain" unique_id=1148900653]
-position = Vector2(170, -118)
-scale = Vector2(0.4609376, 0.9999981)
-polygon = PackedVector2Array(1320, 560, 1413.4625, 560, 1480, 560, 1480, 568, 1320, 568)
+polygon = PackedVector2Array(775.313, 441.999, 855.313, 441.999, 855.313, 449.999, 775.313, 449.999)
 
 [node name="PerchCenter9" type="CollisionPolygon2D" parent="Terrain" unique_id=542462286]
-position = Vector2(166.99988, -225.99998)
-scale = Vector2(0.4609376, 0.9999981)
-polygon = PackedVector2Array(1320, 560, 1413.4625, 560, 1480, 560, 1480, 568, 1320, 568)
+polygon = PackedVector2Array(772.313, 333.999, 852.313, 333.999, 852.313, 341.999, 772.313, 341.999)
+
+[node name="PillarTop0" type="CollisionPolygon2D" parent="Terrain" unique_id=2004668933]
+position = Vector2(0, 5)
+polygon = PackedVector2Array(174, 552, 206, 552, 206, 560, 174, 560)
+
+[node name="PillarTop1" type="CollisionPolygon2D" parent="Terrain" unique_id=790249870]
+polygon = PackedVector2Array(717, 556, 749, 556, 749, 564, 717, 564)
+
+[node name="PillarTop2" type="CollisionPolygon2D" parent="Terrain" unique_id=1658515392]
+position = Vector2(0, 2)
+polygon = PackedVector2Array(1143, 556, 1175, 556, 1175, 564, 1143, 564)
+
+[node name="PillarTop3" type="CollisionPolygon2D" parent="Terrain" unique_id=1281201281]
+polygon = PackedVector2Array(1400, 556, 1432, 556, 1432, 564, 1400, 564)
+
+[node name="PillarTop4" type="CollisionPolygon2D" parent="Terrain" unique_id=1723179640]
+polygon = PackedVector2Array(1666, 556, 1698, 556, 1698, 564, 1666, 564)
+
+[node name="PillarTop5" type="CollisionPolygon2D" parent="Terrain" unique_id=1941844446]
+polygon = PackedVector2Array(2274, 556, 2306, 556, 2306, 564, 2274, 564)
 
 [node name="MovingPlatform1" parent="." unique_id=1609207014 instance=ExtResource("5_mp")]
 position = Vector2(1000, 600)
 travel = Vector2(400, 0)
 speed = 70.0
 downtime = 1.0
+skin = ExtResource("tex_plat")
 
 [node name="End" type="Marker2D" parent="MovingPlatform1" unique_id=1609207101]
 position = Vector2(1214, 0)
 
 [node name="FallingPlatform1" parent="." unique_id=2102387712 instance=ExtResource("6_fp")]
 position = Vector2(996, 413)
+skin = ExtResource("tex_plat")
 
 [node name="FallingPlatform2" parent="." unique_id=1112091366 instance=ExtResource("6_fp")]
 position = Vector2(2239, 416)
+skin = ExtResource("tex_plat")
 
 [node name="BossZone" type="Area2D" parent="." unique_id=1505831751]
 position = Vector2(244, -16)
@@ -205,12 +214,14 @@ position = Vector2(2362, 497)
 
 [node name="FallingPlatform3" parent="." unique_id=909169386 instance=ExtResource("6_fp")]
 position = Vector2(1545, 538)
+skin = ExtResource("tex_plat")
 
 [node name="MovingPlatform2" parent="." unique_id=1915422223 instance=ExtResource("5_mp")]
 position = Vector2(2217, 187)
 travel = Vector2(400, 0)
 speed = 70.0
 downtime = 1.0
+skin = ExtResource("tex_plat")
 
 [node name="End" type="Marker2D" parent="MovingPlatform2" unique_id=1717035608]
 position = Vector2(-1204, 0)
@@ -226,94 +237,128 @@ collectible_id = "shard_s6_2"
 [node name="ThemedTerrain" type="Node2D" parent="." unique_id=1312656020]
 z_index = -1
 
+[node name="LeftWallGF" type="Polygon2D" parent="ThemedTerrain" unique_id=1757932289]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_wall")
+polygon = PackedVector2Array(-100, -300, 0, -300, 0, 800, -100, 800)
+uv = PackedVector2Array(0, 0, 96, 0, 96, 1104, 0, 1104)
+
+[node name="LeftWallEdge" type="Polygon2D" parent="ThemedTerrain" unique_id=893631194]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_wall_edge_r")
+polygon = PackedVector2Array(-16, -300, 0, -300, 0, 800, -16, 800)
+uv = PackedVector2Array(0, 0, 16, 0, 16, 1104, 0, 1104)
+
+[node name="RightWallGF" type="Polygon2D" parent="ThemedTerrain" unique_id=1592296339]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_wall")
+polygon = PackedVector2Array(2400, -300, 2500, -300, 2500, 800, 2400, 800)
+uv = PackedVector2Array(0, 0, 96, 0, 96, 1104, 0, 1104)
+
+[node name="RightWallEdge" type="Polygon2D" parent="ThemedTerrain" unique_id=1731688702]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_wall_edge_l")
+polygon = PackedVector2Array(2400, -300, 2416, -300, 2416, 800, 2400, 800)
+uv = PackedVector2Array(0, 0, 16, 0, 16, 1104, 0, 1104)
+
+[node name="CeilingGF" type="Polygon2D" parent="ThemedTerrain" unique_id=122732676]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_ceiling")
+polygon = PackedVector2Array(4, 49, 2404, 49, 2404, 57, 4, 57)
+uv = PackedVector2Array(0, 8, 2400, 8, 2400, 16, 0, 16)
+
 [node name="FloorGF" type="Polygon2D" parent="ThemedTerrain" unique_id=375910868]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_body")
 polygon = PackedVector2Array(0, 648, 2400, 648, 2400, 680, 0, 680)
-uv = PackedVector2Array(0, 648, 2400, 648, 2400, 680, 0, 680)
+uv = PackedVector2Array(0, 0, 2400, 0, 2400, 32, 0, 32)
 
 [node name="FloorT0" type="Polygon2D" parent="ThemedTerrain" unique_id=310614692]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.62, 0.82, 0.95, 1)
 polygon = PackedVector2Array(0, 648, 2400, 648, 2400, 652, 0, 652)
 
 [node name="SP1GF" type="Polygon2D" parent="ThemedTerrain" unique_id=791120604]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(925, 513, 1075, 513, 1075, 521, 925, 521)
-uv = PackedVector2Array(925, 0, 1075, 0, 1075, 16, 925, 16)
+polygon = PackedVector2Array(920, 513, 1080, 513, 1080, 545, 920, 545)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 32, 0, 32)
 
 [node name="SP2GF" type="Polygon2D" parent="ThemedTerrain" unique_id=962643611]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(1752, 517.4, 1902, 517.4, 1902, 525.4, 1752, 525.4)
-uv = PackedVector2Array(1752, 0, 1902, 0, 1902, 16, 1752, 16)
+polygon = PackedVector2Array(1747, 517.4, 1907, 517.4, 1907, 549.4, 1747, 549.4)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 32, 0, 32)
 
 [node name="PerchCenterGF" type="Polygon2D" parent="ThemedTerrain" unique_id=1819646776]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(1274.13, 517, 1347.88, 517, 1347.88, 525, 1274.13, 525)
-uv = PackedVector2Array(1274.13, 0, 1347.88, 0, 1347.88, 16, 1274.13, 16)
+polygon = PackedVector2Array(1271.005, 517, 1351.005, 517, 1351.005, 549, 1271.005, 549)
+uv = PackedVector2Array(0, 0, 80, 0, 80, 32, 0, 32)
 
 [node name="PerchCenter2GF" type="Polygon2D" parent="ThemedTerrain" unique_id=1055458416]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(1379, 296, 1539, 296, 1539, 304, 1379, 304)
-uv = PackedVector2Array(1379, 0, 1539, 0, 1539, 16, 1379, 16)
+polygon = PackedVector2Array(1379, 296, 1539, 296, 1539, 328, 1379, 328)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 32, 0, 32)
 
 [node name="PerchCenter3GF" type="Polygon2D" parent="ThemedTerrain" unique_id=332002468]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(1843.44, 255.999, 1886.52, 255.999, 1917.19, 255.999, 1917.19, 263.999, 1843.44, 263.999)
-uv = PackedVector2Array(1843.44, 0, 1886.52, 0, 1917.19, 0, 1917.19, 16, 1843.44, 16)
+polygon = PackedVector2Array(1840.315, 255.999, 1920.315, 255.999, 1920.315, 287.999, 1840.315, 287.999)
+uv = PackedVector2Array(0, 0, 80, 0, 80, 32, 0, 32)
 
 [node name="PerchCenter4GF" type="Polygon2D" parent="ThemedTerrain" unique_id=1943187741]
 texture_filter = 1
 texture_repeat = 2
-position = Vector2(2, 0)
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(2324.44, 295.999, 2367.52, 295.999, 2398.19, 295.999, 2398.19, 303.999, 2324.44, 303.999)
-uv = PackedVector2Array(2324.44, 0, 2367.52, 0, 2398.19, 0, 2398.19, 16, 2324.44, 16)
+polygon = PackedVector2Array(2323.315, 295.999, 2403.315, 295.999, 2403.315, 327.999, 2323.315, 327.999)
+uv = PackedVector2Array(0, 0, 80, 0, 80, 32, 0, 32)
 
 [node name="PerchCenter5GF" type="Polygon2D" parent="ThemedTerrain" unique_id=20684760]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(1125.44, 338.999, 1168.52, 338.999, 1199.19, 338.999, 1199.19, 346.999, 1125.44, 346.999)
-uv = PackedVector2Array(1125.44, 0, 1168.52, 0, 1199.19, 0, 1199.19, 16, 1125.44, 16)
+polygon = PackedVector2Array(1122.315, 338.999, 1202.315, 338.999, 1202.315, 370.999, 1122.315, 370.999)
+uv = PackedVector2Array(0, 0, 80, 0, 80, 32, 0, 32)
 
 [node name="PerchCenter6GF" type="Polygon2D" parent="ThemedTerrain" unique_id=208000770]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(2327.44, 520.999, 2370.52, 520.999, 2401.19, 520.999, 2401.19, 528.999, 2327.44, 528.999)
-uv = PackedVector2Array(2327.44, 0, 2370.52, 0, 2401.19, 0, 2401.19, 16, 2327.44, 16)
+polygon = PackedVector2Array(2324.315, 520.999, 2404.315, 520.999, 2404.315, 552.999, 2324.315, 552.999)
+uv = PackedVector2Array(0, 0, 80, 0, 80, 32, 0, 32)
 
 [node name="PerchCenter7GF" type="Polygon2D" parent="ThemedTerrain" unique_id=127985754]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(774.438, 564.999, 817.518, 564.999, 848.188, 564.999, 848.188, 572.999, 774.438, 572.999)
-uv = PackedVector2Array(774.438, 0, 817.518, 0, 848.188, 0, 848.188, 16, 774.438, 16)
+polygon = PackedVector2Array(771.313, 564.999, 851.313, 564.999, 851.313, 596.999, 771.313, 596.999)
+uv = PackedVector2Array(0, 0, 80, 0, 80, 32, 0, 32)
 
 [node name="PerchCenter8GF" type="Polygon2D" parent="ThemedTerrain" unique_id=781437134]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(778.438, 441.999, 821.518, 441.999, 852.188, 441.999, 852.188, 449.999, 778.438, 449.999)
-uv = PackedVector2Array(778.438, 0, 821.518, 0, 852.188, 0, 852.188, 16, 778.438, 16)
+polygon = PackedVector2Array(775.313, 441.999, 855.313, 441.999, 855.313, 473.999, 775.313, 473.999)
+uv = PackedVector2Array(0, 0, 80, 0, 80, 32, 0, 32)
 
 [node name="PerchCenter9GF" type="Polygon2D" parent="ThemedTerrain" unique_id=246491195]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(775.438, 333.999, 818.518, 333.999, 849.188, 333.999, 849.188, 341.999, 775.438, 341.999)
-uv = PackedVector2Array(775.438, 0, 818.518, 0, 849.188, 0, 849.188, 16, 775.438, 16)
+polygon = PackedVector2Array(772.313, 333.999, 852.313, 333.999, 852.313, 365.999, 772.313, 365.999)
+uv = PackedVector2Array(0, 0, 80, 0, 80, 32, 0, 32)
 
 [node name="Props" type="Node2D" parent="." unique_id=550654869]
 z_index = -1
@@ -338,8 +383,39 @@ texture = ExtResource("px_vent")
 position = Vector2(2000, 632)
 texture = ExtResource("px_vent")
 
+[node name="Pillar0" type="Sprite2D" parent="Props" unique_id=740714967]
+texture_filter = 1
+position = Vector2(190, 605)
+texture = ExtResource("tex_pillar")
+
+[node name="Pillar1" type="Sprite2D" parent="Props" unique_id=1985104727]
+texture_filter = 1
+position = Vector2(733, 604)
+texture = ExtResource("tex_pillar")
+
+[node name="Pillar2" type="Sprite2D" parent="Props" unique_id=739856393]
+texture_filter = 1
+position = Vector2(1159, 604)
+texture = ExtResource("tex_pillar")
+
+[node name="Pillar3" type="Sprite2D" parent="Props" unique_id=1259531022]
+texture_filter = 1
+position = Vector2(1416, 604)
+texture = ExtResource("tex_pillar")
+
+[node name="Pillar4" type="Sprite2D" parent="Props" unique_id=1744666012]
+texture_filter = 1
+position = Vector2(1682, 604)
+texture = ExtResource("tex_pillar")
+
+[node name="Pillar5" type="Sprite2D" parent="Props" unique_id=1117487310]
+texture_filter = 1
+position = Vector2(2290, 604)
+texture = ExtResource("tex_pillar")
+
 [node name="FallingPlatform4" parent="." unique_id=1647348761 instance=ExtResource("6_fp")]
 position = Vector2(1545, 538)
+skin = ExtResource("tex_plat")
 
 [connection signal="body_entered" from="BossZone" to="." method="_on_boss_zone_entered"]
 [connection signal="body_entered" from="Stage5Portal" to="." method="_on_stage_5_portal_body_entered"]

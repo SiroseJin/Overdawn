@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://w42cyxltseel" path="res://scene/ui/scene_transition_animation.tscn" id="3_trans"]
 [ext_resource type="AudioStream" uid="uid://028va8maeqdm" path="res://audio/Music/Caketown 1 by matthewpablo.mp3" id="4_bgm"]
 [ext_resource type="PackedScene" uid="uid://d0ib3gkf0fyen" path="res://scene/actors/npc/npc1.tscn" id="5_npc"]
-[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/bandit/bandit_enemy.tscn" id="6_frog"]
+[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/buzzer/buzzer_enemy.tscn" id="6_frog"]
 [ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/actors/enemies/adbot/adbot_enemy.tscn" id="7_bat"]
 [ext_resource type="PackedScene" uid="uid://chn8rr31oxv0x" path="res://scene/actors/enemies/collector/collector_enemy.tscn" id="8_witch"]
 [ext_resource type="PackedScene" uid="uid://jr1opep0t5q3" path="res://scene/actors/enemies/dealer/dealer_enemy.tscn" id="9_necro"]
@@ -17,14 +17,21 @@
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="15_gate"]
 [ext_resource type="PackedScene" uid="uid://b7dp1fygj5tuh" path="res://scene/system/mountain_dusk_parallax.tscn" id="bg_city"]
 [ext_resource type="Script" uid="uid://vf6ib1x5p5s0" path="res://scene/gimmicks/checkpoint/checkpoint.gd" id="cp_scr"]
+[ext_resource type="Script" uid="uid://m4jx8so8x52b" path="res://scene/system/vfx/sheet_anim.gd" id="dec_anim"]
+[ext_resource type="Texture2D" uid="uid://uxgdec6il4vm" path="res://art/LevelTilesets/Level 5/props_itens/barrel.png" id="dec_barrel"]
+[ext_resource type="Texture2D" uid="uid://dqi4fvcfetu3g" path="res://art/LevelTilesets/Level 5/props_itens/bookshelf.png" id="dec_bookshelf"]
+[ext_resource type="Texture2D" uid="uid://dxshqamohl5c" path="res://art/terrain/stage5/decor/candlestick_sheet.png" id="dec_candlestick"]
+[ext_resource type="Texture2D" uid="uid://w4ikhvob5npu" path="res://art/LevelTilesets/Level 5/props_itens/flag_green.png" id="dec_flag_green"]
+[ext_resource type="Texture2D" uid="uid://cjxtrmplgbqcs" path="res://art/LevelTilesets/Level 5/props_itens/flag_red.png" id="dec_flag_red"]
+[ext_resource type="Texture2D" uid="uid://b4py4imj2scrn" path="res://art/terrain/stage5/decor/side_torch_sheet.png" id="dec_torch"]
 [ext_resource type="PackedScene" uid="uid://cbaitplatform" path="res://scene/Levels/Level2/gimmicks/bait_platform/bait_platform.tscn" id="itm_bait"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="itm_coin"]
 [ext_resource type="PackedScene" uid="uid://htdn64tverd8" path="res://scene/Levels/Level3/gimmicks/rising_debt/rising_debt.tscn" id="itm_debt"]
-[ext_resource type="Texture2D" uid="uid://cfg2kauplqr1l" path="res://art/Stage1Terrain/props/grating.png" id="px_grate"]
-[ext_resource type="Texture2D" uid="uid://cuvowxvfto101" path="res://art/Stage1Terrain/props/ad_screen.png" id="px_screen"]
-[ext_resource type="Texture2D" uid="uid://5xebynutc4y1" path="res://art/Stage1Terrain/props/vent_hub.png" id="px_vent"]
 [ext_resource type="PackedScene" uid="uid://ctruthshard01" path="res://scene/pickups/collectible/collectible.tscn" id="shard_scn"]
-[ext_resource type="Texture2D" uid="uid://dy14c6dtdmx3m" path="res://art/Stage1Terrain/body.png" id="tex_body"]
+[ext_resource type="Texture2D" uid="uid://bc3ffbsqa5s2o" path="res://art/terrain/stage5/body.png" id="tex_body"]
+[ext_resource type="Texture2D" uid="uid://baqgid0f03xgk" path="res://art/terrain/stage5/cap.png" id="tex_cap"]
+[ext_resource type="Texture2D" uid="uid://77gqnjft5blw" path="res://art/terrain/stage5/chain.png" id="tex_chain"]
+[ext_resource type="Texture2D" uid="uid://dpl5jceqshnev" path="res://art/terrain/stage5/platform.png" id="tex_plat"]
 
 [sub_resource type="RectangleShape2D" id="RS_death"]
 size = Vector2(4635.54, 91.8)
@@ -571,6 +578,7 @@ polygon = PackedVector2Array(51.0867, 1966.83, 332.064, 1966.83, 332.064, 2043.4
 polygon = PackedVector2Array(561.954, 1966.83, 638.583, 1966.83, 638.583, 2069.01, 561.954, 2069.01)
 
 [node name="T225" type="CollisionPolygon2D" parent="Terrain" unique_id=700000229]
+position = Vector2(0, 4)
 polygon = PackedVector2Array(1660.32, 1966.83, 2145.65, 1966.83, 2145.65, 2069.01, 1660.32, 2069.01)
 
 [node name="T226" type="CollisionPolygon2D" parent="Terrain" unique_id=700000230]
@@ -582,6 +590,8 @@ polygon = PackedVector2Array(4061.39, 1966.83, 4163.57, 1966.83, 4163.57, 2401.0
 polygon = PackedVector2Array(740.759, 1992.38, 766.301, 1992.38, 766.301, 2043.47, 740.759, 2043.47)
 
 [node name="T234" type="CollisionPolygon2D" parent="Terrain" unique_id=700000238]
+position = Vector2(2.0025635, 654.584)
+scale = Vector2(0.9999984, 0.6851906)
 polygon = PackedVector2Array(1532.6, 2069.01, 1583.69, 2069.01, 1583.69, 2094.55, 1532.6, 2094.55)
 
 [node name="T235" type="CollisionPolygon2D" parent="Terrain" unique_id=700000239]
@@ -1879,6 +1889,7 @@ uv = PackedVector2Array(561.954, 1966.83, 638.583, 1966.83, 638.583, 2069.01, 56
 [node name="V225" type="Polygon2D" parent="TerrainVisual" unique_id=700000563]
 texture_filter = 1
 texture_repeat = 2
+position = Vector2(0, 8)
 texture = ExtResource("tex_body")
 polygon = PackedVector2Array(1660.32, 1966.83, 2145.65, 1966.83, 2145.65, 2069.01, 1660.32, 2069.01)
 uv = PackedVector2Array(1660.32, 1966.83, 2145.65, 1966.83, 2145.65, 2069.01, 1660.32, 2069.01)
@@ -1889,14 +1900,6 @@ texture_repeat = 2
 texture = ExtResource("tex_body")
 polygon = PackedVector2Array(740.759, 1992.38, 766.301, 1992.38, 766.301, 2043.47, 740.759, 2043.47)
 uv = PackedVector2Array(740.759, 1992.38, 766.301, 1992.38, 766.301, 2043.47, 740.759, 2043.47)
-
-[node name="V234" type="Polygon2D" parent="TerrainVisual" unique_id=700000572]
-texture_filter = 1
-texture_repeat = 2
-position = Vector2(3.6, 6.3)
-texture = ExtResource("tex_body")
-polygon = PackedVector2Array(1532.6, 2069.01, 1583.69, 2069.01, 1583.69, 2094.55, 1532.6, 2094.55)
-uv = PackedVector2Array(1532.6, 2069.01, 1583.69, 2069.01, 1583.69, 2094.55, 1532.6, 2094.55)
 
 [node name="V242" type="Polygon2D" parent="TerrainVisual" unique_id=700000580]
 texture_filter = 1
@@ -2293,12 +2296,1093 @@ texture = ExtResource("tex_body")
 polygon = PackedVector2Array(51.0867, 280.977, 561.954, 280.977, 561.954, 434.237, 51.0867, 434.237)
 uv = PackedVector2Array(51.0867, 280.977, 561.954, 280.977, 561.954, 434.237, 51.0867, 434.237)
 
+[node name="Cap0" type="Polygon2D" parent="TerrainVisual" unique_id=1131368894]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1762.49, -1071.06, 1864.66, -1071.06, 1864.66, -1055.06, 1762.49, -1055.06)
+uv = PackedVector2Array(1762.49, 0, 1864.66, 0, 1864.66, 16, 1762.49, 16)
+
+[node name="Cap1" type="Polygon2D" parent="TerrainVisual" unique_id=1046417248]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2630.97, 0, 3014.12, 0, 3014.12, 16, 2630.97, 16)
+uv = PackedVector2Array(2630.97, 0, 3014.12, 0, 3014.12, 16, 2630.97, 16)
+
+[node name="Cap2" type="Polygon2D" parent="TerrainVisual" unique_id=1249561324]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(535.411, -8.15, 560.951, -8.15, 560.951, 7.85, 535.411, 7.85)
+uv = PackedVector2Array(535.411, 0, 560.951, 0, 560.951, 16, 535.411, 16)
+
+[node name="Cap3" type="Polygon2D" parent="TerrainVisual" unique_id=619765908]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2069.01, 51.087, 2094.55, 51.087, 2094.55, 67.087, 2069.01, 67.087)
+uv = PackedVector2Array(2069.01, 0, 2094.55, 0, 2094.55, 16, 2069.01, 16)
+
+[node name="Cap4" type="Polygon2D" parent="TerrainVisual" unique_id=2057906164]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2605.42, 51.087, 2630.97, 51.087, 2630.97, 67.087, 2605.42, 67.087)
+uv = PackedVector2Array(2605.42, 0, 2630.97, 0, 2630.97, 16, 2605.42, 16)
+
+[node name="Cap5" type="Polygon2D" parent="TerrainVisual" unique_id=1626775656]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(280.977, 76.63, 306.52, 76.63, 306.52, 92.63, 280.977, 92.63)
+uv = PackedVector2Array(280.977, 0, 306.52, 0, 306.52, 16, 280.977, 16)
+
+[node name="Cap6" type="Polygon2D" parent="TerrainVisual" unique_id=1877402355]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(127.716, 102.173, 153.26, 102.173, 153.26, 118.173, 127.716, 118.173)
+uv = PackedVector2Array(127.716, 0, 153.26, 0, 153.26, 16, 127.716, 16)
+
+[node name="Cap7" type="Polygon2D" parent="TerrainVisual" unique_id=752392042]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(76.63, 127.716, 102.173, 127.716, 102.173, 143.716, 76.63, 143.716)
+uv = PackedVector2Array(76.63, 0, 102.173, 0, 102.173, 16, 76.63, 16)
+
+[node name="Cap8" type="Polygon2D" parent="TerrainVisual" unique_id=374117912]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(161.26, 127.716, 229.89, 127.716, 229.89, 143.716, 161.26, 143.716)
+uv = PackedVector2Array(161.26, 0, 229.89, 0, 229.89, 16, 161.26, 16)
+
+[node name="Cap9" type="Polygon2D" parent="TerrainVisual" unique_id=1284765103]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2579.88, 153.26, 2630.97, 153.26, 2630.97, 169.26, 2579.88, 169.26)
+uv = PackedVector2Array(2579.88, 0, 2630.97, 0, 2630.97, 16, 2579.88, 16)
+
+[node name="Cap10" type="Polygon2D" parent="TerrainVisual" unique_id=1755845634]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2758.68, 153.26, 2784.23, 153.26, 2784.23, 169.26, 2758.68, 169.26)
+uv = PackedVector2Array(2758.68, 0, 2784.23, 0, 2784.23, 16, 2758.68, 16)
+
+[node name="Cap11" type="Polygon2D" parent="TerrainVisual" unique_id=169547510]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(945.099, 178.804, 1200.54, 178.804, 1200.54, 194.804, 945.099, 194.804)
+uv = PackedVector2Array(945.099, 0, 1200.54, 0, 1200.54, 16, 945.099, 16)
+
+[node name="Cap12" type="Polygon2D" parent="TerrainVisual" unique_id=445476273]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1302.71, 178.804, 1328.26, 178.804, 1328.26, 194.804, 1302.71, 194.804)
+uv = PackedVector2Array(1302.71, 0, 1328.26, 0, 1328.26, 16, 1302.71, 16)
+
+[node name="Cap13" type="Polygon2D" parent="TerrainVisual" unique_id=749918933]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1348.66, -429.694, 1764.66, -429.694, 1764.66, -413.694, 1348.66, -413.694)
+uv = PackedVector2Array(1348.66, 0, 1764.66, 0, 1764.66, 16, 1348.66, 16)
+
+[node name="Cap14" type="Polygon2D" parent="TerrainVisual" unique_id=1303221070]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2043.47, 178.804, 2528.79, 178.804, 2528.79, 194.804, 2043.47, 194.804)
+uv = PackedVector2Array(2043.47, 0, 2528.79, 0, 2528.79, 16, 2043.47, 16)
+
+[node name="Cap15" type="Polygon2D" parent="TerrainVisual" unique_id=1160746152]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(561.954, 204.347, 715.216, 204.347, 715.216, 220.347, 561.954, 220.347)
+uv = PackedVector2Array(561.954, 0, 715.216, 0, 715.216, 16, 561.954, 16)
+
+[node name="Cap16" type="Polygon2D" parent="TerrainVisual" unique_id=1568367887]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(868.476, 204.347, 945.099, 204.347, 945.099, 220.347, 868.476, 220.347)
+uv = PackedVector2Array(868.476, 0, 945.099, 0, 945.099, 16, 868.476, 16)
+
+[node name="Cap17" type="Polygon2D" parent="TerrainVisual" unique_id=1387839393]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(842.933, 229.89, 868.476, 229.89, 868.476, 245.89, 842.933, 245.89)
+uv = PackedVector2Array(842.933, 0, 868.476, 0, 868.476, 16, 842.933, 16)
+
+[node name="Cap18" type="Polygon2D" parent="TerrainVisual" unique_id=628058355]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(817.385, 255.434, 842.933, 255.434, 842.933, 271.434, 817.385, 271.434)
+uv = PackedVector2Array(817.385, 0, 842.933, 0, 842.933, 16, 817.385, 16)
+
+[node name="Cap19" type="Polygon2D" parent="TerrainVisual" unique_id=1541121270]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(51.087, 280.977, 561.954, 280.977, 561.954, 296.977, 51.087, 296.977)
+uv = PackedVector2Array(51.087, 0, 561.954, 0, 561.954, 16, 51.087, 16)
+
+[node name="Cap20" type="Polygon2D" parent="TerrainVisual" unique_id=937113660]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(774.301, 280.977, 817.385, 280.977, 817.385, 296.977, 774.301, 296.977)
+uv = PackedVector2Array(774.301, 0, 817.385, 0, 817.385, 16, 774.301, 16)
+
+[node name="Cap21" type="Polygon2D" parent="TerrainVisual" unique_id=1483649215]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2733.14, 280.977, 2784.23, 280.977, 2784.23, 296.977, 2733.14, 296.977)
+uv = PackedVector2Array(2733.14, 0, 2784.23, 0, 2784.23, 16, 2733.14, 16)
+
+[node name="Cap22" type="Polygon2D" parent="TerrainVisual" unique_id=1494956107]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2120.1, 306.52, 2145.65, 306.52, 2145.65, 322.52, 2120.1, 322.52)
+uv = PackedVector2Array(2120.1, 0, 2145.65, 0, 2145.65, 16, 2120.1, 16)
+
+[node name="Cap23" type="Polygon2D" parent="TerrainVisual" unique_id=2056158965]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2017.93, 332.064, 2043.47, 332.064, 2043.47, 348.064, 2017.93, 348.064)
+uv = PackedVector2Array(2017.93, 0, 2043.47, 0, 2043.47, 16, 2017.93, 16)
+
+[node name="Cap24" type="Polygon2D" parent="TerrainVisual" unique_id=2121396023]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1992.38, 357.607, 2017.93, 357.607, 2017.93, 373.607, 1992.38, 373.607)
+uv = PackedVector2Array(1992.38, 0, 2017.93, 0, 2017.93, 16, 1992.38, 16)
+
+[node name="Cap25" type="Polygon2D" parent="TerrainVisual" unique_id=425897944]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2528.79, 357.607, 2733.14, 357.607, 2733.14, 373.607, 2528.79, 373.607)
+uv = PackedVector2Array(2528.79, 0, 2733.14, 0, 2733.14, 16, 2528.79, 16)
+
+[node name="Cap26" type="Polygon2D" parent="TerrainVisual" unique_id=1534735278]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2503.25, 383.15, 2528.79, 383.15, 2528.79, 399.15, 2503.25, 399.15)
+uv = PackedVector2Array(2503.25, 0, 2528.79, 0, 2528.79, 16, 2503.25, 16)
+
+[node name="Cap27" type="Polygon2D" parent="TerrainVisual" unique_id=1363019307]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1226.09, 408.694, 1302.71, 408.694, 1302.71, 424.694, 1226.09, 424.694)
+uv = PackedVector2Array(1226.09, 0, 1302.71, 0, 1302.71, 16, 1226.09, 16)
+
+[node name="Cap28" type="Polygon2D" parent="TerrainVisual" unique_id=1841775789]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2707.6, 459.78, 2733.14, 459.78, 2733.14, 475.78, 2707.6, 475.78)
+uv = PackedVector2Array(2707.6, 0, 2733.14, 0, 2733.14, 16, 2707.6, 16)
+
+[node name="Cap29" type="Polygon2D" parent="TerrainVisual" unique_id=1460187341]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2324.45, 510.867, 2503.25, 510.867, 2503.25, 526.867, 2324.45, 526.867)
+uv = PackedVector2Array(2324.45, 0, 2503.25, 0, 2503.25, 16, 2324.45, 16)
+
+[node name="Cap30" type="Polygon2D" parent="TerrainVisual" unique_id=1914366261]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(894.017, 561.954, 996.192, 561.954, 996.192, 577.954, 894.017, 577.954)
+uv = PackedVector2Array(894.017, 0, 996.192, 0, 996.192, 16, 894.017, 16)
+
+[node name="Cap31" type="Polygon2D" parent="TerrainVisual" unique_id=1708063284]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1277.16, 561.954, 1302.71, 561.954, 1302.71, 577.954, 1277.16, 577.954)
+uv = PackedVector2Array(1277.16, 0, 1302.71, 0, 1302.71, 16, 1277.16, 16)
+
+[node name="Cap32" type="Polygon2D" parent="TerrainVisual" unique_id=258880705]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(817.385, 587.497, 894.017, 587.497, 894.017, 603.497, 817.385, 603.497)
+uv = PackedVector2Array(817.385, 0, 894.017, 0, 894.017, 16, 817.385, 16)
+
+[node name="Cap33" type="Polygon2D" parent="TerrainVisual" unique_id=1962924258]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1004.192, 587.497, 1277.16, 587.497, 1277.16, 603.497, 1004.192, 603.497)
+uv = PackedVector2Array(1004.192, 0, 1277.16, 0, 1277.16, 16, 1004.192, 16)
+
+[node name="Cap34" type="Polygon2D" parent="TerrainVisual" unique_id=1478099098]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(204.347, 613.04, 229.89, 613.04, 229.89, 629.04, 204.347, 629.04)
+uv = PackedVector2Array(204.347, 0, 229.89, 0, 229.89, 16, 204.347, 16)
+
+[node name="Cap35" type="Polygon2D" parent="TerrainVisual" unique_id=592225007]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(306.52, 613.04, 536.411, 613.04, 536.411, 629.04, 306.52, 629.04)
+uv = PackedVector2Array(306.52, 0, 536.411, 0, 536.411, 16, 306.52, 16)
+
+[node name="Cap36" type="Polygon2D" parent="TerrainVisual" unique_id=664217641]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(237.89, 638.583, 306.52, 638.583, 306.52, 654.583, 237.89, 654.583)
+uv = PackedVector2Array(237.89, 0, 306.52, 0, 306.52, 16, 237.89, 16)
+
+[node name="Cap37" type="Polygon2D" parent="TerrainVisual" unique_id=1979404041]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(587.497, 638.583, 715.216, 638.583, 715.216, 654.583, 587.497, 654.583)
+uv = PackedVector2Array(587.497, 0, 715.216, 0, 715.216, 16, 587.497, 16)
+
+[node name="Cap38" type="Polygon2D" parent="TerrainVisual" unique_id=172422542]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(817.385, 740.759, 842.933, 740.759, 842.933, 756.759, 817.385, 756.759)
+uv = PackedVector2Array(817.385, 0, 842.933, 0, 842.933, 16, 817.385, 16)
+
+[node name="Cap39" type="Polygon2D" parent="TerrainVisual" unique_id=1850562983]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(153.26, 766.301, 178.804, 766.301, 178.804, 782.301, 153.26, 782.301)
+uv = PackedVector2Array(153.26, 0, 178.804, 0, 178.804, 16, 153.26, 16)
+
+[node name="Cap40" type="Polygon2D" parent="TerrainVisual" unique_id=3631598]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(740.759, 766.301, 817.385, 766.301, 817.385, 782.301, 740.759, 782.301)
+uv = PackedVector2Array(740.759, 0, 817.385, 0, 817.385, 16, 740.759, 16)
+
+[node name="Cap41" type="Polygon2D" parent="TerrainVisual" unique_id=1746904379]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2707.6, 791.843, 2758.68, 791.843, 2758.68, 807.843, 2707.6, 807.843)
+uv = PackedVector2Array(2707.6, 0, 2758.68, 0, 2758.68, 16, 2707.6, 16)
+
+[node name="Cap42" type="Polygon2D" parent="TerrainVisual" unique_id=1406600382]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(510.867, 868.476, 638.583, 868.476, 638.583, 884.476, 510.867, 884.476)
+uv = PackedVector2Array(510.867, 0, 638.583, 0, 638.583, 16, 510.867, 16)
+
+[node name="Cap43" type="Polygon2D" parent="TerrainVisual" unique_id=370327320]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1004.192, 868.476, 1123.91, 868.476, 1123.91, 884.476, 1004.192, 884.476)
+uv = PackedVector2Array(1004.192, 0, 1123.91, 0, 1123.91, 16, 1004.192, 16)
+
+[node name="Cap44" type="Polygon2D" parent="TerrainVisual" unique_id=504692797]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2733.14, 868.476, 2758.68, 868.476, 2758.68, 884.476, 2733.14, 884.476)
+uv = PackedVector2Array(2733.14, 0, 2758.68, 0, 2758.68, 16, 2733.14, 16)
+
+[node name="Cap45" type="Polygon2D" parent="TerrainVisual" unique_id=1782184039]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2630.97, 945.099, 2886.4, 945.099, 2886.4, 961.099, 2630.97, 961.099)
+uv = PackedVector2Array(2630.97, 0, 2886.4, 0, 2886.4, 16, 2630.97, 16)
+
+[node name="Cap46" type="Polygon2D" parent="TerrainVisual" unique_id=1213884375]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(3187.294, 214.142, 3315.014, 214.142, 3315.014, 230.142, 3187.294, 230.142)
+uv = PackedVector2Array(3187.294, 0, 3315.014, 0, 3315.014, 16, 3187.294, 16)
+
+[node name="Cap47" type="Polygon2D" parent="TerrainVisual" unique_id=145289670]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(4035.85, 945.099, 4163.57, 945.099, 4163.57, 961.099, 4035.85, 961.099)
+uv = PackedVector2Array(4035.85, 0, 4163.57, 0, 4163.57, 16, 4035.85, 16)
+
+[node name="Cap48" type="Polygon2D" parent="TerrainVisual" unique_id=127624724]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(4214.65, 945.099, 4291.29, 945.099, 4291.29, 961.099, 4214.65, 961.099)
+uv = PackedVector2Array(4214.65, 0, 4291.29, 0, 4291.29, 16, 4214.65, 16)
+
+[node name="Cap49" type="Polygon2D" parent="TerrainVisual" unique_id=798705131]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2894.4, 970.65, 3269.56, 970.65, 3269.56, 986.65, 2894.4, 986.65)
+uv = PackedVector2Array(2894.4, 0, 3269.56, 0, 3269.56, 16, 2894.4, 16)
+
+[node name="Cap50" type="Polygon2D" parent="TerrainVisual" unique_id=1564918703]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(3472.442, 970.65, 4040.442, 970.65, 4040.442, 986.65, 3472.442, 986.65)
+uv = PackedVector2Array(3472.442, 0, 4040.442, 0, 4040.442, 16, 3472.442, 16)
+
+[node name="Cap51" type="Polygon2D" parent="TerrainVisual" unique_id=1162182672]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(4171.57, 970.65, 4214.65, 970.65, 4214.65, 986.65, 4171.57, 986.65)
+uv = PackedVector2Array(4171.57, 0, 4214.65, 0, 4214.65, 16, 4171.57, 16)
+
+[node name="Cap52" type="Polygon2D" parent="TerrainVisual" unique_id=1046297507]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2298.91, 996.192, 2426.62, 996.192, 2426.62, 1012.192, 2298.91, 1012.192)
+uv = PackedVector2Array(2298.91, 0, 2426.62, 0, 2426.62, 16, 2298.91, 16)
+
+[node name="Cap53" type="Polygon2D" parent="TerrainVisual" unique_id=671061796]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(204.347, 1047.28, 229.89, 1047.28, 229.89, 1063.28, 204.347, 1063.28)
+uv = PackedVector2Array(204.347, 0, 229.89, 0, 229.89, 16, 204.347, 16)
+
+[node name="Cap54" type="Polygon2D" parent="TerrainVisual" unique_id=1985392331]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2171.19, 1047.28, 2247.81, 1047.28, 2247.81, 1063.28, 2171.19, 1063.28)
+uv = PackedVector2Array(2171.19, 0, 2247.81, 0, 2247.81, 16, 2171.19, 16)
+
+[node name="Cap55" type="Polygon2D" parent="TerrainVisual" unique_id=530853215]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(817.385, 1072.82, 849.385, 1072.82, 849.385, 1088.82, 817.385, 1088.82)
+uv = PackedVector2Array(817.385, 0, 849.385, 0, 849.385, 16, 817.385, 16)
+
+[node name="Cap56" type="Polygon2D" parent="TerrainVisual" unique_id=1450870249]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2043.47, 1098.37, 2069.01, 1098.37, 2069.01, 1114.37, 2043.47, 1114.37)
+uv = PackedVector2Array(2043.47, 0, 2069.01, 0, 2069.01, 16, 2043.47, 16)
+
+[node name="Cap57" type="Polygon2D" parent="TerrainVisual" unique_id=1510055457]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(357.607, 1149.45, 383.15, 1149.45, 383.15, 1165.45, 357.607, 1165.45)
+uv = PackedVector2Array(357.607, 0, 383.15, 0, 383.15, 16, 357.607, 16)
+
+[node name="Cap58" type="Polygon2D" parent="TerrainVisual" unique_id=107373068]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2401.07, 1149.45, 2426.62, 1149.45, 2426.62, 1165.45, 2401.07, 1165.45)
+uv = PackedVector2Array(2401.07, 0, 2426.62, 0, 2426.62, 16, 2401.07, 16)
+
+[node name="Cap59" type="Polygon2D" parent="TerrainVisual" unique_id=725760301]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(638.583, 1200.54, 1098.37, 1200.54, 1098.37, 1216.54, 638.583, 1216.54)
+uv = PackedVector2Array(638.583, 0, 1098.37, 0, 1098.37, 16, 638.583, 16)
+
+[node name="Cap60" type="Polygon2D" parent="TerrainVisual" unique_id=463068780]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1353.8, 1200.54, 1430.42, 1200.54, 1430.42, 1216.54, 1353.8, 1216.54)
+uv = PackedVector2Array(1353.8, 0, 1430.42, 0, 1430.42, 16, 1353.8, 16)
+
+[node name="Cap61" type="Polygon2D" parent="TerrainVisual" unique_id=381285381]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1634.78, 1200.54, 1762.49, 1200.54, 1762.49, 1216.54, 1634.78, 1216.54)
+uv = PackedVector2Array(1634.78, 0, 1762.49, 0, 1762.49, 16, 1634.78, 16)
+
+[node name="Cap62" type="Polygon2D" parent="TerrainVisual" unique_id=1572668302]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(587.497, 1226.09, 638.583, 1226.09, 638.583, 1242.09, 587.497, 1242.09)
+uv = PackedVector2Array(587.497, 0, 638.583, 0, 638.583, 16, 587.497, 16)
+
+[node name="Cap63" type="Polygon2D" parent="TerrainVisual" unique_id=1029310359]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1106.37, 1226.09, 1353.8, 1226.09, 1353.8, 1242.09, 1106.37, 1242.09)
+uv = PackedVector2Array(1106.37, 0, 1353.8, 0, 1353.8, 16, 1106.37, 16)
+
+[node name="Cap64" type="Polygon2D" parent="TerrainVisual" unique_id=2146203790]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1872.66, 1226.09, 1966.83, 1226.09, 1966.83, 1242.09, 1872.66, 1242.09)
+uv = PackedVector2Array(1872.66, 0, 1966.83, 0, 1966.83, 16, 1872.66, 16)
+
+[node name="Cap65" type="Polygon2D" parent="TerrainVisual" unique_id=141945195]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1991.93, 1266.16, 2068.55, 1266.16, 2068.55, 1282.16, 1991.93, 1282.16)
+uv = PackedVector2Array(1991.93, 0, 2068.55, 0, 2068.55, 16, 1991.93, 16)
+
+[node name="Cap66" type="Polygon2D" parent="TerrainVisual" unique_id=1320373207]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(459.78, 1302.71, 510.867, 1302.71, 510.867, 1318.71, 459.78, 1318.71)
+uv = PackedVector2Array(459.78, 0, 510.867, 0, 510.867, 16, 459.78, 16)
+
+[node name="Cap67" type="Polygon2D" parent="TerrainVisual" unique_id=1420787472]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(110.173, 1328.26, 434.237, 1328.26, 434.237, 1344.26, 110.173, 1344.26)
+uv = PackedVector2Array(110.173, 0, 434.237, 0, 434.237, 16, 110.173, 16)
+
+[node name="Cap68" type="Polygon2D" parent="TerrainVisual" unique_id=261961590]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2195.73, 1383.8, 2246.81, 1383.8, 2246.81, 1399.8, 2195.73, 1399.8)
+uv = PackedVector2Array(2195.73, 0, 2246.81, 0, 2246.81, 16, 2195.73, 16)
+
+[node name="Cap69" type="Polygon2D" parent="TerrainVisual" unique_id=1827966752]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1174.99, 1379.34, 1251.62, 1379.34, 1251.62, 1395.34, 1174.99, 1395.34)
+uv = PackedVector2Array(1174.99, 0, 1251.62, 0, 1251.62, 16, 1174.99, 16)
+
+[node name="Cap70" type="Polygon2D" parent="TerrainVisual" unique_id=1543035090]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2298.91, 1404.88, 2324.45, 1404.88, 2324.45, 1420.88, 2298.91, 1420.88)
+uv = PackedVector2Array(2298.91, 0, 2324.45, 0, 2324.45, 16, 2298.91, 16)
+
+[node name="Cap71" type="Polygon2D" parent="TerrainVisual" unique_id=201627318]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(485.324, 1455.97, 510.867, 1455.97, 510.867, 1471.97, 485.324, 1471.97)
+uv = PackedVector2Array(485.324, 0, 510.867, 0, 510.867, 16, 485.324, 16)
+
+[node name="Cap72" type="Polygon2D" parent="TerrainVisual" unique_id=151192579]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2120.1, 1455.97, 2171.19, 1455.97, 2171.19, 1471.97, 2120.1, 1471.97)
+uv = PackedVector2Array(2120.1, 0, 2171.19, 0, 2171.19, 16, 2120.1, 16)
+
+[node name="Cap73" type="Polygon2D" parent="TerrainVisual" unique_id=33934957]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1098.37, 1481.52, 1328.26, 1481.52, 1328.26, 1497.52, 1098.37, 1497.52)
+uv = PackedVector2Array(1098.37, 0, 1328.26, 0, 1328.26, 16, 1098.37, 16)
+
+[node name="Cap74" type="Polygon2D" parent="TerrainVisual" unique_id=444124264]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2043.47, 1481.52, 2120.1, 1481.52, 2120.1, 1497.52, 2043.47, 1497.52)
+uv = PackedVector2Array(2043.47, 0, 2120.1, 0, 2120.1, 16, 2043.47, 16)
+
+[node name="Cap75" type="Polygon2D" parent="TerrainVisual" unique_id=1856635956]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2247.81, 1481.52, 2324.45, 1481.52, 2324.45, 1497.52, 2247.81, 1497.52)
+uv = PackedVector2Array(2247.81, 0, 2324.45, 0, 2324.45, 16, 2247.81, 16)
+
+[node name="Cap76" type="Polygon2D" parent="TerrainVisual" unique_id=1481907005]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2383.53, 1481.52, 2426.62, 1481.52, 2426.62, 1497.52, 2383.53, 1497.52)
+uv = PackedVector2Array(2383.53, 0, 2426.62, 0, 2426.62, 16, 2383.53, 16)
+
+[node name="Cap77" type="Polygon2D" parent="TerrainVisual" unique_id=907274776]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(255.434, 1507.06, 280.977, 1507.06, 280.977, 1523.06, 255.434, 1523.06)
+uv = PackedVector2Array(255.434, 0, 280.977, 0, 280.977, 16, 255.434, 16)
+
+[node name="Cap78" type="Polygon2D" parent="TerrainVisual" unique_id=952883363]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(996.192, 1507.06, 1047.28, 1507.06, 1047.28, 1523.06, 996.192, 1523.06)
+uv = PackedVector2Array(996.192, 0, 1047.28, 0, 1047.28, 16, 996.192, 16)
+
+[node name="Cap79" type="Polygon2D" parent="TerrainVisual" unique_id=1896859258]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1796.03, 1507.06, 1864.66, 1507.06, 1864.66, 1523.06, 1796.03, 1523.06)
+uv = PackedVector2Array(1796.03, 0, 1864.66, 0, 1864.66, 16, 1796.03, 16)
+
+[node name="Cap80" type="Polygon2D" parent="TerrainVisual" unique_id=254443173]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(255.434, 1558.14, 280.977, 1558.14, 280.977, 1574.14, 255.434, 1574.14)
+uv = PackedVector2Array(255.434, 0, 280.977, 0, 280.977, 16, 255.434, 16)
+
+[node name="Cap81" type="Polygon2D" parent="TerrainVisual" unique_id=1799763682]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(204.347, 1583.69, 229.89, 1583.69, 229.89, 1599.69, 204.347, 1599.69)
+uv = PackedVector2Array(204.347, 0, 229.89, 0, 229.89, 16, 204.347, 16)
+
+[node name="Cap82" type="Polygon2D" parent="TerrainVisual" unique_id=684975304]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(306.52, 1583.69, 332.064, 1583.69, 332.064, 1599.69, 306.52, 1599.69)
+uv = PackedVector2Array(306.52, 0, 332.064, 0, 332.064, 16, 306.52, 16)
+
+[node name="Cap83" type="Polygon2D" parent="TerrainVisual" unique_id=757649015]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(740.759, 1583.69, 766.301, 1583.69, 766.301, 1599.69, 740.759, 1599.69)
+uv = PackedVector2Array(740.759, 0, 766.301, 0, 766.301, 16, 740.759, 16)
+
+[node name="Cap84" type="Polygon2D" parent="TerrainVisual" unique_id=1745201665]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(237.89, 1609.24, 306.52, 1609.24, 306.52, 1625.24, 237.89, 1625.24)
+uv = PackedVector2Array(237.89, 0, 306.52, 0, 306.52, 16, 237.89, 16)
+
+[node name="Cap85" type="Polygon2D" parent="TerrainVisual" unique_id=201816215]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(561.954, 1609.24, 715.216, 1609.24, 715.216, 1625.24, 561.954, 1625.24)
+uv = PackedVector2Array(561.954, 0, 715.216, 0, 715.216, 16, 561.954, 16)
+
+[node name="Cap86" type="Polygon2D" parent="TerrainVisual" unique_id=1801540348]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(902.017, 1609.24, 945.099, 1609.24, 945.099, 1625.24, 902.017, 1625.24)
+uv = PackedVector2Array(902.017, 0, 945.099, 0, 945.099, 16, 902.017, 16)
+
+[node name="Cap87" type="Polygon2D" parent="TerrainVisual" unique_id=1142724312]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2145.65, 1634.78, 2222.27, 1634.78, 2222.27, 1650.78, 2145.65, 1650.78)
+uv = PackedVector2Array(2145.65, 0, 2222.27, 0, 2222.27, 16, 2145.65, 16)
+
+[node name="Cap88" type="Polygon2D" parent="TerrainVisual" unique_id=914798982]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(953.099, 1685.86, 996.192, 1685.86, 996.192, 1701.86, 953.099, 1701.86)
+uv = PackedVector2Array(953.099, 0, 996.192, 0, 996.192, 16, 953.099, 16)
+
+[node name="Cap89" type="Polygon2D" parent="TerrainVisual" unique_id=1834848161]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(485.324, 1711.4, 510.867, 1711.4, 510.867, 1727.4, 485.324, 1727.4)
+uv = PackedVector2Array(485.324, 0, 510.867, 0, 510.867, 16, 485.324, 16)
+
+[node name="Cap90" type="Polygon2D" parent="TerrainVisual" unique_id=31486249]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2094.55, 1711.4, 2145.65, 1711.4, 2145.65, 1727.4, 2094.55, 1727.4)
+uv = PackedVector2Array(2094.55, 0, 2145.65, 0, 2145.65, 16, 2094.55, 16)
+
+[node name="Cap91" type="Polygon2D" parent="TerrainVisual" unique_id=1876810352]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(127.716, 1736.96, 178.804, 1736.96, 178.804, 1752.96, 127.716, 1752.96)
+uv = PackedVector2Array(127.716, 0, 178.804, 0, 178.804, 16, 127.716, 16)
+
+[node name="Cap92" type="Polygon2D" parent="TerrainVisual" unique_id=1354213925]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1047.28, 1736.96, 1098.37, 1736.96, 1098.37, 1752.96, 1047.28, 1752.96)
+uv = PackedVector2Array(1047.28, 0, 1098.37, 0, 1098.37, 16, 1047.28, 16)
+
+[node name="Cap93" type="Polygon2D" parent="TerrainVisual" unique_id=1973122320]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1149.45, 1736.96, 1200.54, 1736.96, 1200.54, 1752.96, 1149.45, 1752.96)
+uv = PackedVector2Array(1149.45, 0, 1200.54, 0, 1200.54, 16, 1149.45, 16)
+
+[node name="Cap94" type="Polygon2D" parent="TerrainVisual" unique_id=754501243]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2298.91, 1736.96, 2324.45, 1736.96, 2324.45, 1752.96, 2298.91, 1752.96)
+uv = PackedVector2Array(2298.91, 0, 2324.45, 0, 2324.45, 16, 2298.91, 16)
+
+[node name="Cap95" type="Polygon2D" parent="TerrainVisual" unique_id=1838523468]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2222.87, 1691.06, 2248.42, 1691.06, 2248.42, 1707.06, 2222.87, 1707.06)
+uv = PackedVector2Array(2222.87, 0, 2248.42, 0, 2248.42, 16, 2222.87, 16)
+
+[node name="Cap96" type="Polygon2D" parent="TerrainVisual" unique_id=1552067750]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(378.469, 1844.536, 404.012, 1844.536, 404.012, 1860.536, 378.469, 1860.536)
+uv = PackedVector2Array(378.469, 0, 404.012, 0, 404.012, 16, 378.469, 16)
+
+[node name="Cap97" type="Polygon2D" parent="TerrainVisual" unique_id=1400144974]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2228.266, 1762.49, 2300.266, 1762.49, 2300.266, 1778.49, 2228.266, 1778.49)
+uv = PackedVector2Array(2228.266, 0, 2300.266, 0, 2300.266, 16, 2228.266, 16)
+
+[node name="Cap98" type="Polygon2D" parent="TerrainVisual" unique_id=612748179]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2332.266, 1762.49, 2630.798, 1762.49, 2630.798, 1778.49, 2332.266, 1778.49)
+uv = PackedVector2Array(2332.266, 0, 2630.798, 0, 2630.798, 16, 2332.266, 16)
+
+[node name="Cap99" type="Polygon2D" parent="TerrainVisual" unique_id=1340045639]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1251.62, 1788.03, 1302.71, 1788.03, 1302.71, 1804.03, 1251.62, 1804.03)
+uv = PackedVector2Array(1251.62, 0, 1302.71, 0, 1302.71, 16, 1251.62, 16)
+
+[node name="Cap100" type="Polygon2D" parent="TerrainVisual" unique_id=786685155]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(255.434, 1813.58, 332.064, 1813.58, 332.064, 1829.58, 255.434, 1829.58)
+uv = PackedVector2Array(255.434, 0, 332.064, 0, 332.064, 16, 255.434, 16)
+
+[node name="Cap101" type="Polygon2D" parent="TerrainVisual" unique_id=1602936460]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(459.78, 1839.11, 510.867, 1839.11, 510.867, 1855.11, 459.78, 1855.11)
+uv = PackedVector2Array(459.78, 0, 510.867, 0, 510.867, 16, 459.78, 16)
+
+[node name="Cap102" type="Polygon2D" parent="TerrainVisual" unique_id=706753199]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1353.8, 1839.11, 1404.88, 1839.11, 1404.88, 1855.11, 1353.8, 1855.11)
+uv = PackedVector2Array(1353.8, 0, 1404.88, 0, 1404.88, 16, 1353.8, 16)
+
+[node name="Cap103" type="Polygon2D" parent="TerrainVisual" unique_id=1770166277]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1451.585, 1897.627, 1635.196, 1897.627, 1635.196, 1913.627, 1451.585, 1913.627)
+uv = PackedVector2Array(1451.585, 0, 1635.196, 0, 1635.196, 16, 1451.585, 16)
+
+[node name="Cap104" type="Polygon2D" parent="TerrainVisual" unique_id=180159106]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1992.38, 1839.11, 2043.47, 1839.11, 2043.47, 1855.11, 1992.38, 1855.11)
+uv = PackedVector2Array(1992.38, 0, 2043.47, 0, 2043.47, 16, 1992.38, 16)
+
+[node name="Cap105" type="Polygon2D" parent="TerrainVisual" unique_id=2045329294]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(518.867, 1864.66, 561.954, 1864.66, 561.954, 1880.66, 518.867, 1880.66)
+uv = PackedVector2Array(518.867, 0, 561.954, 0, 561.954, 16, 518.867, 16)
+
+[node name="Cap106" type="Polygon2D" parent="TerrainVisual" unique_id=1823780597]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(57.543, 1941.29, 178.804, 1941.29, 178.804, 1957.29, 57.543, 1957.29)
+uv = PackedVector2Array(57.543, 0, 178.804, 0, 178.804, 16, 57.543, 16)
+
+[node name="Cap107" type="Polygon2D" parent="TerrainVisual" unique_id=1216964794]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(332.064, 1941.29, 459.78, 1941.29, 459.78, 1957.29, 332.064, 1957.29)
+uv = PackedVector2Array(332.064, 0, 459.78, 0, 459.78, 16, 332.064, 16)
+
+[node name="Cap108" type="Polygon2D" parent="TerrainVisual" unique_id=674550292]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(638.583, 1941.29, 664.127, 1941.29, 664.127, 1957.29, 638.583, 1957.29)
+uv = PackedVector2Array(638.583, 0, 664.127, 0, 664.127, 16, 638.583, 16)
+
+[node name="Cap109" type="Polygon2D" parent="TerrainVisual" unique_id=466188465]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(179.087, 1966.83, 332.064, 1966.83, 332.064, 1982.83, 179.087, 1982.83)
+uv = PackedVector2Array(179.087, 0, 332.064, 0, 332.064, 16, 179.087, 16)
+
+[node name="Cap110" type="Polygon2D" parent="TerrainVisual" unique_id=1020302485]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(569.954, 1966.83, 638.583, 1966.83, 638.583, 1982.83, 569.954, 1982.83)
+uv = PackedVector2Array(569.954, 0, 638.583, 0, 638.583, 16, 569.954, 16)
+
+[node name="Cap111" type="Polygon2D" parent="TerrainVisual" unique_id=727285468]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(0, 4)
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1660.32, 1966.83, 2145.65, 1966.83, 2145.65, 1982.83, 1660.32, 1982.83)
+uv = PackedVector2Array(1660.32, 0, 2145.65, 0, 2145.65, 16, 1660.32, 16)
+
+[node name="Cap112" type="Polygon2D" parent="TerrainVisual" unique_id=186916916]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(740.759, 1992.38, 766.301, 1992.38, 766.301, 2008.38, 740.759, 2008.38)
+uv = PackedVector2Array(740.759, 0, 766.301, 0, 766.301, 16, 740.759, 16)
+
+[node name="Cap113" type="Polygon2D" parent="TerrainVisual" unique_id=2005832029]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(2, 3)
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1532.6, 2069.01, 1583.69, 2069.01, 1583.69, 2085.01, 1532.6, 2085.01)
+uv = PackedVector2Array(1532.6, 0, 1583.69, 0, 1583.69, 16, 1532.6, 16)
+
+[node name="Cap114" type="Polygon2D" parent="TerrainVisual" unique_id=1858231505]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1585.428, 2072.611, 1665.428, 2072.611, 1665.428, 2088.611, 1585.428, 2088.611)
+uv = PackedVector2Array(1585.428, 0, 1665.428, 0, 1665.428, 16, 1585.428, 16)
+
+[node name="Cap115" type="Polygon2D" parent="TerrainVisual" unique_id=1295187412]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(73.173, 2118.1, 98.716, 2118.1, 98.716, 2134.1, 73.173, 2134.1)
+uv = PackedVector2Array(73.173, 0, 98.716, 0, 98.716, 16, 73.173, 16)
+
+[node name="Cap116" type="Polygon2D" parent="TerrainVisual" unique_id=128056791]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(740.759, 2145.65, 766.301, 2145.65, 766.301, 2161.65, 740.759, 2161.65)
+uv = PackedVector2Array(740.759, 0, 766.301, 0, 766.301, 16, 740.759, 16)
+
+[node name="Cap117" type="Polygon2D" parent="TerrainVisual" unique_id=820822606]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(945.099, 2145.65, 970.65, 2145.65, 970.65, 2161.65, 945.099, 2161.65)
+uv = PackedVector2Array(945.099, 0, 970.65, 0, 970.65, 16, 945.099, 16)
+
+[node name="Cap118" type="Polygon2D" parent="TerrainVisual" unique_id=1698580126]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1490.09, 2145.65, 1515.64, 2145.65, 1515.64, 2161.65, 1490.09, 2161.65)
+uv = PackedVector2Array(1490.09, 0, 1515.64, 0, 1515.64, 16, 1490.09, 16)
+
+[node name="Cap119" type="Polygon2D" parent="TerrainVisual" unique_id=482141137]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(131.173, 2161.19, 156.716, 2161.19, 156.716, 2177.19, 131.173, 2177.19)
+uv = PackedVector2Array(131.173, 0, 156.716, 0, 156.716, 16, 131.173, 16)
+
+[node name="Cap120" type="Polygon2D" parent="TerrainVisual" unique_id=1997698845]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(204.347, 2171.19, 229.89, 2171.19, 229.89, 2187.19, 204.347, 2187.19)
+uv = PackedVector2Array(204.347, 0, 229.89, 0, 229.89, 16, 204.347, 16)
+
+[node name="Cap121" type="Polygon2D" parent="TerrainVisual" unique_id=1607957120]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(306.52, 2171.19, 332.064, 2171.19, 332.064, 2187.19, 306.52, 2187.19)
+uv = PackedVector2Array(306.52, 0, 332.064, 0, 332.064, 16, 306.52, 16)
+
+[node name="Cap122" type="Polygon2D" parent="TerrainVisual" unique_id=398564309]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(383.15, 2171.19, 434.237, 2171.19, 434.237, 2187.19, 383.15, 2187.19)
+uv = PackedVector2Array(383.15, 0, 434.237, 0, 434.237, 16, 383.15, 16)
+
+[node name="Cap123" type="Polygon2D" parent="TerrainVisual" unique_id=568156666]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(485.324, 2171.19, 536.411, 2171.19, 536.411, 2187.19, 485.324, 2187.19)
+uv = PackedVector2Array(485.324, 0, 536.411, 0, 536.411, 16, 485.324, 16)
+
+[node name="Cap124" type="Polygon2D" parent="TerrainVisual" unique_id=1322024004]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(613.04, 2171.19, 638.583, 2171.19, 638.583, 2187.19, 613.04, 2187.19)
+uv = PackedVector2Array(613.04, 0, 638.583, 0, 638.583, 16, 613.04, 16)
+
+[node name="Cap125" type="Polygon2D" parent="TerrainVisual" unique_id=462244252]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(715.216, 2171.19, 740.759, 2171.19, 740.759, 2187.19, 715.216, 2187.19)
+uv = PackedVector2Array(715.216, 0, 740.759, 0, 740.759, 16, 715.216, 16)
+
+[node name="Cap126" type="Polygon2D" parent="TerrainVisual" unique_id=1782118564]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(817.385, 2171.19, 868.476, 2171.19, 868.476, 2187.19, 817.385, 2187.19)
+uv = PackedVector2Array(817.385, 0, 868.476, 0, 868.476, 16, 817.385, 16)
+
+[node name="Cap127" type="Polygon2D" parent="TerrainVisual" unique_id=180618559]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(919.557, 2171.19, 945.099, 2171.19, 945.099, 2187.19, 919.557, 2187.19)
+uv = PackedVector2Array(919.557, 0, 945.099, 0, 945.099, 16, 919.557, 16)
+
+[node name="Cap128" type="Polygon2D" parent="TerrainVisual" unique_id=60352776]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1021.73, 2171.19, 1072.82, 2171.19, 1072.82, 2187.19, 1021.73, 2187.19)
+uv = PackedVector2Array(1021.73, 0, 1072.82, 0, 1072.82, 16, 1021.73, 16)
+
+[node name="Cap129" type="Polygon2D" parent="TerrainVisual" unique_id=1684691376]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1123.91, 2171.19, 1149.45, 2171.19, 1149.45, 2187.19, 1123.91, 2187.19)
+uv = PackedVector2Array(1123.91, 0, 1149.45, 0, 1149.45, 16, 1123.91, 16)
+
+[node name="Cap130" type="Polygon2D" parent="TerrainVisual" unique_id=1203932195]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1226.09, 2171.19, 1277.16, 2171.19, 1277.16, 2187.19, 1226.09, 2187.19)
+uv = PackedVector2Array(1226.09, 0, 1277.16, 0, 1277.16, 16, 1226.09, 16)
+
+[node name="Cap131" type="Polygon2D" parent="TerrainVisual" unique_id=49536271]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1353.8, 2171.19, 1379.34, 2171.19, 1379.34, 2187.19, 1353.8, 2187.19)
+uv = PackedVector2Array(1353.8, 0, 1379.34, 0, 1379.34, 16, 1353.8, 16)
+
+[node name="Cap132" type="Polygon2D" parent="TerrainVisual" unique_id=850277165]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1440.8, 2171.19, 1491.89, 2171.19, 1491.89, 2187.19, 1440.8, 2187.19)
+uv = PackedVector2Array(1440.8, 0, 1491.89, 0, 1491.89, 16, 1440.8, 16)
+
+[node name="Cap133" type="Polygon2D" parent="TerrainVisual" unique_id=1030158969]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1558.14, 2273.36, 1583.69, 2273.36, 1583.69, 2289.36, 1558.14, 2289.36)
+uv = PackedVector2Array(1558.14, 0, 1583.69, 0, 1583.69, 16, 1558.14, 16)
+
+[node name="Cap134" type="Polygon2D" parent="TerrainVisual" unique_id=1068000242]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1634.78, 2273.36, 1711.4, 2273.36, 1711.4, 2289.36, 1634.78, 2289.36)
+uv = PackedVector2Array(1634.78, 0, 1711.4, 0, 1711.4, 16, 1634.78, 16)
+
+[node name="Cap135" type="Polygon2D" parent="TerrainVisual" unique_id=1560061065]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1736.96, 2273.36, 1762.49, 2273.36, 1762.49, 2289.36, 1736.96, 2289.36)
+uv = PackedVector2Array(1736.96, 0, 1762.49, 0, 1762.49, 16, 1736.96, 16)
+
+[node name="Cap136" type="Polygon2D" parent="TerrainVisual" unique_id=360471345]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(4035.85, 2273.36, 4061.39, 2273.36, 4061.39, 2289.36, 4035.85, 2289.36)
+uv = PackedVector2Array(4035.85, 0, 4061.39, 0, 4061.39, 16, 4035.85, 16)
+
+[node name="Cap137" type="Polygon2D" parent="TerrainVisual" unique_id=1077844220]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(842.933, 2298.91, 1558.14, 2298.91, 1558.14, 2314.91, 842.933, 2314.91)
+uv = PackedVector2Array(842.933, 0, 1558.14, 0, 1558.14, 16, 842.933, 16)
+
+[node name="Cap138" type="Polygon2D" parent="TerrainVisual" unique_id=1587490321]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1591.69, 2298.91, 1634.78, 2298.91, 1634.78, 2314.91, 1591.69, 2314.91)
+uv = PackedVector2Array(1591.69, 0, 1634.78, 0, 1634.78, 16, 1591.69, 16)
+
+[node name="Cap139" type="Polygon2D" parent="TerrainVisual" unique_id=1849070643]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(51.087, 2324.45, 842.933, 2324.45, 842.933, 2340.45, 51.087, 2340.45)
+uv = PackedVector2Array(51.087, 0, 842.933, 0, 842.933, 16, 51.087, 16)
+
+[node name="Cap140" type="Polygon2D" parent="TerrainVisual" unique_id=1942370457]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1309.676, 2627.407, 1352.756, 2627.407, 1352.756, 2643.407, 1309.676, 2643.407)
+uv = PackedVector2Array(1309.676, 0, 1352.756, 0, 1352.756, 16, 1309.676, 16)
+
+[node name="Cap141" type="Polygon2D" parent="TerrainVisual" unique_id=800077711]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1333.049, 2700.316, 1812.624, 2700.316, 1812.624, 2716.316, 1333.049, 2716.316)
+uv = PackedVector2Array(1333.049, 0, 1812.624, 0, 1812.624, 16, 1333.049, 16)
+
+[node name="Cap142" type="Polygon2D" parent="TerrainVisual" unique_id=1744809889]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(1897.759, 2700.316, 1999.909, 2700.316, 1999.909, 2716.316, 1897.759, 2716.316)
+uv = PackedVector2Array(1897.759, 0, 1999.909, 0, 1999.909, 16, 1897.759, 16)
+
+[node name="Cap143" type="Polygon2D" parent="TerrainVisual" unique_id=1494160651]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2127.629, 2700.316, 2204.269, 2700.316, 2204.269, 2716.316, 2127.629, 2716.316)
+uv = PackedVector2Array(2127.629, 0, 2204.269, 0, 2204.269, 16, 2127.629, 16)
+
+[node name="Cap144" type="Polygon2D" parent="TerrainVisual" unique_id=823374215]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2306.449, 2700.316, 2383.069, 2700.316, 2383.069, 2716.316, 2306.449, 2716.316)
+uv = PackedVector2Array(2306.449, 0, 2383.069, 0, 2383.069, 16, 2306.449, 16)
+
+[node name="Cap145" type="Polygon2D" parent="TerrainVisual" unique_id=1764765122]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2485.249, 2700.316, 2612.959, 2700.316, 2612.959, 2716.316, 2485.249, 2716.316)
+uv = PackedVector2Array(2485.249, 0, 2612.959, 0, 2612.959, 16, 2485.249, 16)
+
+[node name="Cap146" type="Polygon2D" parent="TerrainVisual" unique_id=1224392897]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2740.679, 2700.316, 2842.849, 2700.316, 2842.849, 2716.316, 2740.679, 2716.316)
+uv = PackedVector2Array(2740.679, 0, 2842.849, 0, 2842.849, 16, 2740.679, 16)
+
+[node name="Cap147" type="Polygon2D" parent="TerrainVisual" unique_id=395429384]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2945.029, 2700.316, 3072.739, 2700.316, 3072.739, 2716.316, 2945.029, 2716.316)
+uv = PackedVector2Array(2945.029, 0, 3072.739, 0, 3072.739, 16, 2945.029, 16)
+
+[node name="Cap148" type="Polygon2D" parent="TerrainVisual" unique_id=998714755]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(3158.595, 2708.428, 4309.691, 2708.428, 4309.691, 2724.428, 3158.595, 2724.428)
+uv = PackedVector2Array(3158.595, 0, 4309.691, 0, 4309.691, 16, 3158.595, 16)
+
+[node name="Cap149" type="Polygon2D" parent="TerrainVisual" unique_id=1339882332]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2102.089, 2725.866, 2127.629, 2725.866, 2127.629, 2741.866, 2102.089, 2741.866)
+uv = PackedVector2Array(2102.089, 0, 2127.629, 0, 2127.629, 16, 2102.089, 16)
+
+[node name="Cap150" type="Polygon2D" parent="TerrainVisual" unique_id=1341497926]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2280.899, 2725.866, 2306.449, 2725.866, 2306.449, 2741.866, 2280.899, 2741.866)
+uv = PackedVector2Array(2280.899, 0, 2306.449, 0, 2306.449, 16, 2280.899, 16)
+
+[node name="Cap151" type="Polygon2D" parent="TerrainVisual" unique_id=1494208825]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(2459.709, 2725.866, 2485.249, 2725.866, 2485.249, 2741.866, 2459.709, 2741.866)
+uv = PackedVector2Array(2459.709, 0, 2485.249, 0, 2485.249, 16, 2459.709, 16)
+
+[node name="Cap152" type="Polygon2D" parent="TerrainVisual" unique_id=216118584]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(-37.545, -91.8, 49.594, -91.8, 49.594, -75.8, -37.545, -75.8)
+uv = PackedVector2Array(-37.545, 0, 49.594, 0, 49.594, 16, -37.545, 16)
+
+[node name="Cap153" type="Polygon2D" parent="TerrainVisual" unique_id=2003610227]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("tex_cap")
+polygon = PackedVector2Array(4302.77, -91.8, 4342.92, -91.8, 4342.92, -75.8, 4302.77, -75.8)
+uv = PackedVector2Array(4302.77, 0, 4342.92, 0, 4342.92, 16, 4302.77, 16)
+
 [node name="Lift4" parent="." unique_id=700000675 instance=ExtResource("10_mp")]
 position = Vector2(1894.5, 1916.1)
 travel = Vector2(0, -204.347)
 speed = 70.0
 downtime = 0.5
 move_on_stand = true
+skin = ExtResource("tex_plat")
 
 [node name="End" type="Marker2D" parent="Lift4" unique_id=700000705]
 position = Vector2(110.16, -425.722)
@@ -2309,6 +3393,7 @@ travel = Vector2(0, -357.607)
 speed = 70.0
 downtime = 0.5
 move_on_stand = true
+skin = ExtResource("tex_plat")
 
 [node name="End" type="Marker2D" parent="Lift6" unique_id=700000706]
 position = Vector2(29.7, -801.9)
@@ -2353,16 +3438,14 @@ position = Vector2(3199.23, 961.029)
 position = Vector2(3964.61, 2702.93)
 dialogue_timeline = "s5gate4timeline"
 quest_id = "q_s5_gate_key"
-quest_giver_name = "Gatekeeper"
+quest_giver_name = "Joko"
+quest_done_timeline = "s5gate4done"
 
 [node name="Coin1" parent="." unique_id=700000689 instance=ExtResource("itm_coin")]
 position = Vector2(1409.14, 1181.03)
 
 [node name="Coin2" parent="." unique_id=700000690 instance=ExtResource("itm_coin")]
 position = Vector2(2081.78, 1462.01)
-
-[node name="Coin3" parent="." unique_id=700000691 instance=ExtResource("itm_coin")]
-position = Vector2(140.34, 772.335)
 
 [node name="Shard_s5_3" parent="." unique_id=700000692 instance=ExtResource("shard_scn")]
 position = Vector2(1217.5, 1363.81)
@@ -2413,13 +3496,16 @@ required_key = "stage5_keyA"
 position = Vector2(2800, 944)
 dialogue_timeline = "s5keya_timeline"
 quest_id = "q_s5_side_key"
-quest_giver_name = "Warden"
+quest_giver_name = "Bima"
+quest_done_timeline = "s5keyadone"
 
 [node name="Crumble0" parent="." unique_id=700000710 instance=ExtResource("11_fp")]
 position = Vector2(1983, 1169)
+skin = ExtResource("tex_plat")
 
 [node name="Crumble1" parent="." unique_id=700000711 instance=ExtResource("11_fp")]
 position = Vector2(2129, 1344)
+skin = ExtResource("tex_plat")
 
 [node name="Flood1" parent="." unique_id=700000712 instance=ExtResource("itm_debt")]
 position = Vector2(865.8, 2253.6)
@@ -2452,11 +3538,11 @@ position = Vector2(0, -57.375)
 shape = SubResource("RS_cp")
 
 [node name="CheckPoint2" type="Area2D" parent="." unique_id=700000717]
-position = Vector2(1546.25, 1833.13)
+position = Vector2(1543, 1893)
 script = ExtResource("cp_scr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint2" unique_id=700000718]
-position = Vector2(-2.295, 1.1475)
+position = Vector2(4.5776367e-05, -57.99996)
 shape = SubResource("RS_cp")
 
 [node name="CheckPoint3" type="Area2D" parent="." unique_id=700000719]
@@ -2780,15 +3866,15 @@ position = Vector2(1600.2, 1885.5)
 
 [node name="Shard_s5_6" parent="." unique_id=372995136 instance=ExtResource("shard_scn")]
 position = Vector2(4191.82, 927.756)
-collectible_id = "shard_s5_2"
+collectible_id = "shard_s5_6"
 
 [node name="Shard_s5_7" parent="." unique_id=867047091 instance=ExtResource("shard_scn")]
 position = Vector2(2989.81, 2078.69)
-collectible_id = "shard_s5_2"
+collectible_id = "shard_s5_7"
 
 [node name="Shard_s5_8" parent="." unique_id=724684966 instance=ExtResource("shard_scn")]
 position = Vector2(3759.79, 2470.56)
-collectible_id = "shard_s5_2"
+collectible_id = "shard_s5_8"
 
 [node name="Enemy9" parent="." unique_id=925523153 instance=ExtResource("7_bat")]
 position = Vector2(252, 2156)
@@ -2801,7 +3887,7 @@ position = Vector2(2513.7, 1674.9)
 
 [node name="Shard_s5_9" parent="." unique_id=2083199800 instance=ExtResource("shard_scn")]
 position = Vector2(2408.4, 972.9)
-collectible_id = "shard_s5_2"
+collectible_id = "shard_s5_9"
 
 [node name="BaitConv0" parent="." unique_id=715000001 instance=ExtResource("itm_bait")]
 position = Vector2(89, 1690)
@@ -2829,7 +3915,7 @@ position = Vector2(1606.25, 1713.13)
 
 [node name="Shard_s5_5" parent="." unique_id=1221957688 instance=ExtResource("shard_scn")]
 position = Vector2(2411, 1467)
-collectible_id = "shard_s5_2"
+collectible_id = "shard_s5_5"
 
 [node name="Enemy13" parent="." unique_id=564807266 instance=ExtResource("7_bat")]
 position = Vector2(2343, 954)
@@ -2840,124 +3926,517 @@ position = Vector2(1902, 1189)
 [node name="Enemy15" parent="." unique_id=1556349936 instance=ExtResource("6_frog")]
 position = Vector2(1817, 1953.0002)
 
-[node name="Props" type="Node2D" parent="." unique_id=1861018751]
+[node name="Decor" type="Node2D" parent="." unique_id=1873402562]
 z_index = -1
 
-[node name="VentU0" type="Sprite2D" parent="Props" unique_id=1196457291]
-position = Vector2(306.52, 357.607)
-texture = ExtResource("px_vent")
+[node name="Chain0" type="Sprite2D" parent="Decor" unique_id=664783845]
+texture_filter = 1
+position = Vector2(639, 442)
+texture = ExtResource("tex_chain")
 
-[node name="GratingU0" type="Sprite2D" parent="Props" unique_id=1903759885]
-position = Vector2(236.52, 388.259)
-texture = ExtResource("px_grate")
+[node name="Chain1" type="Sprite2D" parent="Decor" unique_id=1979988547]
+texture_filter = 1
+position = Vector2(907, 442)
+texture = ExtResource("tex_chain")
 
-[node name="AdScreen0" type="Sprite2D" parent="Props" unique_id=1856714800]
-position = Vector2(306.52, 202.977)
-texture = ExtResource("px_screen")
+[node name="Chain2" type="Sprite2D" parent="Decor" unique_id=994500855]
+texture_filter = 1
+position = Vector2(335, 442)
+texture = ExtResource("tex_chain")
 
-[node name="VentU1" type="Sprite2D" parent="Props" unique_id=627637610]
-position = Vector2(191.575, 2005.15)
-texture = ExtResource("px_vent")
+[node name="Chain3" type="Sprite2D" parent="Decor" unique_id=1179551605]
+texture_filter = 1
+position = Vector2(792, 442)
+texture = ExtResource("tex_chain")
 
-[node name="VentU2" type="Sprite2D" parent="Props" unique_id=1027032780]
-position = Vector2(447.01, 2414.45)
-texture = ExtResource("px_vent")
+[node name="Chain4" type="Sprite2D" parent="Decor" unique_id=1668257145]
+texture_filter = 1
+position = Vector2(1063, 315)
+texture = ExtResource("tex_chain")
 
-[node name="GratingU1" type="Sprite2D" parent="Props" unique_id=1230315642]
-position = Vector2(377.01, 2464.45)
-texture = ExtResource("px_grate")
+[node name="Chain5" type="Sprite2D" parent="Decor" unique_id=1112963841]
+texture_filter = 1
+position = Vector2(2581, 417)
+texture = ExtResource("tex_chain")
 
-[node name="VentU3" type="Sprite2D" parent="Props" unique_id=1350228480]
-position = Vector2(255.434, 1417.66)
-texture = ExtResource("px_vent")
+[node name="Chain6" type="Sprite2D" parent="Decor" unique_id=2075337067]
+texture_filter = 1
+position = Vector2(2352, 544)
+texture = ExtResource("tex_chain")
 
-[node name="AdScreen1" type="Sprite2D" parent="Props" unique_id=504703063]
-position = Vector2(255.434, 1275.8)
-texture = ExtResource("px_screen")
+[node name="Chain7" type="Sprite2D" parent="Decor" unique_id=2042949582]
+texture_filter = 1
+position = Vector2(473, 749)
+texture = ExtResource("tex_chain")
 
-[node name="VentU4" type="Sprite2D" parent="Props" unique_id=856668014]
-position = Vector2(868.476, 1238.85)
-texture = ExtResource("px_vent")
+[node name="Chain8" type="Sprite2D" parent="Decor" unique_id=584986028]
+texture_filter = 1
+position = Vector2(358, 1081)
+texture = ExtResource("tex_chain")
 
-[node name="GratingU2" type="Sprite2D" parent="Props" unique_id=1509525525]
-position = Vector2(798.476, 1254.17)
-texture = ExtResource("px_grate")
+[node name="Chain9" type="Sprite2D" parent="Decor" unique_id=807075752]
+texture_filter = 1
+position = Vector2(1060, 1081)
+texture = ExtResource("tex_chain")
 
-[node name="VentU5" type="Sprite2D" parent="Props" unique_id=16458978]
-position = Vector2(947.991, 2162.01)
-texture = ExtResource("px_vent")
+[node name="Chain10" type="Sprite2D" parent="Decor" unique_id=1475762252]
+texture_filter = 1
+position = Vector2(2465, 1541)
+texture = ExtResource("tex_chain")
 
-[node name="VentU6" type="Sprite2D" parent="Props" unique_id=548593915]
-position = Vector2(1200.54, 2362.76)
-texture = ExtResource("px_vent")
+[node name="Chain11" type="Sprite2D" parent="Decor" unique_id=1982109308]
+texture_filter = 1
+position = Vector2(843, 1106)
+texture = ExtResource("tex_chain")
 
-[node name="GratingU3" type="Sprite2D" parent="Props" unique_id=1457043178]
-position = Vector2(1130.54, 2388.31)
-texture = ExtResource("px_grate")
+[node name="Chain12" type="Sprite2D" parent="Decor" unique_id=675204443]
+texture_filter = 1
+position = Vector2(613, 1285)
+texture = ExtResource("tex_chain")
 
-[node name="AdScreen2" type="Sprite2D" parent="Props" unique_id=2115296398]
-position = Vector2(1200.54, 2220.91)
-texture = ExtResource("px_screen")
+[node name="Chain13" type="Sprite2D" parent="Decor" unique_id=519592405]
+texture_filter = 1
+position = Vector2(1932, 1260)
+texture = ExtResource("tex_chain")
 
-[node name="VentU7" type="Sprite2D" parent="Props" unique_id=1648632314]
-position = Vector2(1072.82, 2516.62)
-texture = ExtResource("px_vent")
+[node name="Chain14" type="Sprite2D" parent="Decor" unique_id=893600247]
+texture_filter = 1
+position = Vector2(716, 1515)
+texture = ExtResource("tex_chain")
 
-[node name="VentU8" type="Sprite2D" parent="Props" unique_id=1411904652]
-position = Vector2(1072.82, 229.89)
-texture = ExtResource("px_vent")
+[node name="Chain15" type="Sprite2D" parent="Decor" unique_id=439812242]
+texture_filter = 1
+position = Vector2(1202, 1541)
+texture = ExtResource("tex_chain")
 
-[node name="GratingU4" type="Sprite2D" parent="Props" unique_id=754031788]
-position = Vector2(1002.82, 250.325)
-texture = ExtResource("px_grate")
+[node name="Chain16" type="Sprite2D" parent="Decor" unique_id=1665593962]
+texture_filter = 1
+position = Vector2(2082, 1515)
+texture = ExtResource("tex_chain")
 
-[node name="VentU9" type="Sprite2D" parent="Props" unique_id=681496471]
-position = Vector2(1136.68, 677.497)
-texture = ExtResource("px_vent")
+[node name="Chain17" type="Sprite2D" parent="Decor" unique_id=1839799858]
+texture_filter = 1
+position = Vector2(1405, 1592)
+texture = ExtResource("tex_chain")
 
-[node name="AdScreen3" type="Sprite2D" parent="Props" unique_id=1243763409]
-position = Vector2(1136.68, 509.497)
-texture = ExtResource("px_screen")
+[node name="Chain18" type="Sprite2D" parent="Decor" unique_id=31479435]
+texture_filter = 1
+position = Vector2(627, 1694)
+texture = ExtResource("tex_chain")
 
-[node name="VentU10" type="Sprite2D" parent="Props" unique_id=1516736304]
-position = Vector2(1226.09, 1277.17)
-texture = ExtResource("px_vent")
+[node name="Chain19" type="Sprite2D" parent="Decor" unique_id=989295473]
+texture_filter = 1
+position = Vector2(690, 2077)
+texture = ExtResource("tex_chain")
 
-[node name="GratingU5" type="Sprite2D" parent="Props" unique_id=99479261]
-position = Vector2(1156.09, 1297.61)
-texture = ExtResource("px_grate")
+[node name="Chain20" type="Sprite2D" parent="Decor" unique_id=781467794]
+texture_filter = 1
+position = Vector2(1175, 2077)
+texture = ExtResource("tex_chain")
 
-[node name="VentU11" type="Sprite2D" parent="Props" unique_id=672020408]
-position = Vector2(1902.99, 2017.92)
-texture = ExtResource("px_vent")
+[node name="Chain21" type="Sprite2D" parent="Decor" unique_id=2118600192]
+texture_filter = 1
+position = Vector2(2018, 1873)
+texture = ExtResource("tex_chain")
 
-[node name="VentU12" type="Sprite2D" parent="Props" unique_id=608208568]
-position = Vector2(1954.07, 2337.22)
-texture = ExtResource("px_vent")
+[node name="Chain22" type="Sprite2D" parent="Decor" unique_id=992284677]
+texture_filter = 1
+position = Vector2(1564, 2099)
+texture = ExtResource("tex_chain")
 
-[node name="GratingU6" type="Sprite2D" parent="Props" unique_id=1224691784]
-position = Vector2(1884.07, 2372.98)
-texture = ExtResource("px_grate")
+[node name="Chain23" type="Sprite2D" parent="Decor" unique_id=45263594]
+texture_filter = 1
+position = Vector2(1677, 2259)
+texture = ExtResource("tex_chain")
 
-[node name="AdScreen4" type="Sprite2D" parent="Props" unique_id=222714131]
-position = Vector2(1954.07, 2169.81)
-texture = ExtResource("px_screen")
+[node name="Chain24" type="Sprite2D" parent="Decor" unique_id=625592748]
+texture_filter = 1
+position = Vector2(1954, 2435)
+texture = ExtResource("tex_chain")
 
-[node name="VentU13" type="Sprite2D" parent="Props" unique_id=778279695]
-position = Vector2(2768.49, 1060.65)
-texture = ExtResource("px_vent")
+[node name="Chain25" type="Sprite2D" parent="Decor" unique_id=2110218435]
+texture_filter = 1
+position = Vector2(1949, 2759)
+texture = ExtResource("tex_chain")
 
-[node name="GratingU7" type="Sprite2D" parent="Props" unique_id=383208875]
-position = Vector2(2752.55, 53.641)
-texture = ExtResource("px_grate")
+[node name="Chain26" type="Sprite2D" parent="Decor" unique_id=585867346]
+texture_filter = 1
+position = Vector2(2792, 2759)
+texture = ExtResource("tex_chain")
 
-[node name="AdScreen5" type="Sprite2D" parent="Props" unique_id=1466309285]
-position = Vector2(2802, 749)
-texture = ExtResource("px_screen")
+[node name="Chain27" type="Sprite2D" parent="Decor" unique_id=922421153]
+texture_filter = 1
+position = Vector2(3009, 2759)
+texture = ExtResource("tex_chain")
 
-[node name="GratingU8" type="Sprite2D" parent="Props" unique_id=1586491538]
-position = Vector2(3007.98, 1110.65)
-texture = ExtResource("px_grate")
+[node name="Prop0_barrel" type="Sprite2D" parent="Decor" unique_id=674291040]
+texture_filter = 1
+position = Vector2(2651, 353)
+texture = ExtResource("dec_barrel")
+
+[node name="Prop1_barrel" type="Sprite2D" parent="Decor" unique_id=675220756]
+texture_filter = 1
+position = Vector2(951, 557)
+texture = ExtResource("dec_barrel")
+
+[node name="Prop2_barrel" type="Sprite2D" parent="Decor" unique_id=1056327726]
+texture_filter = 1
+position = Vector2(1186, 582)
+texture = ExtResource("dec_barrel")
+
+[node name="Prop3_barrel" type="Sprite2D" parent="Decor" unique_id=1549783827]
+texture_filter = 1
+position = Vector2(386, 608)
+texture = ExtResource("dec_barrel")
+
+[node name="Prop5_bookshelf" type="Sprite2D" parent="Decor" unique_id=1729443037]
+texture_filter = 1
+position = Vector2(3121, 963)
+texture = ExtResource("dec_bookshelf")
+
+[node name="Prop7_barrel" type="Sprite2D" parent="Decor" unique_id=1232284033]
+texture_filter = 1
+position = Vector2(1168, 1221)
+texture = ExtResource("dec_barrel")
+
+[node name="Candle8" type="Sprite2D" parent="Decor" unique_id=1553377205]
+texture_filter = 1
+position = Vector2(256, 1320)
+texture = ExtResource("dec_candlestick")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 8.2
+
+[node name="Prop9_barrel" type="Sprite2D" parent="Decor" unique_id=1608055317]
+texture_filter = 1
+position = Vector2(626, 1604)
+texture = ExtResource("dec_barrel")
+
+[node name="Prop10_barrel" type="Sprite2D" parent="Decor" unique_id=793320349]
+texture_filter = 1
+position = Vector2(94, 1936)
+texture = ExtResource("dec_barrel")
+
+[node name="Candle11" type="Sprite2D" parent="Decor" unique_id=1564905481]
+texture_filter = 1
+position = Vector2(252, 1959)
+texture = ExtResource("dec_candlestick")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 7.2
+
+[node name="Prop14_barrel" type="Sprite2D" parent="Decor" unique_id=2103469005]
+texture_filter = 1
+position = Vector2(2998, 2695)
+texture = ExtResource("dec_barrel")
+
+[node name="Candle15" type="Sprite2D" parent="Decor" unique_id=1481962443]
+texture_filter = 1
+position = Vector2(3489, 2700)
+texture = ExtResource("dec_candlestick")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 8.2
+
+[node name="Torch0" type="Sprite2D" parent="Decor" unique_id=80560701]
+texture_filter = 1
+position = Vector2(1754, -1037)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 7.7
+
+[node name="Torch1" type="Sprite2D" parent="Decor" unique_id=1178017281]
+texture_filter = 1
+position = Vector2(1754, 927)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 7.3
+
+[node name="Torch2" type="Sprite2D" parent="Decor" unique_id=1816292144]
+texture_filter = 1
+position = Vector2(1873, -465)
+texture = ExtResource("dec_torch")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 8.5
+
+[node name="Torch3" type="Sprite2D" parent="Decor" unique_id=941448299]
+texture_filter = 1
+position = Vector2(1873, 147)
+texture = ExtResource("dec_torch")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 6.3
+
+[node name="Torch4" type="Sprite2D" parent="Decor" unique_id=505201029]
+texture_filter = 1
+position = Vector2(2623, 34)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 8.3
+
+[node name="Torch5" type="Sprite2D" parent="Decor" unique_id=1360166768]
+texture_filter = 1
+position = Vector2(527, 78)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 6.1
+
+[node name="Torch6" type="Sprite2D" parent="Decor" unique_id=557222091]
+texture_filter = 1
+position = Vector2(1295, 239)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 7.8
+
+[node name="Torch7" type="Sprite2D" parent="Decor" unique_id=2119014597]
+texture_filter = 1
+position = Vector2(2997, 472)
+texture = ExtResource("dec_torch")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 7.4
+
+[node name="Torch8" type="Sprite2D" parent="Decor" unique_id=2058305915]
+texture_filter = 1
+position = Vector2(110, 468)
+texture = ExtResource("dec_torch")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 6.7
+
+[node name="Torch9" type="Sprite2D" parent="Decor" unique_id=1040499446]
+texture_filter = 1
+position = Vector2(110, 1054)
+texture = ExtResource("dec_torch")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 8.1
+
+[node name="Torch10" type="Sprite2D" parent="Decor" unique_id=22059445]
+texture_filter = 1
+position = Vector2(2393, 596)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 7.5
+
+[node name="Torch11" type="Sprite2D" parent="Decor" unique_id=593066793]
+texture_filter = 1
+position = Vector2(835, 699)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 7.8
+
+[node name="Torch12" type="Sprite2D" parent="Decor" unique_id=48705223]
+texture_filter = 1
+position = Vector2(2511, 1162)
+texture = ExtResource("dec_torch")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 8.8
+
+[node name="Torch13" type="Sprite2D" parent="Decor" unique_id=1748841193]
+texture_filter = 1
+position = Vector2(3278, 1031)
+texture = ExtResource("dec_torch")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 6.8
+
+[node name="Torch14" type="Sprite2D" parent="Decor" unique_id=1415285588]
+texture_filter = 1
+position = Vector2(3278, 1591)
+texture = ExtResource("dec_torch")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 6.0
+
+[node name="Torch15" type="Sprite2D" parent="Decor" unique_id=1376705096]
+texture_filter = 1
+position = Vector2(1438, 1495)
+texture = ExtResource("dec_torch")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 6.9
+
+[node name="Torch16" type="Sprite2D" parent="Decor" unique_id=294022045]
+texture_filter = 1
+position = Vector2(656, 1414)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 8.0
+
+[node name="Torch17" type="Sprite2D" parent="Decor" unique_id=290871435]
+texture_filter = 1
+position = Vector2(758, 1983)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 6.6
+
+[node name="Torch18" type="Sprite2D" parent="Decor" unique_id=737627651]
+texture_filter = 1
+position = Vector2(2138, 1669)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 6.5
+
+[node name="Torch19" type="Sprite2D" parent="Decor" unique_id=1392291093]
+texture_filter = 1
+position = Vector2(2230, 2241)
+texture = ExtResource("dec_torch")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 8.7
+
+[node name="Torch20" type="Sprite2D" parent="Decor" unique_id=792741495]
+texture_filter = 1
+position = Vector2(3951, 1669)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 8.0
+
+[node name="Torch21" type="Sprite2D" parent="Decor" unique_id=379874094]
+texture_filter = 1
+position = Vector2(2792, 1902)
+texture = ExtResource("dec_torch")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 7.3
+
+[node name="Torch22" type="Sprite2D" parent="Decor" unique_id=1729200132]
+texture_filter = 1
+position = Vector2(1652, 2027)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 8.7
+
+[node name="Torch23" type="Sprite2D" parent="Decor" unique_id=430429151]
+texture_filter = 1
+position = Vector2(4053, 2261)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 7.0
+
+[node name="Torch24" type="Sprite2D" parent="Decor" unique_id=207138060]
+texture_filter = 1
+position = Vector2(1311, 2487)
+texture = ExtResource("dec_torch")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 8.0
+
+[node name="Torch25" type="Sprite2D" parent="Decor" unique_id=1907045620]
+texture_filter = 1
+position = Vector2(-46, 1736)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 6.6
+
+[node name="Torch26" type="Sprite2D" parent="Decor" unique_id=744696304]
+texture_filter = 1
+position = Vector2(-46, 2296)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 7.3
+
+[node name="Torch27" type="Sprite2D" parent="Decor" unique_id=819193205]
+texture_filter = 1
+position = Vector2(4295, -58)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 8.4
+
+[node name="Torch28" type="Sprite2D" parent="Decor" unique_id=6935175]
+texture_filter = 1
+position = Vector2(4295, 580)
+texture = ExtResource("dec_torch")
+flip_h = true
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 8.7
+
+[node name="Torch29" type="Sprite2D" parent="Decor" unique_id=1287116692]
+texture_filter = 1
+position = Vector2(4351, 1190)
+texture = ExtResource("dec_torch")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 8.6
+
+[node name="Torch30" type="Sprite2D" parent="Decor" unique_id=372819716]
+texture_filter = 1
+position = Vector2(4351, 2764)
+texture = ExtResource("dec_torch")
+hframes = 4
+script = ExtResource("dec_anim")
+fps = 7.2
+
+[node name="Banner0_flag_green" type="Sprite2D" parent="Decor" unique_id=512745547]
+texture_filter = 1
+position = Vector2(1357, -384)
+texture = ExtResource("dec_flag_green")
+
+[node name="Banner1_flag_red" type="Sprite2D" parent="Decor" unique_id=956000390]
+texture_filter = 1
+position = Vector2(401, 787)
+texture = ExtResource("dec_flag_red")
+
+[node name="Banner2_flag_green" type="Sprite2D" parent="Decor" unique_id=2024486450]
+texture_filter = 1
+position = Vector2(2639, 991)
+texture = ExtResource("dec_flag_green")
+
+[node name="Banner3_flag_red" type="Sprite2D" parent="Decor" unique_id=943904656]
+texture_filter = 1
+position = Vector2(3307, 260)
+texture = ExtResource("dec_flag_red")
+
+[node name="Banner4_flag_green" type="Sprite2D" parent="Decor" unique_id=68903518]
+texture_filter = 1
+position = Vector2(1422, 1247)
+texture = ExtResource("dec_flag_green")
+
+[node name="Banner5_flag_green" type="Sprite2D" parent="Decor" unique_id=2076218655]
+texture_filter = 1
+position = Vector2(468, 1885)
+texture = ExtResource("dec_flag_green")
+
+[node name="Banner6_flag_green" type="Sprite2D" parent="Decor" unique_id=2026740193]
+texture_filter = 1
+position = Vector2(4069, 2013)
+texture = ExtResource("dec_flag_green")
 
 [node name="V29" type="Polygon2D" parent="." unique_id=116511331]
 texture_filter = 1
@@ -2966,6 +4445,10 @@ position = Vector2(-16, -288)
 texture = ExtResource("tex_body")
 polygon = PackedVector2Array(51.0867, 280.977, 561.954, 280.977, 561.954, 434.237, 51.0867, 434.237)
 uv = PackedVector2Array(51.0867, 280.977, 561.954, 280.977, 561.954, 434.237, 51.0867, 434.237)
+
+[node name="Shard_s5_10" parent="." unique_id=1356429898 instance=ExtResource("shard_scn")]
+position = Vector2(140, 773)
+collectible_id = "shard_s5_10"
 
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Stage6Portal" to="." method="_on_stage_6_portal_body_entered"]

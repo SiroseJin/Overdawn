@@ -40,6 +40,7 @@ func _place_exit_portal_fx() -> void:
 	var fx := Global.spawn_fx("portal", cs.global_position, 1.3, Color(0.5, 1.0, 0.75), true)
 	if fx:
 		fx.z_index = -1   # behind the player as they step through
+	Global.add_portal_caption($LobbyPortal, "To Lobby", "Ke Lobi")
 
 # Collect every tutorial sign for the proximity-reveal system, and — ONLY when the
 # game locale is Indonesian — overwrite each with its ID text. In English we keep
@@ -61,6 +62,7 @@ func _localize_signs() -> void:
 		"L_enemy": "FIREWALL:  Q\npasang tameng, menahan tembakan",
 		"L_dashatk": "SERANGAN DASH: Shift, lalu\nKlik Kiri/Kanan saat dash",
 		"L_enemy2": "Klik Kanan: Serangan berat",
+		"L_check": "CHECKPOINT — cukup lewati saja\njika jatuh atau mati, kamu mulai lagi dari sini",
 		"L_npc":   "TANDA !  (empat di depan menunjukkan tiap warna):\nPUTIH = cerita    HIJAU = kuis / hadiah\nKUNING = info gimmick / musuh    MERAH = wajib diajak bicara",
 		"L_exit":  "KELUAR ke Lobby",
 		# platform name-tags (children of the platforms, shown just below them)

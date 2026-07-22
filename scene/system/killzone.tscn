@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://ckc517ki8s0j1"]
+[gd_scene format=3 uid="uid://ckc517ki8s0j1"]
 
-[ext_resource type="Script" path="res://scene/system/killzone.gd" id="1_kbmh7"]
+[ext_resource type="Script" uid="uid://t2u27hh86jed" path="res://scene/system/killzone.gd" id="1_kbmh7"]
 
-[node name="killzone" type="Area2D"]
+[node name="killzone" type="Area2D" unique_id=26944936]
+position = Vector2(0, 1)
 script = ExtResource("1_kbmh7")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=1645423235]

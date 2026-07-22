@@ -17,6 +17,7 @@ const STAGE_COLORS := {
 
 @onready var _stairs: HBoxContainer  = $Margin/Root/Scroll/Content/Stairs
 @onready var _stats:  GridContainer  = $Margin/Root/Scroll/Content/Stats
+@onready var _badges_header: Label   = $Margin/Root/Scroll/Content/BadgesHeader
 @onready var _badges: GridContainer  = $Margin/Root/Scroll/Content/Badges
 @onready var _quests: VBoxContainer  = $Margin/Root/Scroll/Content/Quests
 @onready var _codex:  VBoxContainer  = $Margin/Root/Scroll/Content/Codex
@@ -74,12 +75,17 @@ func _build_stats() -> void:
 
 func _build_badges() -> void:
 	_clear(_badges)
+	# Count in the header so the section reads as a real "X / Y earned" view. Uses
+	# font-safe glyphs (✓ / •) — the mono body font has no emoji, so 🏅/🔒 rendered blank.
+	if _badges_header:
+		_badges_header.text = "%s  (%d / %d)" % [
+			tr("Badges"), ProgressionManager.badge_count(), BadgeManager.BADGES.size()]
 	for bid in BadgeManager.BADGES:
 		var earned: bool = ProgressionManager.has_badge(bid)
 		var l := _label(12, Color(1, 0.88, 0.4) if earned else Color(0.5, 0.5, 0.55))
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		l.custom_minimum_size = Vector2(360, 0)
-		l.text = "%s %s — %s" % ["🏅" if earned else "🔒", BadgeManager.name_of(bid), BadgeManager.desc_of(bid)]
+		l.text = "%s %s — %s" % ["✓" if earned else "•", BadgeManager.name_of(bid), BadgeManager.desc_of(bid)]
 		_badges.add_child(l)
 
 func _build_quests() -> void:

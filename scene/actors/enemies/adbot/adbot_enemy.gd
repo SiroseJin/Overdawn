@@ -233,7 +233,8 @@ func _on_timer_timeout():
 func _on_detection_zone_body_entered(body: Node2D):
 	if body == Global.PlayerBody:
 		player_in_range = true
-		AudioManager.play_alert()
+		if AudioManager.play_alert():
+			Global.enemy_spot_hop(self)   # small startled hop, on the alert's cooldown
 
 func _on_detection_zone_body_exited(body: Node2D):
 	if body == Global.PlayerBody:

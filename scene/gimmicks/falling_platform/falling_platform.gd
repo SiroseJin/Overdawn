@@ -1,3 +1,4 @@
+@tool
 extends AnimatableBody2D
 
 class_name FallingPlatform
@@ -11,6 +12,25 @@ class_name FallingPlatform
 @export var shake_time: float   = 0.5    # how long it shakes before dropping
 @export var respawn_time: float = 3.0    # seconds before it returns
 
+# ─── Skin ────────────────────────────────────────────────────────────────────────
+# Set per stage so the platform matches that level's terrain tileset. Left empty it
+# keeps the flat orange look. The bright top Edge keeps its colour either way, so a
+# falling platform still reads as one before you trust it with your weight.
+@export_group("Skin")
+## Tileset texture painted onto the platform body. Empty = flat colour.
+@export var skin: Texture2D:
+	set(v):
+		skin = v
+		_apply_skin()
+## Tint multiplied over the skin (white = the texture's own colours).
+@export var skin_tint: Color = Color.WHITE:
+	set(v):
+		skin_tint = v
+		_apply_skin()
+
+const PlatformSkin = preload("res://scene/gimmicks/platform_skin.gd")
+const _BASE_COLOR := Color(0.85, 0.45, 0.2, 1)   # the unskinned orange body
+
 @onready var _col:     CollisionShape2D = $CollisionShape2D
 @onready var _visual:  Polygon2D        = $Visual
 @onready var _edge:    Polygon2D        = $Edge
@@ -19,7 +39,15 @@ class_name FallingPlatform
 var _start: Vector2
 var _triggered := false
 
+func _apply_skin() -> void:
+	if not is_inside_tree():
+		return
+	PlatformSkin.apply(get_node_or_null("Visual") as Polygon2D, skin, skin_tint, _BASE_COLOR)
+
 func _ready() -> void:
+	_apply_skin()
+	if Engine.is_editor_hint():
+		return          # editor: just show the skin, no physics/signal wiring
 	sync_to_physics = true
 	_start = position
 	_trigger.body_entered.connect(_on_trigger)

@@ -521,7 +521,7 @@ func check_hitbox():
 	var parent = hitbox.get_parent()
 
 	if   parent is AdbotEnemy:   damage = Global.adbotDamageAmount
-	elif parent is BanditEnemy:  damage = Global.banditDamageAmount
+	elif parent is BuzzerEnemy:  damage = Global.buzzerDamageAmount
 	elif parent is CollectorEnemy: damage = Global.collectorDamageAmount
 	elif parent is DealerEnemy: damage = Global.dealerDamageAmount
 

@@ -27,6 +27,26 @@ class_name RisingDebt
 ## The debt stops rising once its top reaches this world Y (a smaller Y = higher).
 ## Used by arcade so the flood only covers the lower arena instead of drowning it.
 @export var min_top_y: float = -100000.0
+## Scale the rise speed by the save's difficulty (Casual -20% … Expert +20%).
+## Arcade turns this off — arcade is exempt from difficulty scaling.
+@export var speed_scales_with_difficulty: bool = true
+
+# ─── Staged rise ────────────────────────────────────────────────────────────────
+# The debt doesn't drown the whole tower at once. It floods to a first ceiling —
+# just below the key — and holds there, so the climb to the key is pressured but
+# survivable. Take the key and the debt comes for you again: paying off one debt
+# doesn't end it, it just buys the quiet before the next rise.
+@export_group("Staged rise")
+## Phase 1 ceiling: the flood stops `first_stop_gap` px BELOW this node (the stage's
+## key). Leave empty for a debt that rises straight to `min_top_y` with no hold.
+@export var first_stop_target: NodePath
+## How far below the target the flood holds — ~3x the player's jump height, so the
+## key sits clearly above the waterline while you climb for it.
+@export var first_stop_gap: float = 195.0
+## Collecting this key releases the flood. Empty = never release (holds forever).
+@export var release_on_key: String = ""
+## Calm beat between taking the key and the debt resuming its climb.
+@export var release_delay: float = 2.0
 
 # ─── Fake-coin popcorn ───────────────────────────────────────────────────────────
 # The debt keeps spitting fake "jackpot" coins into the air like popcorn — a shiny
@@ -48,11 +68,36 @@ class_name RisingDebt
 var _half_w: float = 860.0   # half the flood width (read from the collision shape)
 var _pop_timer: float = 0.0
 
+var _speed_mult: float   = 1.0
+var _first_stop_y: float = -INF   # phase-1 ceiling in parent space (-INF = no hold)
+var _released: bool      = true   # false while the debt is holding below the key
+var _release_timer: float = 0.0
+
 func _ready() -> void:
 	_apply_size()
 	if Engine.is_editor_hint():
 		return
+	if speed_scales_with_difficulty:
+		_speed_mult = Difficulty.debt_speed_mult()
+	_setup_first_stop()
 	AudioManager.attach_loop(self, "rising_debt", -6.0)   # slow dread bed while the debt floods
+
+# Work out the phase-1 ceiling from the target node. Cached now because the key is
+# freed the moment it's collected — we can't ask it for its position later.
+func _setup_first_stop() -> void:
+	if first_stop_target.is_empty() or release_on_key.is_empty():
+		return
+	var target := get_node_or_null(first_stop_target) as Node2D
+	if target == null:
+		push_warning("RisingDebt: first_stop_target '%s' not found — flood will rise unchecked." % first_stop_target)
+		return
+	var origin: Vector2 = target.global_position
+	var parent := get_parent() as Node2D
+	var ty: float = parent.to_local(origin).y if parent else origin.y
+	_first_stop_y = ty + first_stop_gap
+	# Already holding the key (loaded save / backtracked into the stage)? Then the
+	# debt has nothing left to wait for — let it rise freely from the start.
+	_released = ProgressionManager.has_key(release_on_key)
 
 # Resize the flood's body, bright edge, and damage collision to flood_width/height.
 func _apply_size() -> void:
@@ -81,8 +126,10 @@ func _process(delta: float) -> void:
 	var p = Global.PlayerBody
 	# Freeze the debt while the player is talking so conversations are safe.
 	var talking: bool = is_instance_valid(p) and p.conversation_safe
-	if not talking and position.y > min_top_y:
-		position.y -= rise_speed * delta
+	if not talking:
+		_update_release(delta)
+		if position.y > _ceiling():
+			position.y -= rise_speed * _speed_mult * delta
 	if is_instance_valid(p) and p.can_take_damage and overlaps_body(p):
 		p.take_damage(damage)
 
@@ -92,6 +139,22 @@ func _process(delta: float) -> void:
 		if _pop_timer >= popcorn_interval:
 			_pop_timer = 0.0
 			_spew_popcorn()
+
+# How high the debt may climb right now: the phase-1 ceiling while it's holding
+# below the key, the stage's true limit once it's been released.
+func _ceiling() -> float:
+	return min_top_y if _released else maxf(min_top_y, _first_stop_y)
+
+# Watch for the key, then count down the calm beat before the debt climbs again.
+func _update_release(delta: float) -> void:
+	if _released:
+		return
+	if _release_timer > 0.0:
+		_release_timer -= delta
+		if _release_timer <= 0.0:
+			_released = true
+	elif ProgressionManager.has_key(release_on_key):
+		_release_timer = release_delay
 
 func _spew_popcorn() -> void:
 	var host := get_parent()

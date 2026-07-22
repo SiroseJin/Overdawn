@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c1syp2d5epldj"
+path="res://.godot/imported/industrial.mp3-392d86bbe1368c9074371bcda7b821b4.mp3str"
+
+[deps]
+
+source_file="res://Stage Parallax/Stage 3 ansimuz — Industrial Parallax Background/parallax-industrial-web/Assets/Industrial Theme Music/industrial.mp3"
+dest_files=["res://.godot/imported/industrial.mp3-392d86bbe1368c9074371bcda7b821b4.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

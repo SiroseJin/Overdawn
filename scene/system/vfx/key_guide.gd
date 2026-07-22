@@ -61,40 +61,60 @@ func _draw() -> void:
 	draw_line(tip, tip - dir * 10.0 + perp * 7.0, core, 2.0, true)
 	draw_line(tip, tip - dir * 10.0 - perp * 7.0, core, 2.0, true)
 
-# Returns the nearest uncollected key whose id is required by a still-locked door.
+# Returns the key for the gate the player is actually up against.
+#
+# It resolves DOOR-FIRST, not key-first. A stage with several gates (Stage 5 has
+# three, each wanting a different key) would otherwise point at whichever key
+# happened to be closest — so standing at Gate4 could send you off toward KeyA.
+# We pick the nearest still-locked gate the player can't open, then guide to the
+# key THAT gate requires.
 func _find_needed_key() -> Node2D:
 	var tree := get_tree()
 	if tree == null:
 		return null
 	# No quest given yet → no world guidance. A fresh save with no quests shows nothing.
-	if not QuestManager.has_active_quest():
+	# An NPC can also reveal a key directly (quiz_reveals_key) by putting it in
+	# "guide_key"; that counts as guidance being earned even with no quest running.
+	if not QuestManager.has_active_quest() and tree.get_nodes_in_group(&"guide_key").is_empty():
 		return null
 	var doors := tree.get_nodes_in_group("locked_door")
 	if doors.is_empty():
 		return null
 
-	# Collect the key ids that are actually still blocking a door.
-	var wanted := {}
+	var player := Global.PlayerBody
+	var origin: Vector2 = player.global_position if is_instance_valid(player) else Vector2.ZERO
+
+	# Gates still blocking the player, nearest first.
+	var blocking: Array = []
 	for door in doors:
 		if not is_instance_valid(door):
 			continue
 		if door.get("_opened") == true:
 			continue
 		var kid: String = str(door.get("required_key"))
-		if kid != "" and not ProgressionManager.has_key(kid):
-			wanted[kid] = true
-	if wanted.is_empty():
+		if kid == "" or ProgressionManager.has_key(kid):
+			continue
+		blocking.append({"id": kid, "d": origin.distance_to(door.global_position)})
+	if blocking.is_empty():
 		return null
+	blocking.sort_custom(func(a, b): return a["d"] < b["d"])
 
-	var player := Global.PlayerBody
-	var origin: Vector2 = player.global_position if is_instance_valid(player) else Vector2.ZERO
+	# Take the closest gate that actually has its key placed in the world; if a gate's
+	# key doesn't exist yet (e.g. a boss key granted by an NPC), fall through to the
+	# next gate rather than showing nothing.
+	for gate in blocking:
+		var best: Node2D = _nearest_key_with_id(str(gate["id"]), origin)
+		if best != null:
+			return best
+	return null
+
+func _nearest_key_with_id(kid: String, origin: Vector2) -> Node2D:
 	var best: Node2D = null
 	var best_d := INF
-	for key in tree.get_nodes_in_group("key"):
+	for key in get_tree().get_nodes_in_group("key"):
 		if not is_instance_valid(key):
 			continue
-		var kid: String = str(key.get("key_id"))
-		if not wanted.has(kid):
+		if str(key.get("key_id")) != kid:
 			continue
 		var d: float = origin.distance_to(key.global_position)
 		if max_range > 0.0 and d > max_range:

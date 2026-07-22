@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/actors/enemies/adbot/adbot_enemy.tscn" id="7_bat"]
 [ext_resource type="PackedScene" uid="uid://cmovingplat01" path="res://scene/gimmicks/moving_platform/moving_platform.tscn" id="8_mp"]
 [ext_resource type="PackedScene" uid="uid://cfallingplat0" path="res://scene/gimmicks/falling_platform/falling_platform.tscn" id="9_fp"]
-[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/bandit/bandit_enemy.tscn" id="13_6pt3j"]
+[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/buzzer/buzzer_enemy.tscn" id="13_6pt3j"]
 [ext_resource type="PackedScene" uid="uid://cbahifur4venj" path="res://scene/pickups/health_pickup/health_pickup.tscn" id="14_8ol0d"]
 [ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="15_ha050"]
 [ext_resource type="PackedScene" uid="uid://2u6ko5ggbnkl" path="res://scene/system/industrial_parallax.tscn" id="bg_city"]
@@ -17,12 +17,12 @@
 [ext_resource type="PackedScene" uid="uid://htdn64tverd8" path="res://scene/Levels/Level3/gimmicks/rising_debt/rising_debt.tscn" id="itm_debt"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="itm_door"]
 [ext_resource type="PackedScene" uid="uid://cqkeypickup00" path="res://scene/pickups/key_pickup/key_pickup.tscn" id="itm_key"]
-[ext_resource type="Texture2D" uid="uid://cfg2kauplqr1l" path="res://art/Stage1Terrain/props/grating.png" id="px_grate"]
-[ext_resource type="Texture2D" uid="uid://cuvowxvfto101" path="res://art/Stage1Terrain/props/ad_screen.png" id="px_screen"]
-[ext_resource type="Texture2D" uid="uid://5xebynutc4y1" path="res://art/Stage1Terrain/props/vent_hub.png" id="px_vent"]
+[ext_resource type="Texture2D" uid="uid://cfg2kauplqr1l" path="res://art/terrain/stage1/props/grating.png" id="px_grate"]
+[ext_resource type="Texture2D" uid="uid://cuvowxvfto101" path="res://art/terrain/stage1/props/ad_screen.png" id="px_screen"]
+[ext_resource type="Texture2D" uid="uid://5xebynutc4y1" path="res://art/terrain/stage1/props/vent_hub.png" id="px_vent"]
 [ext_resource type="PackedScene" uid="uid://ctruthshard01" path="res://scene/pickups/collectible/collectible.tscn" id="shard_scn"]
-[ext_resource type="Texture2D" uid="uid://dy14c6dtdmx3m" path="res://art/Stage1Terrain/body.png" id="tex_body"]
-[ext_resource type="Texture2D" uid="uid://dph2g5hsn6rqn" path="res://art/Stage1Terrain/platform.png" id="tex_plat"]
+[ext_resource type="Texture2D" uid="uid://cqvs3sv8ch5t7" path="res://art/LevelTilesets/Level 3/1 Tiles/IndustrialTile_47.png" id="tex_body"]
+[ext_resource type="Texture2D" uid="uid://3nvi5676ogf8" path="res://art/LevelTilesets/Level 3/1 Tiles/IndustrialTile_78.png" id="tex_plat"]
 
 [sub_resource type="RectangleShape2D" id="RS_death"]
 size = Vector2(2560, 80)
@@ -54,98 +54,94 @@ polygon = PackedVector2Array(2530, -2160, 2570, -2160, 2570, 760, 2530, 760)
 polygon = PackedVector2Array(0, -2200, 2570, -2200, 2570, -2160, 0, -2160)
 
 [node name="S1shardA" type="CollisionPolygon2D" parent="Terrain" unique_id=840000013]
-polygon = PackedVector2Array(180, 600, 320, 600, 320, 614, 180, 614)
+polygon = PackedVector2Array(170, 600, 330, 600, 330, 616, 170, 616)
 
 [node name="S1shardB" type="CollisionPolygon2D" parent="Terrain" unique_id=840000015]
-polygon = PackedVector2Array(110, 500, 250, 500, 250, 514, 110, 514)
+polygon = PackedVector2Array(100, 500, 260, 500, 260, 516, 100, 516)
 
 [node name="S1shardTop" type="CollisionPolygon2D" parent="Terrain" unique_id=840000017]
-polygon = PackedVector2Array(80, 410, 260, 410, 260, 424, 80, 424)
+polygon = PackedVector2Array(74, 410, 266, 410, 266, 426, 74, 426)
 
 [node name="E1" type="CollisionPolygon2D" parent="Terrain" unique_id=840000019]
-polygon = PackedVector2Array(450, 624, 590, 624, 590, 638, 450, 638)
+polygon = PackedVector2Array(440, 624, 600, 624, 600, 640, 440, 640)
 
 [node name="E2" type="CollisionPolygon2D" parent="Terrain" unique_id=840000021]
-polygon = PackedVector2Array(730, 588, 870, 588, 870, 602, 730, 602)
+polygon = PackedVector2Array(720, 588, 880, 588, 880, 604, 720, 604)
 
 [node name="E3" type="CollisionPolygon2D" parent="Terrain" unique_id=840000025]
-polygon = PackedVector2Array(1450, 560, 1590, 560, 1590, 574, 1450, 574)
+polygon = PackedVector2Array(1440, 560, 1600, 560, 1600, 576, 1440, 576)
 
 [node name="E4" type="CollisionPolygon2D" parent="Terrain" unique_id=840000027]
-polygon = PackedVector2Array(1730, 520, 1870, 520, 1870, 534, 1730, 534)
+polygon = PackedVector2Array(1720, 520, 1880, 520, 1880, 536, 1720, 536)
 
 [node name="E5" type="CollisionPolygon2D" parent="Terrain" unique_id=840000029]
-polygon = PackedVector2Array(2010, 486, 2150, 486, 2150, 500, 2010, 500)
+polygon = PackedVector2Array(2000, 486, 2160, 486, 2160, 502, 2000, 502)
 
 [node name="R2a" type="CollisionPolygon2D" parent="Terrain" unique_id=840000035]
-polygon = PackedVector2Array(2090, 220, 2230, 220, 2230, 234, 2090, 234)
+polygon = PackedVector2Array(2080, 220, 2240, 220, 2240, 236, 2080, 236)
 
 [node name="R2c" type="CollisionPolygon2D" parent="Terrain" unique_id=840000043]
-polygon = PackedVector2Array(1730, -120, 1910, -120, 1910, -106, 1730, -106)
+polygon = PackedVector2Array(1724, -120, 1916, -120, 1916, -104, 1724, -104)
 
 [node name="P1" type="CollisionPolygon2D" parent="Terrain" unique_id=840000058]
-polygon = PackedVector2Array(140, -480, 280, -480, 280, -466, 140, -466)
+polygon = PackedVector2Array(130, -480, 290, -480, 290, -464, 130, -464)
 
 [node name="P2" type="CollisionPolygon2D" parent="Terrain" unique_id=840000060]
-polygon = PackedVector2Array(260, -560, 400, -560, 400, -546, 260, -546)
+polygon = PackedVector2Array(250, -560, 410, -560, 410, -544, 250, -544)
 
 [node name="P3" type="CollisionPolygon2D" parent="Terrain" unique_id=840000062]
-polygon = PackedVector2Array(130, -640, 270, -640, 270, -626, 130, -626)
+polygon = PackedVector2Array(120, -640, 280, -640, 280, -624, 120, -624)
 
 [node name="P4" type="CollisionPolygon2D" parent="Terrain" unique_id=840000064]
-polygon = PackedVector2Array(260, -720, 400, -720, 400, -706, 260, -706)
+polygon = PackedVector2Array(250, -720, 410, -720, 410, -704, 250, -704)
 
 [node name="P5" type="CollisionPolygon2D" parent="Terrain" unique_id=840000066]
-polygon = PackedVector2Array(130, -800, 270, -800, 270, -786, 130, -786)
+polygon = PackedVector2Array(120, -800, 280, -800, 280, -784, 120, -784)
 
 [node name="P6" type="CollisionPolygon2D" parent="Terrain" unique_id=840000068]
-position = Vector2(-186, -5)
-polygon = PackedVector2Array(250, -880, 390, -880, 390, -866, 250, -866)
+polygon = PackedVector2Array(54, -885, 214, -885, 214, -869, 54, -869)
 
 [node name="R4hub" type="CollisionPolygon2D" parent="Terrain" unique_id=840000070]
-position = Vector2(-316.00568, 0.001953126)
-scale = Vector2(1.7982953, 1.0000021)
-polygon = PackedVector2Array(180, -950, 400, -950, 400, -936, 180, -936)
+polygon = PackedVector2Array(0, -950, 416, -950, 416, -934, 0, -934)
 
 [node name="R4keyLedge" type="CollisionPolygon2D" parent="Terrain" unique_id=840000074]
-position = Vector2(78, 2)
-polygon = PackedVector2Array(820, -720, 980, -720, 980, -706, 820, -706)
+polygon = PackedVector2Array(899, -719, 1059, -719, 1059, -703, 899, -703)
 
 [node name="D1" type="CollisionPolygon2D" parent="Terrain" unique_id=840000076]
-polygon = PackedVector2Array(450, -1020, 590, -1020, 590, -1006, 450, -1006)
+polygon = PackedVector2Array(440, -1020, 600, -1020, 600, -1004, 440, -1004)
 
 [node name="D2" type="CollisionPolygon2D" parent="Terrain" unique_id=840000078]
-polygon = PackedVector2Array(690, -1084, 830, -1084, 830, -1070, 690, -1070)
+polygon = PackedVector2Array(680, -1084, 840, -1084, 840, -1068, 680, -1068)
 
 [node name="D3" type="CollisionPolygon2D" parent="Terrain" unique_id=840000082]
-polygon = PackedVector2Array(1450, -1150, 1590, -1150, 1590, -1136, 1450, -1136)
+polygon = PackedVector2Array(1440, -1150, 1600, -1150, 1600, -1134, 1440, -1134)
 
 [node name="D4" type="CollisionPolygon2D" parent="Terrain" unique_id=840000084]
-polygon = PackedVector2Array(1730, -1214, 1870, -1214, 1870, -1200, 1730, -1200)
+polygon = PackedVector2Array(1720, -1214, 1880, -1214, 1880, -1198, 1720, -1198)
 
 [node name="D5" type="CollisionPolygon2D" parent="Terrain" unique_id=840000086]
-polygon = PackedVector2Array(2010, -1288, 2150, -1288, 2150, -1274, 2010, -1274)
+polygon = PackedVector2Array(2000, -1288, 2160, -1288, 2160, -1272, 2000, -1272)
 
 [node name="D6" type="CollisionPolygon2D" parent="Terrain" unique_id=840000088]
-polygon = PackedVector2Array(2270, -1370, 2410, -1370, 2410, -1356, 2270, -1356)
+polygon = PackedVector2Array(2260, -1370, 2420, -1370, 2420, -1354, 2260, -1354)
 
 [node name="A1" type="CollisionPolygon2D" parent="Terrain" unique_id=840000090]
-polygon = PackedVector2Array(2090, -1450, 2230, -1450, 2230, -1436, 2090, -1436)
+polygon = PackedVector2Array(2080, -1450, 2240, -1450, 2240, -1434, 2080, -1434)
 
 [node name="A2" type="CollisionPolygon2D" parent="Terrain" unique_id=840000092]
-polygon = PackedVector2Array(1870, -1522, 2010, -1522, 2010, -1508, 1870, -1508)
+polygon = PackedVector2Array(1860, -1522, 2020, -1522, 2020, -1506, 1860, -1506)
 
 [node name="A3" type="CollisionPolygon2D" parent="Terrain" unique_id=840000096]
-polygon = PackedVector2Array(1430, -1850, 1570, -1850, 1570, -1836, 1430, -1836)
+polygon = PackedVector2Array(1420, -1850, 1580, -1850, 1580, -1834, 1420, -1834)
 
 [node name="A4" type="CollisionPolygon2D" parent="Terrain" unique_id=840000098]
-polygon = PackedVector2Array(1170, -1922, 1310, -1922, 1310, -1908, 1170, -1908)
+polygon = PackedVector2Array(1160, -1922, 1320, -1922, 1320, -1906, 1160, -1906)
 
 [node name="A5" type="CollisionPolygon2D" parent="Terrain" unique_id=840000100]
-polygon = PackedVector2Array(910, -1994, 1050, -1994, 1050, -1980, 910, -1980)
+polygon = PackedVector2Array(900, -1994, 1060, -1994, 1060, -1978, 900, -1978)
 
 [node name="SummitFloor" type="CollisionPolygon2D" parent="Terrain" unique_id=840000102]
-polygon = PackedVector2Array(300, -2080, 1000, -2080, 1000, -2060, 300, -2060)
+polygon = PackedVector2Array(298, -2080, 1002, -2080, 1002, -2064, 298, -2064)
 
 [node name="TerrainVisual" type="Node2D" parent="." unique_id=840000105]
 z_index = -1
@@ -155,10 +151,10 @@ texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_body")
 polygon = PackedVector2Array(0, 700, 2570, 700, 2570, 760, 0, 760)
-uv = PackedVector2Array(0, 700, 2570, 700, 2570, 760, 0, 760)
+uv = PackedVector2Array(0, 0, 2560, 0, 2560, 64, 0, 64)
 
 [node name="BottomFloorT" type="Polygon2D" parent="TerrainVisual" unique_id=840000003]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.45, 0.86, 1, 1)
 polygon = PackedVector2Array(0, 700, 2570, 700, 2570, 704, 0, 704)
 
 [node name="LeftWallF" type="Polygon2D" parent="TerrainVisual" unique_id=840000005]
@@ -166,10 +162,10 @@ texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_body")
 polygon = PackedVector2Array(0, -2160, 40, -2160, 40, 760, 0, 760)
-uv = PackedVector2Array(0, -2160, 40, -2160, 40, 760, 0, 760)
+uv = PackedVector2Array(0, 0, 32, 0, 32, 2912, 0, 2912)
 
 [node name="LeftWallT" type="Polygon2D" parent="TerrainVisual" unique_id=840000006]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.45, 0.86, 1, 1)
 polygon = PackedVector2Array(0, -2160, 40, -2160, 40, -2156, 0, -2156)
 
 [node name="RightWallF" type="Polygon2D" parent="TerrainVisual" unique_id=840000008]
@@ -177,10 +173,10 @@ texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_body")
 polygon = PackedVector2Array(2530, -2160, 2570, -2160, 2570, 760, 2530, 760)
-uv = PackedVector2Array(2530, -2160, 2570, -2160, 2570, 760, 2530, 760)
+uv = PackedVector2Array(0, 0, 32, 0, 32, 2912, 0, 2912)
 
 [node name="RightWallT" type="Polygon2D" parent="TerrainVisual" unique_id=840000009]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.45, 0.86, 1, 1)
 polygon = PackedVector2Array(2530, -2160, 2570, -2160, 2570, -2156, 2530, -2156)
 
 [node name="CeilingF" type="Polygon2D" parent="TerrainVisual" unique_id=840000011]
@@ -188,226 +184,224 @@ texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_body")
 polygon = PackedVector2Array(0, -2200, 2570, -2200, 2570, -2160, 0, -2160)
-uv = PackedVector2Array(0, -2200, 2570, -2200, 2570, -2160, 0, -2160)
+uv = PackedVector2Array(0, 0, 2560, 0, 2560, 32, 0, 32)
 
 [node name="CeilingT" type="Polygon2D" parent="TerrainVisual" unique_id=840000012]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.45, 0.86, 1, 1)
 polygon = PackedVector2Array(0, -2200, 2570, -2200, 2570, -2196, 0, -2196)
 
 [node name="S1shardAF" type="Polygon2D" parent="TerrainVisual" unique_id=840000014]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(180, 600, 320, 600, 320, 614, 180, 614)
-uv = PackedVector2Array(180, 0, 320, 0, 320, 16, 180, 16)
+polygon = PackedVector2Array(170, 600, 330, 600, 330, 616, 170, 616)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="S1shardBF" type="Polygon2D" parent="TerrainVisual" unique_id=840000016]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(110, 500, 250, 500, 250, 514, 110, 514)
-uv = PackedVector2Array(110, 0, 250, 0, 250, 16, 110, 16)
+polygon = PackedVector2Array(100, 500, 260, 500, 260, 516, 100, 516)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="S1shardTopF" type="Polygon2D" parent="TerrainVisual" unique_id=840000018]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(80, 410, 260, 410, 260, 424, 80, 424)
-uv = PackedVector2Array(80, 0, 260, 0, 260, 16, 80, 16)
+polygon = PackedVector2Array(74, 410, 266, 410, 266, 426, 74, 426)
+uv = PackedVector2Array(0, 0, 192, 0, 192, 16, 0, 16)
 
 [node name="E1F" type="Polygon2D" parent="TerrainVisual" unique_id=840000020]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(450, 624, 590, 624, 590, 638, 450, 638)
-uv = PackedVector2Array(450, 0, 590, 0, 590, 16, 450, 16)
+polygon = PackedVector2Array(440, 624, 600, 624, 600, 640, 440, 640)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="E2F" type="Polygon2D" parent="TerrainVisual" unique_id=840000022]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(730, 588, 870, 588, 870, 602, 730, 602)
-uv = PackedVector2Array(730, 0, 870, 0, 870, 16, 730, 16)
+polygon = PackedVector2Array(720, 588, 880, 588, 880, 604, 720, 604)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="E3F" type="Polygon2D" parent="TerrainVisual" unique_id=840000026]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(1450, 560, 1590, 560, 1590, 574, 1450, 574)
-uv = PackedVector2Array(1450, 0, 1590, 0, 1590, 16, 1450, 16)
+polygon = PackedVector2Array(1440, 560, 1600, 560, 1600, 576, 1440, 576)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="E4F" type="Polygon2D" parent="TerrainVisual" unique_id=840000028]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(1730, 520, 1870, 520, 1870, 534, 1730, 534)
-uv = PackedVector2Array(1730, 0, 1870, 0, 1870, 16, 1730, 16)
+polygon = PackedVector2Array(1720, 520, 1880, 520, 1880, 536, 1720, 536)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="E5F" type="Polygon2D" parent="TerrainVisual" unique_id=840000030]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(2010, 486, 2150, 486, 2150, 500, 2010, 500)
-uv = PackedVector2Array(2010, 0, 2150, 0, 2150, 16, 2010, 16)
+polygon = PackedVector2Array(2000, 486, 2160, 486, 2160, 502, 2000, 502)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="R2aF" type="Polygon2D" parent="TerrainVisual" unique_id=840000036]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(2090, 220, 2230, 220, 2230, 234, 2090, 234)
-uv = PackedVector2Array(2090, 0, 2230, 0, 2230, 16, 2090, 16)
+polygon = PackedVector2Array(2080, 220, 2240, 220, 2240, 236, 2080, 236)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="R2cF" type="Polygon2D" parent="TerrainVisual" unique_id=840000044]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(1730, -120, 1910, -120, 1910, -106, 1730, -106)
-uv = PackedVector2Array(1730, 0, 1910, 0, 1910, 16, 1730, 16)
+polygon = PackedVector2Array(1724, -120, 1916, -120, 1916, -104, 1724, -104)
+uv = PackedVector2Array(0, 0, 192, 0, 192, 16, 0, 16)
 
 [node name="P1F" type="Polygon2D" parent="TerrainVisual" unique_id=840000059]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(140, -480, 280, -480, 280, -466, 140, -466)
-uv = PackedVector2Array(140, 0, 280, 0, 280, 16, 140, 16)
+polygon = PackedVector2Array(130, -480, 290, -480, 290, -464, 130, -464)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="P2F" type="Polygon2D" parent="TerrainVisual" unique_id=840000061]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(260, -560, 400, -560, 400, -546, 260, -546)
-uv = PackedVector2Array(260, 0, 400, 0, 400, 16, 260, 16)
+polygon = PackedVector2Array(250, -560, 410, -560, 410, -544, 250, -544)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="P3F" type="Polygon2D" parent="TerrainVisual" unique_id=840000063]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(130, -640, 270, -640, 270, -626, 130, -626)
-uv = PackedVector2Array(130, 0, 270, 0, 270, 16, 130, 16)
+polygon = PackedVector2Array(120, -640, 280, -640, 280, -624, 120, -624)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="P4F" type="Polygon2D" parent="TerrainVisual" unique_id=840000065]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(260, -720, 400, -720, 400, -706, 260, -706)
-uv = PackedVector2Array(260, 0, 400, 0, 400, 16, 260, 16)
+polygon = PackedVector2Array(250, -720, 410, -720, 410, -704, 250, -704)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="P5F" type="Polygon2D" parent="TerrainVisual" unique_id=840000067]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(130, -800, 270, -800, 270, -786, 130, -786)
-uv = PackedVector2Array(130, 0, 270, 0, 270, 16, 130, 16)
+polygon = PackedVector2Array(120, -800, 280, -800, 280, -784, 120, -784)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="P6F" type="Polygon2D" parent="TerrainVisual" unique_id=840000069]
 texture_filter = 1
 texture_repeat = 2
-position = Vector2(-186, -5)
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(250, -880, 359.32, -880, 390, -880, 390, -866, 250, -866)
-uv = PackedVector2Array(250, 0, 359.32, 0, 390, 0, 390, 16, 250, 16)
+polygon = PackedVector2Array(54, -885, 214, -885, 214, -869, 54, -869)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="R4hubF" type="Polygon2D" parent="TerrainVisual" unique_id=382918833]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(7.68747, -950, 403.312, -950, 403.312, -936, 7.68747, -936)
-uv = PackedVector2Array(7.68747, 0, 403.312, 0, 403.312, 16, 7.68747, 16)
+polygon = PackedVector2Array(0, -950, 416, -950, 416, -934, 0, -934)
+uv = PackedVector2Array(0, 0, 416, 0, 416, 16, 0, 16)
 
 [node name="R4keyLedgeF" type="Polygon2D" parent="TerrainVisual" unique_id=840000075]
 texture_filter = 1
 texture_repeat = 2
-position = Vector2(79, 1)
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(820, -720, 980, -720, 980, -706, 820, -706)
-uv = PackedVector2Array(820, 0, 980, 0, 980, 16, 820, 16)
+polygon = PackedVector2Array(899, -719, 1059, -719, 1059, -703, 899, -703)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="D1F" type="Polygon2D" parent="TerrainVisual" unique_id=840000077]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(450, -1020, 590, -1020, 590, -1006, 450, -1006)
-uv = PackedVector2Array(450, 0, 590, 0, 590, 16, 450, 16)
+polygon = PackedVector2Array(440, -1020, 600, -1020, 600, -1004, 440, -1004)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="D2F" type="Polygon2D" parent="TerrainVisual" unique_id=840000079]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(690, -1084, 830, -1084, 830, -1070, 690, -1070)
-uv = PackedVector2Array(690, 0, 830, 0, 830, 16, 690, 16)
+polygon = PackedVector2Array(680, -1084, 840, -1084, 840, -1068, 680, -1068)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="D3F" type="Polygon2D" parent="TerrainVisual" unique_id=840000083]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(1450, -1150, 1590, -1150, 1590, -1136, 1450, -1136)
-uv = PackedVector2Array(1450, 0, 1590, 0, 1590, 16, 1450, 16)
+polygon = PackedVector2Array(1440, -1150, 1600, -1150, 1600, -1134, 1440, -1134)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="D4F" type="Polygon2D" parent="TerrainVisual" unique_id=840000085]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(1730, -1214, 1870, -1214, 1870, -1200, 1730, -1200)
-uv = PackedVector2Array(1730, 0, 1870, 0, 1870, 16, 1730, 16)
+polygon = PackedVector2Array(1720, -1214, 1880, -1214, 1880, -1198, 1720, -1198)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="D5F" type="Polygon2D" parent="TerrainVisual" unique_id=840000087]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(2010, -1288, 2150, -1288, 2150, -1274, 2010, -1274)
-uv = PackedVector2Array(2010, 0, 2150, 0, 2150, 16, 2010, 16)
+polygon = PackedVector2Array(2000, -1288, 2160, -1288, 2160, -1272, 2000, -1272)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="D6F" type="Polygon2D" parent="TerrainVisual" unique_id=840000089]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(2270, -1370, 2410, -1370, 2410, -1356, 2270, -1356)
-uv = PackedVector2Array(2270, 0, 2410, 0, 2410, 16, 2270, 16)
+polygon = PackedVector2Array(2260, -1370, 2420, -1370, 2420, -1354, 2260, -1354)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="A1F" type="Polygon2D" parent="TerrainVisual" unique_id=840000091]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(2090, -1450, 2230, -1450, 2230, -1436, 2090, -1436)
-uv = PackedVector2Array(2090, 0, 2230, 0, 2230, 16, 2090, 16)
+polygon = PackedVector2Array(2080, -1450, 2240, -1450, 2240, -1434, 2080, -1434)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="A2F" type="Polygon2D" parent="TerrainVisual" unique_id=840000093]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(1870, -1522, 2010, -1522, 2010, -1508, 1870, -1508)
-uv = PackedVector2Array(1870, 0, 2010, 0, 2010, 16, 1870, 16)
+polygon = PackedVector2Array(1860, -1522, 2020, -1522, 2020, -1506, 1860, -1506)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="A3F" type="Polygon2D" parent="TerrainVisual" unique_id=840000097]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(1430, -1850, 1570, -1850, 1570, -1836, 1430, -1836)
-uv = PackedVector2Array(1430, 0, 1570, 0, 1570, 16, 1430, 16)
+polygon = PackedVector2Array(1420, -1850, 1580, -1850, 1580, -1834, 1420, -1834)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="A4F" type="Polygon2D" parent="TerrainVisual" unique_id=840000099]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(1170, -1922, 1310, -1922, 1310, -1908, 1170, -1908)
-uv = PackedVector2Array(1170, 0, 1310, 0, 1310, 16, 1170, 16)
+polygon = PackedVector2Array(1160, -1922, 1320, -1922, 1320, -1906, 1160, -1906)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="A5F" type="Polygon2D" parent="TerrainVisual" unique_id=840000101]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(910, -1994, 1050, -1994, 1050, -1980, 910, -1980)
-uv = PackedVector2Array(910, 0, 1050, 0, 1050, 16, 910, 16)
+polygon = PackedVector2Array(900, -1994, 1060, -1994, 1060, -1978, 900, -1978)
+uv = PackedVector2Array(0, 0, 160, 0, 160, 16, 0, 16)
 
 [node name="SummitFloorF" type="Polygon2D" parent="TerrainVisual" unique_id=840000103]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("tex_plat")
-polygon = PackedVector2Array(300, -2080, 1000, -2080, 1000, -2060, 300, -2060)
-uv = PackedVector2Array(300, 0, 1000, 0, 1000, 16, 300, 16)
+polygon = PackedVector2Array(298, -2080, 1002, -2080, 1002, -2064, 298, -2064)
+uv = PackedVector2Array(0, 0, 704, 0, 704, 16, 0, 16)
 
 [node name="SummitFloorT" type="Polygon2D" parent="TerrainVisual" unique_id=840000104]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.45, 0.86, 1, 1)
 polygon = PackedVector2Array(300, -2080, 1000, -2080, 1000, -2076, 300, -2076)
 
 [node name="DeathZone" type="Area2D" parent="." unique_id=1119012481]
@@ -443,7 +437,9 @@ position = Vector2(235, 696)
 position = Vector2(1277, 1103)
 flood_width = 2560.0
 flood_height = 3600.0
-rise_speed = 16.5
+rise_speed = 14.025
+first_stop_target = NodePath("../Key")
+release_on_key = "stage3_key"
 popcorn_interval = 0.4
 popcorn_per_pop = 4
 popcorn_launch = 240.0
@@ -454,6 +450,7 @@ position = Vector2(980, 584)
 speed = 95.0
 downtime = 0.4
 start_on_touch = true
+skin = ExtResource("tex_plat")
 
 [node name="End" type="Marker2D" parent="Ferry1" unique_id=840000024]
 position = Vector2(320, 0)
@@ -462,6 +459,7 @@ position = Vector2(320, 0)
 position = Vector2(2247, 472)
 speed = 95.0
 start_on_touch = true
+skin = ExtResource("tex_plat")
 
 [node name="End" type="Marker2D" parent="Lift1" unique_id=840000034]
 position = Vector2(34, -247)
@@ -470,6 +468,7 @@ position = Vector2(34, -247)
 position = Vector2(2040, 196)
 speed = 95.0
 downtime = 0.4
+skin = ExtResource("tex_plat")
 
 [node name="End" type="Marker2D" parent="Ferry2" unique_id=840000038]
 position = Vector2(-226, -51)
@@ -478,35 +477,42 @@ position = Vector2(-226, -51)
 position = Vector2(1684, 146)
 speed = 95.0
 start_on_touch = true
+skin = ExtResource("tex_plat")
 
 [node name="End" type="Marker2D" parent="Lift2" unique_id=840000042]
 position = Vector2(0, -258)
 
 [node name="F1" parent="." unique_id=840000045 instance=ExtResource("9_fp")]
 position = Vector2(1570, -150)
+skin = ExtResource("tex_plat")
 
 [node name="F2" parent="." unique_id=840000046 instance=ExtResource("9_fp")]
 position = Vector2(1422, -175)
+skin = ExtResource("tex_plat")
 
 [node name="F3" parent="." unique_id=840000047 instance=ExtResource("9_fp")]
 position = Vector2(1120, -224)
+skin = ExtResource("tex_plat")
 
 [node name="Ferry3" parent="." unique_id=840000048 instance=ExtResource("8_mp")]
 position = Vector2(978, -250)
 speed = 95.0
 downtime = 0.4
 start_on_touch = true
+skin = ExtResource("tex_plat")
 
 [node name="End" type="Marker2D" parent="Ferry3" unique_id=840000049]
 position = Vector2(-328, -31)
 
 [node name="F4" parent="." unique_id=840000050 instance=ExtResource("9_fp")]
 position = Vector2(539, -309)
+skin = ExtResource("tex_plat")
 
 [node name="Lift3" parent="." unique_id=840000054 instance=ExtResource("8_mp")]
 position = Vector2(444, -365)
 speed = 95.0
 start_on_touch = true
+skin = ExtResource("tex_plat")
 
 [node name="End" type="Marker2D" parent="Lift3" unique_id=840000055]
 position = Vector2(0, -577)
@@ -515,6 +521,7 @@ position = Vector2(0, -577)
 position = Vector2(586, -711)
 speed = 95.0
 downtime = 0.4
+skin = ExtResource("tex_plat")
 
 [node name="End" type="Marker2D" parent="Ferry4" unique_id=840000073]
 position = Vector2(271, 0)
@@ -523,6 +530,7 @@ position = Vector2(271, 0)
 position = Vector2(940, -1116)
 speed = 95.0
 downtime = 0.4
+skin = ExtResource("tex_plat")
 
 [node name="End" type="Marker2D" parent="Ferry5" unique_id=840000081]
 position = Vector2(418, -31)
@@ -531,6 +539,7 @@ position = Vector2(418, -31)
 position = Vector2(1720, -1560)
 speed = 95.0
 start_on_touch = true
+skin = ExtResource("tex_plat")
 
 [node name="End" type="Marker2D" parent="Lift4" unique_id=840000095]
 position = Vector2(0, -250)
@@ -557,7 +566,7 @@ position = Vector2(1520, -1175)
 position = Vector2(1898, -1302)
 
 [node name="frog_enemy" parent="." unique_id=840000110 instance=ExtResource("13_6pt3j")]
-position = Vector2(1009, -741)
+position = Vector2(918, -779.00006)
 
 [node name="CheckPoint1" type="Area2D" parent="." unique_id=840000111]
 position = Vector2(1820, -120)
@@ -658,6 +667,7 @@ position = Vector2(538, -337)
 
 [node name="F6" parent="." unique_id=116783348 instance=ExtResource("9_fp")]
 position = Vector2(1276, -199)
+skin = ExtResource("tex_plat")
 
 [node name="Props" type="Node2D" parent="." unique_id=811951624]
 z_index = -1
@@ -717,6 +727,16 @@ texture = ExtResource("px_screen")
 [node name="DecoScreenB" type="Sprite2D" parent="Props" unique_id=915345132]
 position = Vector2(2270, 150)
 texture = ExtResource("px_screen")
+
+[node name="Ferry6" parent="." unique_id=528669853 instance=ExtResource("8_mp")]
+position = Vector2(1105, -709)
+speed = 95.0
+downtime = 0.4
+start_on_touch = true
+skin = ExtResource("tex_plat")
+
+[node name="End" type="Marker2D" parent="Ferry6" unique_id=1527849074]
+position = Vector2(1385, -648)
 
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
 [connection signal="body_entered" from="Stage4Portal" to="." method="_on_stage_4_portal_body_entered"]

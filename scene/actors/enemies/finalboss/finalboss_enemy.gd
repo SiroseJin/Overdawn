@@ -28,10 +28,13 @@ signal hp_changed(hp: float, hp_max: float)
 
 const BULLET := preload("res://scene/actors/enemies/finalboss/boss_bullet.tscn")
 const SERVER := preload("res://scene/actors/enemies/finalboss/boss_server.tscn")
+## Half the boss_server visual's height (its Polygon2D spans -24..24), so a snapped
+## server can be seated with its base exactly on the surface it landed on.
+const _SERVER_HALF_H := 24.0
 # Adds scale with how hurt the boss is: weak fodder early, tougher foes as HP drops.
 const WEAK_ADDS := [
 	preload("res://scene/actors/enemies/adbot/adbot_enemy.tscn"),
-	preload("res://scene/actors/enemies/bandit/bandit_enemy.tscn"),
+	preload("res://scene/actors/enemies/buzzer/buzzer_enemy.tscn"),
 ]
 const TOUGH_ADDS := [
 	preload("res://scene/actors/enemies/collector/collector_enemy.tscn"),
@@ -70,6 +73,14 @@ const FAKE_COIN_PROJECTILE := preload("res://scene/actors/enemies/fake_coin_proj
 ## stage and add them to it — move them freely in the editor). Only `servers_per_cycle`
 ## of them are picked at random each cycle.
 @export var server_spawn_group: StringName = &"server_spawn"
+## Servers must stand on something. When true, a spawn point left hanging in mid-air
+## is snapped down onto the first STATIC surface beneath it (floor, perch, pillar top)
+## and seated so its base rests on that surface — so a mis-placed marker can never
+## leave a server floating. Moving/falling platforms are skipped on purpose: they'd
+## slide out from under the server and strand it in the air again.
+@export var server_snap_to_ground: bool = true
+## How far below a spawn point to look for that surface.
+@export var server_ground_probe: float = 3000.0
 
 ## Optional: when true the boss stays dormant/hidden until summon() is called
 ## (Stage 6 does this after its countdown) instead of auto-waking at activation_x.
@@ -349,11 +360,37 @@ func _spawn_servers() -> void:
 	var spots := _pick_spots(servers_per_cycle)
 	for pos in spots:
 		var s := SERVER.instantiate()
-		s.global_position = pos
 		if s.has_method("setup"):
 			s.setup(self)
+		# Add FIRST, then place. `global_position` on a node that isn't in the tree yet
+		# just writes local position, so setting it before add_child left every server
+		# displaced by the parent's transform — Stage 6's root sits at (-69, -26), which
+		# shoved servers up and to the left, off their platform and into the air.
 		get_parent().add_child(s)
+		s.global_position = _grounded_spot(pos)
 		_servers.append(s)
+
+# Drop a spawn point onto the first static surface below it and seat the server on
+# top, so servers are always reachable from a platform instead of floating. Bodies
+# that move (moving/falling platforms) are skipped — landing on one would leave the
+# server hanging as soon as it travelled.
+func _grounded_spot(pos: Vector2) -> Vector2:
+	if not server_snap_to_ground:
+		return pos
+	var space := get_world_2d().direct_space_state
+	var exclude: Array[RID] = []
+	for _i in 8:
+		var q := PhysicsRayQueryParameters2D.create(
+			pos + Vector2(0.0, -6.0), pos + Vector2(0.0, server_ground_probe))
+		q.collide_with_areas = false
+		q.exclude = exclude
+		var hit: Dictionary = space.intersect_ray(q)
+		if hit.is_empty():
+			return pos                      # nothing underneath at all — respect the author's spot
+		if hit["collider"] is StaticBody2D:
+			return Vector2(pos.x, hit["position"].y - _SERVER_HALF_H)
+		exclude.append(hit["rid"])          # a mover: ignore it and look for real ground below
+	return pos
 
 # Nudge a target position out of / away from any nearby platform (nodes in
 # `avoid_group`) so the boss goes around them instead of phasing through.

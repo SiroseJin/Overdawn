@@ -26,7 +26,6 @@ buses/default_bus_layout="uid://deolkwypii4ig"
 [autoload]
 
 Global="*res://script/managers/global.gd"
-PreviousSceneManager="*res://script/previous_scene_manager.gd"
 SaveManager="*res://script/managers/save_manager.gd"
 Dialogic="*uid://ds2q0uclmolvu"
 TranslationManager="*res://script/managers/translation_manager.gd"
@@ -44,28 +43,28 @@ Difficulty="*res://script/managers/difficulty_manager.gd"
 [dialogic]
 
 directories/dch_directory={
-"ana": "res://scene/Levels/Level1/npc/ana.dch",
-"arif": "res://scene/Levels/Level5/npc/arif.dch",
-"bayu": "res://scene/Levels/Level1/npc/bayu.dch",
-"damar": "res://scene/Levels/Level3/npc/damar.dch",
-"eko": "res://scene/Levels/Level2/npc/eko.dch",
-"gatekeeper": "res://scene/Levels/Level1/npc/gatekeeper.dch",
-"guntur": "res://scene/Levels/Level4/npc/guntur.dch",
-"hendra": "res://scene/Levels/Level1/npc/hendra.dch",
-"laras": "res://scene/Levels/Level4/npc/laras.dch",
-"mega": "res://scene/Levels/Level4/npc/mega.dch",
-"nadia": "res://scene/Levels/Level2/npc/nadia.dch",
-"npc1": "res://scene/actors/npc/npc1.dch",
-"rafi": "res://scene/Levels/Level2/npc/rafi.dch",
-"rina": "res://scene/Levels/Level3/npc/rina.dch",
-"sari": "res://scene/Levels/Level1/npc/sari.dch",
-"scene/npc1": "res://scene/npc1.dch",
-"sinta": "res://scene/Levels/Level3/npc/sinta.dch",
-"toni": "res://scene/Levels/Level3/npc/toni.dch",
-"vino": "res://scene/Levels/Level4/npc/vino.dch",
-"warden": "res://scene/Levels/Level5/npc/warden.dch",
-"wira": "res://scene/Levels/Level5/npc/wira.dch",
-"yani": "res://scene/Levels/Level2/npc/yani.dch"
+"npc/ana": "res://scene/Levels/Level1/npc/ana.dch",
+"npc/arif": "res://scene/Levels/Level5/npc/arif.dch",
+"npc/bayu": "res://scene/Levels/Level1/npc/bayu.dch",
+"npc/damar": "res://scene/Levels/Level3/npc/damar.dch",
+"npc/eko": "res://scene/Levels/Level2/npc/eko.dch",
+"npc/gatekeeper": "res://scene/Levels/Level1/npc/gatekeeper.dch",
+"npc/guntur": "res://scene/Levels/Level4/npc/guntur.dch",
+"npc/hendra": "res://scene/Levels/Level1/npc/hendra.dch",
+"npc/laras": "res://scene/Levels/Level4/npc/laras.dch",
+"npc/mega": "res://scene/Levels/Level4/npc/mega.dch",
+"npc/nadia": "res://scene/Levels/Level2/npc/nadia.dch",
+"npc/npc1": "res://scene/actors/npc/npc1.dch",
+"npc/rafi": "res://scene/Levels/Level2/npc/rafi.dch",
+"npc/rina": "res://scene/Levels/Level3/npc/rina.dch",
+"npc/sari": "res://scene/Levels/Level1/npc/sari.dch",
+"npc/sinta": "res://scene/Levels/Level3/npc/sinta.dch",
+"npc/toni": "res://scene/Levels/Level3/npc/toni.dch",
+"npc/vino": "res://scene/Levels/Level4/npc/vino.dch",
+"npc/wira": "res://scene/Levels/Level5/npc/wira.dch",
+"npc/yani": "res://scene/Levels/Level2/npc/yani.dch",
+"npc1": "res://scene/npc1.dch",
+"warden": "res://scene/Levels/Level5/npc/warden.dch"
 }
 directories/dtl_directory={
 "ana_rep": "res://scene/Levels/Level1/npc/ana_rep.dtl",
@@ -120,6 +119,8 @@ directories/dtl_directory={
 "s3npc3timeline_id": "res://scene/Levels/Level3/npc/s3npc3timeline_id.dtl",
 "s3npc4timeline": "res://scene/Levels/Level3/npc/s3npc4timeline.dtl",
 "s3npc4timeline_id": "res://scene/Levels/Level3/npc/s3npc4timeline_id.dtl",
+"s3sintadone": "res://scene/Levels/Level3/npc/s3sintadone.dtl",
+"s3sintadone_id": "res://scene/Levels/Level3/npc/s3sintadone_id.dtl",
 "s3sintapost": "res://scene/Levels/Level3/npc/s3sintapost.dtl",
 "s3sintapost_id": "res://scene/Levels/Level3/npc/s3sintapost_id.dtl",
 "s4laraspost": "res://scene/Levels/Level4/npc/s4laraspost.dtl",
@@ -136,10 +137,14 @@ directories/dtl_directory={
 "s5bossgate_id": "res://scene/Levels/Level5/npc/s5bossgate_id.dtl",
 "s5bossgatepost": "res://scene/Levels/Level5/npc/s5bossgatepost.dtl",
 "s5bossgatepost_id": "res://scene/Levels/Level5/npc/s5bossgatepost_id.dtl",
+"s5gate4done": "res://scene/Levels/Level5/npc/s5gate4done.dtl",
+"s5gate4done_id": "res://scene/Levels/Level5/npc/s5gate4done_id.dtl",
 "s5gate4timeline": "res://scene/Levels/Level5/npc/s5gate4timeline.dtl",
 "s5gate4timeline_id": "res://scene/Levels/Level5/npc/s5gate4timeline_id.dtl",
 "s5keya_timeline": "res://scene/Levels/Level5/npc/s5keya_timeline.dtl",
 "s5keya_timeline_id": "res://scene/Levels/Level5/npc/s5keya_timeline_id.dtl",
+"s5keyadone": "res://scene/Levels/Level5/npc/s5keyadone.dtl",
+"s5keyadone_id": "res://scene/Levels/Level5/npc/s5keyadone_id.dtl",
 "s5npc1timeline": "res://scene/Levels/Level5/npc/s5npc1timeline.dtl",
 "s5npc1timeline_id": "res://scene/Levels/Level5/npc/s5npc1timeline_id.dtl",
 "sari_rep": "res://scene/Levels/Level1/npc/sari_rep.dtl",

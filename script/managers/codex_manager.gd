@@ -52,12 +52,12 @@ const GUIDE := {
 		"id_d": "Drone iklan judi yang mencolok. Terbang lurus ke arahmu saat dekat. Rapuh — satu-dua panah menamatkannya.",
 		"en_dd": "Behaviour: hovers until you enter its range, then charges in a straight line and detonates on contact.\nCounter: it's fragile — shoot it with arrows before it reaches you, or side-step the charge and swing.\nMeaning: the gambling ad itself — loud, everywhere, promising the world. Harmless only if you never let it reach you.",
 		"id_dd": "Perilaku: melayang sampai kau masuk jangkauan, lalu menerjang lurus dan meledak saat kena.\nLawan: ia rapuh — panah dari jauh, atau elak terjangannya lalu pukul.\nMakna: iklan judi itu sendiri — berisik, di mana-mana, menjanjikan segalanya. Tak berbahaya jika tak pernah kaubiarkan mendekat."},
-	"g_bandit": {"en": "Bandit", "id": "Bandit", "ev": "enemy_seen", "key": "type", "val": "bandit",
+	"g_buzzer": {"en": "Buzzer", "id": "Buzzer", "ev": "enemy_seen", "key": "type", "val": "buzzer",
 		"img": "res://art/craftpix-net-913026-free-gangster-pixel-character-sprite-sheets-pack/Gangsters_2/Idle.png", "img_frames": 7,
-		"en_d": "A grounded chaser that rushes in to hit you. Keep moving, punish it between lunges.",
-		"id_d": "Pengejar darat yang menyerbu untuk memukulmu. Terus bergerak, serang di antara terjangannya.",
-		"en_dd": "Behaviour: runs you down and swings, then waits out a short cooldown before it can hit again.\nCounter: keep moving and strike in the gap after a lunge; a dash attack cuts clean through.\nMeaning: the 'you almost won' rush made flesh — it only keeps coming while you stand and engage.",
-		"id_dd": "Perilaku: mengejarmu dan memukul, lalu jeda sebentar sebelum bisa memukul lagi.\nLawan: terus bergerak dan serang di celah setelah terjangan; serangan dash menembusnya.\nMakna: sensasi 'nyaris menang' yang menjelma — ia hanya terus datang selama kau diam melayaninya."},
+		"en_d": "A paid promoter that chases you down to land a hit. Keep moving, punish it between lunges.",
+		"id_d": "Promotor bayaran yang mengejarmu untuk memukul. Terus bergerak, serang di antara terjangannya.",
+		"en_dd": "Behaviour: runs you down and swings, then waits out a short cooldown before it can hit again.\nCounter: keep moving and strike in the gap after a lunge; a dash attack cuts clean through.\nMeaning: the paid promoter — the influencer hired to make judol look fun and normal. Loud and relentless while you engage, but it holds power only as long as you keep listening.",
+		"id_dd": "Perilaku: mengejarmu dan memukul, lalu jeda sebentar sebelum bisa memukul lagi.\nLawan: terus bergerak dan serang di celah setelah terjangan; serangan dash menembusnya.\nMakna: buzzer bayaran — influencer yang disewa agar judol terlihat seru dan wajar. Berisik dan gigih selama kau meladeninya, tapi ia hanya berkuasa selama kau terus mendengarkan."},
 	"g_collector": {"en": "Collector", "id": "Penagih", "ev": "enemy_seen", "key": "type", "val": "collector",
 		"img": "res://art/craftpix-net-516149-city-man-pixel-art-character-sprite-sheets/City_men_2/Idle.png", "img_frames": 6,
 		"en_d": "From afar she winds up a ranged shot and hurls a rigged fake coin. Get close and she drops it to rush you — control the distance.",
@@ -129,7 +129,7 @@ const GUIDE := {
 #   "default" → known from the start (l_judol).
 #   "shard"   → opens by TOTAL Truth Shards collected, in listed order (1st shard-entry
 #               at 1 shard, 2nd at 2, …). Its hint is the generic "collect shards" line.
-#   "enemy"   → opens when you defeat an enemy of `etype` (adbot/bandit/collector/dealer).
+#   "enemy"   → opens when you defeat an enemy of `etype` (adbot/buzzer/collector/dealer).
 #   "npc"     → opens when you finish talking to the NPC whose id is `npc`.
 #   "boss"    → opens when the House is defeated.
 # Non-shard entries carry a specific hint (en_h/id_h); shard entries share a generic one.
@@ -149,10 +149,10 @@ const LORE := {
 	"l_shard": {"en": "Voices of the Hurt", "id": "Suara yang Terluka", "by": "shard",
 		"en_d": "Truth Shards are the words of people the machine hurt — savings gone, families strained, time lost. Collecting them carries their stories forward.",
 		"id_d": "Pecahan Kebenaran adalah kata-kata orang yang dilukai mesin — tabungan lenyap, keluarga tegang, waktu hilang. Mengumpulkannya membawa kisah mereka."},
-	"l_nearmiss": {"en": "Engineered Near-Misses", "id": "Nyaris Menang yang Direkayasa", "by": "enemy", "etype": "bandit",
-		"en_d": "'Almost won' isn't luck — it's designed. Your brain treats a near-miss like a real win, and a bonus appears the moment you try to quit.",
-		"id_d": "'Nyaris menang' bukan keberuntungan — itu dirancang. Otakmu memperlakukan nyaris-menang seperti menang, dan bonus muncul begitu kau coba berhenti.",
-		"en_h": "Defeat a Bandit (the living slot machine) to reveal this.", "id_h": "Kalahkan seorang Bandit (mesin slot hidup) untuk membukanya."},
+	"l_buzzer": {"en": "Paid Promoters", "id": "Buzzer Bayaran", "by": "enemy", "etype": "buzzer",
+		"en_d": "Influencers and celebrities get paid to make gambling look fun, easy, and normal. Someone you trust endorsing it is marketing, not proof it's safe — the fee goes to them, the losses come to you.",
+		"id_d": "Influencer dan selebriti dibayar agar judi terlihat seru, gampang, dan wajar. Orang yang kaupercaya meng-endorse-nya itu pemasaran, bukan bukti ia aman — bayarannya untuk mereka, kerugiannya untukmu.",
+		"en_h": "Defeat a Buzzer (the paid promoter) to reveal this.", "id_h": "Kalahkan seorang Buzzer (promotor bayaran) untuk membukanya."},
 	"l_debt": {"en": "The Debt Trap", "id": "Jebakan Utang", "by": "enemy", "etype": "collector",
 		"en_d": "Losses pile up and the apps offer loans to 'win it back'. Borrowing to chase a rigged game only digs the hole deeper. The debt is the goal.",
 		"id_d": "Kekalahan menumpuk dan aplikasi menawarkan pinjaman untuk 'menang kembali'. Berutang mengejar permainan curang hanya memperdalam lubang. Utang adalah tujuannya.",

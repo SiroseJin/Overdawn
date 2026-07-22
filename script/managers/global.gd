@@ -25,6 +25,11 @@ var playerHitbox: Area2D              # The player's own hurtbox (receives incom
 # ─── FX helper ─────────────────────────────────────────────────────────────────
 const _BURST := preload("res://scene/system/vfx/particle_burst.tscn")
 
+# The Dialogic default name-plate is styled with an empty FontVariation (null base
+# font). It measures fine but renders NO glyphs in-game, so the speaker's name shows
+# as a blank box (#1). Force a real, known-good body font on every name label instead.
+const _DIALOGUE_NAME_FONT := preload("res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf")
+
 ## Spawn a one-shot particle burst at a world position, tinted `color`. Frees itself.
 func spawn_burst(at: Vector2, color: Color = Color.WHITE, amount: int = 14) -> void:
 	var scene := get_tree().current_scene
@@ -86,8 +91,30 @@ const _STAGE_COLORS := {
 	6: Color(0.5, 1.0, 0.65),    # S6 sci-fi lab — green
 }
 
+const _CAPTION_SCENE := preload("res://scene/ui/caption/caption.tscn")
+
+## Hang a name-tag over a portal saying where it goes. It's an ordinary caption, so it
+## joins the global "caption" group and the Settings ▸ "Object labels" toggle hides or
+## shows it along with every other tag. Idempotent — a portal that already carries a
+## Caption (e.g. one placed by hand in the editor) is left alone.
+func add_portal_caption(portal: Node, en: String, id_text: String = "") -> void:
+	if portal == null or portal.get_node_or_null("Caption") != null:
+		return
+	var cap := _CAPTION_SCENE.instantiate()
+	cap.text_en = en                      # set before add_child: caption._ready reads these
+	cap.text_id = id_text
+	# Sit above the portal MOUTH, not the node origin — a portal's Area2D is often at
+	# (0,0) with the real opening offset onto its collision shape.
+	var at := Vector2.ZERO
+	var cs := portal.get_node_or_null("CollisionShape2D")
+	if cs is Node2D:
+		at = (cs as Node2D).position
+	portal.add_child(cap)
+	cap.position = at + Vector2(-60.0, -86.0)   # tag is 120 wide, so -60 centres it
+
 ## Place a looping portal beacon on every StageN exit in the current scene, tinted
-## by the destination stage's colour. Called from each stage's _ready.
+## by the destination stage's colour, and tag it with where it leads. Called from
+## each stage's _ready.
 func decorate_stage_portals() -> void:
 	var scene := get_tree().current_scene
 	if scene == null:
@@ -103,6 +130,7 @@ func decorate_stage_portals() -> void:
 		var fx := spawn_fx("portal", pos, 1.2, _STAGE_COLORS[num], true)
 		if fx:
 			fx.z_index = -1   # sit behind the player as they step through
+		add_portal_caption(node, "To Stage %d" % num, "Ke Tahap %d" % num)
 
 # ─── Game State ────────────────────────────────────────────────────────────────
 
@@ -198,7 +226,7 @@ var checkpoints_enabled: bool = true
 #
 # HP_PER_DMG is tuned so the weakest enemy (Adbot, 20 base HP) first becomes a one-shot
 # around Lv40: one-shot when STR ≥ 20 + STR×0.78  →  STR ≥ ~91  →  Lv41. Below that it
-# takes 2 hits; tougher enemies (Bandit/Collector/Dealer) take proportionally more.
+# takes 2 hits; tougher enemies (Buzzer/Collector/Dealer) take proportionally more.
 # Speed only creeps up a little (capped +10%) so it never becomes an unfair chase.
 # Arcade mode is unaffected (it has its own wave scaling).
 const HP_PER_DMG  := 0.78   # enemy bonus HP per point of player attack damage
@@ -279,6 +307,39 @@ func enemy_line_of_sight(from: Node2D, target: Node2D = null, slope_up: float = 
 		return false                               # vertical-ish wall (or ceiling) → blocked
 	return false
 
+# ─── Enemy behaviour helpers ─────────────────────────────────────────────────────
+# Shared by every ground enemy so the behaviour is written once instead of copied
+# into adbot/buzzer/collector/dealer.
+
+## A small startled hop the moment an enemy notices the player — reads as "it saw
+## you" without changing how the chase plays. Call it only when
+## AudioManager.play_alert() returns true, so the hop follows the same global
+## cooldown as the alert sting and a room of enemies doesn't pop in unison.
+func enemy_spot_hop(e: Node2D, force: float = -165.0) -> void:
+	if not (e is CharacterBody2D):
+		return
+	var body := e as CharacterBody2D
+	if not body.is_on_floor():
+		return                                   # flyers and mid-air enemies stay put
+	body.velocity.y = force
+	spawn_burst(body.global_position + Vector2(0, 10), Color(1, 1, 1, 0.55), 4)
+
+## True when there is NO solid ground a step ahead of `e` in `dir` — i.e. walking on
+## would drop it into a pit. Ground enemies flip instead of strolling off a ledge.
+## Probes from just in front of the enemy's feet straight down.
+func enemy_ledge_ahead(e: Node2D, dir: float, probe_x: float = 24.0, probe_down: float = 56.0) -> bool:
+	if dir == 0.0 or not is_instance_valid(e):
+		return false
+	var world := e.get_world_2d()
+	if world == null:
+		return false
+	var from: Vector2 = e.global_position + Vector2(signf(dir) * probe_x, -6.0)
+	var q := PhysicsRayQueryParameters2D.create(from, from + Vector2(0.0, probe_down))
+	q.collide_with_areas = false
+	if e is CollisionObject2D:
+		q.exclude = [(e as CollisionObject2D).get_rid()]
+	return world.direct_space_state.intersect_ray(q).is_empty()
+
 # ─── Scrollable menus ────────────────────────────────────────────────────────────
 ## Wrap `content` (a menu's main container) in a ScrollContainer occupying the same
 ## slot, so it scrolls vertically instead of overflowing/clipping. Idempotent and
@@ -327,6 +388,19 @@ func warm_dialogic() -> void:
 	await get_tree().process_frame
 	if styles.has_active_layout_node():
 		styles.get_layout_node().hide() # keep it hidden until a real dialogue shows it
+	fix_dialogue_name_labels()
+
+## Force a real font onto every Dialogic name label so the speaker's name renders
+## instead of showing a blank plate (#1). Idempotent — safe to call before each talk.
+## The label keeps Dialogic's per-character colour (applied via self_modulate).
+func fix_dialogue_name_labels() -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+	for l in tree.get_nodes_in_group("dialogic_name_label"):
+		if l is Label:
+			l.add_theme_font_override("font", _DIALOGUE_NAME_FONT)
+			l.add_theme_font_size_override("font_size", 16)
 
 ## Spawn a rising, fading damage number at a world position. No-op if the toggle is off.
 func spawn_damage_number(at: Vector2, amount: int, color: Color = Color(1, 0.9, 0.5)) -> void:
@@ -360,7 +434,7 @@ var batDamageZone: Area2D
 var adbotDamageAmount: int
 
 var frogDamageZone: Area2D
-var banditDamageAmount: int
+var buzzerDamageAmount: int
 
 var witchDamageZone: Area2D
 var collectorDamageAmount: int

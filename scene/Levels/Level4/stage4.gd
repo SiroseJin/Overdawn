@@ -71,6 +71,9 @@ func _configure_npcs() -> void:
 		n4.quiz_bonus_coins   = 25
 		n4.quiz_bonus_skill_point = true
 		n4.post_quiz_timeline = "s4laraspost"
+		# Passing her quiz lights the way to the gate key — but only if it's still out
+		# there. She's the last NPC before the locked door to the Core.
+		n4.quiz_reveals_key   = true
 
 # Bring up the dormant bridge platform once the first NPC (Vino) has been spoken to.
 func _on_bridge_npc_talked(_npc_id: String) -> void:

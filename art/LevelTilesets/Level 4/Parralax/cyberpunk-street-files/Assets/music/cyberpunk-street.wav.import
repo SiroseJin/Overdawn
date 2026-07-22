@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bjkx40tlkxrjr"
+path="res://.godot/imported/cyberpunk-street.wav-6c18b64ba30fe227a170fb15a8a8c27b.sample"
+
+[deps]
+
+source_file="res://art/LevelTilesets/Level 4/Parralax/cyberpunk-street-files/Assets/music/cyberpunk-street.wav"
+dest_files=["res://.godot/imported/cyberpunk-street.wav-6c18b64ba30fe227a170fb15a8a8c27b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

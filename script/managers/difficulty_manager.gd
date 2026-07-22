@@ -2,10 +2,11 @@ extends Node
 
 # ─── Difficulty (Autoload) ──────────────────────────────────────────────────────────
 # Per-save difficulty, chosen on New Game and persisted with the save (via
-# ProgressionManager), restored on load. It changes ONLY two things:
+# ProgressionManager), restored on load. It changes ONLY three things:
 #   • enemy ATTACK + HP (a single multiplier applied in Global.apply_enemy_scaling)
 #   • the EXP needed to level up (a multiplier applied by the player)
-# Nothing else — player stats, drops, speeds, etc. are untouched.
+#   • how fast the Stage 3 rising debt floods (applied in rising_debt.gd)
+# Nothing else — player stats, drops, movement speeds, etc. are untouched.
 # ────────────────────────────────────────────────────────────────────────────────────
 
 enum Level { CASUAL, EASY, NORMAL, HARD, EXPERT }
@@ -17,6 +18,9 @@ const NAMES_ID := ["Santai", "Mudah", "Normal", "Sulit", "Ahli"]
 const ENEMY_MULT := [0.60, 0.85, 1.00, 1.15, 1.40]
 # EXP-to-level-up multiplier — Casual -25%, Easy -10%, Normal 0, Hard +15%, Expert +30%.
 const EXP_MULT := [0.75, 0.90, 1.00, 1.15, 1.30]
+# Rising-debt flood speed — Casual -20%, Easy -10%, Normal 0, Hard +10%, Expert +20%.
+# A slower flood buys you more time to climb the Debt Tower; a faster one hounds you.
+const DEBT_MULT := [0.80, 0.90, 1.00, 1.10, 1.20]
 
 # One-line effect summaries for the selection screen.
 const BLURB_EN := [
@@ -44,6 +48,9 @@ func enemy_mult() -> float:
 
 func exp_req_mult() -> float:
 	return EXP_MULT[current]
+
+func debt_speed_mult() -> float:
+	return DEBT_MULT[current]
 
 func _is_id() -> bool:
 	return TranslationServer.get_locale().begins_with("id")

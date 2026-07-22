@@ -62,8 +62,8 @@ const SFX := {
 	"alert":             "res://audio/sfx/enemy/alert.ogg",
 	"adbot_attack":      "res://audio/sfx/enemy/adbot_attack.ogg",
 	"adbot_death":       "res://audio/sfx/enemy/adbot_death.ogg",
-	"bandit_attack":     "res://audio/sfx/enemy/bandit_attack.wav",
-	"bandit_death":      "res://audio/sfx/enemy/bandit_death.ogg",
+	"buzzer_attack":     "res://audio/sfx/enemy/buzzer_attack.wav",
+	"buzzer_death":      "res://audio/sfx/enemy/buzzer_death.ogg",
 	"collector_attack":  "res://audio/sfx/enemy/collector_attack.ogg",
 	"collector_death":   "res://audio/sfx/enemy/collector_death.ogg",
 	"collector_fireball":"res://audio/sfx/enemy/collector_fireball.ogg",
@@ -238,14 +238,18 @@ func play_ui(key: String) -> void:
 const ALERT_COOLDOWN_MS := 5000
 var _alert_ms: int = -ALERT_COOLDOWN_MS - 1   # so the first alert always fires
 
-func play_alert() -> void:
+# Returns TRUE only when the sting actually fired, so callers can hang other
+# "it noticed you" reactions (the enemy spot-hop) off the same global cooldown
+# instead of every enemy reacting at once.
+func play_alert() -> bool:
 	if Global.arcade_mode:
-		return
+		return false
 	var now := Time.get_ticks_msec()
 	if now - _alert_ms < ALERT_COOLDOWN_MS:
-		return
+		return false
 	_alert_ms = now
 	play_sfx("alert")
+	return true
 
 func _play_pool(lib: Dictionary, pool: Array, key: String, pitch_variation: float, is_ui: bool) -> void:
 	if not lib.has(key):

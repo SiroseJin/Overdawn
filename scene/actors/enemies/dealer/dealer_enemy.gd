@@ -157,15 +157,21 @@ func move(delta):
 		# Move at 1/5 speed while charging (winding up the orb shot)
 		var move_speed = speed / 5.0 if charging else speed
 		var chase_dir  = sign(Player.position.x - position.x)
-		velocity.x     = chase_dir * move_speed
 		dir.x          = chase_dir
+		# Never chase off a ledge — hold at the edge instead of dropping into the pit.
+		if is_on_floor() and Global.enemy_ledge_ahead(self, chase_dir):
+			velocity.x = 0
+		else:
+			velocity.x = chase_dir * move_speed
 
 	elif taking_damage and is_necro_chase and is_instance_valid(Global.PlayerBody):
 		velocity.x = sign(position.x - Global.PlayerBody.position.x) * 30
 
 	elif not taking_damage and is_necro_roaming:
-		# Slow patrol back and forth within roam_range of spawn position
-		if abs(position.x - spawn_position.x) >= roam_range:
+		# Slow patrol back and forth within roam_range of spawn position, turning early
+		# if the ground runs out so it paces the ledge instead of stepping off it.
+		if abs(position.x - spawn_position.x) >= roam_range \
+				or (is_on_floor() and Global.enemy_ledge_ahead(self, roam_direction)):
 			roam_direction *= -1
 		velocity.x = roam_direction * speed * 0.2
 		dir.x      = roam_direction
@@ -413,7 +419,8 @@ func _on_timer_timeout():
 func _on_detection_zone_body_entered(body: Node2D):
 	if body == Global.PlayerBody:
 		player_in_range = true
-		AudioManager.play_alert()
+		if AudioManager.play_alert():
+			Global.enemy_spot_hop(self)   # small startled hop, on the alert's cooldown
 
 func _on_detection_zone_body_exited(body: Node2D):
 	if body == Global.PlayerBody:

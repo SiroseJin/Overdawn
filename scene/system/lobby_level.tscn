@@ -1387,11 +1387,15 @@ bus = &"bgm"
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stage1Portal" unique_id=1199428644]
-position = Vector2(111, 95)
+position = Vector2(143, 98)
 shape = SubResource("RectangleShape2D_ggk7w")
 
 [node name="ArcadePortal" type="Area2D" parent="." unique_id=640023935]
 collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ArcadePortal" unique_id=1944237522]
+position = Vector2(-231, 100)
+shape = SubResource("RectangleShape2D_ggk7w")
 
 [connection signal="body_entered" from="StartGameDetection" to="." method="_on_start_game_detection_body_entered"]
 [connection signal="body_entered" from="Stage1Portal" to="." method="_on_stage_1_portal_body_entered"]

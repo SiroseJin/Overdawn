@@ -195,15 +195,71 @@ func offer_quest(qid: String, giver: String = "") -> void:
 	if st.get("offered", false) or st.get("done", false):
 		return
 	st["offered"] = true
-	AudioManager.play_ui("quest_accept")
 	if giver != "":
 		st["giver"] = giver          # remembered for the quest-list menu ("Given by …")
+	# Credit anything the player has ALREADY done before this quest was handed out — e.g.
+	# picking up the key before talking to the NPC who asks for it. Without this the
+	# key_collected/stage_cleared/etc. event fired with nobody listening and the quest
+	# could never complete (#4, #6). If it's already all done, complete it right now.
+	_seed_existing_progress(qid)
+	var will_complete := _all_objectives_met(qid)
+	AudioManager.play_ui("quest_accept")
 	quests_changed.emit()
 	ProgressionManager.notify("quest_offered", {"id": qid})
 	var p = Global.PlayerBody
-	if is_instance_valid(p) and p.has_method("show_toast"):
+	if not will_complete and is_instance_valid(p) and p.has_method("show_toast"):
 		var kind := tr("Main Quest") if is_mandatory(qid) else tr("Side Quest")
 		p.show_toast("★ " + kind + ": " + title_of(qid))
+	if will_complete:
+		_complete(qid)
+		quests_changed.emit()
+
+# Seed a freshly-offered quest's progress from the player's current PERSISTENT state,
+# so objectives already satisfied count immediately (see offer_quest).
+func _seed_existing_progress(qid: String) -> void:
+	var st := _state(qid)
+	var objs: Array = QUESTS[qid]["objectives"]
+	for i in objs.size():
+		var have := _objective_already_satisfied(objs[i])
+		if have > 0:
+			st["prog"][i] = max(int(st["prog"][i]), have)
+
+# How much of `obj` is ALREADY met by persistent state (keys held, stages cleared,
+# quizzes passed, shards collected). Returns the credited count (0 if none / if the
+# objective can only be judged live, like no-hit / arcade runs).
+func _objective_already_satisfied(obj: Dictionary) -> int:
+	var req: int = int(obj.get("count", 1))
+	match obj["type"]:
+		"key_collected":
+			var kt: String = obj.get("target", "")
+			if kt != "" and ProgressionManager.has_key(kt):
+				return req
+		"stage_cleared":
+			if ProgressionManager.is_stage_cleared(obj.get("target", "")):
+				return req
+		"quiz_passed":
+			var qt: String = obj.get("target", "any")
+			if qt != "any" and ProgressionManager.has_talked_to("quizpass_" + qt):
+				return req
+		"collectible_stage":
+			return min(req, CollectibleManager.collected_for_stage(obj.get("target", "")))
+		"collectible":
+			return min(req, ProgressionManager.collectible_count())
+		"boss_defeated":
+			if ProgressionManager.is_stage_cleared("stage6"):
+				return req
+	return 0
+
+## True if EVERY objective of this quest is already satisfied by persistent state —
+## used by key-giver NPCs to show a "you already have it" line instead of sending the
+## player off to fetch a key they're already holding (#6).
+func objectives_satisfied_externally(qid: String) -> bool:
+	if not QUESTS.has(qid):
+		return false
+	for obj in QUESTS[qid]["objectives"]:
+		if _objective_already_satisfied(obj) < int(obj.get("count", 1)):
+			return false
+	return true
 
 # ─── Quest-list menu helpers ──────────────────────────────────────────────────────
 

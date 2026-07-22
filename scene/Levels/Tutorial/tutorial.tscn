@@ -7,9 +7,10 @@
 [ext_resource type="AudioStream" uid="uid://028va8maeqdm" path="res://audio/Music/Caketown 1 by matthewpablo.mp3" id="4_bgm"]
 [ext_resource type="FontFile" uid="uid://ckwcdsnaosuys" path="res://art/Fonts/DepartureMono-1.500/DepartureMono-Regular.otf" id="5_font"]
 [ext_resource type="PackedScene" uid="uid://dyuawibkpcwfh" path="res://scene/actors/enemies/adbot/adbot_enemy.tscn" id="adbot"]
-[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/bandit/bandit_enemy.tscn" id="bandit"]
+[ext_resource type="PackedScene" uid="uid://dsxx5fkcrw8f5" path="res://scene/actors/enemies/buzzer/buzzer_enemy.tscn" id="buzzer"]
 [ext_resource type="PackedScene" uid="uid://cn6xex6j56w3n" path="res://scene/pickups/coin/coin.tscn" id="coin"]
 [ext_resource type="PackedScene" uid="uid://chn8rr31oxv0x" path="res://scene/actors/enemies/collector/collector_enemy.tscn" id="collector"]
+[ext_resource type="Script" uid="uid://vf6ib1x5p5s0" path="res://scene/gimmicks/checkpoint/checkpoint.gd" id="cp_scr"]
 [ext_resource type="PackedScene" uid="uid://cqlockeddoor0" path="res://scene/pickups/locked_door/locked_door.tscn" id="door"]
 [ext_resource type="PackedScene" uid="uid://bwiyib8fihf07" path="res://scene/pickups/fake_coin/fake_coin.tscn" id="fake"]
 [ext_resource type="PackedScene" uid="uid://cfallingplat0" path="res://scene/gimmicks/falling_platform/falling_platform.tscn" id="fp"]
@@ -17,18 +18,22 @@
 [ext_resource type="PackedScene" uid="uid://cqkeypickup00" path="res://scene/pickups/key_pickup/key_pickup.tscn" id="key"]
 [ext_resource type="PackedScene" uid="uid://cmovingplat01" path="res://scene/gimmicks/moving_platform/moving_platform.tscn" id="mp"]
 [ext_resource type="PackedScene" uid="uid://d0ib3gkf0fyen" path="res://scene/actors/npc/npc1.tscn" id="npc"]
-[ext_resource type="Texture2D" uid="uid://cfg2kauplqr1l" path="res://art/Stage1Terrain/props/grating.png" id="px_grate"]
-[ext_resource type="Texture2D" uid="uid://cuvowxvfto101" path="res://art/Stage1Terrain/props/ad_screen.png" id="px_screen"]
-[ext_resource type="Texture2D" uid="uid://5xebynutc4y1" path="res://art/Stage1Terrain/props/vent_hub.png" id="px_vent"]
+[ext_resource type="Texture2D" uid="uid://cfg2kauplqr1l" path="res://art/terrain/stage1/props/grating.png" id="px_grate"]
+[ext_resource type="Texture2D" uid="uid://cuvowxvfto101" path="res://art/terrain/stage1/props/ad_screen.png" id="px_screen"]
+[ext_resource type="Texture2D" uid="uid://5xebynutc4y1" path="res://art/terrain/stage1/props/vent_hub.png" id="px_vent"]
 [ext_resource type="PackedScene" uid="uid://cstaticplat01" path="res://scene/gimmicks/static_platform/static_platform.tscn" id="sp"]
 [ext_resource type="PackedScene" uid="uid://cspd0pickup01" path="res://scene/pickups/speed_pickup/speed_pickup.tscn" id="spd"]
-[ext_resource type="Texture2D" uid="uid://dy14c6dtdmx3m" path="res://art/Stage1Terrain/body.png" id="tex_body"]
+[ext_resource type="Texture2D" uid="uid://dy14c6dtdmx3m" path="res://art/terrain/stage1/body.png" id="tex_body"]
+[ext_resource type="Texture2D" uid="uid://dph2g5hsn6rqn" path="res://art/terrain/stage1/platform.png" id="tex_plat"]
 
 [sub_resource type="RectangleShape2D" id="rs_portal"]
 size = Vector2(48, 96)
 
 [sub_resource type="RectangleShape2D" id="rs_death"]
 size = Vector2(5200, 80)
+
+[sub_resource type="RectangleShape2D" id="rs_cp"]
+size = Vector2(150, 200)
 
 [node name="Tutorial" type="Node2D" unique_id=584039840]
 script = ExtResource("1_tut")
@@ -228,10 +233,10 @@ theme_override_font_sizes/font_size = 16
 text = "KEY opens the DOOR"
 
 [node name="L_enemy" type="Label" parent="." unique_id=613250801]
-offset_left = 4363.0
-offset_top = 457.0
-offset_right = 4707.0
-offset_bottom = 523.0
+offset_left = 4490.0
+offset_top = 458.0
+offset_right = 4834.0
+offset_bottom = 524.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
@@ -253,10 +258,10 @@ theme_override_font_sizes/font_size = 18
 text = "EXIT to Lobby"
 
 [node name="L_dashatk" type="Label" parent="." unique_id=898089173]
-offset_left = 4018.0
-offset_top = 465.0
-offset_right = 4324.0
-offset_bottom = 534.0
+offset_left = 4147.0
+offset_top = 458.0
+offset_right = 4453.0
+offset_bottom = 527.0
 theme_override_colors/font_color = Color(1, 0.85, 0.4, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
@@ -266,9 +271,9 @@ text = "DASH ATTACK: Shift, then
 Left/Right-Click while dashing"
 
 [node name="L_npc" type="Label" parent="." unique_id=1230204835]
-offset_left = 4832.0
+offset_left = 4900.0
 offset_top = 435.0
-offset_right = 5312.0
+offset_right = 5380.0
 offset_bottom = 515.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -335,12 +340,14 @@ downtime = 0.4
 move_on_stand = true
 start_on_touch = true
 auto_return = false
+skin = ExtResource("tex_plat")
 
 [node name="End" type="Marker2D" parent="PitMoving" unique_id=205373953]
 position = Vector2(441, -110)
 
 [node name="PitFalling" parent="." unique_id=1999157346 instance=ExtResource("fp")]
 position = Vector2(2723, 443)
+skin = ExtResource("tex_plat")
 
 [node name="Coin1" parent="." unique_id=502609002 instance=ExtResource("coin")]
 position = Vector2(2852, 541)
@@ -364,12 +371,12 @@ required_key = "tutorial_key"
 consume_key = false
 
 [node name="Adbot1" parent="." unique_id=292757098 instance=ExtResource("adbot")]
-position = Vector2(3885, 540)
+position = Vector2(3978, 547)
 
-[node name="Bandit1" parent="." unique_id=1023223583 instance=ExtResource("bandit")]
-position = Vector2(4283, 558.00006)
+[node name="Buzzer1" parent="." unique_id=1023223583 instance=ExtResource("buzzer")]
+position = Vector2(4296, 549)
 
-[node name="Bandit2" parent="." unique_id=1556349936 instance=ExtResource("bandit")]
+[node name="Buzzer2" parent="." unique_id=1556349936 instance=ExtResource("buzzer")]
 position = Vector2(1315, 618)
 
 [node name="LobbyPortal" type="Area2D" parent="." unique_id=2091917295]
@@ -388,13 +395,13 @@ position = Vector2(2250, 830)
 shape = SubResource("rs_death")
 
 [node name="CollectorEnemy" parent="." unique_id=687139458 instance=ExtResource("collector")]
-position = Vector2(4631, 549)
+position = Vector2(4739, 547)
 
 [node name="L_enemy2" type="Label" parent="." unique_id=1385769913]
-offset_left = 3617.0
-offset_top = 480.0
-offset_right = 3824.0
-offset_bottom = 520.0
+offset_left = 3859.0
+offset_top = 473.0
+offset_right = 4088.0
+offset_bottom = 513.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
@@ -413,7 +420,9 @@ polygon = PackedVector2Array(-60.9375, 560, 985.938, 560, 985.938, 720, -60.9375
 uv = PackedVector2Array(-60.9375, 560, 985.938, 560, 985.938, 720, -60.9375, 720)
 
 [node name="G1T0" type="Polygon2D" parent="ThemedTerrain" unique_id=2101508020]
-color = Color(0.737, 0.29, 0.608, 1)
+position = Vector2(-40.509804, 0)
+scale = Vector2(0.33522373, 1)
+color = Color(0.75, 0.9, 1, 1)
 polygon = PackedVector2Array(-60.9375, 560, 985.938, 560, 985.938, 564, -60.9375, 564)
 
 [node name="G2GF" type="Polygon2D" parent="ThemedTerrain" unique_id=709374129]
@@ -424,7 +433,7 @@ polygon = PackedVector2Array(1044, 651, 2024.31, 560, 2024.31, 720, 1044, 717)
 uv = PackedVector2Array(1044, 651, 2024.31, 560, 2024.31, 720, 1044, 717)
 
 [node name="G2T0" type="Polygon2D" parent="ThemedTerrain" unique_id=555351409]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.75, 0.9, 1, 1)
 polygon = PackedVector2Array(1044, 651, 2024.31, 560, 2024.31, 564, 1044, 655)
 
 [node name="G3GF" type="Polygon2D" parent="ThemedTerrain" unique_id=197547018]
@@ -435,7 +444,7 @@ polygon = PackedVector2Array(2654.63, 560, 4823.38, 560, 4823.38, 720, 2654.63, 
 uv = PackedVector2Array(2654.63, 560, 4823.38, 560, 4823.38, 720, 2654.63, 720)
 
 [node name="G3T0" type="Polygon2D" parent="ThemedTerrain" unique_id=1740132202]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.75, 0.9, 1, 1)
 polygon = PackedVector2Array(2654.63, 560, 4823.38, 560, 4823.38, 564, 2654.63, 564)
 
 [node name="G4GF" type="Polygon2D" parent="ThemedTerrain" unique_id=34384853]
@@ -446,7 +455,7 @@ polygon = PackedVector2Array(4739.38, 560, 5770.63, 560, 5770.63, 720, 4739.38, 
 uv = PackedVector2Array(4739.38, 560, 5770.63, 560, 5770.63, 720, 4739.38, 720)
 
 [node name="G4T0" type="Polygon2D" parent="ThemedTerrain" unique_id=1165297726]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.75, 0.9, 1, 1)
 polygon = PackedVector2Array(4739.38, 560, 5770.63, 560, 5770.63, 564, 4739.38, 564)
 
 [node name="ObstacleGF" type="Polygon2D" parent="ThemedTerrain" unique_id=195519109]
@@ -457,7 +466,7 @@ polygon = PackedVector2Array(290, 535, 655, 534, 655, 447, 757, 447, 758, 560, 9
 uv = PackedVector2Array(290, 535, 655, 534, 655, 447, 757, 447, 758, 560, 986, 560, 290, 561)
 
 [node name="ObstacleT0" type="Polygon2D" parent="ThemedTerrain" unique_id=478366757]
-color = Color(0.737, 0.29, 0.608, 1)
+color = Color(0.75, 0.9, 1, 1)
 polygon = PackedVector2Array(655, 447, 757, 447, 757, 451, 655, 451)
 
 [node name="RightWallGF" type="Polygon2D" parent="ThemedTerrain" unique_id=1281302780]
@@ -480,6 +489,21 @@ texture_repeat = 2
 texture = ExtResource("tex_body")
 polygon = PackedVector2Array(5301, -88.0205, 5401, -88.0205, 5401, 131.063, 5401, 422.041, 5301, 422.041)
 uv = PackedVector2Array(5301, -88.0205, 5401, -88.0205, 5401, 131.063, 5401, 422.041, 5301, 422.041)
+
+[node name="G1T1" type="Polygon2D" parent="ThemedTerrain" unique_id=2102024825]
+position = Vector2(311.24625, -166)
+scale = Vector2(0.34865656, 1.25)
+color = Color(0.75, 0.9, 1, 1)
+polygon = PackedVector2Array(-60.9375, 560.8, 985.938, 560, 985.938, 564, -60.9375, 564)
+
+[node name="G1GF2" type="Polygon2D" parent="ThemedTerrain" unique_id=207174613]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(561, -181)
+rotation = 1.5707964
+texture = ExtResource("tex_body")
+polygon = PackedVector2Array(-60.9375, 560, 985.938, 560, 985.938, 720, -60.9375, 720)
+uv = PackedVector2Array(-60.9375, 560, 985.938, 560, 985.938, 720, -60.9375, 720)
 
 [node name="Props" type="Node2D" parent="." unique_id=919157023]
 z_index = -1
@@ -515,6 +539,27 @@ texture = ExtResource("px_vent")
 [node name="AdScreen1" type="Sprite2D" parent="Props" unique_id=465535828]
 position = Vector2(5255, 482)
 texture = ExtResource("px_screen")
+
+[node name="L_check" type="Label" parent="." unique_id=1659003466]
+offset_left = 3552.0
+offset_top = 462.0
+offset_right = 3816.0
+offset_bottom = 528.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 13
+text = "CHECKPOINT — walk through it
+fall or die and you restart here"
+
+[node name="TutorialCheckPoint" type="Area2D" parent="." unique_id=1238620284]
+position = Vector2(3649, 562)
+script = ExtResource("cp_scr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TutorialCheckPoint" unique_id=765230857]
+position = Vector2(0, -100)
+shape = SubResource("rs_cp")
 
 [connection signal="body_entered" from="LobbyPortal" to="." method="_on_lobby_portal_body_entered"]
 [connection signal="body_entered" from="DeathZone" to="." method="_on_deathzone_body_entered"]
