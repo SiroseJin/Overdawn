@@ -129,5 +129,10 @@ func _on_back() -> void:
 # Esc goes back too, not just the Back button (#1).
 func _unhandled_input(event: InputEvent) -> void:
 	if visible and event.is_action_pressed("ui_cancel"):
-		_on_back()
+		# Consume the key BEFORE running the Back action. Back may call
+		# change_scene_to_file(), which detaches this node from the tree — and once
+		# it's detached get_viewport() is null, so marking the input handled
+		# afterwards crashed with "Cannot call method 'set_input_as_handled' on a
+		# null value". Pressing Esc in Settings hit this every time.
 		get_viewport().set_input_as_handled()
+		_on_back()

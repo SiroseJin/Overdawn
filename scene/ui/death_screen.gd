@@ -85,5 +85,10 @@ func _on_cancel_pressed() -> void:
 # main panel it does nothing (there's no "resume" from death).
 func _unhandled_input(event: InputEvent) -> void:
 	if visible and event.is_action_pressed("ui_cancel") and not main_panel.visible:
-		_show_only(main_panel)
+		# Consume the key BEFORE running the Back action. Back may call
+		# change_scene_to_file(), which detaches this node from the tree — and once
+		# it's detached get_viewport() is null, so marking the input handled
+		# afterwards crashed with "Cannot call method 'set_input_as_handled' on a
+		# null value". Pressing Esc in Settings hit this every time.
 		get_viewport().set_input_as_handled()
+		_show_only(main_panel)
