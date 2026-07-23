@@ -42,12 +42,18 @@ func _skin(npc_name: String, trader: String) -> void:
 			load(TRADER + trader + "/Dialogue.png"))
 
 func _configure_npcs() -> void:
+	# NOTE: unlike every other stage, Stage 3's NPCs carry no `dialogue_timeline` in the
+	# .tscn — so all four fell back to the export default ("npc1timeline") and played
+	# Stage 1's Hendra dialogue instead of their own. The s3npc*timeline resources were
+	# written but never reachable. Assign them here, where the rest of the per-NPC setup
+	# already lives.
 	var repeats := {"Damar": "damar_rep", "Rina": "rina_rep", "Toni": "toni_rep"}
-	for pair in [["Damar", "stage3_damar"], ["Rina", "stage3_rina"],
-			["Toni", "stage3_toni"], ["Sinta", "stage3_sinta"]]:
+	for pair in [["Damar", "stage3_damar", "s3npc1timeline"], ["Rina", "stage3_rina", "s3npc2timeline"],
+			["Toni", "stage3_toni", "s3npc3timeline"], ["Sinta", "stage3_sinta", "s3npc4timeline"]]:
 		var n := get_node_or_null(pair[0])
 		if n:
 			n.npc_id = pair[1]
+			n.dialogue_timeline = pair[2]
 			if repeats.has(pair[0]):
 				n.repeat_timeline = repeats[pair[0]]
 	# Damar (first NPC) teaches DOUBLE JUMP right away, so the whole tower climb above
